@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "BookOrganizerDbDEV": "Server=WIN10FIRECODED\\SQLEXPRESS;Database=BookOrganizerDb-DEV;Trusted_Connection=True;"
+  }
+}
