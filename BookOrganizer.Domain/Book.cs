@@ -119,5 +119,6 @@ namespace BookOrganizer.Domain
         public ICollection<BookAuthors> AuthorsLink { get; set; }
         public Language Language { get; set; }
         public Publisher Publisher { get; set; }
+        public ICollection<BooksReadDate> ReadDates { get; set; }
     }
 }
