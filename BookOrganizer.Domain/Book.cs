@@ -120,5 +120,6 @@ namespace BookOrganizer.Domain
         public Language Language { get; set; }
         public Publisher Publisher { get; set; }
         public ICollection<BooksReadDate> ReadDates { get; set; }
+        public ICollection<BookGenres> GenreLink { get; set; }
     }
 }

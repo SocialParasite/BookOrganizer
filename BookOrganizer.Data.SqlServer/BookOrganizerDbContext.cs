@@ -26,12 +26,14 @@ namespace BookOrganizer.Data.SqlServer
         public DbSet<Author> Authors { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Genre> Genres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new BookAuthorConfig());
+            modelBuilder.ApplyConfiguration(new BookGenreConfig());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
