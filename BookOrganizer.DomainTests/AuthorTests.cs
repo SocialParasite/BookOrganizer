@@ -60,21 +60,21 @@ namespace BookOrganizer.DomainTests
         }
 
 
-        public static IEnumerable<object[]> BookTestCases()
-        {
-            yield return new object[] { new Book { Title = "Awesome Debut" } };
-            yield return new object[] { new Book { Title = "Buy this book" } };
-            yield return new object[] { new Book { Title = "Steal this one" } };
-        }
+        //public static IEnumerable<object[]> BookTestCases()
+        //{
+        //    yield return new object[] { new Book { Title = "Awesome Debut" } };
+        //    yield return new object[] { new Book { Title = "Buy this book" } };
+        //    yield return new object[] { new Book { Title = "Steal this one" } };
+        //}
 
-        [Theory]
-        [MemberData(nameof(BookTestCases))]
-        public void AuthorMayHaveWrittenSeveralBooks(Book book)
-        {
-            var author = new Author();
-            author.Books = new List<Book>() { book };
+        //[Theory]
+        //[MemberData(nameof(BookTestCases))]
+        //public void AuthorMayHaveWrittenSeveralBooks(Book book)
+        //{
+        //    var author = new Author();
+        //    author.Books = new List<Book>() { book };
 
-            author.Books.Should().NotBeEmpty();
-        }
+        //    author.Books.Should().NotBeEmpty();
+        //}
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using BookOrganizer.Domain;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BookOrganizer.Data.SqlServer
 {
@@ -23,14 +24,20 @@ namespace BookOrganizer.Data.SqlServer
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Language> Languages { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new BookAuthorConfig());
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (connectionString is null)
             {
                 IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("connectionString.json");
-                //.SetBasePath(Directory.GetCurrentDirectory())
-                //.AddJsonFile("connectionString.json");
 
                 Configuration = builder.Build();
 

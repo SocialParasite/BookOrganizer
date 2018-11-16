@@ -44,6 +44,7 @@ namespace BookOrganizer.Domain
         }
 
         // Navigation properties
-        public ICollection<Book> Books { get; set; }
+        //public ICollection<Book> Books { get; set; }
+        public ICollection<BookAuthors> BooksLink { get; set; }
     }
 }

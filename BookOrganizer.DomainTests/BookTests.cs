@@ -175,50 +175,50 @@ namespace BookOrganizer.DomainTests
             book.BookCoverPicture.Should().Equals(path);
         }
 
-        public static IEnumerable<object[]> AuthorTestCases
-        {
-            get
-            {
-                yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "Patric", LastName = "Rothfuss" } };
-                yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "George R.R.", LastName = "Martin" } };
-                yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "Scott", LastName = "Lynch" } };
-            }
-        }
+        //public static IEnumerable<object[]> AuthorTestCases
+        //{
+        //    get
+        //    {
+        //        yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "Patric", LastName = "Rothfuss" } };
+        //        yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "George R.R.", LastName = "Martin" } };
+        //        yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "Scott", LastName = "Lynch" } };
+        //    }
+        //}
 
-        [Theory]
-        [MemberData(nameof(AuthorTestCases))]
-        public void BookMayHaveBeenWrittenBySeveralAuthors(Author author)
-        {
-            var book = new Book();
+        //[Theory]
+        //[MemberData(nameof(AuthorTestCases))]
+        //public void BookMayHaveBeenWrittenBySeveralAuthors(Author author)
+        //{
+        //    var book = new Book();
 
-            book.Authors = new List<Author>() { author };
+        //    book.Authors = new List<Author>() { author };
 
-            book.Authors.Should().NotBeEmpty();
-        }
+        //    book.Authors.Should().NotBeEmpty();
+        //}
 
-        [Fact]
-        public void IfBookHaveMoreThanOneAuthorItCanStoreThemAll()
-        {
+        //[Fact]
+        //public void IfBookHaveMoreThanOneAuthorItCanStoreThemAll()
+        //{
 
-            var book = new Book();
+        //    var book = new Book();
 
-            book.Authors = new List<Author>
-            {
-                new Author { FirstName = "Patric", LastName = "Rothfuss" },
-                new Author { FirstName = "George R.R.", LastName = "Martin" },
-                new Author { FirstName = "Scott", LastName = "Lynch" }
-            };
+        //    book.Authors = new List<Author>
+        //    {
+        //        new Author { FirstName = "Patric", LastName = "Rothfuss" },
+        //        new Author { FirstName = "George R.R.", LastName = "Martin" },
+        //        new Author { FirstName = "Scott", LastName = "Lynch" }
+        //    };
 
-            book.Authors.Should().HaveCount(3);
-        }
+        //    book.Authors.Should().HaveCount(3);
+        //}
 
-        [Fact]
-        public void BookShouldStoreIdOfLanguageItsWrittenIn()
-        {
-            var book = new Book();
-            book.LanguageId = Guid.NewGuid();
-            book.LanguageId.Should().NotBe(Guid.Empty);
-        }
+        //[Fact]
+        //public void BookShouldStoreIdOfLanguageItsWrittenIn()
+        //{
+        //    var book = new Book();
+        //    book.LanguageId = Guid.NewGuid();
+        //    book.LanguageId.Should().NotBe(Guid.Empty);
+        //}
 
         [Fact]
         public void BookShouldStoreReferenceToLanguageItsWrittenIn()
