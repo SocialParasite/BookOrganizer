@@ -1,6 +1,7 @@
 ﻿using BookOrganizer.Domain;
 using FluentAssertions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
@@ -24,7 +25,7 @@ namespace BookOrganizer.DomainTests
             var author = new Author();
             author.FirstName = "Patrick";
 
-            author.FirstName.Should().Equals("Patrick");
+            author.FirstName.Should().NotBeEmpty().And.NotBeNull().Equals("Patrick");
         }
 
         [Fact]
@@ -33,7 +34,7 @@ namespace BookOrganizer.DomainTests
             var author = new Author();
             author.LastName = "Rothfuss";
 
-            author.LastName.Should().Equals("Rothfuss");
+            author.LastName.Should().NotBeEmpty().And.NotBeNull().Equals("Rothfuss");
         }
 
         [Theory]
@@ -56,6 +57,24 @@ namespace BookOrganizer.DomainTests
             Action action = () => author.LastName = lastName;
 
             action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+
+        public static IEnumerable<object[]> BookTestCases()
+        {
+            yield return new object[] { new Book { Title = "Awesome Debut" } };
+            yield return new object[] { new Book { Title = "Buy this book" } };
+            yield return new object[] { new Book { Title = "Steal this one" } };
+        }
+
+        [Theory]
+        [MemberData(nameof(BookTestCases))]
+        public void AuthorMayHaveWrittenSeveralBooks(Book book)
+        {
+            var author = new Author();
+            author.Books = new List<Book>() { book };
+
+            author.Books.Should().NotBeEmpty();
         }
     }
 }

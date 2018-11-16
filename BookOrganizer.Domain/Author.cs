@@ -42,5 +42,8 @@ namespace BookOrganizer.Domain
                 _lastName = value;
             }
         }
+
+        // Navigation properties
+        public ICollection<Book> Books { get; set; }
     }
 }
