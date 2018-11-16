@@ -114,5 +114,8 @@ namespace BookOrganizer.Domain
                 }
             }
         }
+
+        // Navigation properties
+        public ICollection<Author> Authors { get; set; }
     }
 }
