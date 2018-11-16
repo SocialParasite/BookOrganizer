@@ -211,5 +211,21 @@ namespace BookOrganizer.DomainTests
 
             book.Authors.Should().HaveCount(3);
         }
+
+        [Fact]
+        public void BookShouldStoreIdOfLanguageItsWrittenIn()
+        {
+            var book = new Book();
+            book.LanguageId = Guid.NewGuid();
+            book.LanguageId.Should().NotBe(Guid.Empty);
+        }
+
+        [Fact]
+        public void BookShouldStoreReferenceToLanguageItsWrittenIn()
+        {
+            var book = new Book();
+            book.Language = new Language();
+            book.Language.Should().BeOfType<Language>();
+        }
     }
 }

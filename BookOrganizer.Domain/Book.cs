@@ -115,7 +115,10 @@ namespace BookOrganizer.Domain
             }
         }
 
+        public Guid LanguageId { get; set; }
+
         // Navigation properties
         public ICollection<Author> Authors { get; set; }
+        public Language Language { get; set; }
     }
 }
