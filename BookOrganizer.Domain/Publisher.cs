@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,5 +26,7 @@ namespace BookOrganizer.Domain
                 _name = value;
             }
         }
+
+        public ICollection<Book> Books { get; set; }
     }
 }
