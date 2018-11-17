@@ -44,5 +44,8 @@ namespace BookOrganizer.Domain
                 _abbreveation = value;
             }
         }
+
+        // Navigation properties
+        public ICollection<BooksFormats> BookLink { get; set; }
     }
 }
