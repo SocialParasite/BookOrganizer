@@ -43,6 +43,8 @@ namespace BookOrganizer.Domain
             }
         }
 
+        public DateTime? DateOfBirth { get; set; }
+
         // Navigation properties
         //public ICollection<Book> Books { get; set; }
         public ICollection<BookAuthors> BooksLink { get; set; }

@@ -59,6 +59,14 @@ namespace BookOrganizer.DomainTests
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
+        [Fact]
+        public void AuthorShouldHaveADateOfBirthProperty()
+        {
+            var author = new Author();
+            author.DateOfBirth = new DateTime(1990, 12, 24);
+
+            author.DateOfBirth.Should().HaveDay(24).And.HaveMonth(12).And.HaveYear(1990);
+        }
 
         //public static IEnumerable<object[]> BookTestCases()
         //{
