@@ -15,14 +15,14 @@ namespace BookOrganizer.Domain
 
         [Required]
         [MinLength(1, ErrorMessage = "Language name should be at minimum 1 character long.")]
-        [MaxLength(32, ErrorMessage = "Language name should be maximum of 64 characters long.")]
+        [MaxLength(32, ErrorMessage = "Language name should be maximum of 32 characters long.")]
         public string LanguageName
         {
             get => _languageName;
             set
             {
-                if (value is null || value == string.Empty || value.Length < 1 || value.Length > 64)
-                    throw new ArgumentOutOfRangeException(nameof(LanguageName), "Language name should be 1-64 characters long.");
+                if (value is null || value == string.Empty || value.Length < 1 || value.Length > 32)
+                    throw new ArgumentOutOfRangeException(nameof(LanguageName), "Language name should be 1-32 characters long.");
 
                 _languageName = value;
             }

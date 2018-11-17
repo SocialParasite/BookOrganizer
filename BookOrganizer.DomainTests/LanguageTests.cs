@@ -19,7 +19,7 @@ namespace BookOrganizer.DomainTests
         }
 
         [Fact]
-        public void LanguageShouldAcceptNamesLessThan64Characters()
+        public void LanguageShouldAcceptNamesLessThan32Characters()
         {
             var language = new Language();
             language.LanguageName = "Rallydriver english";
@@ -40,12 +40,12 @@ namespace BookOrganizer.DomainTests
         }
 
         [Fact]
-        public void TryingToSetLanguageNameLongerThan64CharactersShouldThrowArgumentOutOfRangeException()
+        public void TryingToSetLanguageNameLongerThan32CharactersShouldThrowArgumentOutOfRangeException()
         {
             var language = new Language();
 
             Action action = ()
-                => language.LanguageName = "Spicy jalapeno bacon ipsum dolor amet prosciutto swine andouille hamburger tri-tip ground round pork";
+                => language.LanguageName = "Spicy jalapeno bacon ipsum dolor amet.";// prosciutto swine andouille hamburger tri-tip ground round pork";
 
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
