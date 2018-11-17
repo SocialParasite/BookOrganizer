@@ -122,5 +122,6 @@ namespace BookOrganizer.Domain
         public ICollection<BooksReadDate> ReadDates { get; set; }
         public ICollection<BookGenres> GenreLink { get; set; }
         public ICollection<BooksFormats> FormatLink { get; set; }
+        public Series BookSeries { get; set; }
     }
 }
