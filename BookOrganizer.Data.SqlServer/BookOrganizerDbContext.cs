@@ -28,6 +28,8 @@ namespace BookOrganizer.Data.SqlServer
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Format> Formats { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
+        public DbSet<Website> Websites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
