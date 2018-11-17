@@ -30,6 +30,8 @@ namespace BookOrganizer.Data.SqlServer
         public DbSet<Format> Formats { get; set; }
         public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<Website> Websites { get; set; }
+        public DbSet<Series> Series { get; set; }
+        public DbSet<SeriesReadOrder> SeriesReadOrder { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
