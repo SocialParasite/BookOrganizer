@@ -27,5 +27,8 @@ namespace BookOrganizer.Domain
                 _name = value;
             }
         }
+
+        // Navigational properties
+        public ICollection<Author> Authors { get; set; }
     }
 }
