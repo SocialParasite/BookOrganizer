@@ -2,7 +2,6 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace BookOrganizer.DomainTests
@@ -30,7 +29,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void WhenNationalityNameIsSetNullOrEmptyThrowsArgumentException(string name)
+        public void TryingToSetNationalityNameToNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
         {
             var nationality = new Nationality();
 
@@ -40,7 +39,7 @@ namespace BookOrganizer.DomainTests
         }
 
         [Fact]
-        public void TryingToSetNationalityNameLongerThan32CharactersShouldThrowArgumentOutOfRangeException()
+        public void TryingToSetNationalityNameLongerThan32Characters_ThrowsArgumentOutOfRangeException()
         {
             var nationality = new Nationality();
 
@@ -48,6 +47,14 @@ namespace BookOrganizer.DomainTests
                 => nationality.Name = "Spicy jalapeno bacon ipsum dolor amet prosciutto swine andouille hamburger tri-tip ground round pork";
 
             action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void NationalityShouldHaveAListOfAuthorsBornInThatCountry()
+        {
+            var nationality = new Nationality();
+            nationality.Authors = new List<Author> { new Author { LastName = "Rothfuss" }, new Author { LastName = "Martin" } };
+            nationality.Authors.Should().HaveCount(2);
         }
     }
 }
