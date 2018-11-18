@@ -1,6 +1,7 @@
 ﻿using BookOrganizer.Domain;
 using FluentAssertions;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace BookOrganizer.DomainTests
@@ -28,7 +29,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void WhenPublisherNameIsSetNullOrEmptyThrowsArgumentException(string name)
+        public void WhenPublisherNameIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
         {
             var publisher = new Publisher();
 
@@ -38,7 +39,7 @@ namespace BookOrganizer.DomainTests
         }
 
         [Fact]
-        public void PublisherNameShouldNotBeLongerThan64Characters()
+        public void TryingToSetPublisherNameLongerThan64Characters_ThrowsArgumentOutOfRangeException()
         {
             var publisher = new Publisher();
 
@@ -46,6 +47,15 @@ namespace BookOrganizer.DomainTests
                 => publisher.Name = "Spicy jalapeno bacon ipsum dolor amet prosciutto swine andouille hamburger tri-tip ground round pork";
 
             action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void PublisherShouldHaveListOfBooksItHasPublished()
+        {
+            var publisher = new Publisher();
+            publisher.Books = new List<Book> { new Book { Title = "Altered Carbon" }, new Book { Title = "Broken Angels" } };
+
+            publisher.Books.Should().HaveCount(2);
         }
     }
 }
