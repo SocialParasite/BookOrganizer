@@ -1,12 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using BookOrganizer.Domain;
+﻿using BookOrganizer.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.IO;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BookOrganizer.Data.SqlServer
 {
