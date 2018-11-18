@@ -1,10 +1,9 @@
 using BookOrganizer.Domain;
-using System;
-using Xunit;
 using FluentAssertions;
-using System.IO;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using Xunit;
 
 namespace BookOrganizer.DomainTests
 {
@@ -31,7 +30,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void WhenBookNameIsSetNullOrEmptyThrowsArgumentException(string name)
+        public void WhenBookNameIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
         {
             var book = new Book();
 
@@ -41,7 +40,7 @@ namespace BookOrganizer.DomainTests
         }
 
         [Fact]
-        public void BookTitleShouldNotBeLongerThan256Characters()
+        public void WhenTryingToSetBookTitleLongerThan256Characters_ThrowsArgumentOutOfRangeException()
         {
             var book = new Book();
 
@@ -76,7 +75,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData(0)]
         [InlineData(2501)]
-        public void ReleaseYearNotWithin1And2500ShouldThrowArgumentException(int year)
+        public void TryingToSetReleaseYearLessThan1OrMoreThan2500_ThrowArgumentOutException(int year)
         {
             var book = new Book();
             Action action = () => book.ReleaseYear = year;
@@ -123,7 +122,7 @@ namespace BookOrganizer.DomainTests
         [InlineData("978055380147XX")]
         [InlineData("000224585ZRR")]
         [InlineData("ABCDEFGHIJKLM")]
-        public void BookIsbnDoesNotAcceptNonStandardNonEmptyValue(string isbn)
+        public void TryingToSetBookIsbnNonStandardOrNonEmptyValue_ThrowArgumentOutOfRangeException(string isbn)
         {
             var book = new Book();
 
@@ -175,50 +174,24 @@ namespace BookOrganizer.DomainTests
             book.BookCoverPicture.Should().Equals(path);
         }
 
-        //public static IEnumerable<object[]> AuthorTestCases
-        //{
-        //    get
-        //    {
-        //        yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "Patric", LastName = "Rothfuss" } };
-        //        yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "George R.R.", LastName = "Martin" } };
-        //        yield return new object[] { new Author { Id = Guid.NewGuid(), FirstName = "Scott", LastName = "Lynch" } };
-        //    }
-        //}
+        [Fact]
+        public void IfBookHaveMoreThanOneAuthorItCanStoreThemAll()
+        {
 
-        //[Theory]
-        //[MemberData(nameof(AuthorTestCases))]
-        //public void BookMayHaveBeenWrittenBySeveralAuthors(Author author)
-        //{
-        //    var book = new Book();
+            var book = new Book();
 
-        //    book.Authors = new List<Author>() { author };
+            book.AuthorsLink = new List<BookAuthors>
+            {
 
-        //    book.Authors.Should().NotBeEmpty();
-        //}
+                new BookAuthors { Author = new Author { FirstName = "Patric", LastName = "Rothfuss" } },
+                new BookAuthors { Author = new Author { FirstName = "George R.R.", LastName = "Martin" } },
+                new BookAuthors { Author = new Author { FirstName = "Scott", LastName = "Lynch" } }
+            };
 
-        //[Fact]
-        //public void IfBookHaveMoreThanOneAuthorItCanStoreThemAll()
-        //{
+            book.AuthorsLink.Should().NotBeEmpty();
+            book.AuthorsLink.Should().HaveCount(3);
+        }
 
-        //    var book = new Book();
-
-        //    book.Authors = new List<Author>
-        //    {
-        //        new Author { FirstName = "Patric", LastName = "Rothfuss" },
-        //        new Author { FirstName = "George R.R.", LastName = "Martin" },
-        //        new Author { FirstName = "Scott", LastName = "Lynch" }
-        //    };
-
-        //    book.Authors.Should().HaveCount(3);
-        //}
-
-        //[Fact]
-        //public void BookShouldStoreIdOfLanguageItsWrittenIn()
-        //{
-        //    var book = new Book();
-        //    book.LanguageId = Guid.NewGuid();
-        //    book.LanguageId.Should().NotBe(Guid.Empty);
-        //}
 
         [Fact]
         public void BookShouldStoreReferenceToLanguageItsWrittenIn()
@@ -226,6 +199,61 @@ namespace BookOrganizer.DomainTests
             var book = new Book();
             book.Language = new Language();
             book.Language.Should().BeOfType<Language>();
+        }
+
+        [Fact]
+        public void BookShouldStoreReferenceToItsPublisher()
+        {
+            var book = new Book();
+            book.Publisher = new Publisher();
+            book.Publisher.Should().BeOfType<Publisher>();
+        }
+
+        [Fact]
+        public void BookShouldHaveReferenceToDatesItWasRead()
+        {
+            var book = new Book();
+            book.ReadDates = new List<BooksReadDate>
+            {
+                new BooksReadDate { Book = book, ReadDate = DateTime.Now.AddYears(-1) },
+                new BooksReadDate { Book = book, ReadDate = DateTime.Today}
+            };
+
+            book.ReadDates.Should().NotBeEmpty().And.HaveCount(2);
+        }
+
+        [Fact]
+        public void BookShouldHaveReferenceToGenresItBelongsTo()
+        {
+            var book = new Book();
+            book.GenreLink = new List<BookGenres>
+            {
+                new BookGenres { Book = book, Genre = new Genre { Name = "Horror" } },
+                new BookGenres { Book = book, Genre = new Genre { Name = "Sci-fi" } }
+            };
+
+            book.GenreLink.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void BookShouldHaveReferenceToFormatsItsOwned()
+        {
+            var book = new Book();
+            book.FormatLink = new List<BooksFormats>
+            {
+                new BooksFormats { Book = book, Format = new Format { Abbreveation = "pdf", Name = "Portable Document Format" } },
+                new BooksFormats { Book = book, Format = new Format { Abbreveation = "asw", Name = "Kindle File Format" } }
+            };
+
+            book.FormatLink.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public void BookShouldStoreReferenceToSeriesItsPartOf()
+        {
+            var book = new Book();
+            book.BookSeries = new Series();
+            book.BookSeries.Should().BeOfType<Series>();
         }
     }
 }
