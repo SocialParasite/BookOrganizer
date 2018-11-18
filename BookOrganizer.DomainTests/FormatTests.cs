@@ -2,13 +2,21 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace BookOrganizer.DomainTests
 {
     public class FormatTests
     {
+        [Fact]
+        public void FormatShouldBeIdentifiedByValidGuid()
+        {
+            var format = new Format();
+            format.Id = Guid.NewGuid();
+
+            format.Id.Should().NotBe(Guid.Empty);
+        }
+
         [Fact]
         public void FormatShouldAcceptNamesLessThan32Characters()
         {
@@ -21,7 +29,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void WhenFormatNameIsSetNullOrEmptyThrowsArgumentException(string name)
+        public void WhenFormatNameIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
         {
             var format = new Format();
 
@@ -31,7 +39,7 @@ namespace BookOrganizer.DomainTests
         }
 
         [Fact]
-        public void FormatNameShouldNotBeLongerThan32Characters()
+        public void TryingToSetFormatNameLongerThan32Characters_ThrowsArgumentOutOfRangeException()
         {
             var format = new Format();
 
@@ -54,7 +62,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void WhenFormatAbbreveationIsSetNullOrEmptyThrowsArgumentException(string abbreveation)
+        public void WhenFormatAbbreveationIsSetNullOrEmpty_ThrowsArgumentOutOfException(string abbreveation)
         {
             var format = new Format();
 
@@ -64,7 +72,7 @@ namespace BookOrganizer.DomainTests
         }
 
         [Fact]
-        public void FormatAbbreveationShouldNotBeLongerThan16Characters()
+        public void TryingToSetFormatAbbreveationLongerThan16Characters_ThrowsArgumentOutOfRangeException()
         {
             var format = new Format();
 
@@ -72,6 +80,19 @@ namespace BookOrganizer.DomainTests
                 => format.Abbreveation = "portableformatdoc";
 
             action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void FormatShouldHaveReferenceToBooksOwnedInThatFormat()
+        {
+            var format = new Format();
+            format.BookLink = new List<BooksFormats>
+            {
+                new BooksFormats { Format = format, Book = new Book { Title = "Game Of Thrones" } },
+                new BooksFormats { Format = format, Book = new Book { Title = "Clash of Kings" } }
+            };
+
+            format.BookLink.Should().HaveCount(2);
         }
     }
 }
