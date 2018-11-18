@@ -1,8 +1,6 @@
 ﻿using BookOrganizer.Domain;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace BookOrganizer.DomainTests
@@ -30,7 +28,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void WhenLanguageNameIsSetNullOrEmptyThrowsArgumentException(string name)
+        public void WhenLanguageNameIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
         {
             var language = new Language();
 
@@ -40,12 +38,12 @@ namespace BookOrganizer.DomainTests
         }
 
         [Fact]
-        public void TryingToSetLanguageNameLongerThan32CharactersShouldThrowArgumentOutOfRangeException()
+        public void TryingToSetLanguageNameLongerThan32Characters_ThrowsArgumentOutOfRangeException()
         {
             var language = new Language();
 
             Action action = ()
-                => language.LanguageName = "Spicy jalapeno bacon ipsum dolor amet.";// prosciutto swine andouille hamburger tri-tip ground round pork";
+                => language.LanguageName = "Spicy jalapeno bacon ipsum dolor amet.";
 
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
