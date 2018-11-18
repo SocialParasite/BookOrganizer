@@ -2,7 +2,6 @@
 using FluentAssertions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace BookOrganizer.DomainTests
@@ -51,7 +50,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData(0)]
         [InlineData(-10)]
-        public void AddingNegativeAmountOfBooksInTheSeriesShouldThrowArgumentOutOfRangeException(int amount)
+        public void TryingToAddNegativeOrZeroAmountOfBooksInTheSeries_ThrowsArgumentOutOfRangeException(int amount)
         {
             var series = new Series();
 
