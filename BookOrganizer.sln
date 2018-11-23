@@ -11,7 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{102869BD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOrganizer.DomainTests", "BookOrganizer.DomainTests\BookOrganizer.DomainTests.csproj", "{DCCB3A57-4559-4D1C-9509-4F982EF36E08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOrganizer.TestConsoleUI", "BookOrganizer.TestConsoleUI\BookOrganizer.TestConsoleUI.csproj", "{139000F3-C2EC-4E01-899B-954A4837C7BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOrganizer.TestConsoleUI", "BookOrganizer.TestConsoleUI\BookOrganizer.TestConsoleUI.csproj", "{139000F3-C2EC-4E01-899B-954A4837C7BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOrganizer.UI.WPF", "BookOrganizer.UI.WPF\BookOrganizer.UI.WPF.csproj", "{279BAD90-CE2B-41F8-B110-DC8E97A87636}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{139000F3-C2EC-4E01-899B-954A4837C7BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{139000F3-C2EC-4E01-899B-954A4837C7BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{139000F3-C2EC-4E01-899B-954A4837C7BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279BAD90-CE2B-41F8-B110-DC8E97A87636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279BAD90-CE2B-41F8-B110-DC8E97A87636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279BAD90-CE2B-41F8-B110-DC8E97A87636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279BAD90-CE2B-41F8-B110-DC8E97A87636}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
