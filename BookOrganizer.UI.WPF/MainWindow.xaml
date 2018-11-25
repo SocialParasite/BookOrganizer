@@ -9,5 +9,11 @@
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <Grid />
+    <Grid>
+        <Button
+            Width="250"
+            Height="100"
+            Content="TESTING..."
+            FontSize="48" />
+    </Grid>
 </Window>
