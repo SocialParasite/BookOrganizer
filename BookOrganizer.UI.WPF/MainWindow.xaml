@@ -5,15 +5,32 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BookOrganizer.UI.WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:BookOrganizer.UI.WPF.Views"
+    xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPF.ViewModels"
     Title="MainWindow"
     Width="800"
     Height="450"
     mc:Ignorable="d">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:BookDetailViewModel}">
+            <view:BookDetailView />
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Button
-            Width="250"
-            Height="100"
-            Content="TESTING..."
-            FontSize="48" />
+            x:Name="TestButton"
+            Width="100"
+            Height="50"
+            Command="{Binding CreateNewBookDetailViewCommand}"
+            Content="Press!" />
+        <TabControl
+            Grid.Row="1"
+            ItemsSource="{Binding DetailViewModels}"
+            SelectedItem="{Binding SelectedDetailViewModel, Mode=TwoWay}" />
     </Grid>
 </Window>

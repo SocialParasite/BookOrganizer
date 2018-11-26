@@ -13,6 +13,8 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
 
+            builder.RegisterType<BookDetailViewModel>().As<IBookDetailViewModel>();
+
             builder.RegisterType<BookOrganizerDbContext>().AsSelf();
 
             return builder.Build();
