@@ -1,0 +1,51 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+    <Style
+        x:Key="NavigationButtonStyle"
+        BasedOn="{StaticResource MetroButton}"
+        TargetType="Button">
+        <Setter Property="Width" Value="100" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style x:Key="LabelStyles" TargetType="Label">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Margin" Value="1" />
+    </Style>
+    <Style
+        x:Key="TextBoxStyles"
+        BasedOn="{StaticResource MetroTextBox}"
+        TargetType="TextBox">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Grid.Column" Value="1" />
+        <Setter Property="Margin" Value="1" />
+    </Style>
+    <Style
+        x:Key="EditableTextBoxStyles"
+        BasedOn="{StaticResource TextBoxStyles}"
+        TargetType="TextBox">
+        <Setter Property="BorderBrush" Value="{Binding UserMode.Item3}" />
+        <Setter Property="BorderThickness" Value="{Binding UserMode.Item2}" />
+        <Setter Property="IsReadOnly" Value="{Binding UserMode.Item1}" />
+    </Style>
+    <Style
+        x:Key="UpdateButtonStyle"
+        BasedOn="{StaticResource NavigationButtonStyle}"
+        TargetType="Button">
+        <Setter Property="Visibility" Value="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+    </Style>
+    <Style
+        x:Key="ComboBoxStyles"
+        BasedOn="{StaticResource MetroComboBox}"
+        TargetType="ComboBox">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Width" Value="150" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+</ResourceDictionary>

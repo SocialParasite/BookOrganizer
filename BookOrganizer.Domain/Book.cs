@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace BookOrganizer.Domain
 {
-    public class Book
+    public class Book : IIdentifiable
     {
         private string _title;
         private int _releaseYear;

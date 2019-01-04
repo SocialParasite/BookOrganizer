@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BookOrganizer.Domain
 {
-    public class Author
+    public class Author : IIdentifiable
     {
         private string _firstName;
         private string _lastName;

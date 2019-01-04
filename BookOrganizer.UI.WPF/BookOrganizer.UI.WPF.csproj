@@ -48,6 +48,7 @@
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.1.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.2.1.2\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
     </Reference>
@@ -113,14 +114,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Enums\TabNames.cs" />
+    <Compile Include="Events\OpenDetailsViewEvent.cs" />
+    <Compile Include="Events\OpenItemMatchingSelectedBookIdEvent.cs" />
+    <Compile Include="Lookups\IBookLookupDataService.cs" />
+    <Compile Include="Lookups\LookupDataService.cs" />
+    <Compile Include="Lookups\LookupItem.cs" />
+    <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\BooksRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
+    <Compile Include="UIControls\ToggleRadioButton.cs" />
+    <Compile Include="ViewModels\BaseDetailViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookDetailViewModel.cs" />
+    <Compile Include="ViewModels\BooksViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBookDetailViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IBooksViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ISelectedViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BookDetailView.xaml.cs">
       <DependentUpon>BookDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BooksView.xaml.cs">
+      <DependentUpon>BooksView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -135,6 +154,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\BookDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BooksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,6 +203,10 @@
       <Name>BookOrganizer.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\placeholder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

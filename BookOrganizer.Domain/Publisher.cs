@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookOrganizer.Domain
 {
-    public class Publisher
+    public class Publisher : IIdentifiable
     {
         private string _name;
 

@@ -1,0 +1,182 @@
+﻿<UserControl
+    x:Class="BookOrganizer.UI.WPF.Views.BooksView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:local="clr-namespace:BookOrganizer.UI.WPF.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPF.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewModel:BookDetailViewModel}">
+            <local:BookDetailView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
+            <local:BooksView />
+        </DataTemplate>
+
+        <DataTemplate x:Key="UserDataTemplate">
+            <StackPanel HorizontalAlignment="Stretch">
+                <Grid x:Name="UserDTGrid" MinHeight="100">
+                    <Label
+                        x:Name="BookCollectionBookTitleLabel"
+                        Width="400"
+                        Height="{Binding Path=Height, ElementName=UserDTGrid}"
+                        Margin="1"
+                        HorizontalAlignment="Stretch">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <i:InvokeCommandAction Command="{Binding DataContext.BookTitleLabelMouseLeftButtonUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Label.Template>
+                            <ControlTemplate TargetType="{x:Type Label}">
+                                <Label
+                                    x:Name="textBlockLabel"
+                                    Background="WhiteSmoke"
+                                    BorderBrush="SteelBlue"
+                                    BorderThickness="1"
+                                    FontSize="18">
+                                    <Label.Content>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image
+                                                x:Name="bookCoverImage"
+                                                MaxWidth="75"
+                                                MaxHeight="75"
+                                                Source="{Binding Picture}" />
+                                            <TextBlock
+                                                x:Name="BasicLabelTextBlock"
+                                                Grid.Column="1"
+                                                Margin="20,0,0,0"
+                                                Text="{Binding DisplayMember}"
+                                                TextWrapping="Wrap" />
+                                        </Grid>
+                                    </Label.Content>
+                                </Label>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="Label.IsMouseOver" Value="True">
+                                        <Setter TargetName="textBlockLabel" Property="Background" Value="LightSkyBlue" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Label.Template>
+                    </Label>
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--<Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MaxWidth="150" />
+                <ColumnDefinition Width="*" MinWidth="150" />
+                <ColumnDefinition Width="*" MaxWidth="150" />
+                <ColumnDefinition Width="*" MinWidth="150" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" MinWidth="100" />
+            </Grid.ColumnDefinitions>
+        -->
+        <!--  TODO: Change to ComboBox and add OrderBy ComboBox?  -->
+        <!--
+            <Label
+                x:Name="BookListViewModeLabel"
+                Content="View Mode:"
+                FontSize="18" />
+            <ComboBox
+                x:Name="viewModeComboBox"
+                Grid.Column="1"
+                Height="50"
+                MaxWidth="150"
+                FontSize="18"
+                SelectedValuePath="Content">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SortByCommand}" CommandParameter="{Binding ElementName=viewModeComboBox, Path=SelectedValue}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBoxItem Content="Simple View" />
+                <ComboBoxItem Content="Basic View" />
+                <ComboBoxItem Content="Detailed View" />
+            </ComboBox>
+            <Label
+                Grid.Column="2"
+                Width="50"
+                HorizontalContentAlignment="Left"
+                VerticalContentAlignment="Bottom"
+                Content="Sort"
+                FontSize="18" />
+            <ComboBox
+                x:Name="sortByComboBox"
+                Grid.Column="3"
+                Height="50"
+                MaxWidth="150"
+                FontSize="18"
+                SelectedValuePath="Content">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SortByCommand}" CommandParameter="{Binding ElementName=sortByComboBox, Path=SelectedValue}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBoxItem Content="A-Z" />
+                <ComboBoxItem Content="Z-A" />
+                <ComboBoxItem Content="Latest first" />
+                <ComboBoxItem Content="Oldest first" />
+            </ComboBox>
+            <Button
+                Grid.Column="4"
+                Width="75"
+                Height="50"
+                Margin="25,0,0,0"
+                Command="{Binding RefreshCommand}"
+                Content="Refresh" />
+            <Button
+                x:Name="AddNewPublisherButton"
+                Grid.Column="6"
+                Height="50"
+                Margin="0,0,15,0"
+                HorizontalAlignment="Right"
+                Command="{Binding AddNewBookCommand}"
+                Content="Add new book" />
+        </Grid>-->
+        <Grid Grid.Row="2">
+            <ItemsControl
+                x:Name="BookList"
+                ItemTemplate="{StaticResource UserDataTemplate}"
+                ItemsSource="{Binding EntityCollection}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel>
+                            <i:Interaction.Behaviors>
+                                <ei:FluidMoveBehavior AppliesTo="Children" Duration="0:0:0.5">
+                                    <ei:FluidMoveBehavior.EaseY>
+                                        <CubicEase EasingMode="EaseInOut" />
+                                    </ei:FluidMoveBehavior.EaseY>
+                                    <ei:FluidMoveBehavior.EaseX>
+                                        <CubicEase EasingMode="EaseInOut" />
+                                    </ei:FluidMoveBehavior.EaseX>
+                                </ei:FluidMoveBehavior>
+                            </i:Interaction.Behaviors>
+                        </WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,6 +1,7 @@
 ﻿namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public interface IBookDetailViewModel : IDetailViewModel
+    public interface ISelectedViewModel
     {
+
     }
 }

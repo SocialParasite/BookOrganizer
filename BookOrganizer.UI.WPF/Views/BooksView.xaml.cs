@@ -2,9 +2,9 @@
 
 namespace BookOrganizer.UI.WPF.Views
 {
-    public partial class BookDetailView : UserControl
+    public partial class BooksView : UserControl
     {
-        public BookDetailView()
+        public BooksView()
         {
             InitializeComponent();
         }

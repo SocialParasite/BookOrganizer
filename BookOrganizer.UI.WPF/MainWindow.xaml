@@ -1,36 +1,147 @@
-﻿<Window
+﻿<Controls:MetroWindow
     x:Class="BookOrganizer.UI.WPF.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:BookOrganizer.UI.WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:BookOrganizer.UI.WPF.Views"
     xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPF.ViewModels"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="1280"
+    Height="768"
     mc:Ignorable="d">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:BookDetailViewModel}">
             <view:BookDetailView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
+            <view:BooksView />
+        </DataTemplate>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Button
-            x:Name="TestButton"
-            Width="100"
-            Height="50"
-            Command="{Binding CreateNewBookDetailViewCommand}"
-            Content="Press!" />
-        <TabControl
-            Grid.Row="1"
-            ItemsSource="{Binding DetailViewModels}"
-            SelectedItem="{Binding SelectedDetailViewModel, Mode=TwoWay}" />
-    </Grid>
-</Window>
+
+    <DockPanel>
+        <DockPanel.Resources>
+            <DataTemplate x:Key="MenuItemTemplate">
+                <local:ToggleRadioButton
+                    BorderThickness="0"
+                    Command="{Binding Command}"
+                    CommandParameter="{Binding CommandParameter}"
+                    GroupName="MenuI">
+                    <local:ToggleRadioButton.Style>
+                        <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Background" Value="Black" />
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter Property="Background" Value="Gray" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </local:ToggleRadioButton.Style>
+                    <Grid Height="48">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="25"
+                            Foreground="White"
+                            Text="{Binding Glyph}" />
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="{Binding Label}" />
+                    </Grid>
+                </local:ToggleRadioButton>
+            </DataTemplate>
+        </DockPanel.Resources>
+
+        <Controls:HamburgerMenu
+            x:Name="MyHamburgerMenu"
+            DisplayMode="CompactInline"
+            Foreground="White"
+            IsPaneOpen="False"
+            ItemTemplate="{StaticResource MenuItemTemplate}"
+            OptionsItemTemplate="{StaticResource MenuItemTemplate}"
+            PaneBackground="#FF444444">
+
+            <Controls:HamburgerMenu.ItemsSource>
+                <Controls:HamburgerMenuItemCollection>
+                    <Controls:HamburgerMenuGlyphItem
+                        Command="{Binding OpenMainMenuCommand}"
+                        CommandParameter="MainPageViewModel"
+                        Glyph="&#xE80F;"
+                        Label="Main Menu"
+                        Tag="ShowMainMenu" />
+                    <Controls:HamburgerMenuGlyphItem
+                        Command="{Binding OpenBooksViewCommand}"
+                        CommandParameter="BooksViewModel"
+                        Glyph="&#xE8F1;"
+                        Label="Books"
+                        Tag="ShowBooksMenu" />
+                    <Controls:HamburgerMenuGlyphItem
+                        Command="{Binding OpenAuthorsViewCommand}"
+                        CommandParameter="AuthorsViewModel"
+                        Glyph="&#xE8D4;"
+                        Label="Authors"
+                        Tag="ShowAuthorsMenu" />
+                    <Controls:HamburgerMenuGlyphItem
+                        Command="{Binding OpenPublishersViewCommand}"
+                        CommandParameter="PublishersViewModel"
+                        Glyph="&#xE8FE;"
+                        Label="Publishers"
+                        Tag="ShowPublishersMenu" />
+                </Controls:HamburgerMenuItemCollection>
+            </Controls:HamburgerMenu.ItemsSource>
+
+            <Controls:HamburgerMenu.OptionsItemsSource>
+                <Controls:HamburgerMenuItemCollection>
+                    <Controls:HamburgerMenuGlyphItem
+                        Command="{Binding OpenSettingsMenuCommand}"
+                        Glyph="&#xE713;"
+                        Label="Settings"
+                        Tag="Settings" />
+                </Controls:HamburgerMenuItemCollection>
+            </Controls:HamburgerMenu.OptionsItemsSource>
+
+            <Controls:HamburgerMenu.Content>
+                <DockPanel>
+
+                    <TabControl x:Name="PrimaryTabControl" SelectedIndex="{Binding SelectedPrimaryTabIndex, Mode=TwoWay}">
+                        <TabItem x:Name="NavigationTabItems" Visibility="Hidden">
+                            <ScrollViewer>
+                                <ContentControl Content="{Binding SelectedVM}" />
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem x:Name="DetailTabItems" Visibility="Hidden">
+                            <TabControl
+                                x:Name="SecondaryTabControl"
+                                ItemsSource="{Binding DetailViewModels}"
+                                SelectedItem="{Binding SelectedDetailViewModel}">
+                                <TabControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding SelectedItem.Title}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </TabControl.ItemTemplate>
+                            </TabControl>
+                        </TabItem>
+                    </TabControl>
+                </DockPanel>
+            </Controls:HamburgerMenu.Content>
+        </Controls:HamburgerMenu>
+    </DockPanel>
+</Controls:MetroWindow>
+

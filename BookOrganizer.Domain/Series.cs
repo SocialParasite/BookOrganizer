@@ -44,5 +44,6 @@ namespace BookOrganizer.Domain
 
         // Navigation properties
         public ICollection<Book> BooksInSeries { get; set; }
+        public ICollection<SeriesReadOrder> SeriesReadOrder { get; set; }
     }
 }

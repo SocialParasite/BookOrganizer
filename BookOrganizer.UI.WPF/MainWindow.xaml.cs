@@ -1,10 +1,9 @@
-﻿using BookOrganizer.Data.SqlServer;
-using BookOrganizer.UI.WPF.ViewModels;
-using System.Windows;
+﻿using BookOrganizer.UI.WPF.ViewModels;
+using MahApps.Metro.Controls;
 
 namespace BookOrganizer.UI.WPF
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         private readonly MainViewModel viewModel;
 
