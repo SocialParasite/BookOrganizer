@@ -1,47 +1,50 @@
 ﻿using BookOrganizer.Domain;
-using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Repositories;
+using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
     public abstract class BaseDetailViewModel<T> : ViewModelBase, IDetailViewModel
         where T : class, IIdentifiable
     {
+        private readonly IEventAggregator eventAggregator;
+        public IRepository<T> Repository;
+
+        private Guid guid;
+        private List<T> itemCollection;
+        private T selectedItem;
+        private Tuple<bool, int, SolidColorBrush, bool> userMode;
+
         public BaseDetailViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
+            SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
+
+            UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
             //this.eventAggregator.GetEvent<OpenDetailsViewEvent<T>>()
             //        .Subscribe(OnOpenItemDetailsViewAsync);
         }
 
-        private readonly IEventAggregator eventAggregator;
 
-        public IRepository<T> Repository;
+        public ICommand SwitchEditableStateCommand { get; set; }
 
-        private List<T> itemCollection;
         public List<T> ItemCollection
         {
             get { return itemCollection; }
             set { itemCollection = value; OnPropertyChanged(); }
         }
 
-        private T selectedItem;
         public T SelectedItem
         {
             get { return selectedItem; }
             set { selectedItem = value; OnPropertyChanged(); }
         }
-
-        public virtual async void OnOpenItemDetailsViewAsync(Guid id)
-            => SelectedItem = await Repository.GetSelectedAsync(id);
-
-        public abstract Task LoadAsync(Guid id);
-
-        private Guid guid;
 
         public Guid Id
         {
@@ -49,5 +52,24 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { guid = value; }
         }
 
+        public Tuple<bool, int, SolidColorBrush, bool> UserMode
+        {
+            get => userMode;
+            set { userMode = value; OnPropertyChanged(); }
+        }
+
+        public virtual async void OnOpenItemDetailsViewAsync(Guid id)
+            => SelectedItem = await Repository.GetSelectedAsync(id);
+
+        private void SwitchEditableStateExecute()
+        {
+            if (UserMode.Item2 == 0)
+                UserMode = (!UserMode.Item1, 1, Brushes.LightGreen, !UserMode.Item4).ToTuple();
+            else
+                UserMode = (!UserMode.Item1, 0, Brushes.LightGray, !UserMode.Item4).ToTuple();
+
+        }
+
+        public abstract Task LoadAsync(Guid id);
     }
 }

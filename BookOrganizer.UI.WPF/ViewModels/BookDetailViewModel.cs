@@ -30,16 +30,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(ShowSelectedBookExecute);
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
             HighlightMouseLeaveCommand = new DelegateCommand(HighlightMouseLeaveExecute);
-            SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
-            Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
-            UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
+            Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
         }
 
         public ICommand ShowSelectedBookCommand { get; }
         public ICommand HighlightMouseLeaveCommand { get; }
         public ICommand HighlightMouseOverCommand { get; }
-        public ICommand SwitchEditableStateCommand { get; set; }
 
         public Book SelectedBook
         {
@@ -68,14 +65,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
-        private Tuple<bool, int, SolidColorBrush, bool> userMode;
-
-        public Tuple<bool, int, SolidColorBrush, bool> UserMode
-        {
-            get => userMode;
-            set { userMode = value; OnPropertyChanged(); }
-        }
-
         public async override Task LoadAsync(Guid id)
         {
             var book = await Repository.GetSelectedAsync(id) ?? null;
@@ -92,14 +81,5 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void HighlightMouseOverExecute()
             => HighlightBrush = Brushes.LightSkyBlue;
-
-        private void SwitchEditableStateExecute()
-        {
-            if (UserMode.Item2 == 0)
-                UserMode = (!UserMode.Item1, 1, Brushes.LightGreen, !UserMode.Item4).ToTuple();
-            else
-                UserMode = (!UserMode.Item1, 0, Brushes.LightGray, !UserMode.Item4).ToTuple();
-
-        }
     }
 }
