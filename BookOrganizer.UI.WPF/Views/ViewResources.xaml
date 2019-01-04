@@ -28,7 +28,6 @@
         x:Key="EditableTextBoxStyles"
         BasedOn="{StaticResource TextBoxStyles}"
         TargetType="TextBox">
-        <Setter Property="BorderBrush" Value="{Binding UserMode.Item3}" />
         <Setter Property="BorderThickness" Value="{Binding UserMode.Item2}" />
         <Setter Property="IsReadOnly" Value="{Binding UserMode.Item1}" />
     </Style>

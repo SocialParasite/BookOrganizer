@@ -35,14 +35,15 @@
                 Grid.Column="4"
                 Margin="2"
                 BorderThickness="1">
-                <CheckBox
-                    x:Name="EditModeActiveCheckBox"
+                <ToggleButton
+                    x:Name="EditModeActiveToggleButton"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
-                    Command="{Binding SwitchEditableState}"
+                    Background="{Binding UserMode.Item3}"
+                    Command="{Binding SwitchEditableStateCommand}"
                     FontSize="18">
                     <TextBlock VerticalAlignment="Center" Text="Edit Mode" />
-                </CheckBox>
+                </ToggleButton>
             </Border>
         </Grid>
 
