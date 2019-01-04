@@ -10,8 +10,8 @@ namespace BookOrganizer.UI.WPF.Repositories
         Task<T> GetSelectedAsync(Guid id);
 
         //void Insert(T entity);
-        //void Update(T entity);
+        void Update(T entity);
         //void Delete(T entity);
-        //Task SaveAsync();
+        Task SaveAsync();
     }
 }

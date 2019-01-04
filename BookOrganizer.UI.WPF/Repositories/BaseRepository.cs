@@ -27,8 +27,8 @@ namespace BookOrganizer.UI.WPF.Repositories
             => await context.Set<TEntity>().FindAsync(id);
 
         //public void Insert(TEntity entity) => context.Set<TEntity>().Add(entity);
-        //public async Task SaveAsync() => await context.SaveChangesAsync();
-        //public void Update(TEntity entity) => context.Set<TEntity>().AddOrUpdate(entity);
+        public async Task SaveAsync() => await context.SaveChangesAsync();
+        public void Update(TEntity entity) => context.Set<TEntity>().Update(entity);
 
         //public void Delete(TEntity entity) => context.Set<TEntity>().Remove(entity);
 

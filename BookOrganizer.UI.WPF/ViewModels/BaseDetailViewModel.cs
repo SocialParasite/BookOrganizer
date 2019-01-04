@@ -14,7 +14,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         where T : class, IIdentifiable
     {
         private readonly IEventAggregator eventAggregator;
-        public IRepository<T> Repository;
+        protected IRepository<T> Repository;
 
         private Guid guid;
         private List<T> itemCollection;
@@ -23,16 +23,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public BaseDetailViewModel(IEventAggregator eventAggregator)
         {
-            this.eventAggregator = eventAggregator;
+            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
+            UpdateItemCommand = new DelegateCommand(UpdateItemExecute);
 
             UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
-            //this.eventAggregator.GetEvent<OpenDetailsViewEvent<T>>()
-            //        .Subscribe(OnOpenItemDetailsViewAsync);
         }
 
-
         public ICommand SwitchEditableStateCommand { get; set; }
+        public ICommand UpdateItemCommand { get; set; }
 
         public List<T> ItemCollection
         {
@@ -58,6 +58,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { userMode = value; OnPropertyChanged(); }
         }
 
+        public abstract Task LoadAsync(Guid id);
+
         public virtual async void OnOpenItemDetailsViewAsync(Guid id)
             => SelectedItem = await Repository.GetSelectedAsync(id);
 
@@ -70,6 +72,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         }
 
-        public abstract Task LoadAsync(Guid id);
+        private async void UpdateItemExecute()
+        {
+            Repository.Update(SelectedItem);
+            await Repository.SaveAsync();
+        }
+
     }
 }
