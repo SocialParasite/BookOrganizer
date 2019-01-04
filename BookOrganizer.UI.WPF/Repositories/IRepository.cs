@@ -11,7 +11,7 @@ namespace BookOrganizer.UI.WPF.Repositories
 
         //void Insert(T entity);
         void Update(T entity);
-        //void Delete(T entity);
+        void Delete(T entity);
         Task SaveAsync();
     }
 }

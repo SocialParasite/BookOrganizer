@@ -27,12 +27,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
             UpdateItemCommand = new DelegateCommand(UpdateItemExecute);
+            DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
 
             UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
         }
 
         public ICommand SwitchEditableStateCommand { get; set; }
         public ICommand UpdateItemCommand { get; set; }
+        public ICommand DeleteItemCommand { get; set; }
 
         public List<T> ItemCollection
         {
@@ -75,8 +77,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private async void UpdateItemExecute()
         {
             Repository.Update(SelectedItem);
-            await Repository.SaveAsync();
+            await SaveRepository();
         }
 
+        private async void DeleteItemExecute()
+        {
+            Repository.Delete(SelectedItem);
+            await SaveRepository();
+        }
+
+        private async Task SaveRepository()
+            => await Repository.SaveAsync();
     }
 }

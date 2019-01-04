@@ -151,7 +151,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                    Id = bookId,
                    ViewModelName = nameof(BookDetailViewModel)
                });
-
         }
     }
 }
