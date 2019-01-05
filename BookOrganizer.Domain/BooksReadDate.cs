@@ -8,7 +8,6 @@ namespace BookOrganizer.Domain
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-
         public DateTime ReadDate { get; set; }
 
         // Navigation properties

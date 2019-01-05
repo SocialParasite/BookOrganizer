@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.Repositories
@@ -11,12 +9,12 @@ namespace BookOrganizer.UI.WPF.Repositories
         where TEntity : class
         where TContext : DbContext
     {
+        private readonly TContext context;
+
         public BaseRepository(TContext context)
         {
-            this.context = context;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
-
-        private readonly TContext context;
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
@@ -27,10 +25,14 @@ namespace BookOrganizer.UI.WPF.Repositories
             => await context.Set<TEntity>().FindAsync(id);
 
         //public void Insert(TEntity entity) => context.Set<TEntity>().Add(entity);
-        public async Task SaveAsync() => await context.SaveChangesAsync();
-        public void Update(TEntity entity) => context.Set<TEntity>().Update(entity);
 
-        public void Delete(TEntity entity) => context.Set<TEntity>().Remove(entity);
+        public async Task SaveAsync()
+            => await context.SaveChangesAsync();
 
+        public void Update(TEntity entity)
+            => context.Set<TEntity>().Update(entity);
+
+        public void Delete(TEntity entity)
+            => context.Set<TEntity>().Remove(entity);
     }
 }

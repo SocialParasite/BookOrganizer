@@ -64,6 +64,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" MinHeight="75" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBox
@@ -242,6 +243,27 @@
                 Command="{Binding DeleteItemCommand}"
                 Content="Delete"
                 Style="{StaticResource UpdateButtonStyle}" />
+            <Label
+                x:Name="ReadDatesLabel"
+                Grid.Row="10"
+                Content="Read dates: "
+                Style="{StaticResource LabelStyles}"
+                Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}" />
+            <ListBox
+                x:Name="ReadDatesListView"
+                Grid.Row="10"
+                Grid.Column="1"
+                BorderThickness="0"
+                ItemsSource="{Binding SelectedItem.ReadDates}"
+                Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label ContentStringFormat="dd.MM.yyyy" Content="{Binding ReadDate}" FontSize="24" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </Grid>
 </UserControl>

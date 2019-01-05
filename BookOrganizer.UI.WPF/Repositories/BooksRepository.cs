@@ -30,6 +30,7 @@ namespace BookOrganizer.UI.WPF.Repositories
                 .ThenInclude(s => s.BooksInSeries)
                 .Include(b => b.BookSeries)
                 .ThenInclude(s => s.SeriesReadOrder)
+                .Include(b => b.ReadDates)
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
     }
