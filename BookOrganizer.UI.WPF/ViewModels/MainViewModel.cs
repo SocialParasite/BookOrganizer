@@ -22,7 +22,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private ISelectedViewModel selectedVM;
         private int selectedPrimaryTabIndex;
 
-
         public MainViewModel(IEventAggregator eventAggregator,
                               IIndex<string, IDetailViewModel> detailViewModelCreator,
                               IIndex<string, ISelectedViewModel> viewModelCreator,
@@ -40,12 +39,46 @@ namespace BookOrganizer.UI.WPF.ViewModels
             OpenAuthorsViewCommand = new DelegateCommand(OnOpenAuthorsViewExecute);
             OpenPublishersViewCommand = new DelegateCommand(OnOpenPublishersViewExecute);
             OpenSettingsMenuCommand = new DelegateCommand(OnOpenSettingsMenuExecute);
+            CloseDetailViewCommand = new DelegateCommand(OnCloseDetailViewExecute, OnCloseDetailViewCanExecute);
 
             this.eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
                     .Subscribe(OnOpenBookMatchingSelectedId);
 
             this.eventAggregator.GetEvent<OpenDetailViewEvent>()
                 .Subscribe(OnOpenDetailViewMatchingSelectedId);
+        }
+
+        public ICommand OpenMainMenuCommand { get; }
+        public ICommand OpenBooksViewCommand { get; }
+        public ICommand OpenAuthorsViewCommand { get; }
+        public ICommand OpenPublishersViewCommand { get; }
+        public ICommand OpenSettingsMenuCommand { get; }
+        public ICommand CloseDetailViewCommand { get; set; }
+
+        public ObservableCollection<IDetailViewModel> DetailViewModels { get; set; }
+
+        public IDetailViewModel SelectedDetailViewModel
+        {
+            get { return _selectedDetailViewModel; }
+            set
+            {
+                _selectedDetailViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsViewVisible { get; set; }
+
+        public ISelectedViewModel SelectedVM
+        {
+            get { return selectedVM; }
+            set { selectedVM = value; OnPropertyChanged(); }
+        }
+
+        public int SelectedPrimaryTabIndex
+        {
+            get { return selectedPrimaryTabIndex; }
+            set { selectedPrimaryTabIndex = value; OnPropertyChanged(); }
         }
 
         private async void OnOpenDetailViewMatchingSelectedId(OpenDetailViewEventArgs args)
@@ -74,38 +107,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 SelectedDetailViewModel = DetailViewModels.SingleOrDefault(b => b.Id == args.Id);
 
             SelectedPrimaryTabIndex = (int)TabNames.DetailTabItems;
-        }
-
-        public ICommand OpenMainMenuCommand { get; }
-        public ICommand OpenBooksViewCommand { get; }
-        public ICommand OpenAuthorsViewCommand { get; }
-        public ICommand OpenPublishersViewCommand { get; }
-        public ICommand OpenSettingsMenuCommand { get; }
-
-        public ObservableCollection<IDetailViewModel> DetailViewModels { get; set; }
-
-        public IDetailViewModel SelectedDetailViewModel
-        {
-            get { return _selectedDetailViewModel; }
-            set
-            {
-                _selectedDetailViewModel = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsViewVisible { get; set; }
-
-        public ISelectedViewModel SelectedVM
-        {
-            get { return selectedVM; }
-            set { selectedVM = value; OnPropertyChanged(); }
-        }
-
-        public int SelectedPrimaryTabIndex
-        {
-            get { return selectedPrimaryTabIndex; }
-            set { selectedPrimaryTabIndex = value; OnPropertyChanged(); }
         }
 
         private void OnOpenPublishersViewExecute()
@@ -151,6 +152,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
                    Id = bookId,
                    ViewModelName = nameof(BookDetailViewModel)
                });
+        }
+
+        private void OnCloseDetailViewExecute()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool OnCloseDetailViewCanExecute()
+        {
+            throw new NotImplementedException();
         }
     }
 }

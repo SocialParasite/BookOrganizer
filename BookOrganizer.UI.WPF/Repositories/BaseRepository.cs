@@ -34,5 +34,8 @@ namespace BookOrganizer.UI.WPF.Repositories
 
         public void Delete(TEntity entity)
             => context.Set<TEntity>().Remove(entity);
+
+        public bool HasChanges() 
+            => context.ChangeTracker.HasChanges();
     }
 }

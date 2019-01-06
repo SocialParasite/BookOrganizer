@@ -12,16 +12,24 @@
     xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPF.ViewModels"
     Title="MainWindow"
     Width="1280"
-    Height="768"
+    Height="1024"
+    MinWidth="800"
+    MinHeight="600"
     mc:Ignorable="d">
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModel:BookDetailViewModel}">
-            <view:BookDetailView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
-            <view:BooksView />
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="I:\Sorsat\PROJECTS\BookDB\BookOrganizer\BookOrganizer.UI.WPF\Views\ViewResources.xaml" />-->
+                <ResourceDictionary Source="Views\ViewResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type viewModel:BookDetailViewModel}">
+                <view:BookDetailView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
+                <view:BooksView />
+            </DataTemplate>
+        </ResourceDictionary>
     </Window.Resources>
 
     <DockPanel>
@@ -129,10 +137,30 @@
                                 x:Name="SecondaryTabControl"
                                 ItemsSource="{Binding DetailViewModels}"
                                 SelectedItem="{Binding SelectedDetailViewModel}">
+                                <TabControl.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="TabItem">
+                                        <Setter Property="Background" Value="Azure" />
+                                        <Setter Property="BorderBrush" Value="Transparent" />
+                                        <Setter Property="BorderThickness" Value="2" />
+                                    </Style>
+                                </TabControl.ItemContainerStyle>
                                 <TabControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding SelectedItem.Title}" />
+                                            <TextBlock
+                                                Foreground="Red"
+                                                Text="*"
+                                                Visibility="{Binding HasChanges, Converter={StaticResource BoolToVis}}" />
+                                            <Button
+                                                Margin="7,0,0,0"
+                                                HorizontalContentAlignment="Right"
+                                                VerticalContentAlignment="Top"
+                                                Command="{Binding CloseDetailViewCommand}"
+                                                Content="X"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                Style="{StaticResource ChromelessButtonStyle}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </TabControl.ItemTemplate>

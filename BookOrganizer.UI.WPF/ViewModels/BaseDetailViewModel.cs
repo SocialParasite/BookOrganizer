@@ -20,6 +20,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private List<T> itemCollection;
         private T selectedItem;
         private Tuple<bool, int, SolidColorBrush, bool> userMode;
+        private bool hasChanges;
 
         public BaseDetailViewModel(IEventAggregator eventAggregator)
         {
@@ -39,13 +40,21 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public List<T> ItemCollection
         {
             get { return itemCollection; }
-            set { itemCollection = value; OnPropertyChanged(); }
+            set
+            {
+                itemCollection = value ?? throw new ArgumentNullException(nameof(ItemCollection));
+                OnPropertyChanged(); 
+            }
         }
 
         public T SelectedItem
         {
             get { return selectedItem; }
-            set { selectedItem = value; OnPropertyChanged(); }
+            set
+            {
+                selectedItem = value ?? throw new ArgumentNullException(nameof(SelectedItem));
+                OnPropertyChanged(); 
+            }
         }
 
         public Guid Id
@@ -60,6 +69,18 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { userMode = value; OnPropertyChanged(); }
         }
 
+        public bool HasChanges
+        {
+            get { return hasChanges; }
+            set
+            {
+                if (hasChanges != value)
+                {
+                    hasChanges = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public abstract Task LoadAsync(Guid id);
 
         public virtual async void OnOpenItemDetailsViewAsync(Guid id)
