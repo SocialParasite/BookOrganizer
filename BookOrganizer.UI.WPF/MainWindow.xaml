@@ -20,7 +20,6 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="I:\Sorsat\PROJECTS\BookDB\BookOrganizer\BookOrganizer.UI.WPF\Views\ViewResources.xaml" />-->
                 <ResourceDictionary Source="Views\ViewResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type viewModel:BookDetailViewModel}">
