@@ -51,7 +51,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="300"/>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -70,6 +70,7 @@
                 <RowDefinition Height="Auto" MinHeight="75" />
                 <RowDefinition x:Name="EditButtonsGridRow" Height="Auto" />
             </Grid.RowDefinitions>
+
             <TextBox
                 x:Name="titleTextBox"
                 Grid.Column="0"
@@ -94,6 +95,7 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+
             <Label
                 x:Name="releaseYearLabel"
                 Grid.Row="1"
@@ -104,6 +106,7 @@
                 Grid.Row="1"
                 Style="{StaticResource EditableTextBoxStyles}"
                 Text="{Binding SelectedItem.ReleaseYear}" />
+
             <Label
                 x:Name="pageCountLabel"
                 Grid.Row="2"
@@ -114,6 +117,7 @@
                 Grid.Row="2"
                 Style="{StaticResource EditableTextBoxStyles}"
                 Text="{Binding SelectedItem.PageCount}" />
+
             <Label
                 x:Name="authorLabel"
                 Grid.Row="3"
@@ -149,6 +153,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
             <Label
                 x:Name="publisherLabel"
                 Grid.Row="4"
@@ -162,7 +167,8 @@
                 VerticalAlignment="Center"
                 Background="{Binding HighlightBrush}"
                 FontSize="24"
-                Text="{Binding SelectedItem.Publisher.Name}">
+                Text="{Binding SelectedItem.Publisher.Name}"
+                Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}">
                 <TextBlock.InputBindings>
                     <MouseBinding
                         Command="{Binding ShowSelectedPublisherCommand}"
@@ -178,6 +184,22 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBlock>
+            <ComboBox
+                x:Name="publisherComboBox"
+                Grid.Row="4"
+                Grid.Column="1"
+                Margin="1"
+                FontSize="24"
+                ItemsSource="{Binding Publishers}"
+                SelectedItem="{Binding SelectedPublisher, Mode=TwoWay}"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayMember}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
             <Label
                 x:Name="languageLabel"
                 Grid.Row="5"
@@ -191,7 +213,6 @@
                 Style="{StaticResource TextBoxStyles}"
                 Text="{Binding SelectedItem.Language.LanguageName}"
                 Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
-
             <ComboBox
                 x:Name="languageComboBox"
                 Grid.Row="5"
@@ -218,6 +239,7 @@
                 Grid.Row="6"
                 Style="{StaticResource EditableTextBoxStyles}"
                 Text="{Binding SelectedItem.ISBN}" />
+
             <Label
                 x:Name="bookSeriesLabel"
                 Grid.Row="7"
@@ -246,6 +268,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
             <CheckBox
                 x:Name="isReadCheckBox"
                 Grid.Row="9"
@@ -300,6 +323,7 @@
                 Command="{Binding AddNewReadDateCommand}"
                 Content="+"
                 Style="{StaticResource UpdateButtonStyle}" />
+
             <Button
                 x:Name="SaveBookDetailsButton"
                 Grid.Row="12"

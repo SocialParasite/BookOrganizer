@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.Lookups
 {
-    public class LookupDataService : IBookLookupDataService, ILanguageLookupDataService
+    public class LookupDataService : IBookLookupDataService, ILanguageLookupDataService, IPublisherLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
 
@@ -50,6 +50,23 @@ namespace BookOrganizer.UI.WPF.Lookups
                       DisplayMember = l.LanguageName,
                       Picture = null,
                       ViewModelName = null //nameof(LanguageDetailViewModel)
+                  })
+                  .ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<LookupItem>> GetPublisherLookupAsync()
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Publishers.AsNoTracking()
+                  .Select(p =>
+                  new LookupItem
+                  {
+                      Id = p.Id,
+                      DisplayMember = p.Name,
+                      Picture = null,
+                      ViewModelName = null //nameof(PublisherDetailViewModel)
                   })
                   .ToListAsync();
             }

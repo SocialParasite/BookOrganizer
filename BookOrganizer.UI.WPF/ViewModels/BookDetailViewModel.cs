@@ -20,20 +20,28 @@ namespace BookOrganizer.UI.WPF.ViewModels
     {
         readonly IEventAggregator eventAggregator;
         private readonly ILanguageLookupDataService languageLookupDataService;
+        private readonly IPublisherLookupDataService publisherLookupDataService;
         private Book selectedBook;
         private SolidColorBrush highlightBrush;
         private Guid selectedBookId;
         private bool isNewReadDate;
         private DateTime newReadDate;
+        private ObservableCollection<LookupItem> languages;
+        private LookupItem selectedLanguage;
+        private ObservableCollection<LookupItem> publishers;
+        private LookupItem selectedPublisher;
 
         public BookDetailViewModel(IEventAggregator eventAggregator,
             IRepository<Book> booksRepo,
-            ILanguageLookupDataService languageLookupDataService)
+            ILanguageLookupDataService languageLookupDataService,
+            IPublisherLookupDataService publisherLookupDataService)
             : base(eventAggregator)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.languageLookupDataService = languageLookupDataService 
                 ?? throw new ArgumentNullException(nameof(languageLookupDataService));
+            this.publisherLookupDataService = publisherLookupDataService
+                ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
 
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(ShowSelectedBookExecute);
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
@@ -47,6 +55,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             IsNewReadDate = false;
             NewReadDate = DateTime.Today;
             Languages = new ObservableCollection<LookupItem>();
+            Publishers = new ObservableCollection<LookupItem>();
         }
 
         public ICommand ShowSelectedBookCommand { get; }
@@ -83,6 +92,29 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
+        public ObservableCollection<LookupItem> Languages
+        {
+            get { return languages; }
+            set { languages = value; }
+        }
+
+        public LookupItem SelectedLanguage
+        {
+            get { return selectedLanguage; }
+            set { selectedLanguage = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<LookupItem> Publishers
+        {
+            get { return publishers; }
+            set { publishers = value; }
+        }
+
+        public LookupItem SelectedPublisher
+        {
+            get { return selectedPublisher; }
+            set { selectedPublisher = value; OnPropertyChanged(); }
+        }
 
         public bool IsNewReadDate
         {
@@ -152,26 +184,22 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
 
             SelectedLanguage = Languages.FirstOrDefault(l => l.Id == SelectedItem.Language.Id);
+
+            Publishers.Clear();
+
+            foreach (var item in await GetPublisherList())
+            {
+                Publishers.Add(item);
+            }
+            SelectedPublisher = Publishers.FirstOrDefault(p => p.Id == SelectedItem.Publisher.Id);
         }
 
-        private ObservableCollection<LookupItem> languages;
-
-        public ObservableCollection<LookupItem> Languages
+        private async Task<IEnumerable<LookupItem>> GetPublisherList()
         {
-            get { return languages; }
-            set { languages = value; }
+            return await publisherLookupDataService.GetPublisherLookupAsync();
         }
 
-        private LookupItem selectedLanguage;
-
-        public LookupItem SelectedLanguage
-        {
-            get { return selectedLanguage; }
-            set { selectedLanguage = value; OnPropertyChanged(); }
-        }
-
-
-        public async Task<IEnumerable<LookupItem>> GetLanguageList()
+        private async Task<IEnumerable<LookupItem>> GetLanguageList()
         {
             return await languageLookupDataService.GetLanguageLookupAsync();
         }
