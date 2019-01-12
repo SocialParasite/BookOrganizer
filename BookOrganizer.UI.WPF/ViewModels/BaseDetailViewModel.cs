@@ -27,14 +27,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
-            UpdateItemCommand = new DelegateCommand(UpdateItemExecute);
+            SaveItemCommand = new DelegateCommand(SaveItemExecute);
             DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
 
             UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
         }
 
         public ICommand SwitchEditableStateCommand { get; set; }
-        public ICommand UpdateItemCommand { get; set; }
+        public ICommand SaveItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
 
         public List<T> ItemCollection
@@ -86,7 +86,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public virtual async void OnOpenItemDetailsViewAsync(Guid id)
             => SelectedItem = await Repository.GetSelectedAsync(id);
 
-        private void SwitchEditableStateExecute()
+        public virtual void SwitchEditableStateExecute()
         {
             if (UserMode.Item2 == 0)
                 UserMode = (!UserMode.Item1, 1, Brushes.LightGreen, !UserMode.Item4).ToTuple();
@@ -95,7 +95,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         }
 
-        private async void UpdateItemExecute()
+        private async void SaveItemExecute()
         {
             Repository.Update(SelectedItem);
             await SaveRepository();

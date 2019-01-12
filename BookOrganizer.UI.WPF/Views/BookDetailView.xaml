@@ -76,10 +76,9 @@
                 Grid.ColumnSpan="3"
                 FontSize="48"
                 Style="{StaticResource EditableTextBoxStyles}"
-                Text="{Binding SelectedItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding SelectedItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue='Book Title'}"
                 TextWrapping="Wrap" />
-            <Image
-                x:Name="bookCoverImage"
+            <Button
                 Grid.Row="1"
                 Grid.RowSpan="8"
                 Grid.Column="2"
@@ -87,7 +86,14 @@
                 MaxHeight="300"
                 Margin="50,0,0,0"
                 HorizontalAlignment="Left"
-                Source="{Binding SelectedItem.BookCoverPicture}" />
+                Command="{Binding AddBookCoverImageCommand}"
+                IsEnabled="{Binding UserMode.Item4}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image x:Name="bookCoverImage" Source="{Binding SelectedItem.BookCoverPicture}" />
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
             <Label
                 x:Name="releaseYearLabel"
                 Grid.Row="1"
@@ -183,7 +189,25 @@
                 BorderThickness="0"
                 IsReadOnly="True"
                 Style="{StaticResource TextBoxStyles}"
-                Text="{Binding SelectedItem.Language.LanguageName}" />
+                Text="{Binding SelectedItem.Language.LanguageName}"
+                Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
+
+            <ComboBox
+                x:Name="languageComboBox"
+                Grid.Row="5"
+                Grid.Column="1"
+                Margin="1"
+                FontSize="24"
+                ItemsSource="{Binding Languages}"
+                SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayMember}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
             <Label
                 x:Name="isbnLabel"
                 Grid.Row="6"
@@ -277,13 +301,13 @@
                 Content="+"
                 Style="{StaticResource UpdateButtonStyle}" />
             <Button
-                x:Name="UpdateBookDetailsButton"
+                x:Name="SaveBookDetailsButton"
                 Grid.Row="12"
                 Grid.Column="2"
                 Margin="50,0,0,0"
                 HorizontalAlignment="Left"
                 Command="{Binding UpdateItemCommand}"
-                Content="Update"
+                Content="Save"
                 Style="{StaticResource UpdateButtonStyle}" />
             <Button
                 x:Name="DeleteBookDetailsButton"

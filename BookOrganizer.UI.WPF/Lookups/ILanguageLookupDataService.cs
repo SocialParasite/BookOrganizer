@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.Lookups
 {
-    public interface IBookLookupDataService
+    public interface ILanguageLookupDataService
     {
-        Task<IEnumerable<LookupItem>> GetBookLookupAsync();
+        Task<IEnumerable<LookupItem>> GetLanguageLookupAsync();
     }
 }

@@ -25,6 +25,7 @@ namespace BookOrganizer.Data.SqlServer
         public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<Series> Series { get; set; }
         public DbSet<SeriesReadOrder> SeriesReadOrder { get; set; }
+        public DbSet<Settings> Settings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

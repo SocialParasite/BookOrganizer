@@ -118,6 +118,7 @@
     <Compile Include="Events\OpenDetailsViewEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedBookIdEvent.cs" />
     <Compile Include="Lookups\IBookLookupDataService.cs" />
+    <Compile Include="Lookups\ILanguageLookupDataService.cs" />
     <Compile Include="Lookups\LookupDataService.cs" />
     <Compile Include="Lookups\LookupItem.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
