@@ -191,6 +191,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             {
                 Publishers.Add(item);
             }
+
             SelectedPublisher = Publishers.FirstOrDefault(p => p.Id == SelectedItem.Publisher.Id);
         }
 

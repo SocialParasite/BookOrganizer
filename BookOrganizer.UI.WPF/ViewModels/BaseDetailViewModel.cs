@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,7 +18,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         protected IRepository<T> Repository;
 
         private Guid guid;
-        private List<T> itemCollection;
+        //private ObservableCollection<T> itemCollection;
         private T selectedItem;
         private Tuple<bool, int, SolidColorBrush, bool> userMode;
         private bool hasChanges;
@@ -37,15 +38,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand SaveItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
 
-        public List<T> ItemCollection
-        {
-            get { return itemCollection; }
-            set
-            {
-                itemCollection = value ?? throw new ArgumentNullException(nameof(ItemCollection));
-                OnPropertyChanged(); 
-            }
-        }
+        //public ObservableCollection<T> ItemCollection
+        //{
+        //    get { return itemCollection; }
+        //    set
+        //    {
+        //        itemCollection = value ?? throw new ArgumentNullException(nameof(ItemCollection));
+        //    }
+        //}
 
         public T SelectedItem
         {
@@ -92,7 +92,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 UserMode = (!UserMode.Item1, 1, Brushes.LightGreen, !UserMode.Item4).ToTuple();
             else
                 UserMode = (!UserMode.Item1, 0, Brushes.LightGray, !UserMode.Item4).ToTuple();
-
         }
 
         private async void SaveItemExecute()
