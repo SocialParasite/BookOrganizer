@@ -1,11 +1,11 @@
 ﻿using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Repositories;
 using Prism.Commands;
 using Prism.Events;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -18,7 +18,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         protected IRepository<T> Repository;
 
         private Guid guid;
-        //private ObservableCollection<T> itemCollection;
         private T selectedItem;
         private Tuple<bool, int, SolidColorBrush, bool> userMode;
         private bool hasChanges;
@@ -30,22 +29,30 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
             SaveItemCommand = new DelegateCommand(SaveItemExecute);
             DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
+            CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
 
             UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
+        }
+
+        private void CloseDetailViewExecute()
+        {
+            if (this.Repository.HasChanges())
+            {
+                // TODO
+            }
+
+            eventAggregator.GetEvent<CloseDetailsViewEvent>()
+                .Publish(new CloseDetailsViewEventArgs
+                {
+                    Id = this.Id,
+                    ViewModelName = this.GetType().Name
+                });
         }
 
         public ICommand SwitchEditableStateCommand { get; set; }
         public ICommand SaveItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
-
-        //public ObservableCollection<T> ItemCollection
-        //{
-        //    get { return itemCollection; }
-        //    set
-        //    {
-        //        itemCollection = value ?? throw new ArgumentNullException(nameof(ItemCollection));
-        //    }
-        //}
+        public ICommand CloseDetailViewCommand { get; set; }
 
         public T SelectedItem
         {
@@ -53,7 +60,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set
             {
                 selectedItem = value ?? throw new ArgumentNullException(nameof(SelectedItem));
-                OnPropertyChanged(); 
+                OnPropertyChanged();
             }
         }
 

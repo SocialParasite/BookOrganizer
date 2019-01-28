@@ -115,6 +115,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Enums\TabNames.cs" />
+    <Compile Include="Events\CloseDetailsViewEvent.cs" />
     <Compile Include="Events\OpenDetailsViewEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedBookIdEvent.cs" />
     <Compile Include="Lookups\IBookLookupDataService.cs" />

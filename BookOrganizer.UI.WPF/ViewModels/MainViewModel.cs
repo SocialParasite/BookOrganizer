@@ -39,13 +39,33 @@ namespace BookOrganizer.UI.WPF.ViewModels
             OpenAuthorsViewCommand = new DelegateCommand(OnOpenAuthorsViewExecute);
             OpenPublishersViewCommand = new DelegateCommand(OnOpenPublishersViewExecute);
             OpenSettingsMenuCommand = new DelegateCommand(OnOpenSettingsMenuExecute);
-            CloseDetailViewCommand = new DelegateCommand(OnCloseDetailViewExecute, OnCloseDetailViewCanExecute);
 
             this.eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
                     .Subscribe(OnOpenBookMatchingSelectedId);
 
             this.eventAggregator.GetEvent<OpenDetailViewEvent>()
                 .Subscribe(OnOpenDetailViewMatchingSelectedId);
+
+            this.eventAggregator.GetEvent<CloseDetailsViewEvent>()
+                .Subscribe(CloseDetailsView);
+
+        }
+
+        private void CloseDetailsView(CloseDetailsViewEventArgs args)
+        {
+            RemoveDetailViewModel(args.Id, args.ViewModelName);
+        }
+        
+        private void RemoveDetailViewModel(Guid id, string viewModelName)
+        {
+            var detailViewModel = DetailViewModels
+                .SingleOrDefault(vm => vm.Id == id 
+                && vm.GetType().Name == viewModelName);
+
+            if (detailViewModel != null)
+            {
+                DetailViewModels.Remove(detailViewModel);
+            }
         }
 
         public ICommand OpenMainMenuCommand { get; }
@@ -53,7 +73,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand OpenAuthorsViewCommand { get; }
         public ICommand OpenPublishersViewCommand { get; }
         public ICommand OpenSettingsMenuCommand { get; }
-        public ICommand CloseDetailViewCommand { get; set; }
 
         public ObservableCollection<IDetailViewModel> DetailViewModels { get; set; }
 
@@ -152,16 +171,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                    Id = bookId,
                    ViewModelName = nameof(BookDetailViewModel)
                });
-        }
-
-        private void OnCloseDetailViewExecute()
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool OnCloseDetailViewCanExecute()
-        {
-            throw new NotImplementedException();
         }
     }
 }
