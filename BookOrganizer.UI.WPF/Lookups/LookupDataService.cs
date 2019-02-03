@@ -1,4 +1,5 @@
 ﻿using BookOrganizer.Data.SqlServer;
+using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.Lookups
 {
-    public class LookupDataService : IBookLookupDataService, ILanguageLookupDataService, IPublisherLookupDataService
+    public class LookupDataService : IBookLookupDataService, ILanguageLookupDataService,
+                                     IPublisherLookupDataService, IAuthorLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
 
@@ -69,6 +71,32 @@ namespace BookOrganizer.UI.WPF.Lookups
                       ViewModelName = null //nameof(PublisherDetailViewModel)
                   })
                   .ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<LookupItem>> GetAuthorLookupAsync()
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Authors.AsNoTracking()
+                    .OrderBy(a => a.LastName)
+                    .Select(a =>
+                      new LookupItem
+                      {
+                          Id = a.Id,
+                          DisplayMember = $"{a.LastName}, {a.FirstName}",
+                          Picture = null,
+                          ViewModelName = null //nameof(AuthorDetailViewModel)
+                      })
+                      .ToListAsync();
+            }
+        }
+
+        public async Task<Author> GetAuthorById(Guid authorId)
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Authors.AsNoTracking().FirstAsync(a => a.Id == authorId);
             }
         }
     }

@@ -82,7 +82,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--<Grid Grid.Row="0">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" MaxWidth="150" />
                 <ColumnDefinition Width="*" MinWidth="150" />
@@ -92,10 +92,8 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" MinWidth="100" />
             </Grid.ColumnDefinitions>
-        -->
-        <!--  TODO: Change to ComboBox and add OrderBy ComboBox?  -->
-        <!--
-            <Label
+
+            <!--<Label
                 x:Name="BookListViewModeLabel"
                 Content="View Mode:"
                 FontSize="18" />
@@ -138,11 +136,12 @@
                 <ComboBoxItem Content="Z-A" />
                 <ComboBoxItem Content="Latest first" />
                 <ComboBoxItem Content="Oldest first" />
-            </ComboBox>
+            </ComboBox>-->
             <Button
                 Grid.Column="4"
                 Width="75"
                 Height="50"
+                MinWidth="75"
                 Margin="25,0,0,0"
                 Command="{Binding RefreshCommand}"
                 Content="Refresh" />
@@ -150,11 +149,12 @@
                 x:Name="AddNewPublisherButton"
                 Grid.Column="6"
                 Height="50"
+                MinWidth="75"
                 Margin="0,0,15,0"
                 HorizontalAlignment="Right"
                 Command="{Binding AddNewBookCommand}"
                 Content="Add new book" />
-        </Grid>-->
+        </Grid>
         <Grid Grid.Row="2">
             <ItemsControl
                 x:Name="BookList"

@@ -17,21 +17,26 @@ namespace BookOrganizer.UI.WPF.Repositories
         }
 
         public Book GetBookByTitle(string title)
-            => context.Books.Include(b => b.Publisher).FirstOrDefault(b => b.Title == title);
+            => context.Books
+                .Include(b => b.Publisher)
+                .FirstOrDefault(b => b.Title == title);
 
         public async override Task<Book> GetSelectedAsync(Guid id)
         {
-            return await context.Books
-                .Include(b => b.Publisher)
-                .Include(b => b.Language)
-                .Include(b => b.AuthorsLink)
-                .ThenInclude(a => a.Author)
-                .Include(b => b.BookSeries)
-                .ThenInclude(s => s.BooksInSeries)
-                .Include(b => b.BookSeries)
-                .ThenInclude(s => s.SeriesReadOrder)
-                .Include(b => b.ReadDates)
-                .FirstOrDefaultAsync(b => b.Id == id);
+            if (id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+                return await context.Books
+                    .Include(b => b.Publisher)
+                    .Include(b => b.Language)
+                    .Include(b => b.AuthorsLink)
+                    .ThenInclude(a => a.Author)
+                    .Include(b => b.BookSeries)
+                    .ThenInclude(s => s.BooksInSeries)
+                    .Include(b => b.BookSeries)
+                    .ThenInclude(s => s.SeriesReadOrder)
+                    .Include(b => b.ReadDates)
+                    .FirstOrDefaultAsync(b => b.Id == id);
+
+            else return new Book();
         }
     }
 }

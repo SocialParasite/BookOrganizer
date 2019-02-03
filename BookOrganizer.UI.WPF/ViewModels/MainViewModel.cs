@@ -60,7 +60,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             var detailViewModel = DetailViewModels
                 .SingleOrDefault(vm => vm.Id == id 
-                && vm.GetType().Name == viewModelName);
+                /*&& vm.GetType().Name == viewModelName*/);
 
             if (detailViewModel != null)
             {

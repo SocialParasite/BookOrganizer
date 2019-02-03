@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -9,6 +10,11 @@ namespace BookOrganizer.Domain
 {
     public class Book : IIdentifiable
     {
+        public Book()
+        {
+            AuthorsLink = new ObservableCollection<BookAuthors>();
+        }
+
         private string _title;
         private int _releaseYear;
         private int _pageCount;

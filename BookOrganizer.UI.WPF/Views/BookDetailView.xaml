@@ -249,18 +249,20 @@
                 Grid.Column="1"
                 Margin="1"
                 FontSize="24"
-                ItemsSource="{Binding}"
+                ItemsSource="{Binding Authors}"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{1}, {0}">
-                                    <Binding Path="FirstName" />
-                                    <Binding Path="LastName" />
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
+                        <StackPanel>
+                            <TextBlock FontSize="24">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{1}">
+                                        <Binding Path="Id" />
+                                        <Binding Path="DisplayMember" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
@@ -304,7 +306,11 @@
                     ItemsSource="{Binding SelectedItem.AuthorsLink}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
                                 <TextBlock FontSize="24">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{1}, {0}">
@@ -320,7 +326,15 @@
                                             MouseAction="LeftDoubleClick" />
                                     </TextBlock.InputBindings>
                                 </TextBlock>
-                            </StackPanel>
+                                <Button
+                                    x:Name="authorListButton"
+                                    Grid.Column="1"
+                                    Width="30"
+                                    Height="30"
+                                    Command="{Binding DataContext.RemoveAuthorAsABookAuthorCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                    CommandParameter="{Binding Author.Id}"
+                                    Content="-" />
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

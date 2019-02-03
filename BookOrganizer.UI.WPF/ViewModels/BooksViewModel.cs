@@ -22,14 +22,20 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             BookTitleLabelMouseLeftButtonUpCommand
                 = new DelegateCommand<Guid?>(OnBookTitleLabelMouseLeftButtonUpExecute, OnBookTitleLabelMouseLeftButtonUpCanExecute);
-
+            AddNewBookCommand = new DelegateCommand(OnAddNewBookExecute);
 
             InitializeRepositoryAsync();
+        }
+
+        private void OnAddNewBookExecute()
+        {
+            SelectedBook = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(BookDetailViewModel) };
         }
 
         readonly IEventAggregator eventAggregator;
 
         public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
+        public ICommand AddNewBookCommand { get; set; }
 
         private OpenDetailViewEventArgs selectedBook;
         public OpenDetailViewEventArgs SelectedBook
@@ -62,10 +68,5 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void OnOpenBookMatchingSelectedId(Guid id)
             => SelectedBook = new OpenDetailViewEventArgs { Id = id, ViewModelName = nameof(BookDetailViewModel) };
-
-        //public ISelectedViewModel CreateView()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

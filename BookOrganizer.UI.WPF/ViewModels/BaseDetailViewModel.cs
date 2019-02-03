@@ -78,7 +78,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public bool HasChanges
         {
-            get { return hasChanges; }
+            get => hasChanges;
             set
             {
                 if (hasChanges != value)
@@ -88,6 +88,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 }
             }
         }
+
         public abstract Task LoadAsync(Guid id);
 
         public virtual async void OnOpenItemDetailsViewAsync(Guid id)
