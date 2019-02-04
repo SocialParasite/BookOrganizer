@@ -124,50 +124,45 @@
 
             <Controls:HamburgerMenu.Content>
                 <DockPanel>
-
-                    <TabControl x:Name="PrimaryTabControl" SelectedIndex="{Binding SelectedPrimaryTabIndex, Mode=TwoWay}">
-                        <TabItem x:Name="NavigationTabItems" Visibility="Hidden">
-                            <ScrollViewer>
-                                <ContentControl Content="{Binding SelectedVM}" />
-                            </ScrollViewer>
-                        </TabItem>
-                        <TabItem x:Name="DetailTabItems" Visibility="Hidden">
-                            <ScrollViewer>
-                                <TabControl
-                                    x:Name="SecondaryTabControl"
-                                    ItemsSource="{Binding DetailViewModels}"
-                                    SelectedItem="{Binding SelectedDetailViewModel}">
-                                    <TabControl.ItemContainerStyle>
-                                        <Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="TabItem">
-                                            <Setter Property="Background" Value="Azure" />
-                                            <Setter Property="BorderBrush" Value="Transparent" />
-                                            <Setter Property="BorderThickness" Value="2" />
-                                        </Style>
-                                    </TabControl.ItemContainerStyle>
-                                    <TabControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding SelectedItem.Title}" />
-                                                <TextBlock
-                                                    Foreground="Red"
-                                                    Text="*"
-                                                    Visibility="{Binding HasChanges, Converter={StaticResource BoolToVis}}" />
-                                                <Button
-                                                    Margin="7,0,0,0"
-                                                    HorizontalContentAlignment="Right"
-                                                    VerticalContentAlignment="Top"
-                                                    Command="{Binding CloseDetailViewCommand}"
-                                                    Content="X"
-                                                    FontSize="16"
-                                                    FontWeight="Bold"
-                                                    Style="{StaticResource ChromelessButtonStyle}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </TabControl.ItemTemplate>
-                                </TabControl>
-                            </ScrollViewer>
-                        </TabItem>
-                    </TabControl>
+                    <Label Visibility="{Binding IsViewVisible, Converter={StaticResource BoolToVis}}">
+                        <ScrollViewer>
+                            <ContentControl Content="{Binding SelectedVM}" />
+                        </ScrollViewer>
+                    </Label>
+                    <ScrollViewer>
+                        <TabControl
+                            x:Name="SecondaryTabControl"
+                            ItemsSource="{Binding DetailViewModels}"
+                            SelectedItem="{Binding SelectedDetailViewModel}">
+                            <TabControl.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="TabItem">
+                                    <Setter Property="Background" Value="Azure" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                </Style>
+                            </TabControl.ItemContainerStyle>
+                            <TabControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding SelectedItem.Title}" />
+                                        <TextBlock
+                                            Foreground="Red"
+                                            Text="*"
+                                            Visibility="{Binding HasChanges, Converter={StaticResource BoolToVis}}" />
+                                        <Button
+                                            Margin="7,0,0,0"
+                                            HorizontalContentAlignment="Right"
+                                            VerticalContentAlignment="Top"
+                                            Command="{Binding CloseDetailViewCommand}"
+                                            Content="X"
+                                            FontSize="16"
+                                            FontWeight="Bold"
+                                            Style="{StaticResource ChromelessButtonStyle}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </TabControl.ItemTemplate>
+                        </TabControl>
+                    </ScrollViewer>
                 </DockPanel>
             </Controls:HamburgerMenu.Content>
         </Controls:HamburgerMenu>

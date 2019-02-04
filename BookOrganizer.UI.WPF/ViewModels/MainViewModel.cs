@@ -20,7 +20,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly IBookLookupDataService bookLookupDataService;
 
         private ISelectedViewModel selectedVM;
-        private int selectedPrimaryTabIndex;
+        private bool isViewVisible;
 
         public MainViewModel(IEventAggregator eventAggregator,
                               IIndex<string, IDetailViewModel> detailViewModelCreator,
@@ -51,23 +51,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         }
 
-        private void CloseDetailsView(CloseDetailsViewEventArgs args)
-        {
-            RemoveDetailViewModel(args.Id, args.ViewModelName);
-        }
-        
-        private void RemoveDetailViewModel(Guid id, string viewModelName)
-        {
-            var detailViewModel = DetailViewModels
-                .SingleOrDefault(vm => vm.Id == id 
-                /*&& vm.GetType().Name == viewModelName*/);
-
-            if (detailViewModel != null)
-            {
-                DetailViewModels.Remove(detailViewModel);
-            }
-        }
-
         public ICommand OpenMainMenuCommand { get; }
         public ICommand OpenBooksViewCommand { get; }
         public ICommand OpenAuthorsViewCommand { get; }
@@ -86,18 +69,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
-        public bool IsViewVisible { get; set; }
+        public bool IsViewVisible { get => isViewVisible; set { isViewVisible = value; OnPropertyChanged(); } }
 
         public ISelectedViewModel SelectedVM
         {
             get { return selectedVM; }
             set { selectedVM = value; OnPropertyChanged(); }
-        }
-
-        public int SelectedPrimaryTabIndex
-        {
-            get { return selectedPrimaryTabIndex; }
-            set { selectedPrimaryTabIndex = value; OnPropertyChanged(); }
         }
 
         private async void OnOpenDetailViewMatchingSelectedId(OpenDetailViewEventArgs args)
@@ -125,7 +102,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             else
                 SelectedDetailViewModel = DetailViewModels.SingleOrDefault(b => b.Id == args.Id);
 
-            SelectedPrimaryTabIndex = (int)TabNames.DetailTabItems;
+            IsViewVisible = false;
         }
 
         private void OnOpenPublishersViewExecute()
@@ -143,7 +120,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             if (!IsViewVisible)
             {
                 SelectedVM = viewModelCreator[viewModel];
-                SelectedPrimaryTabIndex = (int)TabNames.NavigationTabItems;
                 IsViewVisible = true;
             }
             else
@@ -171,6 +147,23 @@ namespace BookOrganizer.UI.WPF.ViewModels
                    Id = bookId,
                    ViewModelName = nameof(BookDetailViewModel)
                });
+        }
+
+        private void CloseDetailsView(CloseDetailsViewEventArgs args)
+        {
+            RemoveDetailViewModel(args.Id, args.ViewModelName);
+        }
+
+        private void RemoveDetailViewModel(Guid id, string viewModelName)
+        {
+            var detailViewModel = DetailViewModels
+                .SingleOrDefault(vm => vm.Id == id
+                /*&& vm.GetType().Name == viewModelName*/);
+
+            if (detailViewModel != null)
+            {
+                DetailViewModels.Remove(detailViewModel);
+            }
         }
     }
 }
