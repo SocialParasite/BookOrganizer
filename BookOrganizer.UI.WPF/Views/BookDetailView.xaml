@@ -51,8 +51,10 @@
 
         <Grid Grid.Row="1" Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="250" />
-                <ColumnDefinition Width="Auto" MinWidth="300" />
+                <ColumnDefinition Width="Auto" MinWidth="150" />
+                <ColumnDefinition Width="Auto" MinWidth="150" />
+                <ColumnDefinition Width="Auto" MinWidth="10" />
+                <ColumnDefinition Width="Auto" MinWidth="150" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -71,7 +73,7 @@
             <TextBox
                 x:Name="titleTextBox"
                 Grid.Column="0"
-                Grid.ColumnSpan="3"
+                Grid.ColumnSpan="4"
                 FontSize="48"
                 Style="{StaticResource EditableTextBoxStyles}"
                 Text="{Binding SelectedItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue='Book Title'}"
@@ -79,7 +81,7 @@
             <Button
                 Grid.Row="1"
                 Grid.RowSpan="7"
-                Grid.Column="2"
+                Grid.Column="4"
                 Grid.ColumnSpan="2"
                 MaxWidth="600"
                 MaxHeight="600"
@@ -113,8 +115,24 @@
             <TextBox
                 x:Name="pageCountTextBox"
                 Grid.Row="2"
+                Grid.Column="1"
                 Style="{StaticResource EditableTextBoxStyles}"
                 Text="{Binding SelectedItem.PageCount}" />
+
+            <Label
+                x:Name="wordCountLabel"
+                Grid.Row="2"
+                Grid.Column="2"
+                Content="Words:"
+                FontSize="24"
+                Style="{StaticResource LabelStyles}" />
+
+            <TextBox
+                x:Name="wordCountTextBox"
+                Grid.Row="2"
+                Grid.Column="3"
+                Style="{StaticResource EditableTextBoxStyles}"
+                Text="{Binding SelectedItem.WordCount}" />
 
             <Label
                 x:Name="publisherLabel"
@@ -125,6 +143,7 @@
                 x:Name="publisherTextBlock"
                 Grid.Row="3"
                 Grid.Column="1"
+                Grid.ColumnSpan="3"
                 Margin="1"
                 VerticalAlignment="Center"
                 Background="{Binding HighlightBrush}"
@@ -150,6 +169,7 @@
                 x:Name="publisherComboBox"
                 Grid.Row="3"
                 Grid.Column="1"
+                Grid.ColumnSpan="3"
                 Margin="1"
                 FontSize="24"
                 ItemsSource="{Binding Publishers}"
@@ -170,6 +190,7 @@
             <TextBox
                 x:Name="languageTextBox"
                 Grid.Row="4"
+                Grid.ColumnSpan="3"
                 BorderThickness="0"
                 IsReadOnly="True"
                 Style="{StaticResource TextBoxStyles}"
@@ -179,6 +200,7 @@
                 x:Name="languageComboBox"
                 Grid.Row="4"
                 Grid.Column="1"
+                Grid.ColumnSpan="3"
                 Margin="1"
                 FontSize="24"
                 ItemsSource="{Binding Languages}"
@@ -199,19 +221,20 @@
             <TextBox
                 x:Name="isnbTextBox"
                 Grid.Row="5"
+                Grid.ColumnSpan="3"
                 Style="{StaticResource EditableTextBoxStyles}"
                 Text="{Binding SelectedItem.ISBN}" />
 
             <GroupBox
                 x:Name="descriptionGroupBox"
                 Grid.Row="6"
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="4"
                 Header="Description">
                 <TextBox
                     x:Name="descriptionTextBlock"
                     Grid.Row="7"
                     Grid.Column="0"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="4"
                     MaxWidth="600"
                     AcceptsReturn="True"
                     FontSize="16"
@@ -333,7 +356,8 @@
                                     Height="30"
                                     Command="{Binding DataContext.RemoveAuthorAsABookAuthorCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
                                     CommandParameter="{Binding Author.Id}"
-                                    Content="-" />
+                                    Content="-"
+                                    Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -423,7 +447,8 @@
                 Command="{Binding AddNewReadDateCommand}"
                 Content="+"
                 Style="{StaticResource UpdateButtonStyle}"
-                ToolTip="Set book read date." />
+                ToolTip="Set book read date."
+                Visibility="{Binding SelectedItem.IsRead, Converter={StaticResource BoolToVis}}" />
 
             <Button
                 x:Name="SaveBookDetailsButton"
