@@ -18,6 +18,7 @@ namespace BookOrganizer.Domain
         private string _title;
         private int _releaseYear;
         private int _pageCount;
+        private int wordCount;
         private string _iSBN;
         private string _bookCoverPicture;
 
@@ -76,6 +77,13 @@ namespace BookOrganizer.Domain
                 else
                     throw new ArgumentOutOfRangeException(nameof(ISBN), "Isbn must be valid or empty.");
             }
+        }
+
+        [Range(1, int.MaxValue)]
+        public int WordCount
+        {
+            get { return wordCount; }
+            set { wordCount = value; }
         }
 
         public bool IsRead { get; set; }
