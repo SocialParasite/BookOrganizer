@@ -132,7 +132,7 @@
                 Grid.Row="2"
                 Grid.Column="3"
                 Style="{StaticResource EditableTextBoxStyles}"
-                Text="{Binding SelectedItem.WordCount}" />
+                Text="{Binding SelectedItem.WordCount, StringFormat={}{0:N0}}" />
 
             <Label
                 x:Name="publisherLabel"

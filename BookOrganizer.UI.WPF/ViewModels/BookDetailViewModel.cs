@@ -169,8 +169,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void SetReadDateExecute()
         {
-            var test = new BooksReadDate { Book = SelectedItem, ReadDate = NewReadDate };
-            SelectedItem.ReadDates.Add(test);
+                var newReadDate = new BooksReadDate { Book = SelectedItem, ReadDate = NewReadDate };
+                SelectedItem.ReadDates.Add(newReadDate);
         }
 
         private void AddBookCoverImageExecute()
