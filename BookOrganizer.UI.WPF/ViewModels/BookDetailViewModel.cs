@@ -59,6 +59,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             AddBookCoverImageCommand = new DelegateCommand(AddBookCoverImageExecute);
             AddAuthorAsABookAuthorCommand = new DelegateCommand<LookupItem>(AddBookAuthorExecute);
             RemoveAuthorAsABookAuthorCommand = new DelegateCommand<Guid?>(RemoveAuthorExecute);
+            LanguageSelectionChangedCommand = new DelegateCommand(OnLanguageSelectionChangedExecute);
+            PublisherSelectionChangedCommand = new DelegateCommand(OnPublisherSelectionChangedExecute);
 
             Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
@@ -79,6 +81,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand AddBookCoverImageCommand { get; set; }
         public ICommand AddAuthorAsABookAuthorCommand { get; set; }
         public ICommand RemoveAuthorAsABookAuthorCommand { get; set; }
+        public ICommand LanguageSelectionChangedCommand { get; set; }
+        public ICommand PublisherSelectionChangedCommand { get; set; }
 
         public Book SelectedBook
         {
@@ -202,6 +206,26 @@ namespace BookOrganizer.UI.WPF.ViewModels
             if(SelectedItem.BookCoverPicture is null)
                 SelectedItem.BookCoverPicture =
                     $"{Path.GetDirectoryName((Assembly.GetExecutingAssembly().GetName().CodeBase)).Substring(6)}\\placeholder.png";
+
+            if (SelectedLanguage is null)
+            {
+                SelectedLanguage =
+                    new LookupItem
+                    {
+                        Id = SelectedItem.Language.Id,
+                        DisplayMember = SelectedItem.Language.LanguageName
+                    };
+            }
+
+            if (SelectedPublisher is null)
+            {
+                SelectedPublisher =
+                    new LookupItem
+                    {
+                        Id = SelectedItem.Publisher.Id,
+                        DisplayMember = SelectedItem.Publisher.Name
+                    };
+            }
         }
 
         public async override void SwitchEditableStateExecute()
@@ -288,6 +312,26 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 SelectedItem.AuthorsLink.Add(new BookAuthors { Author = addedAuthor, Book = SelectedItem });
 
                 Authors.Remove(lookupItem);
+            }
+        }
+
+        private void OnLanguageSelectionChangedExecute()
+        {
+            if (SelectedLanguage != null
+                && Languages.Any()
+                && SelectedItem.Language.Id != SelectedLanguage.Id)
+            {
+                SelectedItem.LanguageId = SelectedLanguage.Id;
+            }
+        }
+
+        private void OnPublisherSelectionChangedExecute()
+        {
+            if(SelectedPublisher != null
+                && Publishers.Any()
+                && SelectedItem.Publisher.Id != SelectedPublisher.Id)
+            {
+                SelectedItem.PublisherId = SelectedPublisher.Id;
             }
         }
     }

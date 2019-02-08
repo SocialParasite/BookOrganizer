@@ -99,5 +99,13 @@ namespace BookOrganizer.UI.WPF.Lookups
                 return await ctx.Authors.AsNoTracking().FirstAsync(a => a.Id == authorId);
             }
         }
+
+        public async Task<Language> GetLanguageById(Guid languageId)
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Languages.AsNoTracking().FirstAsync(l => l.Id == languageId);
+            }
+        }
     }
 }

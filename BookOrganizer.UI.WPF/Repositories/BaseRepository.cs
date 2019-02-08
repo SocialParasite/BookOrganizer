@@ -18,7 +18,7 @@ namespace BookOrganizer.UI.WPF.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await context.Set<TEntity>().ToListAsync(); 
+            return await context.Set<TEntity>().ToListAsync();
         }
 
         public virtual async Task<TEntity> GetSelectedAsync(Guid id)
@@ -35,7 +35,7 @@ namespace BookOrganizer.UI.WPF.Repositories
         public void Delete(TEntity entity)
             => context.Set<TEntity>().Remove(entity);
 
-        public bool HasChanges() 
-            => context.ChangeTracker.HasChanges(); 
+        public bool HasChanges()
+            => context.ChangeTracker.HasChanges();
     }
 }

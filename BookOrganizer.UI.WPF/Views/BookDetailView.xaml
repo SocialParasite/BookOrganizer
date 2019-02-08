@@ -148,7 +148,7 @@
                 VerticalAlignment="Center"
                 Background="{Binding HighlightBrush}"
                 FontSize="24"
-                Text="{Binding SelectedItem.Publisher.Name}"
+                Text="{Binding SelectedPublisher.DisplayMember}"
                 Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}">
                 <TextBlock.InputBindings>
                     <MouseBinding
@@ -180,6 +180,11 @@
                         <TextBlock Text="{Binding DisplayMember}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding PublisherSelectionChangedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </ComboBox>
 
             <Label
@@ -194,7 +199,7 @@
                 BorderThickness="0"
                 IsReadOnly="True"
                 Style="{StaticResource TextBoxStyles}"
-                Text="{Binding SelectedItem.Language.LanguageName}"
+                Text="{Binding SelectedLanguage.DisplayMember}"
                 Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
             <ComboBox
                 x:Name="languageComboBox"
@@ -202,7 +207,7 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Margin="1"
-                FontSize="24"
+                FontSize="24" 
                 ItemsSource="{Binding Languages}"
                 SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
@@ -211,6 +216,11 @@
                         <TextBlock Text="{Binding DisplayMember}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding LanguageSelectionChangedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </ComboBox>
 
             <Label
