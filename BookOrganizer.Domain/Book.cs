@@ -19,7 +19,7 @@ namespace BookOrganizer.Domain
         private string _title;
         private int _releaseYear;
         private int _pageCount;
-        private int wordCount;
+        private int _wordCount;
         private string _iSBN;
         private string _bookCoverPicture;
 
@@ -83,8 +83,8 @@ namespace BookOrganizer.Domain
         [Range(1, int.MaxValue)]
         public int WordCount
         {
-            get { return wordCount; }
-            set { wordCount = value; }
+            get { return _wordCount; }
+            set { _wordCount = value; }
         }
 
         public bool IsRead { get; set; }

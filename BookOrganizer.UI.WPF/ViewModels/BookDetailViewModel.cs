@@ -8,7 +8,9 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -67,7 +69,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Authors = new ObservableCollection<LookupItem>();
 
             SelectedItem = new Book();
-            SelectedItem.BookCoverPicture = @"C:\\Users\\tonij\\Pictures\\BookOrganizer\\Covers\\placeholder.png";
         }
 
         public ICommand ShowSelectedBookCommand { get; }
@@ -197,37 +198,50 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SelectedItem = book;
             Id = id;
+
+            if(SelectedItem.BookCoverPicture is null)
+                SelectedItem.BookCoverPicture =
+                    $"{Path.GetDirectoryName((Assembly.GetExecutingAssembly().GetName().CodeBase)).Substring(6)}\\placeholder.png";
         }
 
         public async override void SwitchEditableStateExecute()
         {
             base.SwitchEditableStateExecute();
 
-            Languages.Clear();
-
-            foreach (var item in await GetLanguageList())
+            if (!Languages.Any())
             {
-                Languages.Add(item);
+                Languages.Clear();
+
+                foreach (var item in await GetLanguageList())
+                {
+                    Languages.Add(item);
+                }
+
+                if (SelectedItem.Language != null)
+                    SelectedLanguage = Languages.FirstOrDefault(l => l.Id == SelectedItem.Language.Id);
             }
 
-            if (SelectedItem.Language != null)
-                SelectedLanguage = Languages.FirstOrDefault(l => l.Id == SelectedItem.Language.Id);
-
-            Publishers.Clear();
-
-            foreach (var item in await GetPublisherList())
+            if (!Publishers.Any())
             {
-                Publishers.Add(item);
+                Publishers.Clear();
+
+                foreach (var item in await GetPublisherList())
+                {
+                    Publishers.Add(item);
+                }
+
+                if (SelectedItem.Publisher != null)
+                    SelectedPublisher = Publishers.FirstOrDefault(p => p.Id == SelectedItem.Publisher.Id);
             }
 
-            if (SelectedItem.Publisher != null)
-                SelectedPublisher = Publishers.FirstOrDefault(p => p.Id == SelectedItem.Publisher.Id);
-
-            Authors.Clear();
-
-            foreach (var item in await GetAuthorList())
+            if (!Authors.Any())
             {
-                Authors.Add(item);
+                Authors.Clear();
+
+                foreach (var item in await GetAuthorList())
+                {
+                    Authors.Add(item);
+                }
             }
         }
 
@@ -245,7 +259,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
             if (authorId != null)
             {
                 var removedAuthor = await authorLookupDataService.GetAuthorById((Guid)authorId);
-                Authors.Add(new LookupItem { Id = (Guid)authorId, DisplayMember = $"{removedAuthor.LastName}, {removedAuthor.FirstName}" });
+                Authors.Add(
+                    new LookupItem
+                    {
+                        Id = (Guid)authorId,
+                        DisplayMember = $"{removedAuthor.LastName}, {removedAuthor.FirstName}"
+                    });
 
                 var temporaryAuthorCollection = new ObservableCollection<LookupItem>();
                 temporaryAuthorCollection.AddRange(Authors.OrderBy(a => a.DisplayMember));
