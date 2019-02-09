@@ -1,5 +1,4 @@
 ﻿using Autofac.Features.Indexed;
-using BookOrganizer.UI.WPF.Enums;
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
 using Prism.Commands;

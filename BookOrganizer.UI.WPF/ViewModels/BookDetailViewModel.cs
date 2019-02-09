@@ -317,22 +317,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void OnLanguageSelectionChangedExecute()
         {
-            if (SelectedLanguage != null
-                && Languages.Any()
-                && SelectedItem.Language.Id != SelectedLanguage.Id)
-            {
+            if (SelectedLanguage != null && Languages.Any())
                 SelectedItem.LanguageId = SelectedLanguage.Id;
-            }
         }
 
         private void OnPublisherSelectionChangedExecute()
         {
-            if(SelectedPublisher != null
-                && Publishers.Any()
-                && SelectedItem.Publisher.Id != SelectedPublisher.Id)
-            {
+            if(SelectedPublisher != null && Publishers.Any())
                 SelectedItem.PublisherId = SelectedPublisher.Id;
-            }
         }
     }
 }
