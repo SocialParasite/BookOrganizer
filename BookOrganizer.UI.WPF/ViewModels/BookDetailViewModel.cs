@@ -59,6 +59,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             RemoveAuthorAsABookAuthorCommand = new DelegateCommand<Guid?>(RemoveAuthorExecute);
             LanguageSelectionChangedCommand = new DelegateCommand(OnLanguageSelectionChangedExecute);
             PublisherSelectionChangedCommand = new DelegateCommand(OnPublisherSelectionChangedExecute);
+            RemoveDateAsABookReadDateCommand = new DelegateCommand<DateTime?>(OnRemoveDateAsABookReadDateExecute);
 
             Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
@@ -70,6 +71,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = new Book();
         }
 
+        private void OnRemoveDateAsABookReadDateExecute(DateTime? readDate)
+        {
+            if (SelectedItem.ReadDates.Any(d => d.ReadDate == readDate))
+                SelectedItem.ReadDates.Remove(SelectedItem.ReadDates.First(d => d.ReadDate == readDate));
+        }
+
         public ICommand ShowSelectedBookCommand { get; }
         public ICommand HighlightMouseLeaveCommand { get; }
         public ICommand HighlightMouseOverCommand { get; }
@@ -79,6 +86,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand RemoveAuthorAsABookAuthorCommand { get; set; }
         public ICommand LanguageSelectionChangedCommand { get; set; }
         public ICommand PublisherSelectionChangedCommand { get; set; }
+        public ICommand RemoveDateAsABookReadDateCommand { get; set; }
 
         public Book SelectedBook
         {
@@ -160,7 +168,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void SetReadDateExecute()
         {
-                var newReadDate = new BooksReadDate { Book = SelectedItem, ReadDate = NewReadDate };
+            var newReadDate = new BooksReadDate { Book = SelectedItem, ReadDate = NewReadDate };
+
+            if(!SelectedItem.ReadDates.Any(d => d.ReadDate == newReadDate.ReadDate))
                 SelectedItem.ReadDates.Add(newReadDate);
         }
 
@@ -189,7 +199,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = book;
             Id = id;
 
-            if(SelectedItem.BookCoverPicture is null)
+            if (SelectedItem.BookCoverPicture is null)
                 SelectedItem.BookCoverPicture =
                     $"{Path.GetDirectoryName((Assembly.GetExecutingAssembly().GetName().CodeBase)).Substring(6)}\\placeholder.png";
 
@@ -309,7 +319,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void OnPublisherSelectionChangedExecute()
         {
-            if(SelectedPublisher != null && Publishers.Any())
+            if (SelectedPublisher != null && Publishers.Any())
                 SelectedItem.PublisherId = SelectedPublisher.Id;
         }
     }

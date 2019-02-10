@@ -426,12 +426,26 @@
                 Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
                             <Label
                                 Content="{Binding ReadDate}"
                                 ContentStringFormat="dd.MM.yyyy"
                                 Style="{StaticResource LabelStyles}" />
-                        </StackPanel>
+                            <Button
+                                    x:Name="removeReadDateButton"
+                                    Grid.Column="1"
+                                    Width="30"
+                                    Height="30"
+                                    Command="{Binding DataContext.RemoveDateAsABookReadDateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                    CommandParameter="{Binding ReadDate}"
+                                    Content="-"
+                                    Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
+
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -468,10 +482,9 @@
                 Grid.Row="7"
                 Grid.Column="2"
                 Margin="50,0,0,0"
-                HorizontalAlignment="Left"
                 Command="{Binding SaveItemCommand}"
                 Content="Save"
-                Style="{StaticResource UpdateButtonStyle}" />
+                Style="{StaticResource UpdateButtonStyle}" HorizontalAlignment="Left" />
             <Button
                 x:Name="DeleteBookDetailsButton"
                 Grid.Row="7"
