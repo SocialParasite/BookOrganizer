@@ -6,7 +6,7 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    d:DesignHeight="600"
+    d:DesignHeight="1000"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
@@ -207,7 +207,7 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Margin="1"
-                FontSize="24" 
+                FontSize="24"
                 ItemsSource="{Binding Languages}"
                 SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
@@ -412,6 +412,8 @@
             <Label
                 x:Name="ReadDatesLabel"
                 Grid.Row="5"
+                VerticalAlignment="Top"
+                VerticalContentAlignment="Top"
                 Content="Read dates: "
                 Style="{StaticResource LabelStyles}"
                 Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}" />
@@ -428,37 +430,38 @@
                             <Label
                                 Content="{Binding ReadDate}"
                                 ContentStringFormat="dd.MM.yyyy"
-                                FontSize="24" />
+                                Style="{StaticResource LabelStyles}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <DatePicker
-                Grid.Row="6"
+            <Label
+                x:Name="NewReadDateLabel"
+                Grid.Row="4"
                 Grid.Column="1"
+                Content="Select read date:"
+                Style="{StaticResource LabelStyles}"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+            <DatePicker
+                Grid.Row="4"
+                Grid.Column="2"
                 Height="50"
                 DisplayDateEnd="{x:Static sys:DateTime.Today}"
                 FontSize="24"
                 SelectedDate="{Binding NewReadDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Visibility="{Binding Path=IsNewReadDate, Converter={StaticResource BoolToVis}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectedDateChanged">
-                        <i:InvokeCommandAction Command="{Binding SetReadDateCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </DatePicker>
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
             <Button
                 x:Name="AddReadDateButton"
-                Grid.Row="5"
-                Grid.Column="2"
+                Grid.Row="4"
+                Grid.Column="3"
                 Width="50"
                 Margin="50,0,0,0"
                 HorizontalAlignment="Left"
-                Command="{Binding AddNewReadDateCommand}"
+                Command="{Binding SetReadDateCommand}"
                 Content="+"
                 Style="{StaticResource UpdateButtonStyle}"
-                ToolTip="Set book read date."
-                Visibility="{Binding SelectedItem.IsRead, Converter={StaticResource BoolToVis}}" />
+                ToolTip="Add selected date as books read date."
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
 
             <Button
                 x:Name="SaveBookDetailsButton"

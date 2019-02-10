@@ -27,7 +27,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private Book selectedBook;
         private SolidColorBrush highlightBrush;
         private Guid selectedBookId;
-        private bool isNewReadDate;
         private DateTime newReadDate;
         private ObservableCollection<LookupItem> languages;
         private LookupItem selectedLanguage;
@@ -54,7 +53,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(ShowSelectedBookExecute);
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
             HighlightMouseLeaveCommand = new DelegateCommand(HighlightMouseLeaveExecute);
-            AddNewReadDateCommand = new DelegateCommand(AddNewReadDateExecute);
             SetReadDateCommand = new DelegateCommand(SetReadDateExecute);
             AddBookCoverImageCommand = new DelegateCommand(AddBookCoverImageExecute);
             AddAuthorAsABookAuthorCommand = new DelegateCommand<LookupItem>(AddBookAuthorExecute);
@@ -64,7 +62,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
-            IsNewReadDate = false;
             NewReadDate = DateTime.Today;
             Languages = new ObservableCollection<LookupItem>();
             Publishers = new ObservableCollection<LookupItem>();
@@ -76,7 +73,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand ShowSelectedBookCommand { get; }
         public ICommand HighlightMouseLeaveCommand { get; }
         public ICommand HighlightMouseOverCommand { get; }
-        public ICommand AddNewReadDateCommand { get; set; }
         public ICommand SetReadDateCommand { get; set; }
         public ICommand AddBookCoverImageCommand { get; set; }
         public ICommand AddAuthorAsABookAuthorCommand { get; set; }
@@ -147,13 +143,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { selectedAuthor = value; OnPropertyChanged(); }
         }
 
-
-        public bool IsNewReadDate
-        {
-            get { return isNewReadDate; }
-            set { isNewReadDate = value; OnPropertyChanged(); }
-        }
-
         public DateTime NewReadDate
         {
             get { return newReadDate; }
@@ -168,9 +157,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void HighlightMouseOverExecute()
             => HighlightBrush = Brushes.LightSkyBlue;
-
-        private void AddNewReadDateExecute()
-            => IsNewReadDate = true;
 
         private void SetReadDateExecute()
         {
