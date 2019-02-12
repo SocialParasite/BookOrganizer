@@ -9,7 +9,7 @@ namespace BookOrganizer.UI.WPF.Repositories
         where TEntity : class
         where TContext : DbContext
     {
-        private readonly TContext context;
+        protected readonly TContext context;
 
         public BaseRepository(TContext context)
         {
@@ -17,9 +17,7 @@ namespace BookOrganizer.UI.WPF.Repositories
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
-        {
-            return await context.Set<TEntity>().ToListAsync();
-        }
+            => await context.Set<TEntity>().ToListAsync();
 
         public virtual async Task<TEntity> GetSelectedAsync(Guid id)
             => await context.Set<TEntity>().FindAsync(id);

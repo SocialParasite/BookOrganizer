@@ -9,11 +9,11 @@ namespace BookOrganizer.UI.WPF.Repositories
 {
     public class BooksRepository : BaseRepository<Book, BookOrganizerDbContext>
     {
-        private readonly BookOrganizerDbContext context;
+        //private readonly BookOrganizerDbContext context;
 
         public BooksRepository(BookOrganizerDbContext context) : base(context)
         {
-            this.context = context;
+            //this.context = context;
         }
 
         public Book GetBookByTitle(string title)

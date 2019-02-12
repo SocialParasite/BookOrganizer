@@ -74,7 +74,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private void OnRemoveDateAsABookReadDateExecute(DateTime? readDate)
         {
             if (SelectedItem.ReadDates.Any(d => d.ReadDate == readDate))
-                SelectedItem.ReadDates.Remove(SelectedItem.ReadDates.First(d => d.ReadDate == readDate));
+            {
+                var deletedReadDate = SelectedItem.ReadDates.First(rd => rd.ReadDate == readDate);
+                SelectedItem.ReadDates.Remove(deletedReadDate);
+            }
         }
 
         public ICommand ShowSelectedBookCommand { get; }
@@ -168,7 +171,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void SetReadDateExecute()
         {
-            var newReadDate = new BooksReadDate { Book = SelectedItem, ReadDate = NewReadDate };
+            var newReadDate = new BooksReadDate { /*Book = SelectedItem,*/ ReadDate = NewReadDate };
 
             if(!SelectedItem.ReadDates.Any(d => d.ReadDate == newReadDate.ReadDate))
                 SelectedItem.ReadDates.Add(newReadDate);
@@ -305,7 +308,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             if (lookupItem != null)
             {
                 var addedAuthor = await authorLookupDataService.GetAuthorById(lookupItem.Id);
-                SelectedItem.AuthorsLink.Add(new BookAuthors { Author = addedAuthor, Book = SelectedItem });
+                SelectedItem.AuthorsLink.Add(new BookAuthors
+                {
+                    AuthorId = addedAuthor.Id,
+                    BookId = SelectedItem.Id
+                });
 
                 Authors.Remove(lookupItem);
             }
