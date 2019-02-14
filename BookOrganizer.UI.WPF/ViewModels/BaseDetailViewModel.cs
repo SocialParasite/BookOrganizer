@@ -103,13 +103,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async void SaveItemExecute()
         {
-            Repository.Update(SelectedItem);
+            //Repository.Update(SelectedItem);
             await SaveRepository();
         }
 
         private async void DeleteItemExecute()
         {
-            Repository.Delete(SelectedItem);
+            //Repository.Delete(SelectedItem);
             await SaveRepository();
         }
 

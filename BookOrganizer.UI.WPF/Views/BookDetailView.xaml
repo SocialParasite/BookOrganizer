@@ -105,7 +105,31 @@
                 x:Name="releaseYearTextBox"
                 Grid.Row="1"
                 Style="{StaticResource EditableTextBoxStyles}"
-                Text="{Binding SelectedItem.ReleaseYear}" />
+                Text="{Binding SelectedReleaseYear}"
+                Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
+            <ComboBox
+                x:Name="releaseYearComboBox"
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{Binding YearsList}"
+                MaxDropDownHeight="200"
+                ScrollViewer.CanContentScroll="True"
+                SelectedValue="{Binding SelectedReleaseYear, Mode=TwoWay}"
+                Style="{StaticResource ComboBoxStyles}"
+                VirtualizingStackPanel.IsVirtualizing="True"
+                VirtualizingStackPanel.VirtualizationMode="Recycling"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding ReleaseYearSelectionChangedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
 
             <Label
                 x:Name="pageCountLabel"
@@ -436,14 +460,14 @@
                                 ContentStringFormat="dd.MM.yyyy"
                                 Style="{StaticResource LabelStyles}" />
                             <Button
-                                    x:Name="removeReadDateButton"
-                                    Grid.Column="1"
-                                    Width="30"
-                                    Height="30"
-                                    Command="{Binding DataContext.RemoveDateAsABookReadDateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                    CommandParameter="{Binding ReadDate}"
-                                    Content="-"
-                                    Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
+                                x:Name="removeReadDateButton"
+                                Grid.Column="1"
+                                Width="30"
+                                Height="30"
+                                Command="{Binding DataContext.RemoveDateAsABookReadDateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                CommandParameter="{Binding ReadDate}"
+                                Content="-"
+                                Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
 
                         </Grid>
                     </DataTemplate>
@@ -482,9 +506,10 @@
                 Grid.Row="7"
                 Grid.Column="2"
                 Margin="50,0,0,0"
+                HorizontalAlignment="Left"
                 Command="{Binding SaveItemCommand}"
                 Content="Save"
-                Style="{StaticResource UpdateButtonStyle}" HorizontalAlignment="Left" />
+                Style="{StaticResource UpdateButtonStyle}" />
             <Button
                 x:Name="DeleteBookDetailsButton"
                 Grid.Row="7"

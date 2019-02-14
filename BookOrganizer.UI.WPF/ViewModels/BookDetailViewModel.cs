@@ -34,6 +34,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private LookupItem selectedPublisher;
         private ObservableCollection<LookupItem> authors;
         private LookupItem selectedAuthor;
+        private int selectedReleaseYear;
 
         public BookDetailViewModel(IEventAggregator eventAggregator,
             IRepository<Book> booksRepo,
@@ -60,6 +61,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             LanguageSelectionChangedCommand = new DelegateCommand(OnLanguageSelectionChangedExecute);
             PublisherSelectionChangedCommand = new DelegateCommand(OnPublisherSelectionChangedExecute);
             RemoveDateAsABookReadDateCommand = new DelegateCommand<DateTime?>(OnRemoveDateAsABookReadDateExecute);
+            ReleaseYearSelectionChangedCommand = new DelegateCommand(OnReleaseYearSelectionChangedExecute);
 
             Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
@@ -69,15 +71,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Authors = new ObservableCollection<LookupItem>();
 
             SelectedItem = new Book();
-        }
-
-        private void OnRemoveDateAsABookReadDateExecute(DateTime? readDate)
-        {
-            if (SelectedItem.ReadDates.Any(d => d.ReadDate == readDate))
-            {
-                var deletedReadDate = SelectedItem.ReadDates.First(rd => rd.ReadDate == readDate);
-                SelectedItem.ReadDates.Remove(deletedReadDate);
-            }
+            YearsList = GetYear();
         }
 
         public ICommand ShowSelectedBookCommand { get; }
@@ -90,6 +84,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand LanguageSelectionChangedCommand { get; set; }
         public ICommand PublisherSelectionChangedCommand { get; set; }
         public ICommand RemoveDateAsABookReadDateCommand { get; set; }
+        public ICommand ReleaseYearSelectionChangedCommand { get; set; }
 
         public Book SelectedBook
         {
@@ -160,6 +155,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { newReadDate = value; OnPropertyChanged(); }
         }
 
+        public IEnumerable<int> YearsList { get; set; }
+
+        public int SelectedReleaseYear
+        {
+            get { return selectedReleaseYear; }
+            set { selectedReleaseYear = value; OnPropertyChanged(); }
+        }
+
+
         private void ShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
 
@@ -173,7 +177,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             var newReadDate = new BooksReadDate { /*Book = SelectedItem,*/ ReadDate = NewReadDate };
 
-            if(!SelectedItem.ReadDates.Any(d => d.ReadDate == newReadDate.ReadDate))
+            if (!SelectedItem.ReadDates.Any(d => d.ReadDate == newReadDate.ReadDate))
                 SelectedItem.ReadDates.Add(newReadDate);
         }
 
@@ -225,6 +229,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                         DisplayMember = SelectedItem.Publisher.Name
                     };
             }
+
+            SelectedReleaseYear = SelectedItem.ReleaseYear;
         }
 
         public async override void SwitchEditableStateExecute()
@@ -266,6 +272,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     Authors.Add(item);
                 }
             }
+
+            SelectedItem.ReleaseYear = SelectedReleaseYear;
         }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()
@@ -329,5 +337,26 @@ namespace BookOrganizer.UI.WPF.ViewModels
             if (SelectedPublisher != null && Publishers.Any())
                 SelectedItem.PublisherId = SelectedPublisher.Id;
         }
+
+        private void OnRemoveDateAsABookReadDateExecute(DateTime? readDate)
+        {
+            if (SelectedItem.ReadDates.Any(d => d.ReadDate == readDate))
+            {
+                var deletedReadDate = SelectedItem.ReadDates.First(rd => rd.ReadDate == readDate);
+                SelectedItem.ReadDates.Remove(deletedReadDate);
+            }
+        }
+
+        private void OnReleaseYearSelectionChangedExecute()
+        {
+            SelectedItem.ReleaseYear = SelectedReleaseYear;
+        }
+
+        private IEnumerable<int> GetYear()
+        {
+            for (int y = DateTime.Today.Year; y > 0; y--)
+                yield return y;
+        }
+
     }
 }

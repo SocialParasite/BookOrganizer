@@ -10,9 +10,5 @@ namespace BookOrganizer.Domain
         public Guid Id { get; set; }
         public DateTime ReadDate { get; set; }
         public Guid BookId { get; set; }
-
-        // Navigation properties
-        //public Book Book { get; set; }
-
     }
 }
