@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOrganizer.TestConsoleUI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOrganizer.UI.WPF", "BookOrganizer.UI.WPF\BookOrganizer.UI.WPF.csproj", "{279BAD90-CE2B-41F8-B110-DC8E97A87636}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOrganizer.UI.WPFTests", "BookOrganizer.UI.WPFTests\BookOrganizer.UI.WPFTests.csproj", "{FADE49B4-D12A-4C61-8C27-A914C43734CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,12 +43,17 @@ Global
 		{279BAD90-CE2B-41F8-B110-DC8E97A87636}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{279BAD90-CE2B-41F8-B110-DC8E97A87636}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{279BAD90-CE2B-41F8-B110-DC8E97A87636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FADE49B4-D12A-4C61-8C27-A914C43734CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FADE49B4-D12A-4C61-8C27-A914C43734CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FADE49B4-D12A-4C61-8C27-A914C43734CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FADE49B4-D12A-4C61-8C27-A914C43734CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DCCB3A57-4559-4D1C-9509-4F982EF36E08} = {102869BD-6572-4E4B-8295-5BDD9C7E4F5E}
+		{FADE49B4-D12A-4C61-8C27-A914C43734CD} = {102869BD-6572-4E4B-8295-5BDD9C7E4F5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88707A94-E3ED-4E8D-8673-C6E2571320AF}
