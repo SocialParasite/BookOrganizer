@@ -74,9 +74,10 @@
                 x:Name="titleTextBox"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
+                MaxWidth="800"
                 FontSize="48"
                 Style="{StaticResource EditableTextBoxStyles}"
-                Text="{Binding SelectedItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue='Book Title'}"
+                Text="{Binding SelectedItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap" />
             <Button
                 Grid.Row="1"

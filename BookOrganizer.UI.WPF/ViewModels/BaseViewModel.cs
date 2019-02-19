@@ -5,6 +5,7 @@ using BookOrganizer.UI.WPF.Repositories;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.ViewModels

@@ -210,6 +210,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 SelectedItem.BookCoverPicture =
                     $"{Path.GetDirectoryName((Assembly.GetExecutingAssembly().GetName().CodeBase)).Substring(6)}\\placeholder.png";
 
+            if (SelectedItem.Title == "" || SelectedItem.Title is null)
+                SelectedItem.Title = "Book Title";
+
             if (SelectedLanguage is null)
             {
                 if (SelectedItem.Language != null)

@@ -121,11 +121,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 SelectedVM = viewModelCreator[viewModel];
                 IsViewVisible = true;
             }
-            else
-            {
-                SelectedVM = null;
-                IsViewVisible = false;
-            }
+            //else
+            //{
+            //    SelectedVM = null;
+            //    IsViewVisible = false;
+            //}
         }
 
         private void OnOpenMainMenuExecute()

@@ -32,7 +32,7 @@
     </Window.Resources>
 
     <DockPanel>
-        <DockPanel.Resources>
+        <!--<DockPanel.Resources>
             <DataTemplate x:Key="MenuItemTemplate">
                 <local:ToggleRadioButton
                     BorderThickness="0"
@@ -71,6 +71,34 @@
                             Text="{Binding Label}" />
                     </Grid>
                 </local:ToggleRadioButton>
+            </DataTemplate>
+        </DockPanel.Resources>-->
+
+        <DockPanel.Resources>
+            <DataTemplate x:Key="MenuItemTemplate">
+                <Label BorderThickness="0">
+                    <Grid Height="48">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="25"
+                            Foreground="White"
+                            Text="{Binding Glyph}" />
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="White"
+                            Text="{Binding Label}" />
+                    </Grid>
+                </Label>
             </DataTemplate>
         </DockPanel.Resources>
 
