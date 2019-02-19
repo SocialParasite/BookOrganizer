@@ -212,25 +212,37 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             if (SelectedLanguage is null)
             {
-                SelectedLanguage =
-                    new LookupItem
-                    {
-                        Id = SelectedItem.Language.Id,
-                        DisplayMember = SelectedItem.Language.LanguageName
-                    };
+                if (SelectedItem.Language != null)
+                {
+                    SelectedLanguage =
+                        new LookupItem
+                        {
+                            Id = SelectedItem.Language.Id,
+                            DisplayMember = SelectedItem.Language is null
+                            ? new Language().LanguageName = ""
+                            : SelectedItem.Language.LanguageName
+                        };
+                }
             }
 
             if (SelectedPublisher is null)
             {
-                SelectedPublisher =
-                    new LookupItem
-                    {
-                        Id = SelectedItem.Publisher.Id,
-                        DisplayMember = SelectedItem.Publisher.Name
-                    };
+                if (SelectedItem.Publisher != null)
+                {
+                    SelectedPublisher =
+                        new LookupItem
+                        {
+                            Id = SelectedItem.Publisher.Id,
+                            DisplayMember = SelectedItem.Publisher is null
+                            ? new Publisher().Name = ""
+                            : SelectedItem.Publisher.Name
+                        };
+                }
             }
 
-            SelectedReleaseYear = SelectedItem.ReleaseYear;
+            SelectedReleaseYear = SelectedItem.ReleaseYear == 0
+                ? DateTime.Today.Year
+                : SelectedItem.ReleaseYear;
         }
 
         public async override void SwitchEditableStateExecute()
@@ -319,7 +331,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 SelectedItem.AuthorsLink.Add(new BookAuthors
                 {
                     AuthorId = addedAuthor.Id,
-                    BookId = SelectedItem.Id
+                    BookId = SelectedItem.Id,
+                    Book = SelectedItem,
+                    Author = addedAuthor
                 });
 
                 Authors.Remove(lookupItem);
@@ -357,6 +371,5 @@ namespace BookOrganizer.UI.WPF.ViewModels
             for (int y = DateTime.Today.Year; y > 0; y--)
                 yield return y;
         }
-
     }
 }

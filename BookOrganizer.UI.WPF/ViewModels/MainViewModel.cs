@@ -89,9 +89,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 {
                     await detailViewModel.LoadAsync(args.Id);
                 }
-                catch
+                catch(Exception ex)
                 {
-                    //TODO
+                    //TODO 
                     return;
                 }
 

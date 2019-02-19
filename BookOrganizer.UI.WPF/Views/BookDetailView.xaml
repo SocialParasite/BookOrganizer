@@ -141,7 +141,7 @@
                 Grid.Row="2"
                 Grid.Column="1"
                 Style="{StaticResource EditableTextBoxStyles}"
-                Text="{Binding SelectedItem.PageCount}" />
+                Text="{Binding SelectedItem.PageCount, StringFormat={}{0:N0}}" />
 
             <Label
                 x:Name="wordCountLabel"
