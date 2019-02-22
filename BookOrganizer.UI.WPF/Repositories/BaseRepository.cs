@@ -27,11 +27,11 @@ namespace BookOrganizer.UI.WPF.Repositories
         public async Task SaveAsync()
             => await context.SaveChangesAsync();
 
-        public void Update(TEntity entity)
-            => context.Set<TEntity>().Update(entity);
+        public void Update(TEntity entity) // context.Set<TEntity>().Update(entity);
+            => context.Update(entity);
 
-        public void Delete(TEntity entity)
-            => context.Set<TEntity>().Remove(entity);
+        public void Delete(TEntity entity) //context.Set<TEntity>().Remove(entity);
+            => context.Remove(entity);
 
         public bool HasChanges()
             => context.ChangeTracker.HasChanges();

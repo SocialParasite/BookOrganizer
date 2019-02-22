@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace BookOrganizer.Domain
 {
-    public class Book : IIdentifiable
+    public class Book : BaseDomainEntity, IIdentifiable
     {
         public Book()
         {
@@ -22,6 +22,8 @@ namespace BookOrganizer.Domain
         private int _wordCount;
         private string _iSBN;
         private string _bookCoverPicture;
+        private bool _isRead;
+        private string _description;
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -38,6 +40,7 @@ namespace BookOrganizer.Domain
                     throw new ArgumentOutOfRangeException(nameof(Title), "Books title should be 1-256 characters long.");
 
                 _title = value;
+                OnPropertyChanged();
             }
         }
 
@@ -48,7 +51,10 @@ namespace BookOrganizer.Domain
             set
             {
                 if (value > 0 && value <= 2500)
+                {
                     _releaseYear = value;
+                    OnPropertyChanged();
+                }
                 else
                     throw new ArgumentOutOfRangeException(nameof(ReleaseYear), "Release year should be between 1 and 2500.");
             }
@@ -61,7 +67,10 @@ namespace BookOrganizer.Domain
             set
             {
                 if (value > 0 && value < 10_001)
+                {
                     _pageCount = value;
+                    OnPropertyChanged();
+                }
                 else
                     throw new ArgumentOutOfRangeException(nameof(PageCount), "Page count should be between 1 and 10 000.");
             }
@@ -74,7 +83,10 @@ namespace BookOrganizer.Domain
             set
             {
                 if (ValidateIsbn(value))
+                {
                     _iSBN = value;
+                    OnPropertyChanged();
+                }
                 else
                     throw new ArgumentOutOfRangeException(nameof(ISBN), "Isbn must be valid or empty.");
             }
@@ -84,23 +96,37 @@ namespace BookOrganizer.Domain
         public int WordCount
         {
             get { return _wordCount; }
-            set { _wordCount = value; }
+            set
+            {
+                if (value >= 1 && value < int.MaxValue)
+                {
+                    _wordCount = value;
+                    OnPropertyChanged();
+                }
+                else
+                    throw new ArgumentOutOfRangeException(nameof(WordCount), $"Word count must be between between 1 and {int.MaxValue}");
+            }
         }
 
-        public bool IsRead { get; set; }
-
-        private bool ValidateIsbn(string isbn)
+        public bool IsRead
         {
-            if (isbn is null || isbn is "") return true;
-
-            var pattern = @"^(97(8|9))?\d{9}(\d|X)$";
-
-            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-
-            return rgx.IsMatch(isbn);
+            get => _isRead;
+            set
+            {
+                _isRead = value;
+                OnPropertyChanged();
+            }
         }
 
-        public string Description { get; set; }
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                _description = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string BookCoverPicture
         {
@@ -126,6 +152,7 @@ namespace BookOrganizer.Domain
                 {
                     throw; //TODO:
                 }
+                OnPropertyChanged();
             }
         }
 
@@ -140,5 +167,17 @@ namespace BookOrganizer.Domain
         public ICollection<BookGenres> GenreLink { get; set; }
         public ICollection<BooksFormats> FormatLink { get; set; }
         public Series BookSeries { get; set; }
+
+        private bool ValidateIsbn(string isbn)
+        {
+            if (isbn is null || isbn is "") return true;
+
+            var pattern = @"^(97(8|9))?\d{9}(\d|X)$";
+
+            Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            return rgx.IsMatch(isbn);
+        }
+
     }
 }

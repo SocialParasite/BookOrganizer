@@ -142,7 +142,7 @@
                 Grid.Row="2"
                 Grid.Column="1"
                 Style="{StaticResource EditableTextBoxStyles}"
-                Text="{Binding SelectedItem.PageCount, StringFormat={}{0:N0}}" />
+                Text="{Binding SelectedItem.PageCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label
                 x:Name="wordCountLabel"
@@ -157,7 +157,7 @@
                 Grid.Row="2"
                 Grid.Column="3"
                 Style="{StaticResource EditableTextBoxStyles}"
-                Text="{Binding SelectedItem.WordCount, StringFormat={}{0:N0}}" />
+                Text="{Binding SelectedItem.WordCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label
                 x:Name="publisherLabel"
@@ -274,7 +274,7 @@
                     AcceptsReturn="True"
                     FontSize="16"
                     Style="{StaticResource EditableTextBoxStyles}"
-                    Text="{Binding SelectedItem.Description}"
+                    Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
             </GroupBox>

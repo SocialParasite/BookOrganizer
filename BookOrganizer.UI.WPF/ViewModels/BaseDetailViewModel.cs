@@ -33,21 +33,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
         }
 
-        private void CloseDetailViewExecute()
-        {
-            if (this.Repository.HasChanges())
-            {
-                // TODO
-            }
-
-            eventAggregator.GetEvent<CloseDetailsViewEvent>()
-                .Publish(new CloseDetailsViewEventArgs
-                {
-                    Id = this.Id,
-                    ViewModelName = this.GetType().Name
-                });
-        }
-
         public ICommand SwitchEditableStateCommand { get; set; }
         public ICommand SaveItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
@@ -99,6 +84,21 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 UserMode = (!UserMode.Item1, 1, Brushes.LightGreen, !UserMode.Item4).ToTuple();
             else
                 UserMode = (!UserMode.Item1, 0, Brushes.LightGray, !UserMode.Item4).ToTuple();
+        }
+
+        private void CloseDetailViewExecute()
+        {
+            if (this.Repository.HasChanges())
+            {
+                // TODO
+            }
+
+            eventAggregator.GetEvent<CloseDetailsViewEvent>()
+                .Publish(new CloseDetailsViewEventArgs
+                {
+                    Id = this.Id,
+                    ViewModelName = this.GetType().Name
+                });
         }
 
         private async void SaveItemExecute()

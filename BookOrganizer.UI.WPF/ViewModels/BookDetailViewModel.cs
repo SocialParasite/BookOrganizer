@@ -24,7 +24,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly ILanguageLookupDataService languageLookupDataService;
         private readonly IPublisherLookupDataService publisherLookupDataService;
         private readonly IAuthorLookupDataService authorLookupDataService;
-        private Book selectedBook;
+        //private Book selectedBook;
         private SolidColorBrush highlightBrush;
         private Guid selectedBookId;
         private DateTime newReadDate;
@@ -86,11 +86,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand RemoveDateAsABookReadDateCommand { get; set; }
         public ICommand ReleaseYearSelectionChangedCommand { get; set; }
 
-        public Book SelectedBook
-        {
-            get { return selectedBook; }
-            set { selectedBook = value ?? throw new ArgumentNullException(nameof(SelectedBook)); }
-        }
+        //public Book SelectedBook
+        //{
+        //    get { return selectedBook; }
+        //    set { selectedBook = value ?? throw new ArgumentNullException(nameof(SelectedBook)); }
+        //}
 
         public SolidColorBrush HighlightBrush
         {
@@ -246,6 +246,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedReleaseYear = SelectedItem.ReleaseYear == 0
                 ? DateTime.Today.Year
                 : SelectedItem.ReleaseYear;
+
+            SelectedItem.PropertyChanged += (s, e) =>
+            {
+                if (!HasChanges)
+                {
+                    HasChanges = Repository.HasChanges();
+                }
+            };
         }
 
         public async override void SwitchEditableStateExecute()
