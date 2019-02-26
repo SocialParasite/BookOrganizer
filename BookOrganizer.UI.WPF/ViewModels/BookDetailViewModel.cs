@@ -2,6 +2,7 @@
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
+using BookOrganizer.UI.WPF.Services;
 using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
@@ -24,7 +25,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly ILanguageLookupDataService languageLookupDataService;
         private readonly IPublisherLookupDataService publisherLookupDataService;
         private readonly IAuthorLookupDataService authorLookupDataService;
-        //private Book selectedBook;
         private SolidColorBrush highlightBrush;
         private Guid selectedBookId;
         private DateTime newReadDate;
@@ -37,13 +37,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private int selectedReleaseYear;
 
         public BookDetailViewModel(IEventAggregator eventAggregator,
+            IMetroDialogService metroDialogService,
             IRepository<Book> booksRepo,
             ILanguageLookupDataService languageLookupDataService,
             IPublisherLookupDataService publisherLookupDataService,
             IAuthorLookupDataService authorLookupDataService)
-            : base(eventAggregator)
+            : base(eventAggregator, metroDialogService)
         {
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.languageLookupDataService = languageLookupDataService
                 ?? throw new ArgumentNullException(nameof(languageLookupDataService));
             this.publisherLookupDataService = publisherLookupDataService
@@ -85,12 +85,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand PublisherSelectionChangedCommand { get; set; }
         public ICommand RemoveDateAsABookReadDateCommand { get; set; }
         public ICommand ReleaseYearSelectionChangedCommand { get; set; }
-
-        //public Book SelectedBook
-        //{
-        //    get { return selectedBook; }
-        //    set { selectedBook = value ?? throw new ArgumentNullException(nameof(SelectedBook)); }
-        //}
 
         public SolidColorBrush HighlightBrush
         {

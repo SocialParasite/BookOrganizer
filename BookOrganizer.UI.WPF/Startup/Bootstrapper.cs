@@ -2,6 +2,7 @@
 using BookOrganizer.Data.SqlServer;
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
+using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
 using BookOrganizer.UI.WPF.Views;
 using Prism.Events;
@@ -33,6 +34,8 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<BooksRepository>().AsImplementedInterfaces();
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf();
+
+            builder.RegisterType<MetroDialogService>().As<IMetroDialogService>();
 
             return builder.Build();
         }

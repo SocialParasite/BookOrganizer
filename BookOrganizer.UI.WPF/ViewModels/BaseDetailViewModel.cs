@@ -1,10 +1,14 @@
 ﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Repositories;
+using BookOrganizer.UI.WPF.Services;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -14,6 +18,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         where T : class, IIdentifiable
     {
         private readonly IEventAggregator eventAggregator;
+        private readonly IMetroDialogService metroDialogService;
         protected IRepository<T> Repository;
 
         private Guid guid;
@@ -21,9 +26,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private Tuple<bool, int, SolidColorBrush, bool> userMode;
         private bool hasChanges;
 
-        public BaseDetailViewModel(IEventAggregator eventAggregator)
+        public BaseDetailViewModel(IEventAggregator eventAggregator, IMetroDialogService metroDialogService)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.metroDialogService = metroDialogService ?? throw new ArgumentNullException(nameof(metroDialogService));
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
             SaveItemCommand = new DelegateCommand(SaveItemExecute);
@@ -86,11 +92,19 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 UserMode = (!UserMode.Item1, 0, Brushes.LightGray, !UserMode.Item4).ToTuple();
         }
 
-        private void CloseDetailViewExecute()
+        private async void CloseDetailViewExecute()
         {
             if (this.Repository.HasChanges())
             {
-                // TODO
+                var result = await metroDialogService
+                    .ShowOkCancelDialogAsync(
+                    "You have made changes. Closing will loose all unsaved changes. Are you sure you still want to close this view?",
+                    "Question");
+
+                if (result == MessageDialogResult.Canceled)
+                {
+                    return;
+                }
             }
 
             eventAggregator.GetEvent<CloseDetailsViewEvent>()
@@ -103,12 +117,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async void SaveItemExecute()
         {
+            // TODO: Check?
             Repository.Update(SelectedItem);
             await SaveRepository();
         }
 
         private async void DeleteItemExecute()
         {
+            // TODO: Check?
             Repository.Delete(SelectedItem);
             await SaveRepository();
         }
