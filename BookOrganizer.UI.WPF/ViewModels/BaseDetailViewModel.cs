@@ -2,13 +2,11 @@
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
-using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -99,7 +97,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 var result = await metroDialogService
                     .ShowOkCancelDialogAsync(
                     "You have made changes. Closing will loose all unsaved changes. Are you sure you still want to close this view?",
-                    "Question");
+                    "Close the view?");
 
                 if (result == MessageDialogResult.Canceled)
                 {
@@ -117,16 +115,43 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async void SaveItemExecute()
         {
-            // TODO: Check?
-            Repository.Update(SelectedItem);
-            await SaveRepository();
+            if (this.Repository.HasChanges())
+            {
+                var result = await metroDialogService
+                    .ShowOkCancelDialogAsync(
+                    "You are about to save your changes. This will overwrite the previous version. Are you sure?",
+                    "Save changes?");
+
+                if (result == MessageDialogResult.Canceled)
+                {
+                    return;
+                }
+
+                Repository.Update(SelectedItem);
+                await SaveRepository();
+            }
+            else
+            {
+                var result = metroDialogService.ShowInfoDialogAsync("You have no unsaved changes on this view.");
+            }
         }
 
         private async void DeleteItemExecute()
         {
-            // TODO: Check?
-            Repository.Delete(SelectedItem);
-            await SaveRepository();
+            var result = await metroDialogService
+                .ShowOkCancelDialogAsync(
+                "You are about to delete an item. This operation cannot be undone. Are you sure?",
+                "Delete an item?");
+
+            if (result == MessageDialogResult.Canceled)
+            {
+                return;
+            }
+            else
+            {
+                Repository.Delete(SelectedItem);
+                await SaveRepository();
+            }
         }
 
         private async Task SaveRepository()

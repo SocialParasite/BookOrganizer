@@ -16,6 +16,7 @@ namespace BookOrganizer.UI.WPF.Services
               ? MessageDialogResult.Affirmative
               : MessageDialogResult.Canceled;
         }
+
         public async Task ShowInfoDialogAsync(string text)
             => await MetroWindow.ShowMessageAsync("Info", text);
     }
