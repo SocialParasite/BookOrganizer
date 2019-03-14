@@ -169,7 +169,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void SetReadDateExecute()
         {
-            var newReadDate = new BooksReadDate { /*Book = SelectedItem,*/ ReadDate = NewReadDate };
+            var newReadDate = new BooksReadDate { ReadDate = NewReadDate };
 
             if (!SelectedItem.ReadDates.Any(d => d.ReadDate == newReadDate.ReadDate))
                 SelectedItem.ReadDates.Add(newReadDate);

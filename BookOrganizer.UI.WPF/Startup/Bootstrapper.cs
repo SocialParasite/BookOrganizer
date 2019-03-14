@@ -16,6 +16,7 @@ namespace BookOrganizer.UI.WPF.Startup
             var builder = new ContainerBuilder();
 
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+            builder.RegisterType<MetroDialogService>().As<IMetroDialogService>();
 
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
@@ -35,7 +36,6 @@ namespace BookOrganizer.UI.WPF.Startup
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf();
 
-            builder.RegisterType<MetroDialogService>().As<IMetroDialogService>();
 
             return builder.Build();
         }
