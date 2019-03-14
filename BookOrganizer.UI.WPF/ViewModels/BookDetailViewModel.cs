@@ -28,11 +28,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private SolidColorBrush highlightBrush;
         private Guid selectedBookId;
         private DateTime newReadDate;
-        private ObservableCollection<LookupItem> languages;
         private LookupItem selectedLanguage;
-        private ObservableCollection<LookupItem> publishers;
         private LookupItem selectedPublisher;
-        private ObservableCollection<LookupItem> authors;
         private LookupItem selectedAuthor;
         private int selectedReleaseYear;
 
@@ -107,11 +104,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
-        public ObservableCollection<LookupItem> Languages
-        {
-            get { return languages; }
-            set { languages = value; }
-        }
+        public ObservableCollection<LookupItem> Languages { get; set; }
 
         public LookupItem SelectedLanguage
         {
@@ -119,11 +112,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { selectedLanguage = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<LookupItem> Publishers
-        {
-            get { return publishers; }
-            set { publishers = value; }
-        }
+        public ObservableCollection<LookupItem> Publishers { get; set; }
 
         public LookupItem SelectedPublisher
         {
@@ -131,11 +120,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { selectedPublisher = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<LookupItem> Authors
-        {
-            get { return authors; }
-            set { authors = value; }
-        }
+        public ObservableCollection<LookupItem> Authors { get; set; }
 
         public LookupItem SelectedAuthor
         {

@@ -5,7 +5,7 @@ namespace BookOrganizer.UI.WPFTests.Extensions
 {
     public static class NotifyPropertyChangedExtensions
     {
-        public static bool IsPropertyChangedFired(this INotifyPropertyChanged notifyPropertyChanged,
+        public static bool IsPropertyChangedRaised(this INotifyPropertyChanged notifyPropertyChanged,
             Action action, string propertyName)
         {
             var fired = false;
