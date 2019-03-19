@@ -47,6 +47,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
             this.authorLookupDataService = authorLookupDataService
                 ?? throw new ArgumentNullException(nameof(authorLookupDataService));
+            this.eventAggregator = eventAggregator
+                ?? throw new ArgumentNullException(nameof(eventAggregator));
 
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(ShowSelectedBookExecute);
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
@@ -185,46 +187,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = book;
             Id = id;
 
-            if (SelectedItem.BookCoverPicture is null)
-                SelectedItem.BookCoverPicture =
-                    $"{Path.GetDirectoryName((Assembly.GetExecutingAssembly().GetName().CodeBase)).Substring(6)}\\placeholder.png";
-
-            if (SelectedItem.Title == "" || SelectedItem.Title is null)
-                SelectedItem.Title = "Book Title";
-
-            if (SelectedLanguage is null)
-            {
-                if (SelectedItem.Language != null)
-                {
-                    SelectedLanguage =
-                        new LookupItem
-                        {
-                            Id = SelectedItem.Language.Id,
-                            DisplayMember = SelectedItem.Language is null
-                            ? new Language().LanguageName = ""
-                            : SelectedItem.Language.LanguageName
-                        };
-                }
-            }
-
-            if (SelectedPublisher is null)
-            {
-                if (SelectedItem.Publisher != null)
-                {
-                    SelectedPublisher =
-                        new LookupItem
-                        {
-                            Id = SelectedItem.Publisher.Id,
-                            DisplayMember = SelectedItem.Publisher is null
-                            ? new Publisher().Name = ""
-                            : SelectedItem.Publisher.Name
-                        };
-                }
-            }
-
-            SelectedReleaseYear = SelectedItem.ReleaseYear == 0
-                ? DateTime.Today.Year
-                : SelectedItem.ReleaseYear;
+            SetDefaulBookCoverIfNoneSet();
+            SetDefaultBookTitleIfNoneSet();
+            InitiliazeSelectedLanguageIfNoneSet();
+            InitializeSelectedPublisherIfNoneSet();
+            SetBooksSelectedReleaseYear();
 
             SelectedItem.PropertyChanged += (s, e) =>
             {
@@ -233,49 +200,118 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     HasChanges = Repository.HasChanges();
                 }
             };
+
+            void SetDefaulBookCoverIfNoneSet()
+            {
+                if (SelectedItem.BookCoverPicture is null)
+                    SelectedItem.BookCoverPicture =
+                        $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6)}\\placeholder.png";
+            }
+
+            void SetDefaultBookTitleIfNoneSet()
+            {
+                if (SelectedItem.Title == "" || SelectedItem.Title is null)
+                    SelectedItem.Title = "Book Title";
+            }
+
+            void InitiliazeSelectedLanguageIfNoneSet()
+            {
+                if (SelectedLanguage is null)
+                {
+                    if (SelectedItem.Language != null)
+                    {
+                        SelectedLanguage =
+                            new LookupItem
+                            {
+                                Id = SelectedItem.Language.Id,
+                                DisplayMember = SelectedItem.Language is null
+                                ? new Language().LanguageName = ""
+                                : SelectedItem.Language.LanguageName
+                            };
+                    }
+                }
+            }
+
+            void InitializeSelectedPublisherIfNoneSet()
+            {
+                if (SelectedPublisher is null)
+                {
+                    if (SelectedItem.Publisher != null)
+                    {
+                        SelectedPublisher =
+                            new LookupItem
+                            {
+                                Id = SelectedItem.Publisher.Id,
+                                DisplayMember = SelectedItem.Publisher is null
+                                ? new Publisher().Name = ""
+                                : SelectedItem.Publisher.Name
+                            };
+                    }
+                }
+            }
+
+            void SetBooksSelectedReleaseYear()
+            {
+                SelectedReleaseYear = SelectedItem.ReleaseYear == 0
+                    ? DateTime.Today.Year
+                    : SelectedItem.ReleaseYear;
+            }
         }
 
         public async override void SwitchEditableStateExecute()
         {
             base.SwitchEditableStateExecute();
 
-            if (!Languages.Any())
-            {
-                Languages.Clear();
-
-                foreach (var item in await GetLanguageList())
-                {
-                    Languages.Add(item);
-                }
-
-                if (SelectedItem.Language != null)
-                    SelectedLanguage = Languages.FirstOrDefault(l => l.Id == SelectedItem.Language.Id);
-            }
-
-            if (!Publishers.Any())
-            {
-                Publishers.Clear();
-
-                foreach (var item in await GetPublisherList())
-                {
-                    Publishers.Add(item);
-                }
-
-                if (SelectedItem.Publisher != null)
-                    SelectedPublisher = Publishers.FirstOrDefault(p => p.Id == SelectedItem.Publisher.Id);
-            }
-
-            if (!Authors.Any())
-            {
-                Authors.Clear();
-
-                foreach (var item in await GetAuthorList())
-                {
-                    Authors.Add(item);
-                }
-            }
+            await InitializeLanguageCollection();
+            await InitializePublisherCollection();
+            await InitalizeAuthorCollection();
 
             SelectedItem.ReleaseYear = SelectedReleaseYear;
+
+            async Task InitializeLanguageCollection()
+            {
+                if (!Languages.Any())
+                {
+                    Languages.Clear();
+
+                    foreach (var item in await GetLanguageList())
+                    {
+                        Languages.Add(item);
+                    }
+
+                    if (SelectedItem.Language != null)
+                        SelectedLanguage = Languages.FirstOrDefault(l => l.Id == SelectedItem.Language.Id);
+                }
+            }
+
+            async Task InitializePublisherCollection()
+            {
+                if (!Publishers.Any())
+                {
+                    Publishers.Clear();
+
+                    foreach (var item in await GetPublisherList())
+                    {
+                        Publishers.Add(item);
+                    }
+
+                    if (SelectedItem.Publisher != null)
+                        SelectedPublisher = Publishers.FirstOrDefault(p => p.Id == SelectedItem.Publisher.Id);
+                }
+            }
+
+            async Task InitalizeAuthorCollection()
+            {
+                if (!Authors.Any())
+                {
+                    Authors.Clear();
+
+                    foreach (var item in await GetAuthorList())
+                    {
+                        Authors.Add(item);
+                    }
+                }
+            }
         }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()

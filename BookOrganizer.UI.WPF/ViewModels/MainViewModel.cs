@@ -39,15 +39,22 @@ namespace BookOrganizer.UI.WPF.ViewModels
             OpenPublishersViewCommand = new DelegateCommand(OnOpenPublishersViewExecute);
             OpenSettingsMenuCommand = new DelegateCommand(OnOpenSettingsMenuExecute);
 
-            this.eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
-                    .Subscribe(OnOpenBookMatchingSelectedId);
+            SubscribeToEvents();
+        }
 
-            this.eventAggregator.GetEvent<OpenDetailViewEvent>()
-                .Subscribe(OnOpenDetailViewMatchingSelectedId);
+        private void SubscribeToEvents()
+        {
+            if (eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>() != null)
+            {
+                this.eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
+                        .Subscribe(OnOpenBookMatchingSelectedId);
 
-            this.eventAggregator.GetEvent<CloseDetailsViewEvent>()
-                .Subscribe(CloseDetailsView);
+                this.eventAggregator.GetEvent<OpenDetailViewEvent>()
+                    .Subscribe(OnOpenDetailViewMatchingSelectedId);
 
+                this.eventAggregator.GetEvent<CloseDetailsViewEvent>()
+                    .Subscribe(CloseDetailsView);
+            }
         }
 
         public ICommand OpenMainMenuCommand { get; }
@@ -89,9 +96,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 {
                     await detailViewModel.LoadAsync(args.Id);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    //TODO 
+                    //TODO
                     return;
                 }
 

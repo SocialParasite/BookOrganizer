@@ -63,5 +63,8 @@ namespace BookOrganizer.UI.WPFTests
 
             raised.Should().BeTrue();
         }
+
+        //LoadAsync (override)
+        //SwitchEditableStateExecute (override)
     }
 }

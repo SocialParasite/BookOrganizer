@@ -34,7 +34,7 @@ namespace BookOrganizer.UI.WPFTests
         }
 
         [Fact]
-        public async Task ShouldLoad_BookLookupItems_WhenInitializeRepositoryAsyncCalled()
+        public async Task ShouldLoad_BookLookupItems_WhenInitializeRepositoryAsyncIsCalled()
         {
             await viewModel.InitializeRepositoryAsync();
 
