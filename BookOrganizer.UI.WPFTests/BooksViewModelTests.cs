@@ -12,13 +12,13 @@ using Xunit;
 
 namespace BookOrganizer.UI.WPFTests
 {
-    public class BookViewModelTests
+    public class BooksViewModelTests
     {
         private Mock<IEventAggregator> eventAggregatorMock;
         private Mock<IBookLookupDataService> bookLookupServiceMock;
         private BooksViewModel viewModel;
 
-        public BookViewModelTests()
+        public BooksViewModelTests()
         {
             eventAggregatorMock = new Mock<IEventAggregator>();
             bookLookupServiceMock = new Mock<IBookLookupDataService>();

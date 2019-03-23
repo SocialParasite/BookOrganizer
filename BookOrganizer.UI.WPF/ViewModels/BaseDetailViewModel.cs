@@ -79,7 +79,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public abstract Task LoadAsync(Guid id);
 
-        public virtual async void OnOpenItemDetailsViewAsync(Guid id)
+        public virtual async Task OnOpenItemDetailsViewAsync(Guid id)
             => SelectedItem = await Repository.GetSelectedAsync(id);
 
         public virtual void SwitchEditableStateExecute()
@@ -117,12 +117,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             if (this.Repository.HasChanges())
             {
-                var result = await metroDialogService
+                var resultWhenChanges = await metroDialogService
                     .ShowOkCancelDialogAsync(
                     "You are about to save your changes. This will overwrite the previous version. Are you sure?",
                     "Save changes?");
 
-                if (result == MessageDialogResult.Canceled)
+                if (resultWhenChanges == MessageDialogResult.Canceled)
                 {
                     return;
                 }
@@ -132,7 +132,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
             else
             {
-                var result = metroDialogService.ShowInfoDialogAsync("You have no unsaved changes on this view.");
+                var unmodifiedResult = metroDialogService.ShowInfoDialogAsync("You have no unsaved changes on this view.");
             }
         }
 

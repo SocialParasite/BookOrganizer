@@ -89,7 +89,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 .SingleOrDefault(vm => vm.Id == args.Id
                 && vm.GetType().Name == args.ViewModelName);
 
-            if (detailViewModel == null)
+            if (detailViewModel is null)
             {
                 detailViewModel = detailViewModelCreator[args.ViewModelName];
                 try

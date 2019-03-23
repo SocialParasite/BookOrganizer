@@ -22,15 +22,13 @@ namespace BookOrganizer.UI.WPF.Repositories
         public virtual async Task<TEntity> GetSelectedAsync(Guid id)
             => await context.Set<TEntity>().FindAsync(id);
 
-        //public void Insert(TEntity entity) => context.Set<TEntity>().Add(entity);
-
         public async Task SaveAsync()
             => await context.SaveChangesAsync();
 
-        public void Update(TEntity entity) // context.Set<TEntity>().Update(entity);
+        public void Update(TEntity entity)
             => context.Update(entity);
 
-        public void Delete(TEntity entity) //context.Set<TEntity>().Remove(entity);
+        public void Delete(TEntity entity)
             => context.Remove(entity);
 
         public bool HasChanges()

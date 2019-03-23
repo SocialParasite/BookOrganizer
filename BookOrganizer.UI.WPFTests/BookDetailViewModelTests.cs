@@ -15,7 +15,6 @@ namespace BookOrganizer.UI.WPFTests
     public class BookDetailViewModelTests
     {
         private Mock<IEventAggregator> eventAggregatorMock;
-        private Mock<IBookLookupDataService> bookLookupServiceMock;
         private Mock<IMetroDialogService> metroDialogServiceMock;
         private Mock<IRepository<Book>> booksRepoMock;
         private Mock<ILanguageLookupDataService> languageLookupDataServiceMock;
@@ -26,7 +25,6 @@ namespace BookOrganizer.UI.WPFTests
         public BookDetailViewModelTests()
         {
             eventAggregatorMock = new Mock<IEventAggregator>();
-            bookLookupServiceMock = new Mock<IBookLookupDataService>();
             metroDialogServiceMock = new Mock<IMetroDialogService>();
             booksRepoMock = new Mock<IRepository<Book>>();
             languageLookupDataServiceMock = new Mock<ILanguageLookupDataService>();
@@ -63,8 +61,5 @@ namespace BookOrganizer.UI.WPFTests
 
             raised.Should().BeTrue();
         }
-
-        //LoadAsync (override)
-        //SwitchEditableStateExecute (override)
     }
 }

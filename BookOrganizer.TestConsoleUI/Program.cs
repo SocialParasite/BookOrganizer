@@ -52,20 +52,42 @@ namespace BookOrganizer.TestConsoleUI
                 Console.WriteLine(bookOne.ReadDates.Count());
                 Console.WriteLine($"Series: {bookOne.BookSeries.Name}, book count in series: {bookOne.BookSeries.NumberOfBooks}");
 
-                foreach (var book in bookOne.BookSeries.BooksInSeries.OrderBy(b => b.BookSeries.SeriesReadOrder))
-                {
-                    //Console.WriteLine(book.Title);
-                    var readOrder = book.BookSeries.SeriesReadOrder.Where(s => s.BookId == book.Id).Select(o => o.Instalment);
-                    //Console.WriteLine($"TEST: {readOrder.SingleOrDefault()}");
-                    ReadOrderOfBooks.Add(readOrder.SingleOrDefault(), book.Title);
-                }
+                //foreach (var book in bookOne.BookSeries.BooksInSeries.OrderBy(b => b.BookSeries.SeriesReadOrder))
+                //{
+                //    //Console.WriteLine(book.Title);
+                //    var readOrder = book.BookSeries.SeriesReadOrder.Where(s => s.BookId == book.Id).Select(o => o.Instalment);
+                //    //Console.WriteLine($"TEST: {readOrder.SingleOrDefault()}");
+                //    ReadOrderOfBooks.Add(readOrder.SingleOrDefault(), book.Title);
+                //}
 
+                ReadOrderOfBooks = GetSeriesInOrder(bookOne);
                 foreach (var orderedSeries in ReadOrderOfBooks)
                 {
                     Console.WriteLine($"{orderedSeries.Key}. {orderedSeries.Value}");
                 }
                 //context.SaveChanges();
+
+
             }
+
+        }
+        public static Dictionary<int, string> GetSeriesInOrder(Book bookInSeries)
+        {
+            Dictionary<int, string> orderedList = new Dictionary<int, string>();
+
+            foreach (var book in bookInSeries.BookSeries.BooksInSeries.OrderBy(b => b.BookSeries.SeriesReadOrder))
+            {
+                //Console.WriteLine(book.Title);
+                var readOrder = book.BookSeries.SeriesReadOrder.Where(s => s.BookId == book.Id).Select(o => o.Instalment);
+                //Console.WriteLine($"TEST: {readOrder.SingleOrDefault()}");
+                //ReadOrderOfBooks.Add(readOrder.SingleOrDefault(), book.Title);
+                orderedList.Add(readOrder.SingleOrDefault(), book.Title);
+            }
+            return orderedList;
+            //foreach (var orderedSeries in ReadOrderOfBooks)
+            //{
+            //    Console.WriteLine($"{orderedSeries.Key}. {orderedSeries.Value}");
+            //}
         }
     }
 }

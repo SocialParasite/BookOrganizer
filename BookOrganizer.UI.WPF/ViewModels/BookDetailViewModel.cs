@@ -70,7 +70,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Authors = new ObservableCollection<LookupItem>();
 
             SelectedItem = new Book();
-            YearsList = GetYear();
+            YearsList = PopulateYearsMenu();
         }
 
         public ICommand ShowSelectedBookCommand { get; }
@@ -182,9 +182,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public async override Task LoadAsync(Guid id)
         {
-            var book = await Repository.GetSelectedAsync(id) ?? null;
+            SelectedItem = await Repository.GetSelectedAsync(id) ?? null;
 
-            SelectedItem = book;
             Id = id;
 
             SetDefaulBookCoverIfNoneSet();
@@ -392,10 +391,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem.ReleaseYear = SelectedReleaseYear;
         }
 
-        private IEnumerable<int> GetYear()
+        private IEnumerable<int> PopulateYearsMenu()
         {
-            for (int y = DateTime.Today.Year; y > 0; y--)
-                yield return y;
+            for (int year = DateTime.Today.Year; year > 0; year--)
+                yield return year;
         }
     }
 }
