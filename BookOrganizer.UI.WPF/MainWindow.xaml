@@ -81,7 +81,7 @@
                         Label="Main Menu"
                         Tag="ShowMainMenu" />
                     <Controls:HamburgerMenuGlyphItem
-                        Command="{Binding OpenBooksViewCommand}"
+                        Command="{Binding OpenSelectedViewCommand}"
                         CommandParameter="BooksViewModel"
                         Glyph="&#xE8F1;"
                         Label="Books"
@@ -93,7 +93,7 @@
                         Label="Authors"
                         Tag="ShowAuthorsMenu" />
                     <Controls:HamburgerMenuGlyphItem
-                        Command="{Binding OpenPublishersViewCommand}"
+                        Command="{Binding OpenSelectedViewCommand}"
                         CommandParameter="PublishersViewModel"
                         Glyph="&#xE8FE;"
                         Label="Publishers"

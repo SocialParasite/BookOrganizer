@@ -38,8 +38,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             OpenAuthorsViewCommand = new DelegateCommand(OnOpenAuthorsViewExecute);
             OpenPublishersViewCommand = new DelegateCommand<string>(OnOpenPublishersViewExecute);
             OpenSettingsMenuCommand = new DelegateCommand(OnOpenSettingsMenuExecute);
+            OpenSelectedViewCommand = new DelegateCommand<string>(OnOpenSelectedViewExecute);
 
             SubscribeToEvents();
+
+            isViewVisible = true; //TEMP
         }
 
         private void SubscribeToEvents()
@@ -62,6 +65,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand OpenAuthorsViewCommand { get; }
         public ICommand OpenPublishersViewCommand { get; }
         public ICommand OpenSettingsMenuCommand { get; }
+        public ICommand OpenSelectedViewCommand { get; set; }
 
         public ObservableCollection<IDetailViewModel> DetailViewModels { get; set; }
 
@@ -111,27 +115,35 @@ namespace BookOrganizer.UI.WPF.ViewModels
             IsViewVisible = false;
         }
 
-        private void OnOpenPublishersViewExecute(string viewModel)
+        private void OnOpenSelectedViewExecute(string viewModel)
         {
-            if (!IsViewVisible)
-            {
-                SelectedVM = viewModelCreator[viewModel];
-                IsViewVisible = true;
-            }
+            SelectedVM = viewModelCreator[viewModel];
         }
 
+        [Obsolete]
+        private void OnOpenPublishersViewExecute(string viewModel)
+        {
+            //if (!IsViewVisible)
+            //{
+                SelectedVM = viewModelCreator[viewModel];
+                IsViewVisible = true;
+            //}
+        }
+
+        [Obsolete]
         private void OnOpenAuthorsViewExecute()
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete]
         private void OnOpenBooksViewExecute(string viewModel)
         {
-            if (!IsViewVisible)
-            {
+            //if (!IsViewVisible)
+            //{
                 SelectedVM = viewModelCreator[viewModel];
                 IsViewVisible = true;
-            }
+            //}
             //else
             //{
             //    SelectedVM = null;
@@ -139,11 +151,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
             //}
         }
 
+        [Obsolete]
         private void OnOpenMainMenuExecute()
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete]
         private void OnOpenSettingsMenuExecute()
         {
             throw new NotImplementedException();
