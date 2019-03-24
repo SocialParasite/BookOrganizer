@@ -28,6 +28,9 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<BooksViewModel>().As<IBooksViewModel>();
             builder.RegisterType<BooksViewModel>().Keyed<ISelectedViewModel>(nameof(BooksViewModel));
 
+            builder.RegisterType<PublishersViewModel>().As<IPublishersViewModel>();
+            builder.RegisterType<PublishersViewModel>().Keyed<ISelectedViewModel>(nameof(PublishersViewModel));
+
             builder.RegisterType<BooksView>().AsSelf();
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();

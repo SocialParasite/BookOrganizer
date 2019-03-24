@@ -160,9 +160,11 @@
     <Compile Include="ViewModels\BooksViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBookDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBooksViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IPublishersViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISelectedViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PublishersViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BookDetailView.xaml.cs">
       <DependentUpon>BookDetailView.xaml</DependentUpon>
