@@ -28,6 +28,9 @@
             <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
                 <view:BooksView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PublishersViewModel}">
+                <view:PublishersView />
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
 
