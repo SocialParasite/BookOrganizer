@@ -41,8 +41,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             OpenSelectedViewCommand = new DelegateCommand<string>(OnOpenSelectedViewExecute);
 
             SubscribeToEvents();
-
-            isViewVisible = true; //TEMP
         }
 
         private void SubscribeToEvents()
@@ -118,6 +116,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private void OnOpenSelectedViewExecute(string viewModel)
         {
             SelectedVM = viewModelCreator[viewModel];
+            IsViewVisible = true;
         }
 
         [Obsolete]
