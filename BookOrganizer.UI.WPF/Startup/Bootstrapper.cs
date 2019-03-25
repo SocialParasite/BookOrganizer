@@ -31,14 +31,18 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<PublishersViewModel>().As<IPublishersViewModel>();
             builder.RegisterType<PublishersViewModel>().Keyed<ISelectedViewModel>(nameof(PublishersViewModel));
 
+            builder.RegisterType<PublisherDetailViewModel>().As<IPublisherDetailViewModel>();
+            builder.RegisterType<PublisherDetailViewModel>()
+                .Keyed<IDetailViewModel>(nameof(PublisherDetailViewModel));
+
             builder.RegisterType<BooksView>().AsSelf();
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
 
             builder.RegisterType<BooksRepository>().AsImplementedInterfaces();
+            builder.RegisterType<PublishersRepository>().AsImplementedInterfaces();
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf();
-
 
             return builder.Build();
         }

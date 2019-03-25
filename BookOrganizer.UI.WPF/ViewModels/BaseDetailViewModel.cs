@@ -15,8 +15,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
     public abstract class BaseDetailViewModel<T> : ViewModelBase, IDetailViewModel
         where T : class, IIdentifiable
     {
-        private readonly IEventAggregator eventAggregator;
         private readonly IMetroDialogService metroDialogService;
+        protected readonly IEventAggregator eventAggregator;
         protected IRepository<T> Repository;
 
         private Guid guid;

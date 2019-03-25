@@ -150,6 +150,7 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\BooksRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\PublishersRepository.cs" />
     <Compile Include="Services\IMetroDialogService.cs" />
     <Compile Include="Services\MetroDialogService.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
@@ -160,10 +161,12 @@
     <Compile Include="ViewModels\BooksViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBookDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBooksViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IPublisherDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPublishersViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISelectedViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PublisherDetailViewModel.cs" />
     <Compile Include="ViewModels\PublishersViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BookDetailView.xaml.cs">
@@ -171,6 +174,9 @@
     </Compile>
     <Compile Include="Views\BooksView.xaml.cs">
       <DependentUpon>BooksView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PublisherDetailView.xaml.cs">
+      <DependentUpon>PublisherDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PublishersView.xaml.cs">
       <DependentUpon>PublishersView.xaml</DependentUpon>
@@ -192,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BooksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PublisherDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

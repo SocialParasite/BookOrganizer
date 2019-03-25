@@ -21,7 +21,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 {
     public class BookDetailViewModel : BaseDetailViewModel<Book>, IBookDetailViewModel
     {
-        readonly IEventAggregator eventAggregator;
         private readonly ILanguageLookupDataService languageLookupDataService;
         private readonly IPublisherLookupDataService publisherLookupDataService;
         private readonly IAuthorLookupDataService authorLookupDataService;
@@ -47,8 +46,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
             this.authorLookupDataService = authorLookupDataService
                 ?? throw new ArgumentNullException(nameof(authorLookupDataService));
-            this.eventAggregator = eventAggregator
-                ?? throw new ArgumentNullException(nameof(eventAggregator));
 
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(ShowSelectedBookExecute);
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
@@ -186,7 +183,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             Id = id;
 
-            SetDefaulBookCoverIfNoneSet();
+            SetDefaultBookCoverIfNoneSet();
             SetDefaultBookTitleIfNoneSet();
             InitiliazeSelectedLanguageIfNoneSet();
             InitializeSelectedPublisherIfNoneSet();
@@ -200,7 +197,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 }
             };
 
-            void SetDefaulBookCoverIfNoneSet()
+            void SetDefaultBookCoverIfNoneSet()
             {
                 if (SelectedItem.BookCoverPicture is null)
                     SelectedItem.BookCoverPicture =
