@@ -25,7 +25,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly IPublisherLookupDataService publisherLookupDataService;
         private readonly IAuthorLookupDataService authorLookupDataService;
         private SolidColorBrush highlightBrush;
-        private Guid selectedBookId;
+        //private Guid selectedBookId;
         private DateTime newReadDate;
         private LookupItem selectedLanguage;
         private LookupItem selectedPublisher;
@@ -48,7 +48,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.authorLookupDataService = authorLookupDataService
                 ?? throw new ArgumentNullException(nameof(authorLookupDataService));
 
-            ShowSelectedBookCommand = new DelegateCommand<Guid?>(ShowSelectedBookExecute);
+            //ShowSelectedBookCommand = new DelegateCommand<Guid?>(ShowSelectedBookExecute);
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
             HighlightMouseLeaveCommand = new DelegateCommand(HighlightMouseLeaveExecute);
             SetReadDateCommand = new DelegateCommand(SetReadDateExecute);
@@ -71,7 +71,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             YearsList = PopulateYearsMenu();
         }
 
-        public ICommand ShowSelectedBookCommand { get; }
+        //public ICommand ShowSelectedBookCommand { get; }
         public ICommand HighlightMouseLeaveCommand { get; }
         public ICommand HighlightMouseOverCommand { get; }
         public ICommand SetReadDateCommand { get; set; }
@@ -89,20 +89,20 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { highlightBrush = value; OnPropertyChanged(); }
         }
 
-        public Guid SelectedBookId
-        {
-            get => selectedBookId;
-            set
-            {
-                selectedBookId = value;
-                OnPropertyChanged();
-                if (selectedBookId != Guid.Empty)
-                {
-                    eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
-                                   .Publish(selectedBookId);
-                }
-            }
-        }
+        //public Guid SelectedBookId
+        //{
+        //    get => selectedBookId;
+        //    set
+        //    {
+        //        selectedBookId = value;
+        //        OnPropertyChanged();
+        //        if (selectedBookId != Guid.Empty)
+        //        {
+        //            eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
+        //                           .Publish(selectedBookId);
+        //        }
+        //    }
+        //}
 
         public ObservableCollection<LookupItem> Languages { get; set; }
 
@@ -149,8 +149,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
 
-        private void ShowSelectedBookExecute(Guid? id)
-            => SelectedBookId = (Guid)id;
+        //private void ShowSelectedBookExecute(Guid? id)
+        //    => SelectedBookId = (Guid)id;
 
         private void HighlightMouseLeaveExecute()
             => HighlightBrush = Brushes.White;

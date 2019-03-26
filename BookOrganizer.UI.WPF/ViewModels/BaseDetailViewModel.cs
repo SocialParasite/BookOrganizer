@@ -23,6 +23,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private T selectedItem;
         private Tuple<bool, int, SolidColorBrush, bool> userMode;
         private bool hasChanges;
+        private Guid selectedBookId;
 
         public BaseDetailViewModel(IEventAggregator eventAggregator, IMetroDialogService metroDialogService)
         {
@@ -33,6 +34,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SaveItemCommand = new DelegateCommand(SaveItemExecute);
             DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
             CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
+            ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
 
             UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
         }
@@ -41,6 +43,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand SaveItemCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
         public ICommand CloseDetailViewCommand { get; set; }
+        public ICommand ShowSelectedBookCommand { get; set; }
 
         public T SelectedItem
         {
@@ -85,6 +88,20 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { tabTitle = value; OnPropertyChanged(); }
         }
 
+        public Guid SelectedBookId
+        {
+            get => selectedBookId;
+            set
+            {
+                selectedBookId = value;
+                OnPropertyChanged();
+                if (selectedBookId != Guid.Empty)
+                {
+                    eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
+                                   .Publish(selectedBookId);
+                }
+            }
+        }
 
         public abstract Task LoadAsync(Guid id);
 
@@ -121,6 +138,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     ViewModelName = this.GetType().Name
                 });
         }
+
+        private bool OnShowSelectedBookCanExecute(Guid? id)
+            => (id is null || id == Guid.Empty) ? false : true;
+
+        private void OnShowSelectedBookExecute(Guid? id)
+            => SelectedBookId = (Guid)id;
 
         private async void SaveItemExecute()
         {

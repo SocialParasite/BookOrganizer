@@ -16,7 +16,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
     public class PublisherDetailViewModel : BaseDetailViewModel<Publisher>, IPublisherDetailViewModel
     {
         private string name;
-        private Guid selectedBookId;
+        //private Guid selectedBookId;
 
         public PublisherDetailViewModel(IEventAggregator eventAggregator,
             IMetroDialogService metroDialogService,
@@ -25,18 +25,18 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             Repository = publisherRepo ?? throw new ArgumentNullException(nameof(publisherRepo));
 
-            ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
+            //ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
             SelectedItem = new Publisher();
 
         }
 
-        private bool OnShowSelectedBookCanExecute(Guid? id)
-            => (id is null || id == Guid.Empty) ? false : true;
+        //private bool OnShowSelectedBookCanExecute(Guid? id)
+        //    => (id is null || id == Guid.Empty) ? false : true;
 
-        private void OnShowSelectedBookExecute(Guid? id)
-            => SelectedBookId = (Guid)id;
+        //private void OnShowSelectedBookExecute(Guid? id)
+        //    => SelectedBookId = (Guid)id;
 
-        public ICommand ShowSelectedBookCommand { get; set; }
+        //public ICommand ShowSelectedBookCommand { get; set; }
 
         public string Name
         {
@@ -44,20 +44,20 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { name = value; OnPropertyChanged(); TabTitle = value; SelectedItem.Name = value; }
         }
 
-        public Guid SelectedBookId
-        {
-            get => selectedBookId;
-            set
-            {
-                selectedBookId = value;
-                OnPropertyChanged();
-                if (selectedBookId != Guid.Empty)
-                {
-                    eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
-                                   .Publish(selectedBookId);
-                }
-            }
-        }
+        //public Guid SelectedBookId
+        //{
+        //    get => selectedBookId;
+        //    set
+        //    {
+        //        selectedBookId = value;
+        //        OnPropertyChanged();
+        //        if (selectedBookId != Guid.Empty)
+        //        {
+        //            eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
+        //                           .Publish(selectedBookId);
+        //        }
+        //    }
+        //}
 
         public async override Task LoadAsync(Guid id)
         {
