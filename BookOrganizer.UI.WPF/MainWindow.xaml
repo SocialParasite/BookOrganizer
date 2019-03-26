@@ -136,7 +136,7 @@
                             <TabControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding SelectedItem.Title}" />
+                                        <TextBlock Text="{Binding TabTitle}" />
                                         <TextBlock
                                             Foreground="Red"
                                             Text="*"

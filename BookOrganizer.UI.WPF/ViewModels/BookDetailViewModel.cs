@@ -31,6 +31,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private LookupItem selectedPublisher;
         private LookupItem selectedAuthor;
         private int selectedReleaseYear;
+        private string title;
 
         public BookDetailViewModel(IEventAggregator eventAggregator,
             IMetroDialogService metroDialogService,
@@ -141,6 +142,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { selectedReleaseYear = value; OnPropertyChanged(); }
         }
 
+        public string Title
+        {
+            get { return title; }
+            set { title = value; OnPropertyChanged(); TabTitle = value; SelectedItem.Title = value; }
+        }
+
 
         private void ShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
@@ -182,6 +189,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = await Repository.GetSelectedAsync(id) ?? null;
 
             Id = id;
+
+            TabTitle = SelectedItem.Title;
+            Title = SelectedItem.Title;
 
             SetDefaultBookCoverIfNoneSet();
             SetDefaultBookTitleIfNoneSet();

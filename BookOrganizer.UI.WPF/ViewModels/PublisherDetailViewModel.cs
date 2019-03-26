@@ -12,6 +12,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 {
     public class PublisherDetailViewModel : BaseDetailViewModel<Publisher>, IPublisherDetailViewModel
     {
+        private string name;
+
         public PublisherDetailViewModel(IEventAggregator eventAggregator,
             IMetroDialogService metroDialogService,
             IRepository<Publisher> publisherRepo)
@@ -20,6 +22,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Repository = publisherRepo ?? throw new ArgumentNullException(nameof(publisherRepo));
 
             SelectedItem = new Publisher();
+
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; OnPropertyChanged(); TabTitle = value; SelectedItem.Name = value; }
         }
 
         public async override Task LoadAsync(Guid id)
@@ -28,6 +37,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             Id = id;
 
+            TabTitle = SelectedItem.Name;
+            Name = SelectedItem.Name;
             //SetDefaultPublisherLogoIfNoneSet();
 
             //void SetDefaultPublisherLogoIfNoneSet()

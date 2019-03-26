@@ -77,6 +77,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
+        private string tabTitle;
+
+        public string TabTitle
+        {
+            get { return tabTitle; }
+            set { tabTitle = value; OnPropertyChanged(); }
+        }
+
+
         public abstract Task LoadAsync(Guid id);
 
         public virtual async Task OnOpenItemDetailsViewAsync(Guid id)
