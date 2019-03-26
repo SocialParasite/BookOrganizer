@@ -33,8 +33,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             Id = id;
 
-            TabTitle = SelectedItem.Name;
-            Name = SelectedItem.Name;
+            if (Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            {
+                TabTitle = SelectedItem.Name;
+                Name = SelectedItem.Name;
+            }
             //SetDefaultPublisherLogoIfNoneSet();
 
             //void SetDefaultPublisherLogoIfNoneSet()

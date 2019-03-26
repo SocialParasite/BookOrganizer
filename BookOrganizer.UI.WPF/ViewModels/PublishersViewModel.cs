@@ -26,12 +26,19 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             PublisherNameLabelMouseLeftButtonUpCommand =
                 new DelegateCommand<Guid?>(OnPublisherNameLabelMouseLeftButtonUpExecute,
-                OnPublisherNameLabelMouseLeftButtonUpCanExecute);
+                                           OnPublisherNameLabelMouseLeftButtonUpCanExecute);
+            AddNewPublisherCommand = new DelegateCommand(OnAddNewPublisherExecute);
 
             InitializeRepositoryAsync();
         }
 
+        private void OnAddNewPublisherExecute()
+        {
+            SelectedPublisher = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(PublisherDetailViewModel) };
+        }
+
         public ICommand PublisherNameLabelMouseLeftButtonUpCommand { get; set; }
+        public ICommand AddNewPublisherCommand { get; set; }
 
         public OpenDetailViewEventArgs SelectedPublisher
         {

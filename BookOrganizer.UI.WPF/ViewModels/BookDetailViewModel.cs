@@ -168,8 +168,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             Id = id;
 
-            TabTitle = SelectedItem.Title;
-            Title = SelectedItem.Title;
+            if (Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            {
+                TabTitle = SelectedItem.Title;
+                Title = SelectedItem.Title;
+            }
 
             SetDefaultBookCoverIfNoneSet();
             SetDefaultBookTitleIfNoneSet();
