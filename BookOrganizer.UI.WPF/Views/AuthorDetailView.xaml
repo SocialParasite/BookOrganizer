@@ -134,7 +134,7 @@
                                 <TextBlock.InputBindings>
                                     <MouseBinding
                                         Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                        CommandParameter="{Binding Id}"
+                                        CommandParameter="{Binding Book.Id}"
                                         MouseAction="LeftDoubleClick" />
                                 </TextBlock.InputBindings>
                             </TextBlock>
