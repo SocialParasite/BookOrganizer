@@ -34,7 +34,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             DetailViewModels = new ObservableCollection<IDetailViewModel>();
 
             OpenMainMenuCommand = new DelegateCommand(OnOpenMainMenuExecute);
-            OpenAuthorsViewCommand = new DelegateCommand(OnOpenAuthorsViewExecute);
             OpenSettingsMenuCommand = new DelegateCommand(OnOpenSettingsMenuExecute);
             OpenSelectedViewCommand = new DelegateCommand<string>(OnOpenSelectedViewExecute);
 
@@ -57,9 +56,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         public ICommand OpenMainMenuCommand { get; }
-        public ICommand OpenAuthorsViewCommand { get; }
         public ICommand OpenSettingsMenuCommand { get; }
-        public ICommand OpenSelectedViewCommand { get; set; }
+        public ICommand OpenSelectedViewCommand { get; }
 
         public ObservableCollection<IDetailViewModel> DetailViewModels { get; set; }
 
@@ -113,12 +111,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             SelectedVM = viewModelCreator[viewModel];
             IsViewVisible = true;
-        }
-
-        [Obsolete]
-        private void OnOpenAuthorsViewExecute()
-        {
-            throw new NotImplementedException();
         }
 
         [Obsolete]
