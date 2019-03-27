@@ -61,5 +61,16 @@ namespace BookOrganizer.UI.WPFTests
 
             raised.Should().BeTrue();
         }
+
+        [Fact]
+        public void Title_ShouldRaise_PropertyChangedEvent()
+        {
+            var raised = viewModel.IsPropertyChangedRaised(() =>
+            {
+               viewModel.Title = "Brand new title!";
+            }, nameof(viewModel.Title));
+
+            raised.Should().BeTrue();
+        }
     }
 }
