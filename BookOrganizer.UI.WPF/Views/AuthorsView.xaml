@@ -12,11 +12,11 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <!--<DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
-            <local:PublisherDetailView />
-        </DataTemplate>-->
+        <DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
+            <local:AuthorDetailView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:AuthorsViewModel}">
-            <local:PublishersView />
+            <local:AuthorsView />
         </DataTemplate>
 
         <DataTemplate x:Key="UserDataTemplate">

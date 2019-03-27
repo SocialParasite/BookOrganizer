@@ -1,4 +1,5 @@
 ﻿using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
 using Prism.Commands;
 using Prism.Events;
@@ -15,6 +16,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
     {
         private readonly IEventAggregator eventAggregator;
         private readonly IAuthorLookupDataService authorLookupDataService;
+        private OpenDetailViewEventArgs selectedAuthor;
 
         public AuthorsViewModel(IEventAggregator eventAggregator,
                               IAuthorLookupDataService authorLookupDataService)
@@ -34,6 +36,21 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand AuthorNameLabelMouseLeftButtonUpCommand { get; set; }
         public ICommand AddNewAuthorCommand { get; set; }
 
+        public OpenDetailViewEventArgs SelectedAuthor
+        {
+            get => selectedAuthor;
+            set
+            {
+                selectedAuthor = value;
+                OnPropertyChanged();
+                if (selectedAuthor != null)
+                {
+                    eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(selectedAuthor);
+                }
+            }
+        }
+
         private void OnAddNewAuthorExecute()
         {
             throw new NotImplementedException();
@@ -43,9 +60,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             => (id is null || id == Guid.Empty) ? false : true;
 
         private void OnAuthorNameLabelMouseLeftButtonUpExecute(Guid? id)
-        {
-            throw new NotImplementedException();
-        }
+            => SelectedAuthor = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(AuthorDetailViewModel) };
+
 
         public async override Task InitializeRepositoryAsync()
         {

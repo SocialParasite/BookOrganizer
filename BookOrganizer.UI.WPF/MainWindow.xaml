@@ -35,11 +35,11 @@
                 <view:PublisherDetailView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:AuthorsViewModel}">
-                <view:PublishersView />
+                <view:AuthorsView />
             </DataTemplate>
-            <!--<DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
-                <view:PublisherDetailView />
-            </DataTemplate>-->
+            <DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
+                <view:AuthorDetailView />
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
 
