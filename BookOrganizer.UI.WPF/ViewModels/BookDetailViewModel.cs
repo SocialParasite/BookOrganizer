@@ -31,6 +31,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private LookupItem selectedAuthor;
         private int selectedReleaseYear;
         private string title;
+        private Guid selectedPublisherId;
+        private Guid selectedAuthorId;
 
         public BookDetailViewModel(IEventAggregator eventAggregator,
             IMetroDialogService metroDialogService,
@@ -57,8 +59,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             PublisherSelectionChangedCommand = new DelegateCommand(OnPublisherSelectionChangedExecute);
             RemoveDateAsABookReadDateCommand = new DelegateCommand<DateTime?>(OnRemoveDateAsABookReadDateExecute);
             ReleaseYearSelectionChangedCommand = new DelegateCommand(OnReleaseYearSelectionChangedExecute);
+            ShowSelectedPublisherCommand
+                = new DelegateCommand<Guid?>(OnShowSelectedPublisherExecute, OnShowSelectedPublisherCanExecute);
+            ShowSelectedAuthorCommand = new DelegateCommand<Guid?>(OnShowSelectedAuthorExecute, OnShowSelectedAuthorCanExecute);
 
-            Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
+        Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
             NewReadDate = DateTime.Today;
             Languages = new ObservableCollection<LookupItem>();
@@ -79,6 +84,38 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand PublisherSelectionChangedCommand { get; set; }
         public ICommand RemoveDateAsABookReadDateCommand { get; set; }
         public ICommand ReleaseYearSelectionChangedCommand { get; set; }
+        public ICommand ShowSelectedPublisherCommand { get; set; }
+        public ICommand ShowSelectedAuthorCommand { get; set; }
+
+        public Guid SelectedPublisherId
+        {
+            get => selectedPublisherId;
+            set
+            {
+                selectedPublisherId = value;
+                OnPropertyChanged();
+                if (selectedPublisherId != Guid.Empty)
+                {
+                    eventAggregator.GetEvent<OpenItemMatchingSelectedPublisherIdEvent<Guid>>()
+                                   .Publish(SelectedPublisherId);
+                }
+            }
+        }
+
+        public Guid SelectedAuthorId
+        {
+            get => selectedAuthorId;
+            set
+            {
+                selectedAuthorId = value;
+                OnPropertyChanged();
+                if (selectedAuthorId != Guid.Empty)
+                {
+                    eventAggregator.GetEvent<OpenItemMatchingSelectedAuthorIdEvent<Guid>>()
+                                   .Publish(SelectedAuthorId);
+                }
+            }
+        }
 
         public SolidColorBrush HighlightBrush
         {
@@ -364,6 +401,18 @@ namespace BookOrganizer.UI.WPF.ViewModels
             if (SelectedPublisher != null && Publishers.Any())
                 SelectedItem.PublisherId = SelectedPublisher.Id;
         }
+
+        private bool OnShowSelectedAuthorCanExecute(Guid? id)
+    => (id is null || id == Guid.Empty) ? false : true;
+
+        private void OnShowSelectedAuthorExecute(Guid? id)
+            => SelectedAuthorId = (Guid)id;
+
+        private bool OnShowSelectedPublisherCanExecute(Guid? id)
+            => (id is null || id == Guid.Empty) ? false : true;
+
+        private void OnShowSelectedPublisherExecute(Guid? id)
+            => SelectedPublisherId = (Guid)id;
 
         private void OnRemoveDateAsABookReadDateExecute(DateTime? readDate)
         {

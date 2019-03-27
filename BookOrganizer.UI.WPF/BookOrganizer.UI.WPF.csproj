@@ -140,6 +140,8 @@
     </ApplicationDefinition>
     <Compile Include="Events\CloseDetailsViewEvent.cs" />
     <Compile Include="Events\OpenDetailsViewEvent.cs" />
+    <Compile Include="Events\OpenItemMatchingSelectedAuthorIdEvent.cs" />
+    <Compile Include="Events\OpenItemMatchingSelectedPublisherIdEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedBookIdEvent.cs" />
     <Compile Include="Lookups\IBookLookupDataService.cs" />
     <Compile Include="Lookups\IAuthorLookupDataService.cs" />
