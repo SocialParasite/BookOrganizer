@@ -39,12 +39,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
             throw new NotImplementedException();
         }
 
-        private bool OnAuthorNameLabelMouseLeftButtonUpCanExecute(Guid? arg)
-        {
-            throw new NotImplementedException();
-        }
+        private bool OnAuthorNameLabelMouseLeftButtonUpCanExecute(Guid? id)
+            => (id is null || id == Guid.Empty) ? false : true;
 
-        private void OnAuthorNameLabelMouseLeftButtonUpExecute(Guid? obj)
+        private void OnAuthorNameLabelMouseLeftButtonUpExecute(Guid? id)
         {
             throw new NotImplementedException();
         }
