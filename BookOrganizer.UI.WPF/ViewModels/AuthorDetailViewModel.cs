@@ -11,6 +11,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
 {
     public class AuthorDetailViewModel : BaseDetailViewModel<Author>, IAuthorDetailViewModel
     {
+        private string firstName;
+        private string lastName;
+
         public AuthorDetailViewModel(IEventAggregator eventAggregator,
             IMetroDialogService metroDialogService,
             IRepository<Author> authorRepo)
@@ -19,9 +22,40 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Repository = authorRepo ?? throw new ArgumentNullException(nameof(authorRepo));
 
             AddAuthorPictureCommand = new DelegateCommand(OnAddAuthorPictureExecute);
+
+            SelectedItem = new Author();
         }
 
         public ICommand AddAuthorPictureCommand { get; set; }
+
+        public string FirstName
+        {
+            get => firstName;
+            set
+            {
+                firstName = value;
+                OnPropertyChanged();
+                SetTabTitle();
+                SelectedItem.FirstName = value;
+            }
+        }
+
+        public string LastName
+        {
+            get => lastName;
+            set
+            {
+                lastName = value;
+                OnPropertyChanged();
+                SetTabTitle();
+                SelectedItem.LastName = value;
+            }
+        }
+
+        private void SetTabTitle()
+        {
+            TabTitle = $"{LastName}, {FirstName}";
+        }
 
         private void OnAddAuthorPictureExecute()
         {
@@ -36,9 +70,18 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             if (Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
-                TabTitle = $"{SelectedItem.LastName}, {SelectedItem.FirstName}";
-
+                LastName = SelectedItem.LastName;
+                FirstName = SelectedItem.FirstName;
+                SetTabTitle();
             }
+
+            //SelectedItem.PropertyChanged += (s, e) =>
+            //{
+            //    if (!HasChanges)
+            //    {
+            //        HasChanges = Repository.HasChanges();
+            //    }
+            //};
         }
     }
 }

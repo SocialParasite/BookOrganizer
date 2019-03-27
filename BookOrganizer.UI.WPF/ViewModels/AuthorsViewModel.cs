@@ -52,9 +52,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private void OnAddNewAuthorExecute()
-        {
-            throw new NotImplementedException();
-        }
+            => SelectedAuthor = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(AuthorDetailViewModel) };
 
         private bool OnAuthorNameLabelMouseLeftButtonUpCanExecute(Guid? id)
             => (id is null || id == Guid.Empty) ? false : true;

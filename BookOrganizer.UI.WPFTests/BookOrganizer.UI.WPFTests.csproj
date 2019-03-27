@@ -99,6 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorDetailViewModelTests.cs" />
     <Compile Include="PublisherDetailViewModelTests.cs" />
     <Compile Include="BookDetailViewModelTests.cs" />
     <Compile Include="BooksViewModelTests.cs" />
