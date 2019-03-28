@@ -15,6 +15,7 @@ namespace BookOrganizer.UI.WPF.Lookups
                                      IPublisherLookupDataService, IAuthorLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
+        private readonly string placeholderPic = $"{Path.GetDirectoryName((Assembly.GetExecutingAssembly().GetName().CodeBase)).Substring(6)}\\placeholder.png";
 
         public LookupDataService(Func<BookOrganizerDbContext> contextCreator)
         {
@@ -23,8 +24,6 @@ namespace BookOrganizer.UI.WPF.Lookups
 
         public async Task<IEnumerable<LookupItem>> GetBookLookupAsync()
         {
-            var placeholderPic = $"{Path.GetDirectoryName((Assembly.GetExecutingAssembly().GetName().CodeBase)).Substring(6)}\\placeholder.png";
-
             using (var ctx = _contextCreator())
             {
                 return await ctx.Books.AsNoTracking()
@@ -67,8 +66,8 @@ namespace BookOrganizer.UI.WPF.Lookups
                   {
                       Id = p.Id,
                       DisplayMember = p.Name,
-                      Picture = null,
-                      ViewModelName = null //nameof(PublisherDetailViewModel)
+                      Picture = p.LogoPath ?? placeholderPic,
+                      ViewModelName = nameof(PublisherDetailViewModel)
                   })
                   .ToListAsync();
             }
@@ -85,8 +84,8 @@ namespace BookOrganizer.UI.WPF.Lookups
                       {
                           Id = a.Id,
                           DisplayMember = $"{a.LastName}, {a.FirstName}",
-                          Picture = null,
-                          ViewModelName = null //nameof(AuthorDetailViewModel)
+                          Picture = a.MugShotPath ?? placeholderPic,
+                          ViewModelName = nameof(AuthorDetailViewModel)
                       })
                       .ToListAsync();
             }

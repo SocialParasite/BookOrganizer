@@ -95,7 +95,7 @@
                 TextWrapping="Wrap" />
             <Button
                 Grid.RowSpan="3"
-                Grid.Column="2"
+                Grid.Column="3"
                 Grid.ColumnSpan="2"
                 MaxWidth="600"
                 MaxHeight="600"
@@ -105,7 +105,7 @@
                 IsEnabled="{Binding UserMode.Item4}">
                 <Button.Template>
                     <ControlTemplate>
-                        <Image x:Name="authorImage" Source="{Binding SelectedItem.Picture}" />
+                        <Image x:Name="authorImage" Source="{Binding SelectedItem.MugShotPath}" />
                     </ControlTemplate>
                 </Button.Template>
             </Button>
