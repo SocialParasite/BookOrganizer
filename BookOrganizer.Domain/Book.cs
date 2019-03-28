@@ -134,25 +134,7 @@ namespace BookOrganizer.Domain
             set
             {
                 _bookCoverPicturePath = DomainHelpers.SetPicturePath(value, "Covers");
-                //var pictureName = Path.GetFileName(value);
 
-                //var envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                //var folder = @"\BookOrganizer\Covers\";
-                //var fullPath = $"{envPath}{folder}{pictureName}";
-
-                //fullPath = Path.GetFullPath(fullPath);
-                //_bookCoverPicturePath = fullPath;
-
-                //try
-                //{
-                //    if (Directory.Exists(Path.GetDirectoryName(fullPath))) return;
-
-                //    Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-                //}
-                //catch (Exception ex)
-                //{
-                //    throw; //TODO:
-                //}
                 OnPropertyChanged();
             }
         }
