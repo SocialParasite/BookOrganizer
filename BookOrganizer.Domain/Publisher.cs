@@ -9,7 +9,7 @@ namespace BookOrganizer.Domain
     public class Publisher : IIdentifiable
     {
         private string _name;
-        //private string _logoPath;
+        private string _logoPath;
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -30,14 +30,14 @@ namespace BookOrganizer.Domain
         }
 
 
-        //public string LogoPath
-        //{
-        //    get => _logoPath;
-        //    set
-        //    {
-        //        _logoPath = DomainHelpers.SetPicturePath(value, "PubLogos");
-        //    }
-        //}
+        public string LogoPath
+        {
+            get => _logoPath;
+            set
+            {
+                _logoPath = DomainHelpers.SetPicturePath(value, "PubLogos");
+            }
+        }
 
         public ICollection<Book> Books { get; set; }
     }
