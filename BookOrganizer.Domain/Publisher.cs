@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 
 namespace BookOrganizer.Domain
 {
     public class Publisher : IIdentifiable
     {
         private string _name;
+        //private string _logoPath;
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -26,6 +28,16 @@ namespace BookOrganizer.Domain
                 _name = value;
             }
         }
+
+
+        //public string LogoPath
+        //{
+        //    get => _logoPath;
+        //    set
+        //    {
+        //        _logoPath = DomainHelpers.SetPicturePath(value, "PubLogos");
+        //    }
+        //}
 
         public ICollection<Book> Books { get; set; }
     }

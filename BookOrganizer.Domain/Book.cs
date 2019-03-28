@@ -21,7 +21,7 @@ namespace BookOrganizer.Domain
         private int _pageCount;
         private int _wordCount;
         private string _iSBN;
-        private string _bookCoverPicture;
+        private string _bookCoverPicturePath;
         private bool _isRead;
         private string _description;
 
@@ -130,28 +130,29 @@ namespace BookOrganizer.Domain
 
         public string BookCoverPicturePath
         {
-            get { return _bookCoverPicture; }
+            get { return _bookCoverPicturePath; }
             set
             {
-                var pictureName = Path.GetFileName(value);
+                _bookCoverPicturePath = DomainHelpers.SetPicturePath(value, "Covers");
+                //var pictureName = Path.GetFileName(value);
 
-                var envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                var folder = @"\BookOrganizer\Covers\";
-                var fullPath = $"{envPath}{folder}{pictureName}";
+                //var envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                //var folder = @"\BookOrganizer\Covers\";
+                //var fullPath = $"{envPath}{folder}{pictureName}";
 
-                fullPath = Path.GetFullPath(fullPath);
-                _bookCoverPicture = fullPath;
+                //fullPath = Path.GetFullPath(fullPath);
+                //_bookCoverPicturePath = fullPath;
 
-                try
-                {
-                    if (Directory.Exists(Path.GetDirectoryName(fullPath))) return;
+                //try
+                //{
+                //    if (Directory.Exists(Path.GetDirectoryName(fullPath))) return;
 
-                    Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-                }
-                catch (Exception ex)
-                {
-                    throw; //TODO:
-                }
+                //    Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                //}
+                //catch (Exception ex)
+                //{
+                //    throw; //TODO:
+                //}
                 OnPropertyChanged();
             }
         }
