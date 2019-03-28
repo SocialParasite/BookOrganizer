@@ -128,7 +128,7 @@ namespace BookOrganizer.Domain
             }
         }
 
-        public string BookCoverPicture
+        public string BookCoverPicturePath
         {
             get { return _bookCoverPicture; }
             set

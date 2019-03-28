@@ -33,7 +33,7 @@ namespace BookOrganizer.UI.WPF.Lookups
                   {
                       Id = b.Id,
                       DisplayMember = $"{b.Title} ({b.ReleaseYear})",
-                      Picture = b.BookCoverPicture ?? placeholderPic,
+                      Picture = b.BookCoverPicturePath ?? placeholderPic,
                       ViewModelName = nameof(BookDetailViewModel)
                   })
                   .ToListAsync();

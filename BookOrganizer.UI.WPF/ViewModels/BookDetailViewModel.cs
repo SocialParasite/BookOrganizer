@@ -195,7 +195,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 // TODO: testing...
                 var coverPath = @"C:\\temp\\";
 
-                SelectedItem.BookCoverPicture = coverPath + coverPic.UriSource.Segments.LastOrDefault();
+                SelectedItem.BookCoverPicturePath = coverPath + coverPic.UriSource.Segments.LastOrDefault();
             }
         }
 
@@ -227,8 +227,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             void SetDefaultBookCoverIfNoneSet()
             {
-                if (SelectedItem.BookCoverPicture is null)
-                    SelectedItem.BookCoverPicture =
+                if (SelectedItem.BookCoverPicturePath is null)
+                    SelectedItem.BookCoverPicturePath =
                         $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6)}\\placeholder.png";
             }
 
