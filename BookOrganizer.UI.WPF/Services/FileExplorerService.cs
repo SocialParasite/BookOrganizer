@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Media.Imaging;
 
 namespace BookOrganizer.UI.WPF.Services
@@ -25,5 +27,9 @@ namespace BookOrganizer.UI.WPF.Services
             }
             return null;
         }
+
+        public static string GetImagePath()
+            => $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6)}\\placeholder.png";
+
     }
 }

@@ -55,14 +55,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             void SetDefaultPublisherLogoIfNoneSet()
             {
                 if (SelectedItem.LogoPath is null)
-                    zzTemp();
+                    SelectedItem.LogoPath = FileExplorerService.GetImagePath();
             }
         }
 
-        private void zzTemp()
-        {
-            SelectedItem.LogoPath =
-                $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6)}\\placeholder.png";
-        }
+        //private string GetImagePath()
+        //    => $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6)}\\placeholder.png";
     }
 }
