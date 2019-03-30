@@ -63,7 +63,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 = new DelegateCommand<Guid?>(OnShowSelectedPublisherExecute, OnShowSelectedPublisherCanExecute);
             ShowSelectedAuthorCommand = new DelegateCommand<Guid?>(OnShowSelectedAuthorExecute, OnShowSelectedAuthorCanExecute);
 
-        Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
+            Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
             NewReadDate = DateTime.Today;
             Languages = new ObservableCollection<LookupItem>();
@@ -183,20 +183,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void AddBookCoverImageExecute()
         {
-            OpenFileDialog op = new OpenFileDialog();
-            op.Title = "Select a picture as a book cover";
-            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-                        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-                        "Portable Network Graphic (*.png)|*.png";
-
-            if (op.ShowDialog() == true)
-            {
-                var coverPic = new BitmapImage(new Uri(op.FileName));
-                // TODO: testing...
-                var coverPath = @"C:\\temp\\";
-
-                SelectedItem.BookCoverPicturePath = coverPath + coverPic.UriSource.Segments.LastOrDefault();
-            }
+            SelectedItem.BookCoverPicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.BookCoverPicturePath;
         }
 
         public async override Task LoadAsync(Guid id)
