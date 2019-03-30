@@ -154,6 +154,7 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\AuthorsRepository.cs" />
     <Compile Include="Repositories\PublishersRepository.cs" />
+    <Compile Include="Services\FileExplorerService.cs" />
     <Compile Include="Services\IMetroDialogService.cs" />
     <Compile Include="Services\MetroDialogService.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
