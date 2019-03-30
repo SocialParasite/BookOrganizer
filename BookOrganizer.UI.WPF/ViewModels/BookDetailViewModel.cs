@@ -3,7 +3,6 @@ using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
-using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -15,7 +14,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
@@ -182,9 +180,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private void AddBookCoverImageExecute()
-        {
-            SelectedItem.BookCoverPicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.BookCoverPicturePath;
-        }
+            => SelectedItem.BookCoverPicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.BookCoverPicturePath;
 
         public async override Task LoadAsync(Guid id)
         {
@@ -411,9 +407,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private void OnReleaseYearSelectionChangedExecute()
-        {
-            SelectedItem.ReleaseYear = SelectedReleaseYear;
-        }
+            => SelectedItem.ReleaseYear = SelectedReleaseYear;
 
         private IEnumerable<int> PopulateYearsMenu()
         {

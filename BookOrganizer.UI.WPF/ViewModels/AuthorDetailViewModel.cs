@@ -1,16 +1,13 @@
 ﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
-using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
 using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
@@ -58,14 +55,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private void SetTabTitle()
-        {
-            TabTitle = $"{LastName}, {FirstName}";
-        }
+            => TabTitle = $"{LastName}, {FirstName}";
 
         private void OnAddAuthorPictureExecute()
-        {
-            SelectedItem.MugShotPath = FileExplorerService.BrowsePicture() ?? SelectedItem.MugShotPath;
-        }
+            => SelectedItem.MugShotPath = FileExplorerService.BrowsePicture() ?? SelectedItem.MugShotPath;
 
         public async override Task LoadAsync(Guid id)
         {
