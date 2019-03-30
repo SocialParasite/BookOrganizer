@@ -35,7 +35,7 @@ namespace BookOrganizer.Domain
             get => _logoPath;
             set
             {
-                _logoPath = DomainHelpers.SetPicturePath(value, "PubLogos");
+                _logoPath = DomainHelpers.SetPicturePath(value, "PublisherLogos");
             }
         }
 

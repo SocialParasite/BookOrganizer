@@ -74,19 +74,18 @@
                 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap" />
             <Button
-                Grid.Row="1"
-                Grid.RowSpan="7"
-                Grid.Column="4"
+                Grid.Row="0"
+                Grid.Column="2"
                 Grid.ColumnSpan="2"
-                MaxWidth="600"
-                MaxHeight="600"
+                MaxWidth="200"
+                MaxHeight="200"
                 Margin="50,0,0,0"
                 HorizontalAlignment="Left"
                 Command="{Binding AddPublisherLogoCommand}"
                 IsEnabled="{Binding UserMode.Item4}">
                 <Button.Template>
                     <ControlTemplate>
-                        <Image x:Name="publisherLogoImage" Source="{Binding SelectedItem.PublisherLogo}" />
+                        <Image x:Name="publisherLogoImage" Source="{Binding SelectedItem.LogoPath}" />
                     </ControlTemplate>
                 </Button.Template>
             </Button>
