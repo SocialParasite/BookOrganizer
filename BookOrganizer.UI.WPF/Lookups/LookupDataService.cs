@@ -1,12 +1,11 @@
 ﻿using BookOrganizer.Data.SqlServer;
 using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.Lookups
@@ -15,7 +14,7 @@ namespace BookOrganizer.UI.WPF.Lookups
                                      IPublisherLookupDataService, IAuthorLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
-        private readonly string placeholderPic = $"{Path.GetDirectoryName((Assembly.GetExecutingAssembly().GetName().CodeBase)).Substring(6)}\\placeholder.png";
+        private readonly string placeholderPic = FileExplorerService.GetImagePath();
 
         public LookupDataService(Func<BookOrganizerDbContext> contextCreator)
         {
