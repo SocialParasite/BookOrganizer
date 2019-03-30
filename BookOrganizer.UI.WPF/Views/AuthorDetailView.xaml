@@ -61,11 +61,26 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <TextBox
+                x:Name="fullNameLabe"
+                FontWeight="Bold"
+                BorderThickness="0" FontSize="48"
+                Style="{StaticResource TextBoxStyles}"
+                Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}">
+                <TextBox.Text>
+                    <MultiBinding StringFormat="{}{1}, {0}">
+                        <Binding Path="FirstName" />
+                        <Binding Path="LastName" />
+                    </MultiBinding>
+                </TextBox.Text>
+            </TextBox>
+
             <Label
                 x:Name="lastNameLabel"
                 Content="Surname:"
                 FontWeight="Bold"
-                Style="{StaticResource LabelStyles}" />
+                Style="{StaticResource LabelStyles}"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
             <TextBox
                 x:Name="lastNameTextBox"
                 Grid.Column="1"
@@ -75,13 +90,15 @@
                 FontSize="48"
                 Style="{StaticResource EditableTextBoxStyles}"
                 Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" />
+                TextWrapping="Wrap"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
             <Label
                 x:Name="firstNameLabel"
                 Grid.Row="1"
                 Content="Forename(s):"
                 FontWeight="Bold"
-                Style="{StaticResource LabelStyles}" />
+                Style="{StaticResource LabelStyles}"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
             <TextBox
                 x:Name="firstNameTextBox"
                 Grid.Row="1"
@@ -92,7 +109,8 @@
                 FontSize="48"
                 Style="{StaticResource EditableTextBoxStyles}"
                 Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" />
+                TextWrapping="Wrap"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
             <Button
                 Grid.RowSpan="3"
                 Grid.Column="3"
