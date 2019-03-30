@@ -58,8 +58,5 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     SelectedItem.LogoPath = FileExplorerService.GetImagePath();
             }
         }
-
-        //private string GetImagePath()
-        //    => $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6)}\\placeholder.png";
     }
 }

@@ -85,8 +85,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             void SetDefaultAuthorPicIfNoneSet()
             {
                 if (SelectedItem.MugShotPath is null)
-                    SelectedItem.MugShotPath =
-                        $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6)}\\placeholder.png";
+                    SelectedItem.MugShotPath = FileExplorerService.GetImagePath();
             }
         }
     }
