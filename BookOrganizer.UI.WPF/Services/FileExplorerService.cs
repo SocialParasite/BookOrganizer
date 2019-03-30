@@ -17,11 +17,11 @@ namespace BookOrganizer.UI.WPF.Services
 
             if (op.ShowDialog() == true)
             {
-                var coverPic = new BitmapImage(new Uri(op.FileName));
+                var picture = new BitmapImage(new Uri(op.FileName));
                 // TODO: testing...
-                var coverPath = @"C:\\temp\\";
+                var picturePath = @"C:\\temp\\";
 
-                return coverPath + coverPic.UriSource.Segments.LastOrDefault();
+                return picturePath + picture.UriSource.Segments.LastOrDefault();
             }
             return null;
         }
