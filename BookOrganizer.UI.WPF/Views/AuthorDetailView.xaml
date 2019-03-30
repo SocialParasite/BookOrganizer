@@ -62,9 +62,10 @@
             </Grid.RowDefinitions>
 
             <TextBox
-                x:Name="fullNameLabe"
+                x:Name="fullNameLabel"
+                BorderThickness="0"
+                FontSize="48"
                 FontWeight="Bold"
-                BorderThickness="0" FontSize="48"
                 Style="{StaticResource TextBoxStyles}"
                 Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}">
                 <TextBox.Text>

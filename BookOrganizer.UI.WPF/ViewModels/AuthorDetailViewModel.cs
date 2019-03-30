@@ -92,6 +92,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 FirstName = SelectedItem.FirstName;
                 SetTabTitle();
             }
+
             SetDefaultAuthorPicIfNoneSet();
 
             //SelectedItem.PropertyChanged += (s, e) =>
