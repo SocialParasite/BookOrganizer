@@ -55,8 +55,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private void SetTabTitle()
             => TabTitle = $"{LastName}, {FirstName}";
 
-        private void OnAddAuthorPictureExecute()
-            => SelectedItem.MugShotPath = FileExplorerService.BrowsePicture() ?? SelectedItem.MugShotPath;
+        private async void OnAddAuthorPictureExecute()
+        {
+            SelectedItem.MugShotPath = FileExplorerService.BrowsePicture() ?? SelectedItem.MugShotPath;
+            await LoadAsync(this.Id);
+        }
 
         public async override Task LoadAsync(Guid id)
         {

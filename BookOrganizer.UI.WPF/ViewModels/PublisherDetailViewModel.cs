@@ -25,8 +25,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = new Publisher();
         }
 
-        private void OnAddPublisherLogoExecute()
-            => SelectedItem.LogoPath = FileExplorerService.BrowsePicture() ?? SelectedItem.LogoPath;
+        private async void OnAddPublisherLogoExecute()
+        {
+            SelectedItem.LogoPath = FileExplorerService.BrowsePicture() ?? SelectedItem.LogoPath;
+            await LoadAsync(this.Id);
+        }
 
         public ICommand AddPublisherLogoCommand { get; }
 

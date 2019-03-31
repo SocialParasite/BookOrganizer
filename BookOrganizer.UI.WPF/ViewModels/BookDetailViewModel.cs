@@ -177,8 +177,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 SelectedItem.ReadDates.Add(newReadDate);
         }
 
-        private void AddBookCoverImageExecute()
-            => SelectedItem.BookCoverPicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.BookCoverPicturePath;
+        private async void AddBookCoverImageExecute()
+        {
+            SelectedItem.BookCoverPicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.BookCoverPicturePath;
+            await LoadAsync(this.Id);
+        }
 
         public async override Task LoadAsync(Guid id)
         {
