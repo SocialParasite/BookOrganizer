@@ -50,7 +50,7 @@
 
         <Grid Grid.Row="1" Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="150" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" MinWidth="150" />
                 <ColumnDefinition Width="Auto" MinWidth="10" />
                 <ColumnDefinition Width="Auto" MinWidth="150" />
@@ -64,9 +64,14 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <Label
+                x:Name="nameLabel"
+                Content="Publisher name: "
+                Style="{StaticResource LabelStyles}"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
             <TextBox
                 x:Name="nameTextBox"
-                Grid.Column="0"
+                Grid.Column="1"
                 Grid.ColumnSpan="2"
                 MaxWidth="500"
                 FontSize="48"
@@ -93,12 +98,14 @@
             <Label
                 x:Name="bookSeriesLabel"
                 Grid.Row="1"
+                Grid.Column="1"
                 Content="Books published:"
                 FontWeight="Bold"
                 Style="{StaticResource LabelStyles}" />
             <ListBox
                 x:Name="booksInSeriesListBox"
                 Grid.Row="2"
+                Grid.Column="1"
                 HorizontalContentAlignment="Stretch"
                 VerticalContentAlignment="Center"
                 BorderThickness="0"
