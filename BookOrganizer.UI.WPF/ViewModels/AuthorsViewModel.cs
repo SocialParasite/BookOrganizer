@@ -14,16 +14,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
 {
     public class AuthorsViewModel : BaseViewModel<Author>, IAuthorsViewModel
     {
-        private readonly IEventAggregator eventAggregator;
         private readonly IAuthorLookupDataService authorLookupDataService;
         private OpenDetailViewEventArgs selectedAuthor;
 
         public AuthorsViewModel(IEventAggregator eventAggregator,
                               IAuthorLookupDataService authorLookupDataService)
+            : base(eventAggregator)
         {
             this.authorLookupDataService = authorLookupDataService
                 ?? throw new ArgumentNullException(nameof(authorLookupDataService));
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
             AuthorNameLabelMouseLeftButtonUpCommand =
                 new DelegateCommand<Guid?>(OnAuthorNameLabelMouseLeftButtonUpExecute,

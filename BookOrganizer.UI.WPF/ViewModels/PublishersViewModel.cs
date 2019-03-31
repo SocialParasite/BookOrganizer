@@ -12,17 +12,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
 {
     public class PublishersViewModel : BaseViewModel<Publisher>, IPublishersViewModel
     {
-        private readonly IEventAggregator eventAggregator;
         private readonly IPublisherLookupDataService publisherLookupDataService;
 
         private OpenDetailViewEventArgs selectedPublisher;
 
         public PublishersViewModel(IEventAggregator eventAggregator,
                               IPublisherLookupDataService publisherLookupDataService)
+            : base(eventAggregator)
         {
             this.publisherLookupDataService = publisherLookupDataService
                 ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
             PublisherNameLabelMouseLeftButtonUpCommand =
                 new DelegateCommand<Guid?>(OnPublisherNameLabelMouseLeftButtonUpExecute,

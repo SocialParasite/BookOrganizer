@@ -13,11 +13,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
     public abstract class BaseViewModel<T> : ViewModelBase
             where T : class, IIdentifiable
     {
-        public BaseViewModel()
+        private List<LookupItem> entityCollection;
+
+        public BaseViewModel(IEventAggregator eventAggregator)
         {
+            this.eventAggregator = eventAggregator;
             //RefreshCommand = new DelegateCommand(OnRefreshExecute);
             //SortByCommand = new DelegateCommand<object>(OnSortByExecute);
         }
+
+        public readonly IEventAggregator eventAggregator;
 
         public IEnumerable<LookupItem> Items;
 
@@ -26,7 +31,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         //public ICommand RefreshCommand { get; }
         //public ICommand SortByCommand { get; }
 
-        private List<LookupItem> entityCollection;
+
         public List<LookupItem> EntityCollection
         {
             get => entityCollection;

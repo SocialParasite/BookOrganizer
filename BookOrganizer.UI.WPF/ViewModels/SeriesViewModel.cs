@@ -20,9 +20,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private OpenDetailViewEventArgs selectedSeries;
 
         public SeriesViewModel(IEventAggregator eventAggregator, ISeriesLookupDataService seriesLookupDataService)
+            : base(eventAggregator)
         {
-            // TODO: Move to base
-            this.eventAggregator = eventAggregator;
             this.seriesLookupDataService = seriesLookupDataService;
 
             SeriesNameLabelMouseLeftButtonUpCommand =
