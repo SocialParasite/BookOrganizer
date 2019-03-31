@@ -1,4 +1,5 @@
 ﻿using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
 using Prism.Commands;
 using Prism.Events;
@@ -16,6 +17,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly IEventAggregator eventAggregator;
         private readonly ISeriesLookupDataService seriesLookupDataService;
 
+        private OpenDetailViewEventArgs selectedSeries;
+
         public SeriesViewModel(IEventAggregator eventAggregator, ISeriesLookupDataService seriesLookupDataService)
         {
             // TODO: Move to base
@@ -23,19 +26,27 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.seriesLookupDataService = seriesLookupDataService;
 
             SeriesNameLabelMouseLeftButtonUpCommand =
-                new DelegateCommand<Guid?>(OnSeriesNameLabelMouseLeftButtonUpExecute, OnSeriesNameLabelMouseLeftButtonUpCanExecute);
+                new DelegateCommand<Guid?>(OnSeriesNameLabelMouseLeftButtonUpExecute,
+                OnSeriesNameLabelMouseLeftButtonUpCanExecute);
             AddNewSeriesCommand = new DelegateCommand(OnAddNewSeriesExecute);
 
             InitializeRepositoryAsync();
         }
 
-        private bool OnSeriesNameLabelMouseLeftButtonUpCanExecute(Guid? id)
-            => (id is null || id == Guid.Empty) ? false : true;
-
-        private void OnSeriesNameLabelMouseLeftButtonUpExecute(Guid? id)
+        public OpenDetailViewEventArgs SelectedSeries
         {
-            throw new NotImplementedException();
-            //=> SelectedSeries = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(SeriesDetailViewModel) };
+            get => selectedSeries;
+            set
+            {
+                selectedSeries = value;
+                OnPropertyChanged();
+
+                if (selectedSeries != null)
+                {
+                    eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(selectedSeries);
+                }
+            }
         }
 
         private void OnAddNewSeriesExecute()
@@ -52,5 +63,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             EntityCollection = Items.OrderBy(p => p.DisplayMember).ToList();
         }
+
+        private bool OnSeriesNameLabelMouseLeftButtonUpCanExecute(Guid? id)
+            => (id is null || id == Guid.Empty) ? false : true;
+
+        private void OnSeriesNameLabelMouseLeftButtonUpExecute(Guid? id)
+            => SelectedSeries = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(SeriesDetailViewModel) };
     }
 }

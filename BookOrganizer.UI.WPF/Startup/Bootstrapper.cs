@@ -31,6 +31,10 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<SeriesViewModel>().As<ISeriesViewModel>();
             builder.RegisterType<SeriesViewModel>().Keyed<ISelectedViewModel>(nameof(SeriesViewModel));
 
+            builder.RegisterType<SeriesDetailViewModel>().As<ISeriesDetailViewModel>();
+            builder.RegisterType<SeriesDetailViewModel>()
+                .Keyed<IDetailViewModel>(nameof(SeriesDetailViewModel));
+
             builder.RegisterType<PublishersViewModel>().As<IPublishersViewModel>();
             builder.RegisterType<PublishersViewModel>().Keyed<ISelectedViewModel>(nameof(PublishersViewModel));
 
@@ -52,6 +56,7 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<BooksRepository>().AsImplementedInterfaces();
             builder.RegisterType<PublishersRepository>().AsImplementedInterfaces();
             builder.RegisterType<AuthorsRepository>().AsImplementedInterfaces();
+            builder.RegisterType<SeriesRepository>().AsImplementedInterfaces();
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf();
 

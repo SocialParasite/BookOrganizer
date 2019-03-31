@@ -43,9 +43,9 @@
             <DataTemplate DataType="{x:Type viewModel:SeriesViewModel}">
                 <view:SeriesView />
             </DataTemplate>
-            <!--<DataTemplate DataType="{x:Type viewModel:SeriesDetailViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:SeriesDetailViewModel}">
                 <view:SeriesDetailView />
-            </DataTemplate>-->
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
 

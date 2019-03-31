@@ -141,6 +141,7 @@
     <Compile Include="Events\CloseDetailsViewEvent.cs" />
     <Compile Include="Events\OpenDetailsViewEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedAuthorIdEvent.cs" />
+    <Compile Include="Events\OpenItemMatchingSelectedSeriesIdEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedPublisherIdEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedBookIdEvent.cs" />
     <Compile Include="Lookups\IBookLookupDataService.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\AuthorsRepository.cs" />
     <Compile Include="Repositories\PublishersRepository.cs" />
+    <Compile Include="Repositories\SeriesRepository.cs" />
     <Compile Include="Services\FileExplorerService.cs" />
     <Compile Include="Services\IMetroDialogService.cs" />
     <Compile Include="Services\MetroDialogService.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="ViewModels\Interfaces\IAuthorsViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBookDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBooksViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ISeriesDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPublisherDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPublishersViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISelectedViewModel.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PublisherDetailViewModel.cs" />
     <Compile Include="ViewModels\PublishersViewModel.cs" />
+    <Compile Include="ViewModels\SeriesDetailViewModel.cs" />
     <Compile Include="ViewModels\SeriesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AuthorDetailView.xaml.cs">
@@ -196,6 +200,9 @@
     </Compile>
     <Compile Include="Views\PublishersView.xaml.cs">
       <DependentUpon>PublishersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SeriesDetailView.xaml.cs">
+      <DependentUpon>SeriesDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SeriesView.xaml.cs">
       <DependentUpon>SeriesView.xaml</DependentUpon>
@@ -233,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PublishersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SeriesDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

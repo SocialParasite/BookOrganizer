@@ -25,12 +25,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = new Publisher();
         }
 
-        private async void OnAddPublisherLogoExecute()
-        {
-            SelectedItem.LogoPath = FileExplorerService.BrowsePicture() ?? SelectedItem.LogoPath;
-            await LoadAsync(this.Id);
-        }
-
         public ICommand AddPublisherLogoCommand { get; }
 
         public string Name
@@ -60,6 +54,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 if (SelectedItem.LogoPath is null)
                     SelectedItem.LogoPath = FileExplorerService.GetImagePath();
             }
+        }
+
+        private async void OnAddPublisherLogoExecute()
+        {
+            SelectedItem.LogoPath = FileExplorerService.BrowsePicture() ?? SelectedItem.LogoPath;
+            await LoadAsync(this.Id);
         }
     }
 }
