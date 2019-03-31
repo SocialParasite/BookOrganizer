@@ -194,6 +194,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 TabTitle = SelectedItem.Title;
                 Title = SelectedItem.Title;
             }
+            else
+                this.SwitchEditableStateExecute();
 
             SetDefaultBookCoverIfNoneSet();
             SetDefaultBookTitleIfNoneSet();

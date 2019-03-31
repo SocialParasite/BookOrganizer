@@ -50,6 +50,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 TabTitle = SelectedItem.Name;
                 Name = SelectedItem.Name;
             }
+            else
+                this.SwitchEditableStateExecute();
 
             SetDefaultPublisherLogoIfNoneSet();
 

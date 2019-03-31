@@ -73,6 +73,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 FirstName = SelectedItem.FirstName;
                 SetTabTitle();
             }
+            else
+                this.SwitchEditableStateExecute();
 
             SetDefaultAuthorPicIfNoneSet();
 
