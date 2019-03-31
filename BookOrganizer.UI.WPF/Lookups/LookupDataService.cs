@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace BookOrganizer.UI.WPF.Lookups
 {
     public class LookupDataService : IBookLookupDataService, ILanguageLookupDataService,
-                                     IPublisherLookupDataService, IAuthorLookupDataService
+                                     IPublisherLookupDataService, IAuthorLookupDataService,
+                                     ISeriesLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
         private readonly string placeholderPic = FileExplorerService.GetImagePath();
@@ -103,6 +104,23 @@ namespace BookOrganizer.UI.WPF.Lookups
             using (var ctx = _contextCreator())
             {
                 return await ctx.Languages.AsNoTracking().FirstAsync(l => l.Id == languageId);
+            }
+        }
+
+        public async Task<IEnumerable<LookupItem>> GetSeriesLookupAsync()
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Series.AsNoTracking()
+                  .Select(s =>
+                  new LookupItem
+                  {
+                      Id = s.Id,
+                      DisplayMember = s.Name,
+                      Picture = placeholderPic,
+                      ViewModelName = null //nameof(SeriesDetailViewModel)
+                  })
+                  .ToListAsync();
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BookOrganizer.Domain
 {
-    public class Series
+    public class Series : IIdentifiable
     {
         private string _name;
         private int _numberOfBooks;

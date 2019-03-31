@@ -40,6 +40,12 @@
             <DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
                 <view:AuthorDetailView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SeriesViewModel}">
+                <view:SeriesView />
+            </DataTemplate>
+            <!--<DataTemplate DataType="{x:Type viewModel:SeriesDetailViewModel}">
+                <view:SeriesDetailView />
+            </DataTemplate>-->
         </ResourceDictionary>
     </Window.Resources>
 
@@ -95,6 +101,12 @@
                         Glyph="&#xE8F1;"
                         Label="Books"
                         Tag="ShowBooksMenu" />
+                    <Controls:HamburgerMenuGlyphItem
+                        Command="{Binding OpenSelectedViewCommand}"
+                        CommandParameter="SeriesViewModel"
+                        Glyph="&#xE8F1;"
+                        Label="Book series"
+                        Tag="ShowSeriesMenu" />
                     <Controls:HamburgerMenuGlyphItem
                         Command="{Binding OpenSelectedViewCommand}"
                         CommandParameter="AuthorsViewModel"

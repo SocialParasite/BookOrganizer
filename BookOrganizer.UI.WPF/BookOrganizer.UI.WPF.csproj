@@ -145,6 +145,7 @@
     <Compile Include="Events\OpenItemMatchingSelectedBookIdEvent.cs" />
     <Compile Include="Lookups\IBookLookupDataService.cs" />
     <Compile Include="Lookups\IAuthorLookupDataService.cs" />
+    <Compile Include="Lookups\ISeriesLookupDataService.cs" />
     <Compile Include="Lookups\IPublisherLookupDataService.cs" />
     <Compile Include="Lookups\ILanguageLookupDataService.cs" />
     <Compile Include="Lookups\LookupDataService.cs" />
@@ -172,9 +173,11 @@
     <Compile Include="ViewModels\Interfaces\IPublishersViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISelectedViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ISeriesViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PublisherDetailViewModel.cs" />
     <Compile Include="ViewModels\PublishersViewModel.cs" />
+    <Compile Include="ViewModels\SeriesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AuthorDetailView.xaml.cs">
       <DependentUpon>AuthorDetailView.xaml</DependentUpon>
@@ -193,6 +196,9 @@
     </Compile>
     <Compile Include="Views\PublishersView.xaml.cs">
       <DependentUpon>PublishersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SeriesView.xaml.cs">
+      <DependentUpon>SeriesView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -227,6 +233,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PublishersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SeriesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
