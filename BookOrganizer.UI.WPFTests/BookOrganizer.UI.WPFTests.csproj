@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorDetailViewModelTests.cs" />
+    <Compile Include="SeriesDetailViewModelTests.cs" />
     <Compile Include="PublisherDetailViewModelTests.cs" />
     <Compile Include="BookDetailViewModelTests.cs" />
     <Compile Include="BooksViewModelTests.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="MainViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AuthorsViewModelTests.cs" />
+    <Compile Include="SeriesViewModelTests.cs" />
     <Compile Include="PublishersViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>

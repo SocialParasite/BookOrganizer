@@ -4,9 +4,6 @@ using BookOrganizer.UI.WPF.Services;
 using Prism.Commands;
 using Prism.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -23,6 +20,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Repository = seriesRepo ?? throw new ArgumentNullException(nameof(seriesRepo));
 
             AddSeriesPictureCommand = new DelegateCommand(OnAddSeriesPictureExecute);
+
+            SelectedItem = new Series();
         }
 
         public ICommand AddSeriesPictureCommand { get; }
