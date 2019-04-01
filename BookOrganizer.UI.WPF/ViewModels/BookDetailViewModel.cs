@@ -29,6 +29,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private string title;
         private Guid selectedPublisherId;
         private Guid selectedAuthorId;
+        private Guid selectedSeriesId;
 
         public BookDetailViewModel(IEventAggregator eventAggregator,
             IMetroDialogService metroDialogService,
@@ -58,6 +59,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             ShowSelectedPublisherCommand
                 = new DelegateCommand<Guid?>(OnShowSelectedPublisherExecute, OnShowSelectedPublisherCanExecute);
             ShowSelectedAuthorCommand = new DelegateCommand<Guid?>(OnShowSelectedAuthorExecute, OnShowSelectedAuthorCanExecute);
+            ShowSelectedSeriesCommand = new DelegateCommand<Guid?>(OnShowSelectedSeriesExecute, OnShowSelectedSeriesCanExecute);
 
             Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
@@ -73,15 +75,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand HighlightMouseLeaveCommand { get; }
         public ICommand HighlightMouseOverCommand { get; }
         public ICommand SetReadDateCommand { get; set; }
-        public ICommand AddBookCoverImageCommand { get; set; }
-        public ICommand AddAuthorAsABookAuthorCommand { get; set; }
-        public ICommand RemoveAuthorAsABookAuthorCommand { get; set; }
-        public ICommand LanguageSelectionChangedCommand { get; set; }
-        public ICommand PublisherSelectionChangedCommand { get; set; }
-        public ICommand RemoveDateAsABookReadDateCommand { get; set; }
-        public ICommand ReleaseYearSelectionChangedCommand { get; set; }
-        public ICommand ShowSelectedPublisherCommand { get; set; }
-        public ICommand ShowSelectedAuthorCommand { get; set; }
+        public ICommand AddBookCoverImageCommand { get; }
+        public ICommand AddAuthorAsABookAuthorCommand { get; }
+        public ICommand RemoveAuthorAsABookAuthorCommand { get; }
+        public ICommand LanguageSelectionChangedCommand { get; }
+        public ICommand PublisherSelectionChangedCommand { get; }
+        public ICommand RemoveDateAsABookReadDateCommand { get; }
+        public ICommand ReleaseYearSelectionChangedCommand { get; }
+        public ICommand ShowSelectedPublisherCommand { get; }
+        public ICommand ShowSelectedAuthorCommand { get; }
+        public ICommand ShowSelectedSeriesCommand { get; }
 
         public Guid SelectedPublisherId
         {
@@ -109,6 +112,21 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 {
                     eventAggregator.GetEvent<OpenItemMatchingSelectedAuthorIdEvent<Guid>>()
                                    .Publish(SelectedAuthorId);
+                }
+            }
+        }
+
+        public Guid SelectedSeriesId
+        {
+            get => selectedSeriesId;
+            set
+            {
+                selectedSeriesId = value;
+                OnPropertyChanged();
+                if (selectedSeriesId != Guid.Empty)
+                {
+                    eventAggregator.GetEvent<OpenItemMatchingSelectedSeriesIdEvent<Guid>>()
+                                   .Publish(SelectedSeriesId);
                 }
             }
         }
@@ -388,7 +406,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private bool OnShowSelectedAuthorCanExecute(Guid? id)
-    => (id is null || id == Guid.Empty) ? false : true;
+            => (id is null || id == Guid.Empty) ? false : true;
 
         private void OnShowSelectedAuthorExecute(Guid? id)
             => SelectedAuthorId = (Guid)id;
@@ -398,6 +416,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void OnShowSelectedPublisherExecute(Guid? id)
             => SelectedPublisherId = (Guid)id;
+
+        private void OnShowSelectedSeriesExecute(Guid? id)
+            => SelectedSeriesId = (Guid)id;
+
+        private bool OnShowSelectedSeriesCanExecute(Guid? id)
+            => (id is null || id == Guid.Empty) ? false : true;
 
         private void OnRemoveDateAsABookReadDateExecute(DateTime? readDate)
         {

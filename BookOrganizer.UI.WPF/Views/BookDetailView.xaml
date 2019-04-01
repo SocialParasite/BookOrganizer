@@ -404,7 +404,22 @@
                 Grid.Row="2"
                 Content="{Binding SelectedItem.BookSeries.Name}"
                 FontWeight="Bold"
-                Style="{StaticResource LabelStyles}" />
+                Style="{StaticResource LabelStyles}">
+                <Label.InputBindings>
+                    <MouseBinding
+                        Command="{Binding ShowSelectedSeriesCommand}"
+                        CommandParameter="{Binding SelectedItem.BookSeries.Id}"
+                        MouseAction="LeftDoubleClick" />
+                </Label.InputBindings>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseEnter">
+                        <i:InvokeCommandAction Command="{Binding HighlightMouseOverCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeave">
+                        <i:InvokeCommandAction Command="{Binding HighlightMouseLeaveCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Label>
             <ListBox
                 x:Name="booksInSeriesListBox"
                 Grid.Row="3"
