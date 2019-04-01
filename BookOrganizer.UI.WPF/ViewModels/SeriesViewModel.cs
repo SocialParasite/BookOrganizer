@@ -31,11 +31,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             InitializeRepositoryAsync();
         }
 
-        private void OnAddNewSeriesExecute()
-        {
-            throw new NotImplementedException();
-        }
-
         public ICommand SeriesNameLabelMouseLeftButtonUpCommand { get; }
         public ICommand AddNewSeriesCommand { get; }
 
@@ -67,5 +62,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void OnSeriesNameLabelMouseLeftButtonUpExecute(Guid? id)
             => SelectedSeries = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(SeriesDetailViewModel) };
+
+        private void OnAddNewSeriesExecute()
+            => SelectedSeries = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(SeriesDetailViewModel) };
     }
 }

@@ -101,7 +101,7 @@
                 Command="{Binding RefreshCommand}"
                 Content="Refresh" />
             <Button
-                x:Name="AddNewBookSeriesButton"
+                x:Name="AddNewSeriesButton"
                 Grid.Column="6"
                 Height="50"
                 MinWidth="75"
