@@ -1,12 +1,14 @@
 ﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
+using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
@@ -20,8 +22,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             Repository = seriesRepo ?? throw new ArgumentNullException(nameof(seriesRepo));
 
-            //AddSeriesPictureCommand
+            AddSeriesPictureCommand = new DelegateCommand(OnAddSeriesPictureExecute);
         }
+
+        public ICommand AddSeriesPictureCommand { get; }
 
         public string Name
         {
@@ -43,13 +47,19 @@ namespace BookOrganizer.UI.WPF.ViewModels
             else
                 this.SwitchEditableStateExecute();
 
-            //SetDefaultSeriesPictureIfNoneSet();
+            SetDefaultSeriesPictureIfNoneSet();
 
-            //void SetDefaultSeriesPictureIfNoneSet()
-            //{
-            //    if (SelectedItem.PicturePath is null)
-            //        SelectedItem.PicturePath = FileExplorerService.GetImagePath();
-            //}
+            void SetDefaultSeriesPictureIfNoneSet()
+            {
+                if (SelectedItem.PicturePath is null)
+                    SelectedItem.PicturePath = FileExplorerService.GetImagePath();
+            }
+        }
+
+        private async void OnAddSeriesPictureExecute()
+        {
+            SelectedItem.PicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.PicturePath;
+            await LoadAsync(this.Id);
         }
     }
 }

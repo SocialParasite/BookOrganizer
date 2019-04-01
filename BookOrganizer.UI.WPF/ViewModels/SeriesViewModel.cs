@@ -14,7 +14,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 {
     public class SeriesViewModel : BaseViewModel<Series>, ISeriesViewModel
     {
-        private readonly IEventAggregator eventAggregator;
         private readonly ISeriesLookupDataService seriesLookupDataService;
 
         private OpenDetailViewEventArgs selectedSeries;
@@ -32,6 +31,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
             InitializeRepositoryAsync();
         }
 
+        private void OnAddNewSeriesExecute()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICommand SeriesNameLabelMouseLeftButtonUpCommand { get; }
+        public ICommand AddNewSeriesCommand { get; }
+
         public OpenDetailViewEventArgs SelectedSeries
         {
             get => selectedSeries;
@@ -47,14 +54,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 }
             }
         }
-
-        private void OnAddNewSeriesExecute()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICommand SeriesNameLabelMouseLeftButtonUpCommand { get; }
-        public ICommand AddNewSeriesCommand { get; }
 
         public async override Task InitializeRepositoryAsync()
         {

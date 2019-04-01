@@ -53,6 +53,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 this.eventAggregator.GetEvent<OpenItemMatchingSelectedAuthorIdEvent<Guid>>()
                         .Subscribe(OnOpenAuthorMatchingSelectedId);
 
+                this.eventAggregator.GetEvent<OpenItemMatchingSelectedSeriesIdEvent<Guid>>()
+                    .Subscribe(OnOpenSeriesMatchingSelectedId);
+
                 this.eventAggregator.GetEvent<OpenDetailViewEvent>()
                     .Subscribe(OnOpenDetailViewMatchingSelectedId);
 
@@ -161,6 +164,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 });
         }
 
+        private void OnOpenSeriesMatchingSelectedId(Guid seriesId)
+        {
+            OnOpenDetailViewMatchingSelectedId(
+                new OpenDetailViewEventArgs
+                {
+                    Id = seriesId,
+                    ViewModelName = nameof(SeriesDetailViewModel)
+                });
+        }
 
         private void CloseDetailsView(CloseDetailsViewEventArgs args)
         {
