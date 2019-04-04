@@ -291,7 +291,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             await InitializeLanguageCollection();
             await InitializePublisherCollection();
-            await InitalizeAuthorCollection();
+            await InitializeAuthorCollection();
 
             SelectedItem.ReleaseYear = SelectedReleaseYear;
 
@@ -327,7 +327,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 }
             }
 
-            async Task InitalizeAuthorCollection()
+            async Task InitializeAuthorCollection()
             {
                 if (!Authors.Any())
                 {

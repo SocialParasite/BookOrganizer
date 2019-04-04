@@ -138,6 +138,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToMaxConverter.cs" />
     <Compile Include="Events\CloseDetailsViewEvent.cs" />
     <Compile Include="Events\OpenDetailsViewEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedAuthorIdEvent.cs" />

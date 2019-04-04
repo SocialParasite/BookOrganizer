@@ -12,12 +12,12 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewModel:PublisherDetailViewModel}">
+        <!--<DataTemplate DataType="{x:Type viewModel:PublisherDetailViewModel}">
             <local:PublisherDetailView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:PublishersViewModel}">
             <local:PublishersView />
-        </DataTemplate>
+        </DataTemplate>-->
 
         <DataTemplate x:Key="UserDataTemplate">
             <StackPanel HorizontalAlignment="Stretch">

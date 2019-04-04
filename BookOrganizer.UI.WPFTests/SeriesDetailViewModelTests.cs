@@ -1,4 +1,5 @@
 ﻿using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
@@ -15,6 +16,7 @@ namespace BookOrganizer.UI.WPFTests
         private Mock<IEventAggregator> eventAggregatorMock;
         private Mock<IMetroDialogService> metroDialogServiceMock;
         private Mock<IRepository<Series>> seriesRepoMock;
+        private Mock<IBookLookupDataService> bookLookupDataServiceMock;
         private SeriesDetailViewModel viewModel;
 
         public SeriesDetailViewModelTests()
@@ -22,10 +24,13 @@ namespace BookOrganizer.UI.WPFTests
             eventAggregatorMock = new Mock<IEventAggregator>();
             metroDialogServiceMock = new Mock<IMetroDialogService>();
             seriesRepoMock = new Mock<IRepository<Series>>();
+            bookLookupDataServiceMock = new Mock<IBookLookupDataService>();
 
-            viewModel = new SeriesDetailViewModel(eventAggregatorMock.Object,
+            viewModel = new SeriesDetailViewModel(
+                eventAggregatorMock.Object,
                 metroDialogServiceMock.Object,
-                seriesRepoMock.Object);
+                seriesRepoMock.Object,
+                bookLookupDataServiceMock.Object);
         }
 
         [Fact]

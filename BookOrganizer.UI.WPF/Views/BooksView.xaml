@@ -13,13 +13,6 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewModel:BookDetailViewModel}">
-            <local:BookDetailView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
-            <local:BooksView />
-        </DataTemplate>
-
         <DataTemplate x:Key="UserDataTemplate">
             <StackPanel HorizontalAlignment="Stretch">
                 <Grid x:Name="UserDTGrid" MinHeight="100">
