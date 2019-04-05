@@ -11,6 +11,7 @@ namespace BookOrganizer.Domain
         private string _name;
         private int _numberOfBooks;
         private string picturePath;
+        private string description;
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -49,6 +50,11 @@ namespace BookOrganizer.Domain
             set { picturePath = DomainHelpers.SetPicturePath(value, "SeriesPictures"); }
         }
 
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
 
         // Navigation properties
         public ICollection<Book> BooksInSeries { get; set; }
