@@ -21,20 +21,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="125" />
-            </Grid.ColumnDefinitions>
-
             <Border
-                Grid.Column="4"
                 Margin="2"
+                HorizontalAlignment="Right"
                 BorderThickness="1">
                 <ToggleButton
                     x:Name="EditModeActiveToggleButton"
@@ -50,16 +43,11 @@
 
         <Grid Grid.Row="1" Margin="5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MaxWidth="{Binding UserMode.Item4, Converter={StaticResource BoolToMaxConverter}}" />
                 <ColumnDefinition Width="Auto" MinWidth="150" />
-                <ColumnDefinition Width="Auto" MinWidth="10" />
-                <ColumnDefinition Width="Auto" MinWidth="150" />
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -72,7 +60,6 @@
             <TextBox
                 x:Name="nameTextBox"
                 Grid.Column="1"
-                Grid.ColumnSpan="2"
                 MaxWidth="500"
                 FontSize="48"
                 Style="{StaticResource EditableTextBoxStyles}"
@@ -80,8 +67,8 @@
                 TextWrapping="Wrap" />
             <Button
                 Grid.Row="0"
+                Grid.RowSpan="2"
                 Grid.Column="2"
-                Grid.ColumnSpan="2"
                 MaxWidth="200"
                 MaxHeight="200"
                 Margin="50,0,0,0"
@@ -94,37 +81,83 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <Label
-                x:Name="bookSeriesLabel"
+            <GroupBox
+                x:Name="descriptionGroupBox"
                 Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Width="600"
+                Margin="5"
+                HorizontalAlignment="Left"
+                Header="Description">
+                <TextBox
+                    x:Name="descriptionTextBlock"
+                    AcceptsReturn="True"
+                    BorderThickness="0"
+                    FontSize="16"
+                    Style="{StaticResource EditableTextBoxStyles}"
+                    Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+            </GroupBox>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MaxWidth="{Binding UserMode.Item4, Converter={StaticResource BoolToMaxConverter}}" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox
+                x:Name="bookSeriesGroupBox"
                 Grid.Column="1"
-                Content="Books published:"
+                Width="500"
+                MaxWidth="600"
+                MaxHeight="500"
+                Margin="10"
+                HorizontalAlignment="Left"
                 FontWeight="Bold"
-                Style="{StaticResource LabelStyles}" />
-            <ListBox
-                x:Name="booksInSeriesListBox"
-                Grid.Row="2"
-                Grid.Column="1"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Center"
-                BorderThickness="0"
-                ItemsSource="{Binding SelectedItem.Books}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock FontSize="24" Text="{Binding Title}">
-                                <TextBlock.InputBindings>
-                                    <MouseBinding
-                                        Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                        CommandParameter="{Binding Id}"
-                                        MouseAction="LeftDoubleClick" />
-                                </TextBlock.InputBindings>
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                Header="Published books:">
+                <ListBox
+                    x:Name="publishedBooksListBox"
+                    HorizontalContentAlignment="Stretch"
+                    BorderThickness="0"
+                    ItemsSource="{Binding SelectedItem.Books}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Label>
+                                    <Label.Content>
+                                        <Grid MaxWidth="550">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image
+                                                x:Name="bookCoverImage"
+                                                MaxWidth="75"
+                                                MaxHeight="75"
+                                                Source="{Binding BookCoverPicturePath}" />
+                                            <TextBlock
+                                                x:Name="basicLabelTextBlock"
+                                                Grid.Column="1"
+                                                Margin="20,0,0,0"
+                                                Text="{Binding Title}"
+                                                TextWrapping="Wrap">
+                                                <TextBlock.InputBindings>
+                                                    <MouseBinding
+                                                        Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                                        CommandParameter="{Binding Id}"
+                                                        MouseAction="LeftDoubleClick" />
+                                                </TextBlock.InputBindings>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Label.Content>
+                                </Label>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
         </Grid>
 
         <Grid Grid.Row="3">
