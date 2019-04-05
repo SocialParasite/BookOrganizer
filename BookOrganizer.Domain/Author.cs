@@ -10,6 +10,7 @@ namespace BookOrganizer.Domain
     {
         private string _firstName;
         private string _lastName;
+        private string biography;
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -54,6 +55,12 @@ namespace BookOrganizer.Domain
             {
                 _mugShotPath = DomainHelpers.SetPicturePath(value, "AuthorPics");
             }
+        }
+
+        public string Biography
+        {
+            get { return biography; }
+            set { biography = value; }
         }
 
 
