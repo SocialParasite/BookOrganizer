@@ -197,8 +197,11 @@
                 Grid.ColumnSpan="3"
                 Margin="1"
                 FontSize="24"
+                IsEditable="True"
+                IsTextSearchEnabled="True"
                 ItemsSource="{Binding Publishers}"
                 SelectedItem="{Binding SelectedPublisher, Mode=TwoWay}"
+                TextSearch.TextPath="DisplayMember"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -233,8 +236,11 @@
                 Grid.ColumnSpan="3"
                 Margin="1"
                 FontSize="24"
+                IsEditable="True"
+                IsTextSearchEnabled="True"
                 ItemsSource="{Binding Languages}"
                 SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+                TextSearch.TextPath="DisplayMember"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -307,7 +313,10 @@
                 Grid.Column="1"
                 Margin="1"
                 FontSize="24"
+                IsEditable="True"
+                IsTextSearchEnabled="True"
                 ItemsSource="{Binding Authors}"
+                TextSearch.TextPath="DisplayMember"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
