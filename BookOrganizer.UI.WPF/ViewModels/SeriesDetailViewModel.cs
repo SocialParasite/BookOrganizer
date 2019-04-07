@@ -39,19 +39,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = new Series();
         }
 
-        private void OnFilterBookListExecute(string filter)
-        {
-            if (filter != string.Empty && filter != null)
-            {
-                var testCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
-                               .Any(x => x.Id == item.Id))
-                               .Where(item => item.DisplayMember.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1)
-                               .OrderBy(b => b.DisplayMember);
-
-                PopulateBooksCollection(testCollection);
-            }
-        }
-
         public ICommand AddSeriesPictureCommand { get; }
         public ICommand FilterBookListCommand { get; set; }
 
@@ -108,11 +95,32 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 if (!Books.Any())
                 {
                     var tempBookCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
-                               .Any(x => x.Id == item.Id))
-                               .OrderBy(b => b.DisplayMember);
+                                                     .Any(x => x.Id == item.Id))
+                                                     .OrderBy(b => b.DisplayMember);
 
                     PopulateBooksCollection(tempBookCollection);
                 }
+            }
+        }
+
+        private void OnFilterBookListExecute(string filter)
+        {
+            if (filter != string.Empty && filter != null)
+            {
+                var filteredCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
+                                                 .Any(x => x.Id == item.Id))
+                                                 .Where(item => item.DisplayMember.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1)
+                                                 .OrderBy(b => b.DisplayMember);
+
+                PopulateBooksCollection(filteredCollection);
+            }
+            else
+            {
+                var allExcludingBooksInSeries = AllBooks.Where(item => !SelectedItem.BooksInSeries
+                                                        .Any(x => x.Id == item.Id))
+                                                        .OrderBy(b => b.DisplayMember);
+
+                PopulateBooksCollection(allExcludingBooksInSeries);
             }
         }
 
