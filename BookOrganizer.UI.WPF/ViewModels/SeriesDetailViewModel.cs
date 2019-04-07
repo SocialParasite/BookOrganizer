@@ -39,7 +39,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = new Series();
         }
 
-        private async void OnFilterBookListExecute(string filter)
+        private void OnFilterBookListExecute(string filter)
         {
             if (filter != string.Empty && filter != null)
             {
@@ -48,11 +48,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                .Where(item => item.DisplayMember.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1)
                                .OrderBy(b => b.DisplayMember);
 
-                Books.Clear();
-                foreach (var item in testCollection)
-                {
-                    Books.Add(item);
-                }
+                PopulateBooksCollection(testCollection);
             }
         }
 
@@ -101,32 +97,31 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
-        public async override void SwitchEditableStateExecute()
+        public override void SwitchEditableStateExecute()
         {
             base.SwitchEditableStateExecute();
 
-            await InitializeBookCollection();
+            InitializeBookCollection();
 
-            async Task InitializeBookCollection()
+            void InitializeBookCollection()
             {
                 if (!Books.Any())
                 {
-
-                    //var tempBookCollection = await GetBookList();
-                    //tempBookCollection = tempBookCollection.Where(item => !SelectedItem.BooksInSeries
-                    //           .Any(x => x.Id == item.Id))
-                    //           .OrderBy(b => b.DisplayMember);
-
                     var tempBookCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
                                .Any(x => x.Id == item.Id))
                                .OrderBy(b => b.DisplayMember);
 
-                    Books.Clear();
-                    foreach (var item in tempBookCollection)
-                    {
-                        Books.Add(item);
-                    }
+                    PopulateBooksCollection(tempBookCollection);
                 }
+            }
+        }
+
+        private void PopulateBooksCollection(IOrderedEnumerable<LookupItem> tempBookCollection)
+        {
+            Books.Clear();
+            foreach (var item in tempBookCollection)
+            {
+                Books.Add(item);
             }
         }
 
