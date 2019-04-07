@@ -111,40 +111,63 @@
                 Margin="10"
                 Header="All books:"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
-                <ListBox
-                    x:Name="addBookToSeriesListBox"
-                    Margin="1"
-                    FontSize="16"
-                    ItemsSource="{Binding Books}"
-                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <Label>
-                                    <Label.Content>
-                                        <Grid MaxWidth="550">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="50" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Image
-                                                x:Name="bookCoverImage"
-                                                MaxWidth="75"
-                                                MaxHeight="75"
-                                                Source="{Binding Picture}" />
-                                            <TextBlock
-                                                x:Name="basicLabelTextBlock"
-                                                Grid.Column="1"
-                                                Margin="20,0,0,0"
-                                                Text="{Binding DisplayMember}"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
-                                    </Label.Content>
-                                </Label>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Search:" />
+                    <TextBox x:Name="filterTextBox" Grid.Column="1" />
+                    <Button
+                        x:Name="filterButton"
+                        Grid.Column="2"
+                        Width="50"
+                        Margin="2,0,0,0"
+                        Command="{Binding FilterBookListCommand}"
+                        CommandParameter="{Binding Text, ElementName=filterTextBox}"
+                        Content="Filter" />
+                    <ListBox
+                        x:Name="addBookToSeriesListBox"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        Margin="1"
+                        FontSize="16"
+                        ItemsSource="{Binding Books}"
+                        Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Label>
+                                        <Label.Content>
+                                            <Grid MaxWidth="550">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image
+                                                    x:Name="bookCoverImage"
+                                                    MaxWidth="75"
+                                                    MaxHeight="75"
+                                                    Source="{Binding Picture}" />
+                                                <TextBlock
+                                                    x:Name="basicLabelTextBlock"
+                                                    Grid.Column="1"
+                                                    Margin="20,0,0,0"
+                                                    Text="{Binding DisplayMember}"
+                                                    TextWrapping="Wrap" />
+                                            </Grid>
+                                        </Label.Content>
+                                    </Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </GroupBox>
 
             <GroupBox

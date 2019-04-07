@@ -7,8 +7,10 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
@@ -27,17 +29,38 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Repository = seriesRepo ?? throw new ArgumentNullException(nameof(seriesRepo));
 
             AddSeriesPictureCommand = new DelegateCommand(OnAddSeriesPictureExecute);
+            FilterBookListCommand = new DelegateCommand<string>(OnFilterBookListExecute);
 
             this.bookLookupDataService = bookLookupDataService;
 
             Books = new ObservableCollection<LookupItem>();
+            AllBooks = new ObservableCollection<LookupItem>();
 
             SelectedItem = new Series();
         }
 
+        private async void OnFilterBookListExecute(string filter)
+        {
+            if (filter != string.Empty && filter != null)
+            {
+                var testCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
+                               .Any(x => x.Id == item.Id))
+                               .Where(item => item.DisplayMember.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1)
+                               .OrderBy(b => b.DisplayMember);
+
+                Books.Clear();
+                foreach (var item in testCollection)
+                {
+                    Books.Add(item);
+                }
+            }
+        }
+
         public ICommand AddSeriesPictureCommand { get; }
+        public ICommand FilterBookListCommand { get; set; }
 
         public ObservableCollection<LookupItem> Books { get; set; }
+        public ObservableCollection<LookupItem> AllBooks { get; set; }
 
         public string Name
         {
@@ -59,6 +82,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             else
                 this.SwitchEditableStateExecute();
 
+            await PopulateAllBooksCollection();
             SetDefaultSeriesPictureIfNoneSet();
 
             void SetDefaultSeriesPictureIfNoneSet()
@@ -66,24 +90,38 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 if (SelectedItem.PicturePath is null)
                     SelectedItem.PicturePath = FileExplorerService.GetImagePath();
             }
+
+            async Task PopulateAllBooksCollection()
+            {
+                foreach (var item in await GetBookList())
+                {
+                    AllBooks.Add(item);
+                }
+
+            }
         }
 
         public async override void SwitchEditableStateExecute()
         {
             base.SwitchEditableStateExecute();
+
             await InitializeBookCollection();
 
             async Task InitializeBookCollection()
             {
                 if (!Books.Any())
                 {
-                    Books.Clear();
 
-                    var tempBookCollection = await GetBookList();
-                    tempBookCollection = tempBookCollection.Where(item => !SelectedItem.BooksInSeries
+                    //var tempBookCollection = await GetBookList();
+                    //tempBookCollection = tempBookCollection.Where(item => !SelectedItem.BooksInSeries
+                    //           .Any(x => x.Id == item.Id))
+                    //           .OrderBy(b => b.DisplayMember);
+
+                    var tempBookCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
                                .Any(x => x.Id == item.Id))
                                .OrderBy(b => b.DisplayMember);
 
+                    Books.Clear();
                     foreach (var item in tempBookCollection)
                     {
                         Books.Add(item);
