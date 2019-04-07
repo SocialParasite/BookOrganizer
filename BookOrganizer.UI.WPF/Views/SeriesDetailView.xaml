@@ -122,7 +122,17 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Label Content="Search:" />
-                    <TextBox x:Name="filterTextBox" Grid.Column="1" />
+                    <TextBox
+                        x:Name="filterTextBox"
+                        Grid.Column="1"
+                        AcceptsReturn="False">
+                        <TextBox.InputBindings>
+                            <KeyBinding
+                                Key="Enter"
+                                Command="{Binding FilterBookListCommand}"
+                                CommandParameter="{Binding Text, ElementName=filterTextBox}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
                     <Button
                         x:Name="filterButton"
                         Grid.Column="2"
