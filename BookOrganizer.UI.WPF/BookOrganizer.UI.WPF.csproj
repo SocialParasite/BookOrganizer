@@ -139,6 +139,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToMaxConverter.cs" />
+    <Compile Include="Enums\DetailViewState.cs" />
     <Compile Include="Events\CloseDetailsViewEvent.cs" />
     <Compile Include="Events\OpenDetailsViewEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedAuthorIdEvent.cs" />
@@ -299,8 +300,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

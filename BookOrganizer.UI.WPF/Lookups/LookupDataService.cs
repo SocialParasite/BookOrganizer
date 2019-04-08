@@ -44,15 +44,16 @@ namespace BookOrganizer.UI.WPF.Lookups
             using (var ctx = _contextCreator())
             {
                 return await ctx.Languages.AsNoTracking()
-                  .Select(l =>
-                  new LookupItem
-                  {
-                      Id = l.Id,
-                      DisplayMember = l.LanguageName,
-                      Picture = null,
-                      ViewModelName = null //nameof(LanguageDetailViewModel)
-                  })
-                  .ToListAsync();
+                    .OrderBy(l => l.LanguageName)
+                    .Select(l =>
+                    new LookupItem
+                    {
+                        Id = l.Id,
+                        DisplayMember = l.LanguageName,
+                        Picture = null,
+                        ViewModelName = null //nameof(LanguageDetailViewModel)
+                    })
+                    .ToListAsync();
             }
         }
 
@@ -61,15 +62,16 @@ namespace BookOrganizer.UI.WPF.Lookups
             using (var ctx = _contextCreator())
             {
                 return await ctx.Publishers.AsNoTracking()
-                  .Select(p =>
-                  new LookupItem
-                  {
-                      Id = p.Id,
-                      DisplayMember = p.Name,
-                      Picture = p.LogoPath ?? placeholderPic,
-                      ViewModelName = nameof(PublisherDetailViewModel)
-                  })
-                  .ToListAsync();
+                    .OrderBy(p => p.Name)
+                    .Select(p =>
+                    new LookupItem
+                    {
+                        Id = p.Id,
+                        DisplayMember = p.Name,
+                        Picture = p.LogoPath ?? placeholderPic,
+                        ViewModelName = nameof(PublisherDetailViewModel)
+                    })
+                    .ToListAsync();
             }
         }
 
@@ -118,7 +120,7 @@ namespace BookOrganizer.UI.WPF.Lookups
                       Id = s.Id,
                       DisplayMember = s.Name,
                       Picture = placeholderPic,
-                      ViewModelName = null //nameof(SeriesDetailViewModel)
+                      ViewModelName = nameof(SeriesDetailViewModel)
                   })
                   .ToListAsync();
             }

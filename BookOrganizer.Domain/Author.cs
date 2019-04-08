@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace BookOrganizer.Domain
 {
@@ -65,7 +64,6 @@ namespace BookOrganizer.Domain
 
 
         // Navigation properties
-        //public ICollection<Book> Books { get; set; }
         public ICollection<BookAuthors> BooksLink { get; set; }
         public Nationality Nationality { get; set; }
     }

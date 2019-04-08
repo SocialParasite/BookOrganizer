@@ -1,4 +1,5 @@
 ﻿using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Enums;
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
@@ -21,7 +22,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private Guid guid;
         private T selectedItem;
-        private Tuple<bool, int, SolidColorBrush, bool> userMode;
+        private Tuple<bool, DetailViewState, SolidColorBrush, bool> userMode;
         private bool hasChanges;
         private Guid selectedBookId;
 
@@ -36,7 +37,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
 
-            UserMode = (true, 0, Brushes.LightGray, false).ToTuple();
+            UserMode = (true, DetailViewState.ViewMode, Brushes.LightGray, false).ToTuple();
         }
 
         public ICommand SwitchEditableStateCommand { get; set; }
@@ -61,7 +62,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { guid = value; }
         }
 
-        public Tuple<bool, int, SolidColorBrush, bool> UserMode
+        public Tuple<bool, DetailViewState, SolidColorBrush, bool> UserMode
         {
             get => userMode;
             set { userMode = value; OnPropertyChanged(); }
@@ -110,10 +111,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public virtual void SwitchEditableStateExecute()
         {
-            if (UserMode.Item2 == 0)
-                UserMode = (!UserMode.Item1, 1, Brushes.LightGreen, !UserMode.Item4).ToTuple();
+            if (UserMode.Item2 == DetailViewState.ViewMode)
+                UserMode = (!UserMode.Item1, DetailViewState.EditMode, Brushes.LightGreen, !UserMode.Item4).ToTuple();
             else
-                UserMode = (!UserMode.Item1, 0, Brushes.LightGray, !UserMode.Item4).ToTuple();
+                UserMode = (!UserMode.Item1, DetailViewState.ViewMode, Brushes.LightGray, !UserMode.Item4).ToTuple();
         }
 
         private async void CloseDetailViewExecute()
