@@ -215,16 +215,15 @@
                                                 Grid.Column="1"
                                                 Margin="20,0,0,0"
                                                 Text="{Binding Title}"
-                                                TextWrapping="Wrap">
-                                                <TextBlock.InputBindings>
-                                                    <MouseBinding
-                                                        Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                                        CommandParameter="{Binding Id}"
-                                                        MouseAction="LeftDoubleClick" />
-                                                </TextBlock.InputBindings>
-                                            </TextBlock>
+                                                TextWrapping="Wrap" />
                                         </Grid>
                                     </Label.Content>
+                                    <Label.InputBindings>
+                                        <MouseBinding
+                                            Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                            CommandParameter="{Binding Id}"
+                                            MouseAction="LeftDoubleClick" />
+                                    </Label.InputBindings>
                                 </Label>
                             </StackPanel>
                         </DataTemplate>
