@@ -211,16 +211,38 @@
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
                                             <Image
                                                 x:Name="bookCoverImage"
+                                                Grid.RowSpan="3"
                                                 MaxWidth="75"
                                                 MaxHeight="75"
+                                                VerticalAlignment="Top"
                                                 Source="{Binding BookCoverPicturePath}" />
                                             <TextBlock
                                                 x:Name="basicLabelTextBlock"
                                                 Grid.Column="1"
                                                 Margin="20,0,0,0"
+                                                FontSize="24"
                                                 Text="{Binding Title}"
+                                                TextWrapping="Wrap" />
+                                            <TextBlock
+                                                x:Name="releaseYearLabelTextBlock"
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="20,0,0,0"
+                                                Text="{Binding ReleaseYear}"
+                                                TextWrapping="Wrap" />
+                                            <TextBlock
+                                                x:Name="isbnLabelTextBlock"
+                                                Grid.Row="2"
+                                                Grid.Column="1"
+                                                Margin="20,0,0,0"
+                                                Text="{Binding ISBN}"
                                                 TextWrapping="Wrap" />
                                         </Grid>
                                     </Label.Content>

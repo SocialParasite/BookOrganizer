@@ -40,16 +40,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = new Series();
         }
 
-        private bool OnAddBookToSeriesCanExecute(Guid? id)
-            => (id is null || id == Guid.Empty) ? false : true;
-
-        private async void OnAddBookToSeriesExecute(Guid? id)
-        {
-            var book = await bookLookupDataService.GetBookById((Guid)id);
-            SelectedItem.BooksInSeries.Add(book);
-            Books.Remove(Books.First(b => b.Id == id));
-        }
-
         public ICommand AddSeriesPictureCommand { get; }
         public ICommand FilterBookListCommand { get; }
         public ICommand AddBookToSeriesCommand { get; }
@@ -129,6 +119,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 Books.Add(new LookupItem { Id = book.Id, DisplayMember = book.Title, Picture = book.BookCoverPicturePath });
             }
 
+        }
+
+        private bool OnAddBookToSeriesCanExecute(Guid? id)
+    => (id is null || id == Guid.Empty) ? false : true;
+
+        private async void OnAddBookToSeriesExecute(Guid? id)
+        {
+            var book = await bookLookupDataService.GetBookById((Guid)id);
+            SelectedItem.BooksInSeries.Add(book);
+            Books.Remove(Books.First(b => b.Id == id));
         }
 
         private void OnFilterBookListExecute(string filter)
