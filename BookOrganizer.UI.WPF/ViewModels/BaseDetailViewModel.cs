@@ -143,7 +143,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private bool OnShowSelectedBookCanExecute(Guid? id)
             => (id is null || id == Guid.Empty) ? false : true;
 
-        private void OnShowSelectedBookExecute(Guid? id)
+        public virtual void OnShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
 
         private async void SaveItemExecute()

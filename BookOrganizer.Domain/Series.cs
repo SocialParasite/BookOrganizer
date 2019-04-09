@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -12,6 +13,12 @@ namespace BookOrganizer.Domain
         private int _numberOfBooks;
         private string picturePath;
         private string description;
+
+        public Series()
+        {
+            BooksInSeries = new ObservableCollection<Book>();
+            SeriesReadOrder = new ObservableCollection<SeriesReadOrder>();
+        }
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

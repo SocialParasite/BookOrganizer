@@ -30,6 +30,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             AddSeriesPictureCommand = new DelegateCommand(OnAddSeriesPictureExecute);
             FilterBookListCommand = new DelegateCommand<string>(OnFilterBookListExecute);
+            AddBookToSeriesCommand = new DelegateCommand<Guid?>(OnAddBookToSeriesExecute, OnAddBookToSeriesCanExecute);
 
             this.bookLookupDataService = bookLookupDataService;
 
@@ -39,8 +40,19 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SelectedItem = new Series();
         }
 
+        private bool OnAddBookToSeriesCanExecute(Guid? id)
+            => (id is null || id == Guid.Empty) ? false : true;
+
+        private async void OnAddBookToSeriesExecute(Guid? id)
+        {
+            var book = await bookLookupDataService.GetBookById((Guid)id);
+            SelectedItem.BooksInSeries.Add(book);
+            Books.Remove(Books.First(b => b.Id == id));
+        }
+
         public ICommand AddSeriesPictureCommand { get; }
-        public ICommand FilterBookListCommand { get; set; }
+        public ICommand FilterBookListCommand { get; }
+        public ICommand AddBookToSeriesCommand { get; }
 
         public ObservableCollection<LookupItem> Books { get; set; }
         public ObservableCollection<LookupItem> AllBooks { get; set; }
@@ -101,6 +113,22 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     PopulateBooksCollection(tempBookCollection);
                 }
             }
+        }
+
+        public override void OnShowSelectedBookExecute(Guid? id)
+        {
+            if (UserMode.Item2 == Enums.DetailViewState.ViewMode)
+            {
+                base.OnShowSelectedBookExecute(id);
+            }
+            else
+            {
+                var book = SelectedItem.BooksInSeries.First(b => b.Id == id);
+                SelectedItem.BooksInSeries.Remove(book);
+
+                Books.Add(new LookupItem { Id = book.Id, DisplayMember = book.Title, Picture = book.BookCoverPicturePath });
+            }
+
         }
 
         private void OnFilterBookListExecute(string filter)

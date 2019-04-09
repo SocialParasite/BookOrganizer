@@ -172,6 +172,12 @@
                                                     TextWrapping="Wrap" />
                                             </Grid>
                                         </Label.Content>
+                                        <Label.InputBindings>
+                                            <MouseBinding
+                                                Command="{Binding DataContext.AddBookToSeriesCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                                CommandParameter="{Binding Id}"
+                                                MouseAction="LeftDoubleClick" />
+                                        </Label.InputBindings>
                                     </Label>
                                 </StackPanel>
                             </DataTemplate>

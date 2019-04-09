@@ -39,6 +39,14 @@ namespace BookOrganizer.UI.WPF.Lookups
             }
         }
 
+        public async Task<Book> GetBookById(Guid bookId)
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Books.AsNoTracking().FirstAsync(a => a.Id == bookId);
+            }
+        }
+
         public async Task<IEnumerable<LookupItem>> GetLanguageLookupAsync()
         {
             using (var ctx = _contextCreator())
