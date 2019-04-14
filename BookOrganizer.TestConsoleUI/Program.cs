@@ -41,7 +41,7 @@ namespace BookOrganizer.TestConsoleUI
                     .Include(b => b.ReadDates)
                     .ToList();
 
-                var bookOne = books.Find(b => b.Title == "Altered Carbon"); //books.First();
+                var bookOne = books.Find(b => b.Title == "The Crimson Campaign"); //books.First();
                 Console.WriteLine(bookOne.ReadDates.Count());
                 //bookOne.ReadDates.Add(new BooksReadDate { ReadDate = DateTime.Today });
                 //var rd = bookOne.ReadDates.First(d => d.ReadDate == DateTime.Today);

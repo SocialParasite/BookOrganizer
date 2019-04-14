@@ -2,20 +2,20 @@
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
+using GongSolutions.Wpf.DragDrop;
 using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Data;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class SeriesDetailViewModel : BaseDetailViewModel<Series>, ISeriesDetailViewModel
+    public class SeriesDetailViewModel : BaseDetailViewModel<Series>, ISeriesDetailViewModel, IDropTarget
     {
         private readonly IBookLookupDataService bookLookupDataService;
         private string name;
@@ -116,19 +116,48 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 var book = SelectedItem.BooksInSeries.First(b => b.Id == id);
                 SelectedItem.BooksInSeries.Remove(book);
 
+                var sro = SelectedItem.SeriesReadOrder.First(b => b.BookId == id);
+                SelectedItem.SeriesReadOrder.Remove(sro);
+
                 Books.Add(new LookupItem { Id = book.Id, DisplayMember = book.Title, Picture = book.BookCoverPicturePath });
+
+                var countOfBooksInSeries = SelectedItem.SeriesReadOrder.Count();
+                SelectedItem.NumberOfBooks = countOfBooksInSeries;
+
+                var inst = sro.Instalment;
+                if (inst < ++countOfBooksInSeries)
+                {
+                    foreach (var item in SelectedItem.SeriesReadOrder)
+                    {
+                        if (item.Instalment > inst)
+                            item.Instalment--;
+                    }
+                }
             }
 
         }
 
         private bool OnAddBookToSeriesCanExecute(Guid? id)
-    => (id is null || id == Guid.Empty) ? false : true;
+            => (id is null || id == Guid.Empty) ? false : true;
 
         private async void OnAddBookToSeriesExecute(Guid? id)
         {
             var book = await bookLookupDataService.GetBookById((Guid)id);
             SelectedItem.BooksInSeries.Add(book);
+
+            var sro = new SeriesReadOrder
+            {
+                BookId = (Guid)id,
+                Book = book,
+                Series = SelectedItem,
+                SeriesId = SelectedItem.Id,
+                Instalment = SelectedItem.SeriesReadOrder.Count() + 1
+            };
+
+            SelectedItem.SeriesReadOrder.Add(sro);
             Books.Remove(Books.First(b => b.Id == id));
+
+            SelectedItem.NumberOfBooks = SelectedItem.SeriesReadOrder.Count();
         }
 
         private void OnFilterBookListExecute(string filter)
@@ -168,6 +197,66 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             SelectedItem.PicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.PicturePath;
             await LoadAsync(this.Id);
+        }
+
+        public void DragOver(IDropInfo dropInfo)
+        {
+            SeriesReadOrder sourceItem = dropInfo.Data as SeriesReadOrder;
+            SeriesReadOrder targetItem = dropInfo.TargetItem as SeriesReadOrder;
+
+            if (sourceItem != null && targetItem != null)
+            {
+                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+                dropInfo.Effects = DragDropEffects.Copy;
+            }
+        }
+
+        public void Drop(IDropInfo dropInfo)
+        {
+            SeriesReadOrder sourceItem = dropInfo.Data as SeriesReadOrder;
+            SeriesReadOrder targetItem = dropInfo.TargetItem as SeriesReadOrder;
+
+            var originalSourceInstalment = sourceItem.Instalment;
+            var originalTargetInstalment = targetItem.Instalment;
+
+
+            if (originalTargetInstalment == (originalSourceInstalment + 1)
+                || originalTargetInstalment == (originalSourceInstalment - 1))
+            {
+                originalSourceInstalment = sourceItem.Instalment;
+
+                targetItem.Instalment = originalSourceInstalment;
+                sourceItem.Instalment = originalTargetInstalment;
+
+                SelectedItem.SeriesReadOrder.Remove(sourceItem);
+                SelectedItem.SeriesReadOrder.Add(sourceItem);
+                SelectedItem.SeriesReadOrder.Remove(targetItem);
+                SelectedItem.SeriesReadOrder.Add(targetItem);
+            }
+            else
+            {
+                sourceItem.Instalment = targetItem.Instalment;
+                SelectedItem.SeriesReadOrder.Remove(sourceItem);
+
+                foreach (var item in SelectedItem.SeriesReadOrder)
+                {
+                    if (item.Instalment > originalSourceInstalment && item.Instalment <= sourceItem.Instalment)
+                    {
+                        item.Instalment--;
+                    }
+                }
+
+                SelectedItem.SeriesReadOrder.Add(sourceItem);
+
+                var temporaryReadOrderCollection = new ObservableCollection<SeriesReadOrder>();
+                temporaryReadOrderCollection.AddRange(SelectedItem.SeriesReadOrder.OrderBy(a => a.Instalment));
+                SelectedItem.SeriesReadOrder.Clear();
+
+                foreach (var item in temporaryReadOrderCollection)
+                {
+                    SelectedItem.SeriesReadOrder.Add(item);
+                }
+            }
         }
     }
 }
