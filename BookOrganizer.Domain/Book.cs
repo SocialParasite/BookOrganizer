@@ -36,8 +36,9 @@ namespace BookOrganizer.Domain
             get => _title;
             set
             {
-                if (value is null || value == string.Empty || value.Length < 1 || value.Length > 256)
-                    throw new ArgumentOutOfRangeException(nameof(Title), "Books title should be 1-256 characters long.");
+                ValidatePropertyInternal(nameof(Title), value);
+                //if (value is null || value == string.Empty || value.Length < 1 || value.Length > 256)
+                //    throw new ArgumentOutOfRangeException(nameof(Title), "Books title should be 1-256 characters long.");
 
                 _title = value;
                 OnPropertyChanged();

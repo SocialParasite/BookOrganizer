@@ -7,13 +7,19 @@ using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Events;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public abstract class BaseDetailViewModel<T> : ViewModelBase, IDetailViewModel
+    public abstract class BaseDetailViewModel<T> : ViewModelBase, IDetailViewModel, INotifyDataErrorInfo
+
         where T : class, IIdentifiable
     {
         private readonly IMetroDialogService metroDialogService;
@@ -32,12 +38,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.metroDialogService = metroDialogService ?? throw new ArgumentNullException(nameof(metroDialogService));
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
-            SaveItemCommand = new DelegateCommand(SaveItemExecute);
+            SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute);
             DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
             CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
 
             UserMode = (true, DetailViewState.ViewMode, Brushes.LightGray, false).ToTuple();
+
+            Errors = new Dictionary<string, List<string>>();
         }
 
         public ICommand SwitchEditableStateCommand { get; set; }
@@ -83,7 +91,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private string tabTitle;
 
-        public string TabTitle
+        public virtual string TabTitle
         {
             get { return tabTitle; }
             set { tabTitle = value; OnPropertyChanged(); }
@@ -146,6 +154,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public virtual void OnShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
 
+        private bool SaveItemCanExecute()
+        {
+            return !Errors.Any(); //Repository.HasChanges() && !this.HasErrors;
+        }
+
         private async void SaveItemExecute()
         {
             if (this.Repository.HasChanges())
@@ -189,5 +202,83 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async Task SaveRepository()
             => await Repository.SaveAsync();
+
+        // Testing
+        public bool HasErrors => Errors.Any();
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        public Dictionary<string, List<string>> Errors { get; set; }
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return Errors.ContainsKey(propertyName) ? Errors[propertyName] : null;
+        }
+
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        private void AddError(string propertyName, string error)
+        {
+            if (!Errors.ContainsKey(propertyName))
+            {
+                Errors[propertyName] = new List<string>();
+            }
+            if (!Errors[propertyName].Contains(error))
+            {
+                Errors[propertyName].Add(error);
+                OnErrorsChanged(propertyName);
+            }
+        }
+
+        private void ClearErrors(string propertyName)
+        {
+            if (Errors.ContainsKey(propertyName))
+            {
+                Errors.Remove(propertyName);
+                OnErrorsChanged(propertyName);
+            }
+        }
+
+        public string ValidateDataAnnotations(string propertyName, object currentValue)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(this) { MemberName = propertyName };
+            Validator.TryValidateProperty(currentValue, context, results);
+
+            foreach (var result in results)
+            {
+                AddError(propertyName, result.ErrorMessage);
+            }
+
+            return (string)currentValue;
+        }
+
+        public void ValidatePropertyInternal(string propertyName, object currentValue)
+        {
+            ClearErrors(propertyName);
+
+            ValidateDataAnnotations(propertyName, currentValue);
+
+            ValidateCustomErrors(propertyName);
+        }
+
+        public void ValidateCustomErrors(string propertyName)
+        {
+            var errors = ValidateProperty(propertyName);
+            if (errors != null)
+            {
+                foreach (var error in errors)
+                {
+                    AddError(propertyName, error);
+                }
+            }
+        }
+
+        protected virtual IEnumerable<string> ValidateProperty(string propertyName)
+        {
+            return null;
+        }
+
     }
 }

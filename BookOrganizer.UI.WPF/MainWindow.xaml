@@ -177,5 +177,6 @@
             </Controls:HamburgerMenu.Content>
         </Controls:HamburgerMenu>
     </DockPanel>
+
 </Controls:MetroWindow>
 

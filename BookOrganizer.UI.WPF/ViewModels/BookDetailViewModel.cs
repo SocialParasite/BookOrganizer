@@ -8,6 +8,7 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -175,10 +176,17 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { selectedReleaseYear = value; OnPropertyChanged(); }
         }
 
+        [Required]
+        [MinLength(1, ErrorMessage = "Books title should be at minimum 1 character long.")]
+        [MaxLength(256, ErrorMessage = "Books title should be maximum of 256 characters long.")]
         public string Title
         {
             get { return title; }
-            set { title = value; OnPropertyChanged(); TabTitle = value; SelectedItem.Title = value; }
+            set
+            {
+                ValidatePropertyInternal(nameof(Title), value);
+                title = value; OnPropertyChanged(); TabTitle = value; SelectedItem.Title = value;
+            }
         }
 
         private void HighlightMouseLeaveExecute()
@@ -223,6 +231,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SelectedItem.PropertyChanged += (s, e) =>
             {
+                //if (e.PropertyName == nameof(HasErrors))
+                //{
+                //    ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                //}
                 if (!HasChanges)
                 {
                     HasChanges = Repository.HasChanges();
