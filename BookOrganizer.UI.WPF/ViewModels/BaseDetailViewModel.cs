@@ -203,7 +203,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private async Task SaveRepository()
             => await Repository.SaveAsync();
 
-        // Testing
+        //Testing
         public bool HasErrors => Errors.Any();
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;

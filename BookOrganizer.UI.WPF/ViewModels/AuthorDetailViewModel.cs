@@ -4,6 +4,7 @@ using BookOrganizer.UI.WPF.Services;
 using Prism.Commands;
 using Prism.Events;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -28,11 +29,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public ICommand AddAuthorPictureCommand { get; set; }
 
+        [MinLength(1, ErrorMessage = "Authors first name should be at minimum 1 character long.")]
+        [MaxLength(50, ErrorMessage = "Authors first name should be at maximum 50 character long.")]
+        [Required]
         public string FirstName
         {
             get => firstName;
             set
             {
+                ValidatePropertyInternal(nameof(FirstName), value);
                 firstName = value;
                 OnPropertyChanged();
                 SetTabTitle();
@@ -40,11 +45,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
+        [MinLength(1, ErrorMessage = "Authors last name should be at minimum 1 character long.")]
+        [MaxLength(50, ErrorMessage = "Authors last name should be at maximum 50 character long.")]
+        [Required]
         public string LastName
         {
             get => lastName;
             set
             {
+                ValidatePropertyInternal(nameof(LastName), value);
                 lastName = value;
                 OnPropertyChanged();
                 SetTabTitle();

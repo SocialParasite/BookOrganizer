@@ -8,6 +8,7 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -47,10 +48,20 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ObservableCollection<LookupItem> Books { get; set; }
         public ObservableCollection<LookupItem> AllBooks { get; set; }
 
+        [Required]
+        [MinLength(1, ErrorMessage = "Series name should be at minimum 1 character long.")]
+        [MaxLength(256, ErrorMessage = "Series name should be maximum of 256 characters long.")]
         public string Name
         {
             get { return name; }
-            set { name = value; OnPropertyChanged(); TabTitle = value; SelectedItem.Name = value; }
+            set
+            {
+                ValidatePropertyInternal(nameof(Name), value);
+                name = value;
+                OnPropertyChanged();
+                TabTitle = value;
+                SelectedItem.Name = value;
+            }
         }
 
         public async override Task LoadAsync(Guid id)

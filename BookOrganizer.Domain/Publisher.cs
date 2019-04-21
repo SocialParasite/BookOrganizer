@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
 
 namespace BookOrganizer.Domain
 {
-    public class Publisher : IIdentifiable
+    public class Publisher : BaseDomainEntity, IIdentifiable
     {
         private string _name;
         private string _logoPath;

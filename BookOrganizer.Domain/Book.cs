@@ -37,8 +37,8 @@ namespace BookOrganizer.Domain
             set
             {
                 ValidatePropertyInternal(nameof(Title), value);
-                //if (value is null || value == string.Empty || value.Length < 1 || value.Length > 256)
-                //    throw new ArgumentOutOfRangeException(nameof(Title), "Books title should be 1-256 characters long.");
+                if (value is null || value == string.Empty || value.Length < 1 || value.Length > 256)
+                    throw new ArgumentOutOfRangeException(nameof(Title), "Books title should be 1-256 characters long.");
 
                 _title = value;
                 OnPropertyChanged();
@@ -67,6 +67,7 @@ namespace BookOrganizer.Domain
             get => _pageCount;
             set
             {
+                ValidatePropertyInternal(nameof(PageCount), value);
                 if (value > 0 && value < 10_001)
                 {
                     _pageCount = value;
@@ -83,6 +84,7 @@ namespace BookOrganizer.Domain
             get => _iSBN;
             set
             {
+                ValidatePropertyInternal(nameof(ISBN), value);
                 if (ValidateIsbn(value))
                 {
                     _iSBN = value;
@@ -99,6 +101,7 @@ namespace BookOrganizer.Domain
             get { return _wordCount; }
             set
             {
+                ValidatePropertyInternal(nameof(WordCount), value);
                 if (value >= 1 && value < int.MaxValue)
                 {
                     _wordCount = value;

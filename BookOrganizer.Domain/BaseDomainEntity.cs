@@ -64,7 +64,7 @@ namespace BookOrganizer.Domain
             }
         }
 
-        public string ValidateDataAnnotations(string propertyName, object currentValue)
+        public object ValidateDataAnnotations(string propertyName, object currentValue)
         {
             var results = new List<ValidationResult>();
             var context = new ValidationContext(this) { MemberName = propertyName };
@@ -75,7 +75,7 @@ namespace BookOrganizer.Domain
                 AddError(propertyName, result.ErrorMessage);
             }
 
-            return (string)currentValue;
+            return currentValue;
         }
 
         public void ValidatePropertyInternal(string propertyName, object currentValue)

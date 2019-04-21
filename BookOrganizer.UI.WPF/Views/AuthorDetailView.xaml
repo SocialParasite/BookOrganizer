@@ -81,7 +81,7 @@
                 MinWidth="300"
                 MaxWidth="500"
                 FontSize="24"
-                Style="{StaticResource EditableTextBoxStyles}"
+                Style="{StaticResource ValidationTextBoxStyle}"
                 Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
@@ -99,7 +99,7 @@
                 MinWidth="300"
                 MaxWidth="500"
                 FontSize="24"
-                Style="{StaticResource EditableTextBoxStyles}"
+                Style="{StaticResource ValidationTextBoxStyle}"
                 Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />

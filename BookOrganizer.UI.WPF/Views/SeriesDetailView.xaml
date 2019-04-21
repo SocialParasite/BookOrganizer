@@ -70,8 +70,9 @@
                 x:Name="nameTextBox"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
+                MaxWidth="1000"
                 FontSize="48"
-                Style="{StaticResource EditableTextBoxStyles}"
+                Style="{StaticResource ValidationTextBoxStyle}"
                 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap" />
             <Button
@@ -229,11 +230,14 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
-                                        <Label Grid.RowSpan="2" Content="{Binding Instalment, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource LabelStyles}" />
+                                        <Label
+                                            Grid.RowSpan="2"
+                                            Content="{Binding Instalment, UpdateSourceTrigger=PropertyChanged}"
+                                            Style="{StaticResource LabelStyles}" />
                                         <Image
                                             x:Name="bookCoverImage"
-                                            Grid.Column="1"
                                             Grid.RowSpan="3"
+                                            Grid.Column="1"
                                             MaxWidth="75"
                                             MaxHeight="75"
                                             VerticalAlignment="Top"

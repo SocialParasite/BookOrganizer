@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookOrganizer.Domain
 {
-    public class Series : IIdentifiable
+    public class Series : BaseDomainEntity, IIdentifiable
     {
         private string _name;
         private int _numberOfBooks;

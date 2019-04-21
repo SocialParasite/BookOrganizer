@@ -104,7 +104,7 @@
             <TextBox
                 x:Name="releaseYearTextBox"
                 Grid.Row="1"
-                Style="{StaticResource EditableTextBoxStyles}"
+                Style="{StaticResource ValidationTextBoxStyle}"
                 Text="{Binding SelectedReleaseYear}"
                 Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
             <ComboBox
@@ -140,7 +140,7 @@
                 x:Name="pageCountTextBox"
                 Grid.Row="2"
                 Grid.Column="1"
-                Style="{StaticResource EditableTextBoxStyles}"
+                Style="{StaticResource ValidationTextBoxStyle}"
                 Text="{Binding SelectedItem.PageCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label
@@ -155,7 +155,7 @@
                 x:Name="wordCountTextBox"
                 Grid.Row="2"
                 Grid.Column="3"
-                Style="{StaticResource EditableTextBoxStyles}"
+                Style="{StaticResource ValidationTextBoxStyle}"
                 Text="{Binding SelectedItem.WordCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label
@@ -262,8 +262,8 @@
                 x:Name="isnbTextBox"
                 Grid.Row="5"
                 Grid.ColumnSpan="3"
-                Style="{StaticResource EditableTextBoxStyles}"
-                Text="{Binding SelectedItem.ISBN}" />
+                Style="{StaticResource ValidationTextBoxStyle}"
+                Text="{Binding SelectedItem.ISBN, UpdateSourceTrigger=PropertyChanged}" />
 
             <GroupBox
                 x:Name="descriptionGroupBox"

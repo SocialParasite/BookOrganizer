@@ -62,7 +62,7 @@
                 Grid.Column="1"
                 MaxWidth="500"
                 FontSize="48"
-                Style="{StaticResource EditableTextBoxStyles}"
+                Style="{StaticResource ValidationTextBoxStyle}"
                 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap" />
             <Button

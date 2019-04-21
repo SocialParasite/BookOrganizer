@@ -4,6 +4,7 @@ using BookOrganizer.UI.WPF.Services;
 using Prism.Commands;
 using Prism.Events;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -27,10 +28,19 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public ICommand AddPublisherLogoCommand { get; }
 
+        [Required]
+        [MinLength(1, ErrorMessage = "Publishers name should be at minimum 1 character long.")]
+        [MaxLength(64, ErrorMessage = "Publishers name should be maximum of 64 characters long.")]
         public string Name
         {
             get { return name; }
-            set { name = value; OnPropertyChanged(); TabTitle = value; SelectedItem.Name = value; }
+            set
+            {
+                ValidatePropertyInternal(nameof(Name), value);
+                name = value;
+                OnPropertyChanged();
+                TabTitle = value;
+                SelectedItem.Name = value; }
         }
 
         public async override Task LoadAsync(Guid id)
