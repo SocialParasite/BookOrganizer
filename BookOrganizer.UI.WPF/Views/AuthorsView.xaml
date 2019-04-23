@@ -5,20 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:local="clr-namespace:BookOrganizer.UI.WPF.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPF.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <!--<DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
-            <local:AuthorDetailView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:AuthorsViewModel}">
-            <local:AuthorsView />
-        </DataTemplate>-->
-
         <DataTemplate x:Key="UserDataTemplate">
             <StackPanel HorizontalAlignment="Stretch">
                 <Grid x:Name="UserDTGrid" MinHeight="100">

@@ -12,13 +12,6 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <!--<DataTemplate DataType="{x:Type viewModel:SeriesDetailViewModel}">
-            <local:SeriesDetailView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:SeriesViewModel}">
-            <local:SeriesView />
-        </DataTemplate>-->
-
         <DataTemplate x:Key="UserDataTemplate">
             <StackPanel HorizontalAlignment="Stretch">
                 <Grid x:Name="UserDTGrid" MinHeight="100">
