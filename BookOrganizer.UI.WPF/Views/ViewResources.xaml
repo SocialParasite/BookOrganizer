@@ -5,6 +5,8 @@
 
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
     <converters:BoolToMaxConverter x:Key="BoolToMaxConverter" />
+
+    <!--  Button Styles  -->
     <Style
         x:Key="NavigationButtonStyle"
         BasedOn="{StaticResource MetroButton}"
@@ -13,11 +15,44 @@
         <Setter Property="Height" Value="50" />
         <Setter Property="FontSize" Value="16" />
     </Style>
+    <Style
+        x:Key="UpdateButtonStyle"
+        BasedOn="{StaticResource NavigationButtonStyle}"
+        TargetType="Button">
+        <Setter Property="Visibility" Value="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+    </Style>
+
+    <!--  ToggleButton Styles  -->
+    <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{Binding UserMode.Item3}" />
+        <Setter Property="Command" Value="{Binding SwitchEditableStateCommand}" />
+        <Setter Property="FontSize" Value="18" />
+    </Style>
+
+    <!--  Label Styles  -->
     <Style x:Key="LabelStyles" TargetType="Label">
         <Setter Property="FontSize" Value="24" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="1" />
     </Style>
+
+    <!--  ComboBox Styles  -->
+    <Style
+        x:Key="ComboBoxStyles"
+        BasedOn="{StaticResource MetroComboBox}"
+        TargetType="ComboBox">
+        <Setter Property="Margin" Value="1" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Width" Value="200" />
+        <Setter Property="Visibility" Value="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!--  TextBox Styles  -->
     <Style
         x:Key="TextBoxStyles"
         BasedOn="{StaticResource MetroTextBox}"
@@ -33,22 +68,6 @@
         TargetType="TextBox">
         <Setter Property="BorderThickness" Value="{Binding UserMode.Item2}" />
         <Setter Property="IsReadOnly" Value="{Binding UserMode.Item1}" />
-    </Style>
-    <Style
-        x:Key="UpdateButtonStyle"
-        BasedOn="{StaticResource NavigationButtonStyle}"
-        TargetType="Button">
-        <Setter Property="Visibility" Value="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-    </Style>
-    <Style
-        x:Key="ComboBoxStyles"
-        BasedOn="{StaticResource MetroComboBox}"
-        TargetType="ComboBox">
-        <Setter Property="FontSize" Value="18" />
-        <Setter Property="Height" Value="30" />
-        <Setter Property="Width" Value="150" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
     <Style
         x:Key="ValidationTextBoxStyle"
@@ -67,7 +86,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Margin" Value="0, 5, 0, 15" /> 
+        <Setter Property="Margin" Value="0,5,0,15" />
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="True">
                 <Setter Property="Background" Value="Red" />
@@ -75,4 +94,12 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <!--  ListBox Styles  -->
+    <Style x:Key="ListBoxBaseStyle" TargetType="ListBox">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
 </ResourceDictionary>

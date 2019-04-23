@@ -29,13 +29,7 @@
                 Margin="2"
                 HorizontalAlignment="Right"
                 BorderThickness="1">
-                <ToggleButton
-                    x:Name="EditModeActiveToggleButton"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Background="{Binding UserMode.Item3}"
-                    Command="{Binding SwitchEditableStateCommand}"
-                    FontSize="18">
+                <ToggleButton x:Name="EditModeActiveToggleButton" Style="{StaticResource ToggleButtonStyle}">
                     <TextBlock VerticalAlignment="Center" Text="Edit Mode" />
                 </ToggleButton>
             </Border>

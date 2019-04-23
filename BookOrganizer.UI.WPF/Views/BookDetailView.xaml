@@ -35,13 +35,7 @@
                 Grid.Column="4"
                 Margin="2"
                 BorderThickness="1">
-                <ToggleButton
-                    x:Name="EditModeActiveToggleButton"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Background="{Binding UserMode.Item3}"
-                    Command="{Binding SwitchEditableStateCommand}"
-                    FontSize="18">
+                <ToggleButton x:Name="EditModeActiveToggleButton" Style="{StaticResource ToggleButtonStyle}">
                     <TextBlock VerticalAlignment="Center" Text="Edit Mode" />
                 </ToggleButton>
             </Border>
@@ -117,8 +111,7 @@
                 SelectedValue="{Binding SelectedReleaseYear, Mode=TwoWay}"
                 Style="{StaticResource ComboBoxStyles}"
                 VirtualizingStackPanel.IsVirtualizing="True"
-                VirtualizingStackPanel.VirtualizationMode="Recycling"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
+                VirtualizingStackPanel.VirtualizationMode="Recycling">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel />
@@ -148,7 +141,6 @@
                 Grid.Row="2"
                 Grid.Column="2"
                 Content="Words:"
-                FontSize="24"
                 Style="{StaticResource LabelStyles}" />
 
             <TextBox
@@ -194,14 +186,12 @@
                 Grid.Row="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
-                Margin="1"
-                FontSize="24"
                 IsEditable="True"
                 IsTextSearchEnabled="True"
                 ItemsSource="{Binding Publishers}"
                 SelectedItem="{Binding SelectedPublisher, Mode=TwoWay}"
-                TextSearch.TextPath="DisplayMember"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
+                Style="{StaticResource ComboBoxStyles}"
+                TextSearch.TextPath="DisplayMember">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding DisplayMember}" />
@@ -233,14 +223,12 @@
                 Grid.Row="4"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
-                Margin="1"
-                FontSize="24"
                 IsEditable="True"
                 IsTextSearchEnabled="True"
                 ItemsSource="{Binding Languages}"
                 SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
-                TextSearch.TextPath="DisplayMember"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
+                Style="{StaticResource ComboBoxStyles}"
+                TextSearch.TextPath="DisplayMember">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding DisplayMember}" />
@@ -310,13 +298,11 @@
             <ComboBox
                 x:Name="authorComboBox"
                 Grid.Column="1"
-                Margin="1"
-                FontSize="24"
                 IsEditable="True"
                 IsTextSearchEnabled="True"
                 ItemsSource="{Binding Authors}"
-                TextSearch.TextPath="DisplayMember"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
+                Style="{StaticResource ComboBoxStyles}"
+                TextSearch.TextPath="DisplayMember">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -366,10 +352,8 @@
                 Header="Book Authors:">
                 <ListBox
                     x:Name="authorListBox"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    BorderThickness="0"
-                    ItemsSource="{Binding SelectedItem.AuthorsLink}">
+                    ItemsSource="{Binding SelectedItem.AuthorsLink}"
+                    Style="{StaticResource ListBoxBaseStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -431,10 +415,8 @@
             <ListBox
                 x:Name="booksInSeriesListBox"
                 Grid.Row="3"
-                HorizontalContentAlignment="Stretch"
-                VerticalContentAlignment="Center"
-                BorderThickness="0"
-                ItemsSource="{Binding SelectedItem.BookSeries.SeriesReadOrder}">
+                ItemsSource="{Binding SelectedItem.BookSeries.SeriesReadOrder}"
+                Style="{StaticResource ListBoxBaseStyle}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
