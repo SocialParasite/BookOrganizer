@@ -23,7 +23,10 @@
     </Style>
 
     <!--  ToggleButton Styles  -->
-    <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">
+    <Style
+        x:Key="ToggleButtonStyle"
+        BasedOn="{StaticResource MetroButton}"
+        TargetType="ToggleButton">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{Binding UserMode.Item3}" />
