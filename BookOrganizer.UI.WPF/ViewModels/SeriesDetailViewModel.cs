@@ -156,16 +156,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
             var book = await bookLookupDataService.GetBookById((Guid)id);
             SelectedItem.BooksInSeries.Add(book);
 
-            var sro = new SeriesReadOrder
+            SelectedItem.SeriesReadOrder.Add(new SeriesReadOrder
             {
-                BookId = (Guid)id,
+                BookId = book.Id,
                 Book = book,
                 Series = SelectedItem,
                 SeriesId = SelectedItem.Id,
                 Instalment = SelectedItem.SeriesReadOrder.Count() + 1
-            };
+            });
 
-            SelectedItem.SeriesReadOrder.Add(sro);
             Books.Remove(Books.First(b => b.Id == id));
 
             SelectedItem.NumberOfBooks = SelectedItem.SeriesReadOrder.Count();
@@ -177,7 +176,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             {
                 var filteredCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
                                                  .Any(x => x.Id == item.Id))
-                                                 .Where(item => item.DisplayMember.IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1)
+                                                 .Where(item => item.DisplayMember
+                                                    .IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1)
                                                  .OrderBy(b => b.DisplayMember);
 
                 PopulateBooksCollection(filteredCollection);

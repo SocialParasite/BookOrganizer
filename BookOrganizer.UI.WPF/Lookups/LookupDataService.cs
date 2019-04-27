@@ -26,16 +26,17 @@ namespace BookOrganizer.UI.WPF.Lookups
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Books.AsNoTracking()
-                  .Select(b =>
-                  new LookupItem
-                  {
-                      Id = b.Id,
-                      DisplayMember = $"{b.Title} ({b.ReleaseYear})",
-                      Picture = b.BookCoverPicturePath ?? placeholderPic,
-                      ViewModelName = nameof(BookDetailViewModel)
-                  })
-                  .ToListAsync();
+                return await ctx.Books
+                    .AsNoTracking()
+                    .Select(b =>
+                        new LookupItem
+                        {
+                            Id = b.Id,
+                            DisplayMember = $"{b.Title} ({b.ReleaseYear})",
+                            Picture = b.BookCoverPicturePath ?? placeholderPic,
+                            ViewModelName = nameof(BookDetailViewModel)
+                        })
+                    .ToListAsync();
             }
         }
 
@@ -43,7 +44,9 @@ namespace BookOrganizer.UI.WPF.Lookups
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Books.AsNoTracking().FirstAsync(a => a.Id == bookId);
+                return await ctx.Books
+                    .AsNoTracking()
+                    .SingleAsync(a => a.Id == bookId);
             }
         }
 
@@ -51,16 +54,17 @@ namespace BookOrganizer.UI.WPF.Lookups
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Languages.AsNoTracking()
+                return await ctx.Languages
+                    .AsNoTracking()
                     .OrderBy(l => l.LanguageName)
                     .Select(l =>
-                    new LookupItem
-                    {
-                        Id = l.Id,
-                        DisplayMember = l.LanguageName,
-                        Picture = null,
-                        ViewModelName = null //nameof(LanguageDetailViewModel)
-                    })
+                        new LookupItem
+                        {
+                            Id = l.Id,
+                            DisplayMember = l.LanguageName,
+                            Picture = null,
+                            ViewModelName = null //nameof(LanguageDetailViewModel)
+                        })
                     .ToListAsync();
             }
         }
@@ -69,16 +73,17 @@ namespace BookOrganizer.UI.WPF.Lookups
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Publishers.AsNoTracking()
+                return await ctx.Publishers
+                    .AsNoTracking()
                     .OrderBy(p => p.Name)
                     .Select(p =>
-                    new LookupItem
-                    {
-                        Id = p.Id,
-                        DisplayMember = p.Name,
-                        Picture = p.LogoPath ?? placeholderPic,
-                        ViewModelName = nameof(PublisherDetailViewModel)
-                    })
+                        new LookupItem
+                        {
+                            Id = p.Id,
+                            DisplayMember = p.Name,
+                            Picture = p.LogoPath ?? placeholderPic,
+                            ViewModelName = nameof(PublisherDetailViewModel)
+                        })
                     .ToListAsync();
             }
         }
@@ -87,17 +92,18 @@ namespace BookOrganizer.UI.WPF.Lookups
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Authors.AsNoTracking()
+                return await ctx.Authors
+                    .AsNoTracking()
                     .OrderBy(a => a.LastName)
                     .Select(a =>
-                      new LookupItem
-                      {
-                          Id = a.Id,
-                          DisplayMember = $"{a.LastName}, {a.FirstName}",
-                          Picture = a.MugShotPath ?? placeholderPic,
-                          ViewModelName = nameof(AuthorDetailViewModel)
-                      })
-                      .ToListAsync();
+                        new LookupItem
+                        {
+                            Id = a.Id,
+                            DisplayMember = $"{a.LastName}, {a.FirstName}",
+                            Picture = a.MugShotPath ?? placeholderPic,
+                            ViewModelName = nameof(AuthorDetailViewModel)
+                        })
+                    .ToListAsync();
             }
         }
 
@@ -105,7 +111,9 @@ namespace BookOrganizer.UI.WPF.Lookups
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Authors.AsNoTracking().FirstAsync(a => a.Id == authorId);
+                return await ctx.Authors
+                    .AsNoTracking()
+                    .SingleAsync(a => a.Id == authorId);
             }
         }
 
@@ -113,7 +121,9 @@ namespace BookOrganizer.UI.WPF.Lookups
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Languages.AsNoTracking().FirstAsync(l => l.Id == languageId);
+                return await ctx.Languages
+                    .AsNoTracking()
+                    .FirstAsync(l => l.Id == languageId);
             }
         }
 
@@ -121,16 +131,17 @@ namespace BookOrganizer.UI.WPF.Lookups
         {
             using (var ctx = _contextCreator())
             {
-                return await ctx.Series.AsNoTracking()
-                  .Select(s =>
-                  new LookupItem
-                  {
-                      Id = s.Id,
-                      DisplayMember = s.Name,
-                      Picture = placeholderPic,
-                      ViewModelName = nameof(SeriesDetailViewModel)
-                  })
-                  .ToListAsync();
+                return await ctx.Series
+                    .AsNoTracking()
+                    .Select(s =>
+                        new LookupItem
+                        {
+                            Id = s.Id,
+                            DisplayMember = s.Name,
+                            Picture = placeholderPic,
+                            ViewModelName = nameof(SeriesDetailViewModel)
+                        })
+                    .ToListAsync();
             }
         }
     }

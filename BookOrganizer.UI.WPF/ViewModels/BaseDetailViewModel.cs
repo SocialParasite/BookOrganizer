@@ -4,6 +4,7 @@ using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -26,7 +27,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         protected readonly IEventAggregator eventAggregator;
         protected IRepository<T> Repository;
 
-        private Guid guid;
+        private Guid id;
         private T selectedItem;
         private Tuple<bool, DetailViewState, SolidColorBrush, bool> userMode;
         private bool hasChanges;
@@ -66,8 +67,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public Guid Id
         {
-            get { return guid; }
-            set { guid = value; }
+            get { return id; }
+            set { id = value; }
         }
 
         public Tuple<bool, DetailViewState, SolidColorBrush, bool> UserMode
@@ -161,7 +162,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async void SaveItemExecute()
         {
-            if (this.Repository.HasChanges())
+            if (this.Repository.HasChanges() || SelectedItem.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
                 var resultWhenChanges = await metroDialogService
                     .ShowOkCancelDialogAsync(
@@ -203,7 +204,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private async Task SaveRepository()
             => await Repository.SaveAsync();
 
-        //Testing
+        //COPIED FROM DOMAIN PROJECT
         public bool HasErrors => Errors.Any();
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;

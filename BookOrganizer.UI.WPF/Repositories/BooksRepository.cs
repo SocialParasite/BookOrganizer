@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.Repositories
 {
-    public class BooksRepository : BaseRepository<Book, BookOrganizerDbContext>
+    public class BooksRepository : BaseRepository<Book, BookOrganizerDbContext>, IBookRepository
     {
         public BooksRepository(BookOrganizerDbContext context) : base(context)
         {
@@ -34,6 +34,11 @@ namespace BookOrganizer.UI.WPF.Repositories
                     .Include(b => b.ReadDates)
                     .FirstOrDefaultAsync(b => b.Id == id)
                 : new Book();
+        }
+
+        public async Task<Author> GetBookAuthorById(Guid authorId)
+        {
+            return await context.Authors.SingleAsync(a => a.Id == authorId);
         }
     }
 }

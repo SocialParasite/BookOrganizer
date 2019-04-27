@@ -1,4 +1,5 @@
-﻿using BookOrganizer.Domain;
+﻿using BookOrganizer.Data.SqlServer;
+using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
@@ -70,6 +71,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Authors = new ObservableCollection<LookupItem>();
 
             SelectedItem = new Book();
+
             YearsList = PopulateYearsMenu();
         }
 
@@ -185,7 +187,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set
             {
                 ValidatePropertyInternal(nameof(Title), value);
-                title = value; OnPropertyChanged(); TabTitle = value; SelectedItem.Title = value;
+                title = value;
+                OnPropertyChanged();
+                TabTitle = value;
+                SelectedItem.Title = value;
             }
         }
 
@@ -392,7 +397,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             if (lookupItem != null)
             {
-                var addedAuthor = await authorLookupDataService.GetAuthorById(lookupItem.Id);
+                var addedAuthor = await (Repository as IBookRepository).GetBookAuthorById(lookupItem.Id);
+
                 SelectedItem.AuthorsLink.Add(new BookAuthors
                 {
                     AuthorId = addedAuthor.Id,
