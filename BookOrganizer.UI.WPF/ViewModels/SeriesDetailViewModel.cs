@@ -153,13 +153,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async void OnAddBookToSeriesExecute(Guid? id)
         {
-            var book = await bookLookupDataService.GetBookById((Guid)id);
-            SelectedItem.BooksInSeries.Add(book);
+            var addedBook = await (Repository as ISeriesRepository).GetBookById((Guid)id);
+
+            SelectedItem.BooksInSeries.Add(addedBook);
 
             SelectedItem.SeriesReadOrder.Add(new SeriesReadOrder
             {
-                BookId = book.Id,
-                Book = book,
+                BookId = addedBook.Id,
+                Book = addedBook,
                 Series = SelectedItem,
                 SeriesId = SelectedItem.Id,
                 Instalment = SelectedItem.SeriesReadOrder.Count() + 1

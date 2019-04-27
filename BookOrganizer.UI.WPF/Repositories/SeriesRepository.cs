@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.Repositories
 {
-    public class SeriesRepository : BaseRepository<Series, BookOrganizerDbContext>
+    public class SeriesRepository : BaseRepository<Series, BookOrganizerDbContext>, ISeriesRepository
     {
         public SeriesRepository(BookOrganizerDbContext context) : base(context)
         {
 
+        }
+
+        public async Task<Book> GetBookById(Guid bookId)
+        {
+            return await context.Books.SingleAsync(b => b.Id == bookId);
         }
 
         public async override Task<Series> GetSelectedAsync(Guid id)

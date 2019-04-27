@@ -158,6 +158,7 @@
     <Compile Include="Lookups\LookupItem.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\BooksRepository.cs" />
+    <Compile Include="Repositories\ISeriesRepository.cs" />
     <Compile Include="Repositories\IBookRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\AuthorsRepository.cs" />
