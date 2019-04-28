@@ -34,6 +34,8 @@ namespace BookOrganizer.Domain
                     throw new ArgumentOutOfRangeException(nameof(Name), "Series name should be 1-256 characters long.");
 
                 _name = value;
+
+                OnPropertyChanged();
             }
         }
 
@@ -53,13 +55,13 @@ namespace BookOrganizer.Domain
         public string PicturePath
         {
             get { return picturePath; }
-            set { picturePath = DomainHelpers.SetPicturePath(value, "SeriesPictures"); }
+            set { picturePath = DomainHelpers.SetPicturePath(value, "SeriesPictures"); OnPropertyChanged(); }
         }
 
         public string Description
         {
             get { return description; }
-            set { description = value; }
+            set { description = value; OnPropertyChanged(); }
         }
 
         // Navigation properties

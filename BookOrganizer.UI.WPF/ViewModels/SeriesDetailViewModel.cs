@@ -81,6 +81,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
             await PopulateAllBooksCollection();
             SetDefaultSeriesPictureIfNoneSet();
 
+            SelectedItem.PropertyChanged += (s, e) =>
+            {
+                //if (e.PropertyName == nameof(HasErrors))
+                //{
+                //    ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                //}
+                SetChangeTracker();
+            };
+
             void SetDefaultSeriesPictureIfNoneSet()
             {
                 if (SelectedItem.PicturePath is null)
@@ -144,6 +153,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                             item.Instalment--;
                     }
                 }
+
+                SetChangeTracker();
             }
 
         }
@@ -169,6 +180,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Books.Remove(Books.First(b => b.Id == id));
 
             SelectedItem.NumberOfBooks = SelectedItem.SeriesReadOrder.Count();
+
+            SetChangeTracker();
         }
 
         private void OnFilterBookListExecute(string filter)
@@ -209,6 +222,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             SelectedItem.PicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.PicturePath;
             await LoadAsync(this.Id);
+            SetChangeTracker();
         }
 
         public void DragOver(IDropInfo dropInfo)
