@@ -87,13 +87,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SetDefaultAuthorPicIfNoneSet();
 
-            //SelectedItem.PropertyChanged += (s, e) =>
-            //{
-            //    if (!HasChanges)
-            //    {
-            //        HasChanges = Repository.HasChanges();
-            //    }
-            //};
+            SelectedItem.PropertyChanged += (s, e) =>
+            {
+                SetChangeTracker();
+            };
+
             void SetDefaultAuthorPicIfNoneSet()
             {
                 if (SelectedItem.MugShotPath is null)

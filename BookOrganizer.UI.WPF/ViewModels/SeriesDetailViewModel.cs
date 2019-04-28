@@ -83,10 +83,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SelectedItem.PropertyChanged += (s, e) =>
             {
-                //if (e.PropertyName == nameof(HasErrors))
-                //{
-                //    ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
-                //}
                 SetChangeTracker();
             };
 
