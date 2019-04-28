@@ -59,6 +59,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SetDefaultPublisherLogoIfNoneSet();
 
+            SelectedItem.PropertyChanged += (s, e) =>
+            {
+                SetChangeTracker();
+            };
+
             void SetDefaultPublisherLogoIfNoneSet()
             {
                 if (SelectedItem.LogoPath is null)

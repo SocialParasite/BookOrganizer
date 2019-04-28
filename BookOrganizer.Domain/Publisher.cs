@@ -25,6 +25,7 @@ namespace BookOrganizer.Domain
                     throw new ArgumentOutOfRangeException(nameof(Name), "Books title should be 1-64 characters long.");
 
                 _name = value;
+                OnPropertyChanged();
             }
         }
 
@@ -35,6 +36,7 @@ namespace BookOrganizer.Domain
             set
             {
                 _logoPath = DomainHelpers.SetPicturePath(value, "PublisherLogos");
+                OnPropertyChanged();
             }
         }
 
