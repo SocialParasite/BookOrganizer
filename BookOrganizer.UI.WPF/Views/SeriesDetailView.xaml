@@ -14,7 +14,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ViewResources.xaml" />
                 <ResourceDictionary>
-                    <CollectionViewSource x:Key="src" Source="{Binding SelectedItem.SeriesReadOrder}">
+                    <CollectionViewSource x:Key="ReadOrder" Source="{Binding SelectedItem.SeriesReadOrder}">
                         <CollectionViewSource.SortDescriptions>
                             <componentModel:SortDescription PropertyName="Instalment" />
                         </CollectionViewSource.SortDescriptions>
@@ -210,7 +210,7 @@
                     dd:DragDrop.IsDragSource="True"
                     dd:DragDrop.IsDropTarget="True"
                     BorderThickness="0"
-                    ItemsSource="{Binding Source={StaticResource src}}"
+                    ItemsSource="{Binding Source={StaticResource ReadOrder}}"
                     SelectionMode="Single">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
