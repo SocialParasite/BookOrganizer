@@ -40,15 +40,15 @@ namespace BookOrganizer.UI.WPF.Lookups
             }
         }
 
-        public async Task<Book> GetBookById(Guid bookId)
-        {
-            using (var ctx = _contextCreator())
-            {
-                return await ctx.Books
-                    .AsNoTracking()
-                    .SingleAsync(a => a.Id == bookId);
-            }
-        }
+        //public async Task<Book> GetBookById(Guid bookId)
+        //{
+        //    using (var ctx = _contextCreator())
+        //    {
+        //        return await ctx.Books
+        //            .AsNoTracking()
+        //            .SingleAsync(a => a.Id == bookId);
+        //    }
+        //}
 
         public async Task<IEnumerable<LookupItem>> GetLanguageLookupAsync()
         {
@@ -107,15 +107,15 @@ namespace BookOrganizer.UI.WPF.Lookups
             }
         }
 
-        public async Task<Author> GetAuthorById(Guid authorId)
-        {
-            using (var ctx = _contextCreator())
-            {
-                return await ctx.Authors
-                    .AsNoTracking()
-                    .SingleAsync(a => a.Id == authorId);
-            }
-        }
+        //public async Task<Author> GetAuthorById(Guid authorId)
+        //{
+        //    using (var ctx = _contextCreator())
+        //    {
+        //        return await ctx.Authors
+        //            .AsNoTracking()
+        //            .SingleAsync(a => a.Id == authorId);
+        //    }
+        //}
 
         public async Task<Language> GetLanguageById(Guid languageId)
         {

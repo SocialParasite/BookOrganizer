@@ -4,7 +4,6 @@ using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -20,7 +19,6 @@ using System.Windows.Media;
 namespace BookOrganizer.UI.WPF.ViewModels
 {
     public abstract class BaseDetailViewModel<T> : ViewModelBase, IDetailViewModel, INotifyDataErrorInfo
-
         where T : class, IIdentifiable
     {
         private readonly IMetroDialogService metroDialogService;
@@ -110,6 +108,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
                                    .Publish(selectedBookId);
                 }
+            }
+        }
+
+        protected void SetChangeTracker()
+        {
+            if (!HasChanges)
+            {
+                HasChanges = Repository.HasChanges();
             }
         }
 

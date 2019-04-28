@@ -9,6 +9,6 @@ namespace BookOrganizer.UI.WPF.Lookups
     {
         Task<IEnumerable<LookupItem>> GetAuthorLookupAsync();
 
-        Task<Author> GetAuthorById(Guid authorId);
+        //Task<Author> GetAuthorById(Guid authorId);
     }
 }

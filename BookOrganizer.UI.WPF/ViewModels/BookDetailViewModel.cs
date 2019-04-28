@@ -1,5 +1,4 @@
-﻿using BookOrganizer.Data.SqlServer;
-using BookOrganizer.Domain;
+﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
@@ -205,7 +204,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
             var newReadDate = new BooksReadDate { ReadDate = NewReadDate };
 
             if (!SelectedItem.ReadDates.Any(d => d.ReadDate == newReadDate.ReadDate))
+            {
                 SelectedItem.ReadDates.Add(newReadDate);
+                SetChangeTracker();
+            }
         }
 
         private async void AddBookCoverImageExecute()
@@ -240,10 +242,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 //{
                 //    ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
                 //}
-                if (!HasChanges)
-                {
-                    HasChanges = Repository.HasChanges();
-                }
+                SetChangeTracker();
             };
 
             void SetDefaultBookCoverIfNoneSet()
@@ -371,7 +370,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             if (authorId != null)
             {
-                var removedAuthor = await authorLookupDataService.GetAuthorById((Guid)authorId);
+                var removedAuthor = await (Repository as IBookRepository).GetBookAuthorById((Guid)authorId);
                 Authors.Add(
                     new LookupItem
                     {
@@ -390,6 +389,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
                 var removedAuthorAsLookupItem = SelectedItem.AuthorsLink.First(al => al.Author.Id == authorId);
                 SelectedItem.AuthorsLink.Remove(removedAuthorAsLookupItem);
+
+                SetChangeTracker();
             }
         }
 
@@ -408,19 +409,27 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 });
 
                 Authors.Remove(lookupItem);
+
+                SetChangeTracker();
             }
         }
 
         private void OnLanguageSelectionChangedExecute()
         {
             if (SelectedLanguage != null && Languages.Any())
+            {
                 SelectedItem.LanguageId = SelectedLanguage.Id;
+                SetChangeTracker();
+            }
         }
 
         private void OnPublisherSelectionChangedExecute()
         {
             if (SelectedPublisher != null && Publishers.Any())
+            {
                 SelectedItem.PublisherId = SelectedPublisher.Id;
+                SetChangeTracker();
+            }
         }
 
         private bool OnShowSelectedAuthorCanExecute(Guid? id)
@@ -447,6 +456,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             {
                 var deletedReadDate = SelectedItem.ReadDates.First(rd => rd.ReadDate == readDate);
                 SelectedItem.ReadDates.Remove(deletedReadDate);
+
+                SetChangeTracker();
             }
         }
 
