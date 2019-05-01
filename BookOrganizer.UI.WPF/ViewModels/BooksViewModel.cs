@@ -13,6 +13,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
     public class BooksViewModel : BaseViewModel<Book>, IBooksViewModel
     {
         private readonly IBookLookupDataService bookLookupDataService;
+        private OpenDetailViewEventArgs selectedBook;
 
         public BooksViewModel(IEventAggregator eventAggregator,
                               IBookLookupDataService bookLookupDataService)
@@ -28,9 +29,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
-        public ICommand AddNewBookCommand { get; set; }
+        public ICommand AddNewBookCommand { get; }
 
-        private OpenDetailViewEventArgs selectedBook;
         public OpenDetailViewEventArgs SelectedBook
         {
             get => selectedBook;

@@ -30,6 +30,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private Tuple<bool, DetailViewState, SolidColorBrush, bool> userMode;
         private bool hasChanges;
         private Guid selectedBookId;
+        private string tabTitle;
 
         public BaseDetailViewModel(IEventAggregator eventAggregator, IMetroDialogService metroDialogService)
         {
@@ -87,8 +88,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 }
             }
         }
-
-        private string tabTitle;
 
         public virtual string TabTitle
         {
@@ -170,6 +169,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             if (this.Repository.HasChanges() || SelectedItem.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
+                var isNewItem = false;
+
                 var resultWhenChanges = await metroDialogService
                     .ShowOkCancelDialogAsync(
                     "You are about to save your changes. This will overwrite the previous version. Are you sure?",
@@ -180,13 +181,29 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     return;
                 }
 
+                if (SelectedItem.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+                {
+                    isNewItem = true;
+                }
+
                 Repository.Update(SelectedItem);
                 await SaveRepository();
+
+                if (isNewItem)
+                {
+                    eventAggregator.GetEvent<SavedDetailsViewEvent>()
+                        .Publish(new OpenDetailViewEventArgs
+                        {
+                            Id = SelectedItem.Id,
+                            ViewModelName = this.GetType().Name
+                        });
+                }
             }
             else
             {
                 var unmodifiedResult = metroDialogService.ShowInfoDialogAsync("You have no unsaved changes on this view.");
             }
+
         }
 
         private async void DeleteItemExecute()

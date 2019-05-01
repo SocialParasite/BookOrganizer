@@ -61,6 +61,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
                 this.eventAggregator.GetEvent<CloseDetailsViewEvent>()
                     .Subscribe(CloseDetailsView);
+
+                this.eventAggregator.GetEvent<SavedDetailsViewEvent>()
+                    .Subscribe(OnSaveDetailsView);
             }
         }
 
@@ -183,12 +186,19 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             var detailViewModel = DetailViewModels
                 .SingleOrDefault(vm => vm.Id == id
-                /*&& vm.GetType().Name == viewModelName*/);
+                && vm.GetType().Name == viewModelName);
 
             if (detailViewModel != null)
             {
                 DetailViewModels.Remove(detailViewModel);
             }
+        }
+
+        private void OnSaveDetailsView(OpenDetailViewEventArgs args)
+        {
+            RemoveDetailViewModel(Guid.Parse("00000000-0000-0000-0000-000000000000"), args.ViewModelName);
+
+            OnOpenDetailViewMatchingSelectedId(args);
         }
     }
 }
