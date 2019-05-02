@@ -38,7 +38,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.metroDialogService = metroDialogService ?? throw new ArgumentNullException(nameof(metroDialogService));
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
-            SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute);
+            SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)
+                .ObservesProperty(() => HasChanges);
             DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
             CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
@@ -161,9 +162,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             => SelectedBookId = (Guid)id;
 
         private bool SaveItemCanExecute()
-        {
-            return !Errors.Any(); //Repository.HasChanges() && !this.HasErrors;
-        }
+            => !Errors.Any() && HasChanges;
 
         private async void SaveItemExecute()
         {
