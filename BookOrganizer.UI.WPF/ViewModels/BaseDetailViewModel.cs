@@ -198,6 +198,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                             ViewModelName = this.GetType().Name
                         });
                 }
+
+                HasChanges = false;
             }
             else
             {
