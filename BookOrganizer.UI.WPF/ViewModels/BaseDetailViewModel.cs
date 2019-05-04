@@ -39,7 +39,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
             SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)
-                .ObservesProperty(() => HasChanges);
+                .ObservesProperty(() => HasChanges)
+                .ObservesProperty(() => HasErrors);
             DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
             CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
@@ -162,7 +163,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             => SelectedBookId = (Guid)id;
 
         private bool SaveItemCanExecute()
-            => !Errors.Any() && HasChanges;
+            => (!HasErrors) && HasChanges;
 
         private async void SaveItemExecute()
         {
@@ -228,8 +229,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private async Task SaveRepository()
             => await Repository.SaveAsync();
 
-        //COPIED FROM DOMAIN PROJECT
         public bool HasErrors => Errors.Any();
+
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
         public Dictionary<string, List<string>> Errors { get; set; }
@@ -265,7 +266,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
-        public string ValidateDataAnnotations(string propertyName, object currentValue)
+        public dynamic ValidateDataAnnotations(string propertyName, object currentValue)
         {
             var results = new List<ValidationResult>();
             var context = new ValidationContext(this) { MemberName = propertyName };
@@ -276,7 +277,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 AddError(propertyName, result.ErrorMessage);
             }
 
-            return (string)currentValue;
+            switch (Type.GetTypeCode(GetType().GetProperty(propertyName).PropertyType))
+            {
+                case TypeCode.Int32:
+                    return (int)currentValue;
+                case TypeCode.String:
+                    return (string)currentValue;
+                default:
+                    return currentValue;
+            }
         }
 
         public void ValidatePropertyInternal(string propertyName, object currentValue)

@@ -41,6 +41,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 firstName = value;
                 OnPropertyChanged();
                 SetTabTitle();
+                ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
                 SelectedItem.FirstName = value;
             }
         }
@@ -57,6 +58,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 lastName = value;
                 OnPropertyChanged();
                 SetTabTitle();
+                ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
                 SelectedItem.LastName = value;
             }
         }

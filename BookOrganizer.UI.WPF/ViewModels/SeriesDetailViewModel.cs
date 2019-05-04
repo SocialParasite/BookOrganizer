@@ -60,6 +60,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 name = value;
                 OnPropertyChanged();
                 TabTitle = value;
+
+                ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+
                 SelectedItem.Name = value;
             }
         }

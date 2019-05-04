@@ -142,7 +142,7 @@
                 Grid.Row="2"
                 Grid.Column="1"
                 Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding SelectedItem.PageCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding PageCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label
                 x:Name="wordCountLabel"
@@ -150,13 +150,12 @@
                 Grid.Column="2"
                 Content="Words:"
                 Style="{StaticResource LabelStyles}" />
-
             <TextBox
                 x:Name="wordCountTextBox"
                 Grid.Row="2"
                 Grid.Column="3"
                 Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding SelectedItem.WordCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding WordCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label
                 x:Name="publisherLabel"
@@ -259,7 +258,7 @@
                 Grid.Row="5"
                 Grid.ColumnSpan="3"
                 Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding SelectedItem.ISBN, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding ISBN, UpdateSourceTrigger=PropertyChanged}" />
 
             <GroupBox
                 x:Name="descriptionGroupBox"

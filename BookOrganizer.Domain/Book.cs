@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace BookOrganizer.Domain
@@ -36,7 +35,6 @@ namespace BookOrganizer.Domain
             get => _title;
             set
             {
-                ValidatePropertyInternal(nameof(Title), value);
                 if (value is null || value == string.Empty || value.Length < 1 || value.Length > 256)
                     throw new ArgumentOutOfRangeException(nameof(Title), "Books title should be 1-256 characters long.");
 
@@ -67,7 +65,6 @@ namespace BookOrganizer.Domain
             get => _pageCount;
             set
             {
-                ValidatePropertyInternal(nameof(PageCount), value);
                 if (value > 0 && value < 10_001)
                 {
                     _pageCount = value;
@@ -84,7 +81,6 @@ namespace BookOrganizer.Domain
             get => _iSBN;
             set
             {
-                ValidatePropertyInternal(nameof(ISBN), value);
                 if (ValidateIsbn(value))
                 {
                     _iSBN = value;
@@ -95,14 +91,13 @@ namespace BookOrganizer.Domain
             }
         }
 
-        [Range(1, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         public int WordCount
         {
             get { return _wordCount; }
             set
             {
-                ValidatePropertyInternal(nameof(WordCount), value);
-                if (value >= 1 && value < int.MaxValue)
+                if (value >= 0 && value < int.MaxValue)
                 {
                     _wordCount = value;
                     OnPropertyChanged();
@@ -155,7 +150,7 @@ namespace BookOrganizer.Domain
         public ICollection<BooksFormats> FormatLink { get; set; }
         public Series BookSeries { get; set; }
 
-        private bool ValidateIsbn(string isbn)
+        public bool ValidateIsbn(string isbn)
         {
             if (isbn is null || isbn is "") return true;
 

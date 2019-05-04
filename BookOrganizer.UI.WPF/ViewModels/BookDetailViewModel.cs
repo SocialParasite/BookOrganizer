@@ -28,6 +28,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private LookupItem selectedAuthor;
         private int selectedReleaseYear;
         private string title;
+        private int releaseYear;
+        private int pageCount;
+        private int wordCount;
+        private string iSBN;
+
         private Guid selectedPublisherId;
         private Guid selectedAuthorId;
         private Guid selectedSeriesId;
@@ -182,14 +187,76 @@ namespace BookOrganizer.UI.WPF.ViewModels
         [MaxLength(256, ErrorMessage = "Books title should be maximum of 256 characters long.")]
         public string Title
         {
-            get { return title; }
+            get => title;
             set
             {
                 ValidatePropertyInternal(nameof(Title), value);
                 title = value;
                 OnPropertyChanged();
                 TabTitle = value;
+                ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
                 SelectedItem.Title = value;
+            }
+        }
+
+        [Range(1, 2500, ErrorMessage = "Fairytales older than year 1 shall not be permitted")]
+        public int ReleaseYear
+        {
+            get => releaseYear;
+            set
+            {
+                ValidatePropertyInternal(nameof(ReleaseYear), value);
+                releaseYear = value;
+                OnPropertyChanged();
+                ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                SelectedItem.ReleaseYear = value;
+            }
+        }
+
+        [Range(1, 10_000)]
+        public int PageCount
+        {
+            get => pageCount;
+            set
+            {
+                ValidatePropertyInternal(nameof(PageCount), value);
+                pageCount = value;
+                OnPropertyChanged();
+                ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                SelectedItem.PageCount = value;
+            }
+        }
+
+        [Range(0, int.MaxValue)]
+        public int WordCount
+        {
+            get => wordCount;
+            set
+            {
+                ValidatePropertyInternal(nameof(WordCount), value);
+                wordCount = value;
+                OnPropertyChanged();
+                ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                SelectedItem.WordCount = value;
+            }
+        }
+
+        [MaxLength(13)]
+        public string ISBN
+        {
+            get => iSBN;
+            set
+            {
+                ValidatePropertyInternal(nameof(ISBN), value);
+                if (SelectedItem.ValidateIsbn(value))
+                {
+                    iSBN = value;
+                    OnPropertyChanged();
+                    ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                    SelectedItem.ISBN = value;
+                }
+                else
+                    throw new ArgumentOutOfRangeException(nameof(ISBN), "Isbn must be valid or empty.");
             }
         }
 
@@ -226,6 +293,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
             {
                 TabTitle = SelectedItem.Title;
                 Title = SelectedItem.Title;
+                WordCount = SelectedItem.WordCount;
+                ReleaseYear = SelectedItem.ReleaseYear;
+                ISBN = SelectedItem.ISBN;
+                PageCount = SelectedItem.PageCount;
             }
             else
                 this.SwitchEditableStateExecute();
@@ -238,10 +309,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SelectedItem.PropertyChanged += (s, e) =>
             {
-                //if (e.PropertyName == nameof(HasErrors))
-                //{
-                //    ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
-                //}
                 SetChangeTracker();
             };
 
@@ -309,7 +376,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             await InitializePublisherCollection();
             await InitializeAuthorCollection();
 
-            SelectedItem.ReleaseYear = SelectedReleaseYear;
+            ReleaseYear = SelectedReleaseYear;
 
             async Task InitializeLanguageCollection()
             {
@@ -462,7 +529,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private void OnReleaseYearSelectionChangedExecute()
-            => SelectedItem.ReleaseYear = SelectedReleaseYear;
+            => ReleaseYear = SelectedReleaseYear;
 
         private IEnumerable<int> PopulateYearsMenu()
         {

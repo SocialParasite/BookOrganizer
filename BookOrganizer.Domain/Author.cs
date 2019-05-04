@@ -22,7 +22,6 @@ namespace BookOrganizer.Domain
             get => _firstName;
             set
             {
-                ValidatePropertyInternal(nameof(FirstName), value);
                 if(value is null || value == string.Empty || value.Length < 1 || value.Length > 50)
                     throw new ArgumentOutOfRangeException(nameof(FirstName), "Authors first name should be 1-50 characters long.");
 
@@ -39,7 +38,6 @@ namespace BookOrganizer.Domain
             get => _lastName;
             set
             {
-                ValidatePropertyInternal(nameof(LastName), value);
                 if (value is null || value == string.Empty || value.Length < 1 || value.Length > 50)
                     throw new ArgumentOutOfRangeException(nameof(LastName), "Authors last name should be 1-50 characters long.");
                 _lastName = value;
