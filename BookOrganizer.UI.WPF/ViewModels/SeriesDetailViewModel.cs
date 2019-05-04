@@ -282,6 +282,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     SelectedItem.SeriesReadOrder.Add(item);
                 }
             }
+            SetChangeTracker();
         }
     }
 }
