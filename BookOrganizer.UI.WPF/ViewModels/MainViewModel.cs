@@ -6,6 +6,7 @@ using Prism.Events;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
@@ -32,6 +33,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
             DetailViewModels = new ObservableCollection<IDetailViewModel>();
+            TEMP_DetailViewModels = new ObservableCollection<IDetailViewModel>();
 
             OpenMainMenuCommand = new DelegateCommand(OnOpenMainMenuExecute);
             OpenSettingsMenuCommand = new DelegateCommand(OnOpenSettingsMenuExecute);
@@ -72,6 +74,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand OpenSelectedViewCommand { get; }
 
         public ObservableCollection<IDetailViewModel> DetailViewModels { get; set; }
+        public ObservableCollection<IDetailViewModel> TEMP_DetailViewModels { get; set; }
 
         public IDetailViewModel SelectedDetailViewModel
         {
@@ -88,7 +91,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ISelectedViewModel SelectedVM
         {
             get { return selectedVM; }
-            set { selectedVM = value; OnPropertyChanged(); }
+            set
+            {
+                selectedVM = value;
+                OnPropertyChanged();
+            }
         }
 
         private async void OnOpenDetailViewMatchingSelectedId(OpenDetailViewEventArgs args)

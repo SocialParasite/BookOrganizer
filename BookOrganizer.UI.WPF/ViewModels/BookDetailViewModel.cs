@@ -57,6 +57,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SetReadDateCommand = new DelegateCommand(SetReadDateExecute);
             AddBookCoverImageCommand = new DelegateCommand(AddBookCoverImageExecute);
             AddAuthorAsABookAuthorCommand = new DelegateCommand<LookupItem>(AddBookAuthorExecute);
+            AddNewAuthorCommand = new DelegateCommand(OnAddNewAuthorExecute);
             RemoveAuthorAsABookAuthorCommand = new DelegateCommand<Guid?>(RemoveAuthorExecute);
             LanguageSelectionChangedCommand = new DelegateCommand(OnLanguageSelectionChangedExecute);
             PublisherSelectionChangedCommand = new DelegateCommand(OnPublisherSelectionChangedExecute);
@@ -79,10 +80,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
             YearsList = PopulateYearsMenu();
         }
 
+        private void OnAddNewAuthorExecute()
+        {
+            throw new NotImplementedException();
+        }
+
         public ICommand HighlightMouseLeaveCommand { get; }
         public ICommand HighlightMouseOverCommand { get; }
         public ICommand SetReadDateCommand { get; set; }
         public ICommand AddBookCoverImageCommand { get; }
+        public ICommand AddNewAuthorCommand { get; set; }
         public ICommand AddAuthorAsABookAuthorCommand { get; }
         public ICommand RemoveAuthorAsABookAuthorCommand { get; }
         public ICommand LanguageSelectionChangedCommand { get; }

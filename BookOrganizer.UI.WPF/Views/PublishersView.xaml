@@ -84,6 +84,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" MinWidth="100" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button
                 Grid.Column="4"

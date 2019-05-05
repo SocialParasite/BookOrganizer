@@ -10,6 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:BookOrganizer.UI.WPF.Views"
     xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPF.ViewModels"
+    x:Name="BookOrganizerMainWindow"
     Title="MainWindow"
     Width="1280"
     Height="1024"
@@ -136,7 +137,7 @@
                 <DockPanel>
                     <Label Visibility="{Binding IsViewVisible, Converter={StaticResource BoolToVis}}">
                         <ScrollViewer>
-                            <ContentControl Content="{Binding SelectedVM}" />
+                            <ContentControl Width="{Binding ElementName=BookOrganizerMainWindow, Path=ActualWidth}" Content="{Binding SelectedVM}" />
                         </ScrollViewer>
                     </Label>
                     <ScrollViewer>

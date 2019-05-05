@@ -299,7 +299,7 @@
             </Grid.RowDefinitions>
             <Label
                 x:Name="authorLabel"
-                Content="Author(s): "
+                Content="Select book author: "
                 Style="{StaticResource LabelStyles}"
                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
             <ComboBox
