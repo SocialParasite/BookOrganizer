@@ -80,11 +80,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             YearsList = PopulateYearsMenu();
         }
 
-        private void OnAddNewAuthorExecute()
-        {
-            throw new NotImplementedException();
-        }
-
         public ICommand HighlightMouseLeaveCommand { get; }
         public ICommand HighlightMouseOverCommand { get; }
         public ICommand SetReadDateCommand { get; set; }
@@ -543,5 +538,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
             for (int year = DateTime.Today.Year; year > 0; year--)
                 yield return year;
         }
+        private void OnAddNewAuthorExecute()
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                           .Publish(new OpenDetailViewEventArgs
+                           {
+                               Id = new Guid(),
+                               ViewModelName = nameof(AuthorDetailViewModel)
+                           });
+
+        }
+
     }
 }
