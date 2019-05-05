@@ -163,7 +163,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             => SelectedBookId = (Guid)id;
 
         private bool SaveItemCanExecute()
-            => (!HasErrors) && HasChanges;
+            => (!HasErrors) && (HasChanges || SelectedItem.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"));
 
         private async void SaveItemExecute()
         {

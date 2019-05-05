@@ -47,6 +47,9 @@
             <DataTemplate DataType="{x:Type viewModel:SeriesDetailViewModel}">
                 <view:SeriesDetailView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:LanguageDetailViewModel}">
+                <view:LanguageDetailView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
 

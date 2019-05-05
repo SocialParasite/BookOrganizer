@@ -20,13 +20,12 @@ namespace BookOrganizer.UI.WPF.Repositories
 
         public async override Task<Series> GetSelectedAsync(Guid id)
         {
-            if (id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
-                return await context.Series
+            return id != Guid.Parse("00000000-0000-0000-0000-000000000000")
+                ? await context.Series
                     .Include(b => b.BooksInSeries)
                     .Include(b => b.SeriesReadOrder)
-                    .FirstOrDefaultAsync(b => b.Id == id);
-
-            else return new Series();
+                    .FirstOrDefaultAsync(b => b.Id == id)
+                : new Series();
         }
     }
 }

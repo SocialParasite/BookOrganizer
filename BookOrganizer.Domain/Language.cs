@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BookOrganizer.Domain
 {
-    public class Language
+    public class Language : IIdentifiable
     {
         private string _languageName;
 

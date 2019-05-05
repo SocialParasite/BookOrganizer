@@ -37,8 +37,6 @@ namespace BookOrganizer.UI.WPF.Repositories
         }
 
         public async Task<Author> GetBookAuthorById(Guid authorId)
-        {
-            return await context.Authors.SingleAsync(a => a.Id == authorId);
-        }
+            => await context.Authors.SingleAsync(a => a.Id == authorId);
     }
 }
