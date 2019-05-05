@@ -192,7 +192,6 @@
                 x:Name="publisherComboBox"
                 Grid.Row="3"
                 Grid.Column="1"
-                Grid.ColumnSpan="3"
                 IsEditable="True"
                 IsTextSearchEnabled="True"
                 ItemsSource="{Binding Publishers}"
@@ -210,6 +209,16 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>
+            <Button
+                x:Name="addNewPublisherButton"
+                Grid.Row="3"
+                Grid.Column="2"
+                Width="50"
+                Margin="5"
+                Command="{Binding AddNewPublisherCommand}"
+                Content="New"
+                FontSize="12"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
 
             <Label
                 x:Name="languageLabel"
@@ -229,7 +238,6 @@
                 x:Name="languageComboBox"
                 Grid.Row="4"
                 Grid.Column="1"
-                Grid.ColumnSpan="3"
                 IsEditable="True"
                 IsTextSearchEnabled="True"
                 ItemsSource="{Binding Languages}"
@@ -247,6 +255,16 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>
+            <Button
+                x:Name="addNewLanguageButton"
+                Grid.Row="4"
+                Grid.Column="2"
+                Width="50"
+                Margin="5"
+                Command="{Binding AddNewLanguageCommand}"
+                Content="New"
+                FontSize="12"
+                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
 
             <Label
                 x:Name="isbnLabel"
