@@ -58,9 +58,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
                 TabTitle = LanguageName;
             }
-            else
-                SelectedItem.LanguageName = "new";
-
         }
     }
 }

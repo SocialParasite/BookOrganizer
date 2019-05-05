@@ -48,10 +48,21 @@
                 <view:SeriesDetailView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:LanguageDetailViewModel}">
-                <view:LanguageDetailView/>
+                <view:LanguageDetailView />
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="LeftAlt"
+            Command="{Binding ShowMenuCommand}"
+            Modifiers="Alt" />
+        <KeyBinding
+            Key="RightAlt"
+            Command="{Binding ShowMenuCommand}"
+            Modifiers="Alt+Ctrl" />
+    </Window.InputBindings>
 
     <DockPanel>
         <DockPanel.Resources>
@@ -81,7 +92,15 @@
                 </Label>
             </DataTemplate>
         </DockPanel.Resources>
-
+        <Menu DockPanel.Dock="Top" Visibility="{Binding IsMenuBarVisible, Converter={StaticResource BoolToVis}}">
+            <MenuItem Header="Add">
+                <MenuItem Header="Author" />
+                <MenuItem Header="Book" />
+                <MenuItem Header="Language" />
+                <MenuItem Header="Publisher" />
+                <MenuItem Header="Series" />
+            </MenuItem>
+        </Menu>
         <Controls:HamburgerMenu
             x:Name="MyHamburgerMenu"
             DisplayMode="CompactInline"

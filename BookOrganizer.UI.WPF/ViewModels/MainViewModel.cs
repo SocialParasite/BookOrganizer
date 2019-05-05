@@ -21,6 +21,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private ISelectedViewModel selectedVM;
         private bool isViewVisible;
+        private bool isMenuBarVisible;
 
         public MainViewModel(IEventAggregator eventAggregator,
                               IIndex<string, IDetailViewModel> detailViewModelCreator,
@@ -38,6 +39,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
             OpenMainMenuCommand = new DelegateCommand(OnOpenMainMenuExecute);
             OpenSettingsMenuCommand = new DelegateCommand(OnOpenSettingsMenuExecute);
             OpenSelectedViewCommand = new DelegateCommand<string>(OnOpenSelectedViewExecute);
+            ShowMenuCommand = new DelegateCommand(OnShowMenuExecute);
+
+            IsMenuBarVisible = false;
 
             SubscribeToEvents();
         }
@@ -69,12 +73,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
+        public ICommand ShowMenuCommand { get; }
         public ICommand OpenMainMenuCommand { get; }
         public ICommand OpenSettingsMenuCommand { get; }
         public ICommand OpenSelectedViewCommand { get; }
 
-        public ObservableCollection<IDetailViewModel> DetailViewModels { get; set; }
-        public ObservableCollection<IDetailViewModel> TEMP_DetailViewModels { get; set; }
+        public ObservableCollection<IDetailViewModel> DetailViewModels { get; }
+        public ObservableCollection<IDetailViewModel> TEMP_DetailViewModels { get; }
 
         public IDetailViewModel SelectedDetailViewModel
         {
@@ -87,6 +92,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         public bool IsViewVisible { get => isViewVisible; set { isViewVisible = value; OnPropertyChanged(); } }
+
+        public bool IsMenuBarVisible { get => isMenuBarVisible; set { isMenuBarVisible = value; OnPropertyChanged(); } }
 
         public ISelectedViewModel SelectedVM
         {
@@ -207,5 +214,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             OnOpenDetailViewMatchingSelectedId(args);
         }
+        private void OnShowMenuExecute()
+        {
+            IsMenuBarVisible = !IsMenuBarVisible;
+        }
+
+
+
     }
 }
