@@ -9,6 +9,7 @@ namespace BookOrganizer.Domain
     {
         private string _name;
         private string _logoPath;
+        private string description;
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -29,7 +30,6 @@ namespace BookOrganizer.Domain
             }
         }
 
-
         public string LogoPath
         {
             get => _logoPath;
@@ -38,6 +38,12 @@ namespace BookOrganizer.Domain
                 _logoPath = DomainHelpers.SetPicturePath(value, "PublisherLogos");
                 OnPropertyChanged();
             }
+        }
+
+        public string Description
+        {
+            get { return description; }
+            set { description = value; OnPropertyChanged(); }
         }
 
         public ICollection<Book> Books { get; set; }
