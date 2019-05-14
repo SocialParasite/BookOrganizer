@@ -94,11 +94,27 @@
         </DockPanel.Resources>
         <Menu DockPanel.Dock="Top" Visibility="{Binding IsMenuBarVisible, Converter={StaticResource BoolToVis}}">
             <MenuItem Header="Add">
-                <MenuItem Header="Author" />
-                <MenuItem Header="Book" />
-                <MenuItem Header="Language" />
-                <MenuItem Header="Publisher" />
-                <MenuItem Header="Series" />
+                <MenuItem
+                    Command="{Binding CreateNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:AuthorDetailViewModel}"
+                    Header="Author"
+                    IsCheckable="True" />
+                <MenuItem
+                    Command="{Binding CreateNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:BookDetailViewModel}"
+                    Header="Book" />
+                <MenuItem
+                    Command="{Binding CreateNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:LanguageDetailViewModel}"
+                    Header="Language" />
+                <MenuItem
+                    Command="{Binding CreateNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:PublisherDetailViewModel}"
+                    Header="Publisher" />
+                <MenuItem
+                    Command="{Binding CreateNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:SeriesDetailViewModel}"
+                    Header="Series" />
             </MenuItem>
         </Menu>
         <Controls:HamburgerMenu

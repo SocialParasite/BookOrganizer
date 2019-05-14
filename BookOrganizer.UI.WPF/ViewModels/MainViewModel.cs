@@ -40,11 +40,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
             OpenSettingsMenuCommand = new DelegateCommand(OnOpenSettingsMenuExecute);
             OpenSelectedViewCommand = new DelegateCommand<string>(OnOpenSelectedViewExecute);
             ShowMenuCommand = new DelegateCommand(OnShowMenuExecute);
+            CreateNewItemCommand = new DelegateCommand<Type>(OnCreateNewItemExecute);
 
             IsMenuBarVisible = false;
 
             SubscribeToEvents();
         }
+
 
         private void SubscribeToEvents()
         {
@@ -77,6 +79,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand OpenMainMenuCommand { get; }
         public ICommand OpenSettingsMenuCommand { get; }
         public ICommand OpenSelectedViewCommand { get; }
+        public ICommand CreateNewItemCommand { get; set; }
 
         public ObservableCollection<IDetailViewModel> DetailViewModels { get; }
         public ObservableCollection<IDetailViewModel> TEMP_DetailViewModels { get; }
@@ -219,7 +222,18 @@ namespace BookOrganizer.UI.WPF.ViewModels
             IsMenuBarVisible = !IsMenuBarVisible;
         }
 
+        private void OnCreateNewItemExecute(Type itemType)
+        {
+            if (itemType != null)
+            {
+                eventAggregator.GetEvent<OpenDetailViewEvent>()
+                               .Publish(new OpenDetailViewEventArgs
+                               {
+                                   Id = new Guid(),
+                                   ViewModelName = Type.GetType(itemType.FullName).Name
+                               });
+            }
 
-
+        }
     }
 }

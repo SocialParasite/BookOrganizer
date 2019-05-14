@@ -19,9 +19,10 @@ namespace BookOrganizer.UI.WPF.Services
 
             if (op.ShowDialog() == true)
             {
-                var picture = new BitmapImage(new Uri(op.FileName));
+                //var picture = new BitmapImage(new Uri(op.FileName));
 
-                return picture.UriSource.Segments.LastOrDefault();
+                //return picture.UriSource.Segments.LastOrDefault();
+                return op.FileName;
             }
             return null;
         }

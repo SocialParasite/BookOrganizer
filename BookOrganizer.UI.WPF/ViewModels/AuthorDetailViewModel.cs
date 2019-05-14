@@ -69,6 +69,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private async void OnAddAuthorPictureExecute()
         {
             SelectedItem.MugShotPath = FileExplorerService.BrowsePicture() ?? SelectedItem.MugShotPath;
+
             await LoadAsync(this.Id);
         }
 

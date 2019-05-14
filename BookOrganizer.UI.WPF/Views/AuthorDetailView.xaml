@@ -107,6 +107,11 @@
                 <Button.Template>
                     <ControlTemplate>
                         <Image x:Name="authorImage" Source="{Binding SelectedItem.MugShotPath}" />
+                        <!--<Image x:Name="authorImage">
+                            <Image.Source>
+                                <BitmapImage CreateOptions="IgnoreImageCache" UriSource="{Binding SelectedItem.MugShotPath}" />
+                            </Image.Source>
+                        </Image>-->
                     </ControlTemplate>
                 </Button.Template>
             </Button>
