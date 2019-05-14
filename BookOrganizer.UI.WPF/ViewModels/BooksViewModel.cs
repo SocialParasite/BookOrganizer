@@ -31,20 +31,20 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
         public ICommand AddNewBookCommand { get; }
 
-        public OpenDetailViewEventArgs SelectedBook
-        {
-            get => selectedBook;
-            set
-            {
-                selectedBook = value;
-                OnPropertyChanged();
-                if (selectedBook != null)
-                {
-                    eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(selectedBook);
-                }
-            }
-        }
+        //public OpenDetailViewEventArgs SelectedBook
+        //{
+        //    get => selectedBook;
+        //    set
+        //    {
+        //        selectedBook = value;
+        //        OnPropertyChanged();
+        //        if (selectedBook != null)
+        //        {
+        //            eventAggregator.GetEvent<OpenDetailViewEvent>()
+        //                           .Publish(selectedBook);
+        //        }
+        //    }
+        //}
 
         public override async Task InitializeRepositoryAsync()
         {
@@ -55,7 +55,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void OnAddNewBookExecute()
         {
-            SelectedBook = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(BookDetailViewModel) };
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(new OpenDetailViewEventArgs
+                                   {
+                                       Id = new Guid(),
+                                       ViewModelName = nameof(BookDetailViewModel)
+                                   });
+            //SelectedBook = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(BookDetailViewModel) };
         }
 
         private void OnBookTitleLabelMouseLeftButtonUpExecute(Guid? id)
@@ -65,6 +71,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
             => (id is null || id == Guid.Empty) ? false : true;
 
         private void OnOpenBookMatchingSelectedId(Guid id)
-            => SelectedBook = new OpenDetailViewEventArgs { Id = id, ViewModelName = nameof(BookDetailViewModel) };
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(new OpenDetailViewEventArgs
+                                   {
+                                       Id = id,
+                                       ViewModelName = nameof(BookDetailViewModel)
+                                   });
+            //SelectedBook = new OpenDetailViewEventArgs { Id = id, ViewModelName = nameof(BookDetailViewModel) };
+        }
     }
 }
