@@ -34,21 +34,21 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand SeriesNameLabelMouseLeftButtonUpCommand { get; }
         public ICommand AddNewSeriesCommand { get; }
 
-        public OpenDetailViewEventArgs SelectedSeries
-        {
-            get => selectedSeries;
-            set
-            {
-                selectedSeries = value;
-                OnPropertyChanged();
+        //public OpenDetailViewEventArgs SelectedSeries
+        //{
+        //    get => selectedSeries;
+        //    set
+        //    {
+        //        selectedSeries = value;
+        //        OnPropertyChanged();
 
-                if (selectedSeries != null)
-                {
-                    eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(selectedSeries);
-                }
-            }
-        }
+        //        if (selectedSeries != null)
+        //        {
+        //            eventAggregator.GetEvent<OpenDetailViewEvent>()
+        //                           .Publish(selectedSeries);
+        //        }
+        //    }
+        //}
 
         public async override Task InitializeRepositoryAsync()
         {
@@ -61,9 +61,25 @@ namespace BookOrganizer.UI.WPF.ViewModels
             => (id is null || id == Guid.Empty) ? false : true;
 
         private void OnSeriesNameLabelMouseLeftButtonUpExecute(Guid? id)
-            => SelectedSeries = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(SeriesDetailViewModel) };
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(new OpenDetailViewEventArgs
+                                   {
+                                       Id = (Guid)id,
+                                       ViewModelName = nameof(SeriesDetailViewModel)
+                                   });
+            //SelectedSeries = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(SeriesDetailViewModel) };
+        }
 
         private void OnAddNewSeriesExecute()
-            => SelectedSeries = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(SeriesDetailViewModel) };
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(new OpenDetailViewEventArgs
+                                   {
+                                       Id = new Guid(),
+                                       ViewModelName = nameof(SeriesDetailViewModel)
+                                   });
+            //SelectedSeries = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(SeriesDetailViewModel) };
+        }
     }
 }

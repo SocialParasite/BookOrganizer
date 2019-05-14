@@ -34,21 +34,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand PublisherNameLabelMouseLeftButtonUpCommand { get; set; }
         public ICommand AddNewPublisherCommand { get; set; }
 
-        //public OpenDetailViewEventArgs SelectedPublisher
-        //{
-        //    get => selectedPublisher;
-        //    set
-        //    {
-        //        selectedPublisher = value;
-        //        OnPropertyChanged();
-        //        if (selectedPublisher != null)
-        //        {
-        //            eventAggregator.GetEvent<OpenDetailViewEvent>()
-        //                           .Publish(selectedPublisher);
-        //        }
-        //    }
-        //}
-
         private void OnAddNewPublisherExecute()
         {
             eventAggregator.GetEvent<OpenDetailViewEvent>()
@@ -57,7 +42,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                        Id = new Guid(),
                                        ViewModelName = nameof(PublisherDetailViewModel)
                                    });
-            //SelectedPublisher = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(PublisherDetailViewModel) };
         }
 
         private bool OnPublisherNameLabelMouseLeftButtonUpCanExecute(Guid? id)
@@ -71,7 +55,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                            Id = (Guid)id,
                            ViewModelName = nameof(PublisherDetailViewModel)
                        });
-            //SelectedPublisher = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(PublisherDetailViewModel) };
         }
 
         public override async Task InitializeRepositoryAsync()
