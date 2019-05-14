@@ -31,20 +31,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
         public ICommand AddNewBookCommand { get; }
 
-        //public OpenDetailViewEventArgs SelectedBook
-        //{
-        //    get => selectedBook;
-        //    set
-        //    {
-        //        selectedBook = value;
-        //        OnPropertyChanged();
-        //        if (selectedBook != null)
-        //        {
-        //            eventAggregator.GetEvent<OpenDetailViewEvent>()
-        //                           .Publish(selectedBook);
-        //        }
-        //    }
-        //}
 
         public override async Task InitializeRepositoryAsync()
         {
@@ -61,7 +47,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                        Id = new Guid(),
                                        ViewModelName = nameof(BookDetailViewModel)
                                    });
-            //SelectedBook = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(BookDetailViewModel) };
         }
 
         private void OnBookTitleLabelMouseLeftButtonUpExecute(Guid? id)
@@ -78,7 +63,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                        Id = id,
                                        ViewModelName = nameof(BookDetailViewModel)
                                    });
-            //SelectedBook = new OpenDetailViewEventArgs { Id = id, ViewModelName = nameof(BookDetailViewModel) };
         }
     }
 }

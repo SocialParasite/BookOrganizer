@@ -34,29 +34,45 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand PublisherNameLabelMouseLeftButtonUpCommand { get; set; }
         public ICommand AddNewPublisherCommand { get; set; }
 
-        public OpenDetailViewEventArgs SelectedPublisher
-        {
-            get => selectedPublisher;
-            set
-            {
-                selectedPublisher = value;
-                OnPropertyChanged();
-                if (selectedPublisher != null)
-                {
-                    eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(selectedPublisher);
-                }
-            }
-        }
+        //public OpenDetailViewEventArgs SelectedPublisher
+        //{
+        //    get => selectedPublisher;
+        //    set
+        //    {
+        //        selectedPublisher = value;
+        //        OnPropertyChanged();
+        //        if (selectedPublisher != null)
+        //        {
+        //            eventAggregator.GetEvent<OpenDetailViewEvent>()
+        //                           .Publish(selectedPublisher);
+        //        }
+        //    }
+        //}
 
         private void OnAddNewPublisherExecute()
-            => SelectedPublisher = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(PublisherDetailViewModel) };
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(new OpenDetailViewEventArgs
+                                   {
+                                       Id = new Guid(),
+                                       ViewModelName = nameof(PublisherDetailViewModel)
+                                   });
+            //SelectedPublisher = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(PublisherDetailViewModel) };
+        }
 
         private bool OnPublisherNameLabelMouseLeftButtonUpCanExecute(Guid? id)
             => (id is null || id == Guid.Empty) ? false : true;
 
         private void OnPublisherNameLabelMouseLeftButtonUpExecute(Guid? id)
-            => SelectedPublisher = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(PublisherDetailViewModel) };
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                       .Publish(new OpenDetailViewEventArgs
+                       {
+                           Id = (Guid)id,
+                           ViewModelName = nameof(PublisherDetailViewModel)
+                       });
+            //SelectedPublisher = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(PublisherDetailViewModel) };
+        }
 
         public override async Task InitializeRepositoryAsync()
         {
