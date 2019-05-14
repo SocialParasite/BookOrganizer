@@ -93,12 +93,15 @@
             </DataTemplate>
         </DockPanel.Resources>
         <Menu DockPanel.Dock="Top" Visibility="{Binding IsMenuBarVisible, Converter={StaticResource BoolToVis}}">
-            <MenuItem Header="Add">
+            <MenuItem
+                FontSize="16"
+                FontWeight="Bold"
+                Foreground="Blue"
+                Header="Add">
                 <MenuItem
                     Command="{Binding CreateNewItemCommand}"
                     CommandParameter="{x:Type viewModel:AuthorDetailViewModel}"
-                    Header="Author"
-                    IsCheckable="True" />
+                    Header="Author" />
                 <MenuItem
                     Command="{Binding CreateNewItemCommand}"
                     CommandParameter="{x:Type viewModel:BookDetailViewModel}"

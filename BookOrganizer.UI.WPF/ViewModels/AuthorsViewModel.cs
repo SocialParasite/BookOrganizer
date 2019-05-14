@@ -35,30 +35,27 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand AuthorNameLabelMouseLeftButtonUpCommand { get; set; }
         public ICommand AddNewAuthorCommand { get; set; }
 
-        public OpenDetailViewEventArgs SelectedAuthor
-        {
-            get => selectedAuthor;
-            set
-            {
-                selectedAuthor = value;
-                OnPropertyChanged();
-                if (selectedAuthor != null)
-                {
-                    eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(selectedAuthor);
-                }
-            }
-        }
-
         private void OnAddNewAuthorExecute()
-            => SelectedAuthor = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(AuthorDetailViewModel) };
-
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(new OpenDetailViewEventArgs
+                                   {
+                                       Id = new Guid(),
+                                       ViewModelName = nameof(AuthorDetailViewModel)
+                                   });
+        }
         private bool OnAuthorNameLabelMouseLeftButtonUpCanExecute(Guid? id)
             => (id is null || id == Guid.Empty) ? false : true;
 
         private void OnAuthorNameLabelMouseLeftButtonUpExecute(Guid? id)
-            => SelectedAuthor = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(AuthorDetailViewModel) };
-
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(new OpenDetailViewEventArgs
+                                   {
+                                       Id = (Guid)id,
+                                       ViewModelName = nameof(AuthorDetailViewModel)
+                                   });
+        }
 
         public async override Task InitializeRepositoryAsync()
         {
