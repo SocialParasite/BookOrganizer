@@ -22,13 +22,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SeriesNameLabelMouseLeftButtonUpCommand =
                 new DelegateCommand<Guid?>(OnSeriesNameLabelMouseLeftButtonUpExecute,
                 OnSeriesNameLabelMouseLeftButtonUpCanExecute);
-            //AddNewSeriesCommand = new DelegateCommand(OnAddNewSeriesExecute);
 
             InitializeRepositoryAsync();
         }
 
         public ICommand SeriesNameLabelMouseLeftButtonUpCommand { get; }
-        //public ICommand AddNewSeriesCommand { get; }
 
         public async override Task InitializeRepositoryAsync()
         {
@@ -49,15 +47,5 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                        ViewModelName = nameof(SeriesDetailViewModel)
                                    });
         }
-
-        //private void OnAddNewSeriesExecute()
-        //{
-        //    eventAggregator.GetEvent<OpenDetailViewEvent>()
-        //                           .Publish(new OpenDetailViewEventArgs
-        //                           {
-        //                               Id = new Guid(),
-        //                               ViewModelName = nameof(SeriesDetailViewModel)
-        //                           });
-        //}
     }
 }
