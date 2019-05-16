@@ -22,13 +22,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             BookTitleLabelMouseLeftButtonUpCommand
                 = new DelegateCommand<Guid?>(OnBookTitleLabelMouseLeftButtonUpExecute, OnBookTitleLabelMouseLeftButtonUpCanExecute);
-            AddNewBookCommand = new DelegateCommand(OnAddNewBookExecute);
+            //AddNewBookCommand = new DelegateCommand(OnAddNewBookExecute);
 
             InitializeRepositoryAsync();
         }
 
         public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
-        public ICommand AddNewBookCommand { get; }
+        //public ICommand AddNewBookCommand { get; }
 
 
         public override async Task InitializeRepositoryAsync()
@@ -38,15 +38,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
             EntityCollection = Items.OrderBy(b => b.DisplayMember).ToList();
         }
 
-        private void OnAddNewBookExecute()
-        {
-            eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(new OpenDetailViewEventArgs
-                                   {
-                                       Id = new Guid(),
-                                       ViewModelName = nameof(BookDetailViewModel)
-                                   });
-        }
+        //private void OnAddNewBookExecute()
+        //{
+        //    eventAggregator.GetEvent<OpenDetailViewEvent>()
+        //                           .Publish(new OpenDetailViewEventArgs
+        //                           {
+        //                               Id = new Guid(),
+        //                               ViewModelName = nameof(BookDetailViewModel)
+        //                           });
+        //}
 
         private void OnBookTitleLabelMouseLeftButtonUpExecute(Guid? id)
             => OnOpenBookMatchingSelectedId((Guid)id);

@@ -101,7 +101,8 @@
                 MinWidth="75"
                 Margin="0,0,15,0"
                 HorizontalAlignment="Right"
-                Command="{Binding AddNewPublisherCommand}"
+                Command="{Binding AddNewItemCommand}"
+                CommandParameter="{x:Type viewModel:PublisherDetailViewModel}"
                 Content="Add new publisher" />
         </Grid>
         <Grid Grid.Row="2">

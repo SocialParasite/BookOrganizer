@@ -101,7 +101,8 @@
                 MinWidth="75"
                 Margin="0,0,15,0"
                 HorizontalAlignment="Right"
-                Command="{Binding AddNewSeriesCommand}"
+                Command="{Binding AddNewItemCommand}"
+                CommandParameter="{x:Type viewModel:SeriesDetailViewModel}"
                 Content="Add new book series" />
         </Grid>
         <Grid Grid.Row="2">

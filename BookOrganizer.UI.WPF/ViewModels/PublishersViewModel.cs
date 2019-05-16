@@ -24,23 +24,23 @@ namespace BookOrganizer.UI.WPF.ViewModels
             PublisherNameLabelMouseLeftButtonUpCommand =
                 new DelegateCommand<Guid?>(OnPublisherNameLabelMouseLeftButtonUpExecute,
                                            OnPublisherNameLabelMouseLeftButtonUpCanExecute);
-            AddNewPublisherCommand = new DelegateCommand(OnAddNewPublisherExecute);
+            //AddNewPublisherCommand = new DelegateCommand(OnAddNewPublisherExecute);
 
             InitializeRepositoryAsync();
         }
 
         public ICommand PublisherNameLabelMouseLeftButtonUpCommand { get; set; }
-        public ICommand AddNewPublisherCommand { get; set; }
+        //public ICommand AddNewPublisherCommand { get; set; }
 
-        private void OnAddNewPublisherExecute()
-        {
-            eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(new OpenDetailViewEventArgs
-                                   {
-                                       Id = new Guid(),
-                                       ViewModelName = nameof(PublisherDetailViewModel)
-                                   });
-        }
+        //private void OnAddNewPublisherExecute()
+        //{
+        //    eventAggregator.GetEvent<OpenDetailViewEvent>()
+        //                           .Publish(new OpenDetailViewEventArgs
+        //                           {
+        //                               Id = new Guid(),
+        //                               ViewModelName = nameof(PublisherDetailViewModel)
+        //                           });
+        //}
 
         private bool OnPublisherNameLabelMouseLeftButtonUpCanExecute(Guid? id)
             => (id is null || id == Guid.Empty) ? false : true;
