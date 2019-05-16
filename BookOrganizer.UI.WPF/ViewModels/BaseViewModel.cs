@@ -2,11 +2,13 @@
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
+using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
@@ -20,6 +22,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.eventAggregator = eventAggregator;
             //RefreshCommand = new DelegateCommand(OnRefreshExecute);
             //SortByCommand = new DelegateCommand<object>(OnSortByExecute);
+
+            AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
         }
 
         public readonly IEventAggregator eventAggregator;
@@ -30,7 +34,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         //public ICommand RefreshCommand { get; }
         //public ICommand SortByCommand { get; }
-
+        public ICommand AddNewItemCommand { get; }
 
         public List<LookupItem> EntityCollection
         {
@@ -43,6 +47,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         public abstract Task InitializeRepositoryAsync();
+
+        private void OnAddNewItemExecute(Type itemType)
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                       .Publish(new OpenDetailViewEventArgs
+                       {
+                           Id = new Guid(),
+                           ViewModelName = Type.GetType(itemType.FullName).Name
+                       });
+        }
 
         //public abstract void SortEntityCollection(IEnumerable<T> itemList, string orderBy);
 

@@ -6,6 +6,7 @@
     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPF.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -99,7 +100,8 @@
                 MinWidth="75"
                 Margin="0,0,15,0"
                 HorizontalAlignment="Right"
-                Command="{Binding AddNewAuthorCommand}"
+                Command="{Binding AddNewItemCommand}"
+                CommandParameter="{x:Type viewModel:AuthorDetailViewModel}"
                 Content="Add new author" />
         </Grid>
         <Grid Grid.Row="2">
