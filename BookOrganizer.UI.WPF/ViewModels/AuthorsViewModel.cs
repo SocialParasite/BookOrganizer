@@ -4,9 +4,7 @@ using BookOrganizer.UI.WPF.Lookups;
 using Prism.Commands;
 using Prism.Events;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -15,7 +13,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
     public class AuthorsViewModel : BaseViewModel<Author>, IAuthorsViewModel
     {
         private readonly IAuthorLookupDataService authorLookupDataService;
-        private OpenDetailViewEventArgs selectedAuthor;
 
         public AuthorsViewModel(IEventAggregator eventAggregator,
                               IAuthorLookupDataService authorLookupDataService)

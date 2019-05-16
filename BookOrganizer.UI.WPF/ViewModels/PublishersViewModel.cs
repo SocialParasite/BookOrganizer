@@ -14,8 +14,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
     {
         private readonly IPublisherLookupDataService publisherLookupDataService;
 
-        private OpenDetailViewEventArgs selectedPublisher;
-
         public PublishersViewModel(IEventAggregator eventAggregator,
                               IPublisherLookupDataService publisherLookupDataService)
             : base(eventAggregator)

@@ -13,7 +13,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
     public class BooksViewModel : BaseViewModel<Book>, IBooksViewModel
     {
         private readonly IBookLookupDataService bookLookupDataService;
-        private OpenDetailViewEventArgs selectedBook;
 
         public BooksViewModel(IEventAggregator eventAggregator,
                               IBookLookupDataService bookLookupDataService)

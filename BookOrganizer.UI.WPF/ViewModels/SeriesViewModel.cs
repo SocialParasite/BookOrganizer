@@ -4,9 +4,7 @@ using BookOrganizer.UI.WPF.Lookups;
 using Prism.Commands;
 using Prism.Events;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -15,8 +13,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
     public class SeriesViewModel : BaseViewModel<Series>, ISeriesViewModel
     {
         private readonly ISeriesLookupDataService seriesLookupDataService;
-
-        private OpenDetailViewEventArgs selectedSeries;
 
         public SeriesViewModel(IEventAggregator eventAggregator, ISeriesLookupDataService seriesLookupDataService)
             : base(eventAggregator)
@@ -33,22 +29,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public ICommand SeriesNameLabelMouseLeftButtonUpCommand { get; }
         public ICommand AddNewSeriesCommand { get; }
-
-        //public OpenDetailViewEventArgs SelectedSeries
-        //{
-        //    get => selectedSeries;
-        //    set
-        //    {
-        //        selectedSeries = value;
-        //        OnPropertyChanged();
-
-        //        if (selectedSeries != null)
-        //        {
-        //            eventAggregator.GetEvent<OpenDetailViewEvent>()
-        //                           .Publish(selectedSeries);
-        //        }
-        //    }
-        //}
 
         public async override Task InitializeRepositoryAsync()
         {
@@ -68,7 +48,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                        Id = (Guid)id,
                                        ViewModelName = nameof(SeriesDetailViewModel)
                                    });
-            //SelectedSeries = new OpenDetailViewEventArgs { Id = (Guid)id, ViewModelName = nameof(SeriesDetailViewModel) };
         }
 
         private void OnAddNewSeriesExecute()
@@ -79,7 +58,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                        Id = new Guid(),
                                        ViewModelName = nameof(SeriesDetailViewModel)
                                    });
-            //SelectedSeries = new OpenDetailViewEventArgs { Id = new Guid(), ViewModelName = nameof(SeriesDetailViewModel) };
         }
     }
 }
