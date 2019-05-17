@@ -1,7 +1,5 @@
 ﻿using BookOrganizer.Domain;
-using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Lookups;
-using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Linq;
@@ -20,9 +18,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
 
-            //BookTitleLabelMouseLeftButtonUpCommand
-            //    = new DelegateCommand<Guid?>(OnBookTitleLabelMouseLeftButtonUpExecute, OnBookTitleLabelMouseLeftButtonUpCanExecute);
-
             InitializeRepositoryAsync();
         }
 
@@ -34,22 +29,6 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Items = await bookLookupDataService.GetBookLookupAsync();
 
             EntityCollection = Items.OrderBy(b => b.DisplayMember).ToList();
-        }
-
-        //private void OnBookTitleLabelMouseLeftButtonUpExecute(Guid? id)
-        //    => OnOpenBookMatchingSelectedId((Guid)id);
-
-        //private bool OnBookTitleLabelMouseLeftButtonUpCanExecute(Guid? id)
-        //    => (id is null || id == Guid.Empty) ? false : true;
-
-        private void OnOpenBookMatchingSelectedId(Guid id)
-        {
-            eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(new OpenDetailViewEventArgs
-                                   {
-                                       Id = id,
-                                       ViewModelName = nameof(BookDetailViewModel)
-                                   });
         }
     }
 }
