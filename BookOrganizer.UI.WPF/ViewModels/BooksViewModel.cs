@@ -20,8 +20,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
 
-            BookTitleLabelMouseLeftButtonUpCommand
-                = new DelegateCommand<Guid?>(OnBookTitleLabelMouseLeftButtonUpExecute, OnBookTitleLabelMouseLeftButtonUpCanExecute);
+            //BookTitleLabelMouseLeftButtonUpCommand
+            //    = new DelegateCommand<Guid?>(OnBookTitleLabelMouseLeftButtonUpExecute, OnBookTitleLabelMouseLeftButtonUpCanExecute);
 
             InitializeRepositoryAsync();
         }
@@ -36,11 +36,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             EntityCollection = Items.OrderBy(b => b.DisplayMember).ToList();
         }
 
-        private void OnBookTitleLabelMouseLeftButtonUpExecute(Guid? id)
-            => OnOpenBookMatchingSelectedId((Guid)id);
+        //private void OnBookTitleLabelMouseLeftButtonUpExecute(Guid? id)
+        //    => OnOpenBookMatchingSelectedId((Guid)id);
 
-        private bool OnBookTitleLabelMouseLeftButtonUpCanExecute(Guid? id)
-            => (id is null || id == Guid.Empty) ? false : true;
+        //private bool OnBookTitleLabelMouseLeftButtonUpCanExecute(Guid? id)
+        //    => (id is null || id == Guid.Empty) ? false : true;
 
         private void OnOpenBookMatchingSelectedId(Guid id)
         {

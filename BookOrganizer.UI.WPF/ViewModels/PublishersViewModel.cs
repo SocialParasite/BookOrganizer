@@ -21,27 +21,27 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.publisherLookupDataService = publisherLookupDataService
                 ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
 
-            PublisherNameLabelMouseLeftButtonUpCommand =
-                new DelegateCommand<Guid?>(OnPublisherNameLabelMouseLeftButtonUpExecute,
-                                           OnPublisherNameLabelMouseLeftButtonUpCanExecute);
+            //PublisherNameLabelMouseLeftButtonUpCommand =
+            //    new DelegateCommand<Guid?>(OnPublisherNameLabelMouseLeftButtonUpExecute,
+            //                               OnPublisherNameLabelMouseLeftButtonUpCanExecute);
 
             InitializeRepositoryAsync();
         }
 
-        public ICommand PublisherNameLabelMouseLeftButtonUpCommand { get; set; }
+        //public ICommand PublisherNameLabelMouseLeftButtonUpCommand { get; set; }
 
-        private bool OnPublisherNameLabelMouseLeftButtonUpCanExecute(Guid? id)
-            => (id is null || id == Guid.Empty) ? false : true;
+        //private bool OnPublisherNameLabelMouseLeftButtonUpCanExecute(Guid? id)
+        //    => (id is null || id == Guid.Empty) ? false : true;
 
-        private void OnPublisherNameLabelMouseLeftButtonUpExecute(Guid? id)
-        {
-            eventAggregator.GetEvent<OpenDetailViewEvent>()
-                       .Publish(new OpenDetailViewEventArgs
-                       {
-                           Id = (Guid)id,
-                           ViewModelName = nameof(PublisherDetailViewModel)
-                       });
-        }
+        //private void OnPublisherNameLabelMouseLeftButtonUpExecute(Guid? id)
+        //{
+        //    eventAggregator.GetEvent<OpenDetailViewEvent>()
+        //               .Publish(new OpenDetailViewEventArgs
+        //               {
+        //                   Id = (Guid)id,
+        //                   ViewModelName = nameof(PublisherDetailViewModel)
+        //               });
+        //}
 
         public override async Task InitializeRepositoryAsync()
         {

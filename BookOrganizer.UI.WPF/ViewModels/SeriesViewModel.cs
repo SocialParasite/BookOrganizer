@@ -19,14 +19,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             this.seriesLookupDataService = seriesLookupDataService;
 
-            SeriesNameLabelMouseLeftButtonUpCommand =
-                new DelegateCommand<Guid?>(OnSeriesNameLabelMouseLeftButtonUpExecute,
-                OnSeriesNameLabelMouseLeftButtonUpCanExecute);
+            //SeriesNameLabelMouseLeftButtonUpCommand =
+            //    new DelegateCommand<Guid?>(OnSeriesNameLabelMouseLeftButtonUpExecute,
+            //    OnSeriesNameLabelMouseLeftButtonUpCanExecute);
 
             InitializeRepositoryAsync();
         }
 
-        public ICommand SeriesNameLabelMouseLeftButtonUpCommand { get; }
+        //public ICommand SeriesNameLabelMouseLeftButtonUpCommand { get; }
 
         public async override Task InitializeRepositoryAsync()
         {
@@ -35,17 +35,17 @@ namespace BookOrganizer.UI.WPF.ViewModels
             EntityCollection = Items.OrderBy(p => p.DisplayMember).ToList();
         }
 
-        private bool OnSeriesNameLabelMouseLeftButtonUpCanExecute(Guid? id)
-            => (id is null || id == Guid.Empty) ? false : true;
+        //private bool OnSeriesNameLabelMouseLeftButtonUpCanExecute(Guid? id)
+        //    => (id is null || id == Guid.Empty) ? false : true;
 
-        private void OnSeriesNameLabelMouseLeftButtonUpExecute(Guid? id)
-        {
-            eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(new OpenDetailViewEventArgs
-                                   {
-                                       Id = (Guid)id,
-                                       ViewModelName = nameof(SeriesDetailViewModel)
-                                   });
-        }
+        //private void OnSeriesNameLabelMouseLeftButtonUpExecute(Guid? id)
+        //{
+        //    eventAggregator.GetEvent<OpenDetailViewEvent>()
+        //                           .Publish(new OpenDetailViewEventArgs
+        //                           {
+        //                               Id = (Guid)id,
+        //                               ViewModelName = nameof(SeriesDetailViewModel)
+        //                           });
+        //}
     }
 }
