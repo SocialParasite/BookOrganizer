@@ -21,27 +21,27 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.authorLookupDataService = authorLookupDataService
                 ?? throw new ArgumentNullException(nameof(authorLookupDataService));
 
-            AuthorNameLabelMouseLeftButtonUpCommand =
-                new DelegateCommand<Guid?>(OnAuthorNameLabelMouseLeftButtonUpExecute,
-                                           OnAuthorNameLabelMouseLeftButtonUpCanExecute);
+            //AuthorNameLabelMouseLeftButtonUpCommand =
+            //    new DelegateCommand<Guid?>(OnAuthorNameLabelMouseLeftButtonUpExecute,
+            //                               OnAuthorNameLabelMouseLeftButtonUpCanExecute);
 
             InitializeRepositoryAsync();
         }
 
-        public ICommand AuthorNameLabelMouseLeftButtonUpCommand { get; set; }
+        //public ICommand AuthorNameLabelMouseLeftButtonUpCommand { get; set; }
 
-        private bool OnAuthorNameLabelMouseLeftButtonUpCanExecute(Guid? id)
-            => (id is null || id == Guid.Empty) ? false : true;
+        //private bool OnAuthorNameLabelMouseLeftButtonUpCanExecute(Guid? id)
+        //    => (id is null || id == Guid.Empty) ? false : true;
 
-        private void OnAuthorNameLabelMouseLeftButtonUpExecute(Guid? id)
-        {
-            eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(new OpenDetailViewEventArgs
-                                   {
-                                       Id = (Guid)id,
-                                       ViewModelName = nameof(AuthorDetailViewModel)
-                                   });
-        }
+        //private void OnAuthorNameLabelMouseLeftButtonUpExecute(Guid? id)
+        //{
+        //    eventAggregator.GetEvent<OpenDetailViewEvent>()
+        //                           .Publish(new OpenDetailViewEventArgs
+        //                           {
+        //                               Id = (Guid)id,
+        //                               ViewModelName = nameof(AuthorDetailViewModel)
+        //                           });
+        //}
 
         public async override Task InitializeRepositoryAsync()
         {

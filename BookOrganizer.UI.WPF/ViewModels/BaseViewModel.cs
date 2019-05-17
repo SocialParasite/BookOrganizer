@@ -24,6 +24,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
             //SortByCommand = new DelegateCommand<object>(OnSortByExecute);
 
             AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
+
+            ItemNameLabelMouseLeftButtonUpCommand =
+                new DelegateCommand<LookupItem>(OnItemNameLabelMouseLeftButtonUpExecute,
+                                           OnItemNameLabelMouseLeftButtonUpCanExecute);
         }
 
         public readonly IEventAggregator eventAggregator;
@@ -35,6 +39,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         //public ICommand RefreshCommand { get; }
         //public ICommand SortByCommand { get; }
         public ICommand AddNewItemCommand { get; }
+        public ICommand ItemNameLabelMouseLeftButtonUpCommand { get; }
 
         public List<LookupItem> EntityCollection
         {
@@ -57,6 +62,20 @@ namespace BookOrganizer.UI.WPF.ViewModels
                            ViewModelName = Type.GetType(itemType.FullName).Name
                        });
         }
+
+        private bool OnItemNameLabelMouseLeftButtonUpCanExecute(LookupItem item)
+            => (item.Id == Guid.Empty) ? false : true;
+
+        private void OnItemNameLabelMouseLeftButtonUpExecute(LookupItem item)
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                                   .Publish(new OpenDetailViewEventArgs
+                                   {
+                                       Id = item.Id,
+                                       ViewModelName = item.ViewModelName
+                                   });
+        }
+
 
         //public abstract void SortEntityCollection(IEnumerable<T> itemList, string orderBy);
 

@@ -22,7 +22,7 @@
                         HorizontalAlignment="Stretch">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonUp">
-                                <i:InvokeCommandAction Command="{Binding DataContext.AuthorNameLabelMouseLeftButtonUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Id}" />
+                                <i:InvokeCommandAction Command="{Binding DataContext.ItemNameLabelMouseLeftButtonUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <Label.Template>
