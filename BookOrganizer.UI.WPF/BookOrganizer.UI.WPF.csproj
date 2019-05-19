@@ -220,6 +220,7 @@
     <Compile Include="ViewModels\Interfaces\IAuthorsViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBookDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IBooksViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IMainPageViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISeriesDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPublisherDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPublishersViewModel.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="ViewModels\Interfaces\IDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISeriesViewModel.cs" />
     <Compile Include="ViewModels\LanguageDetailViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PublisherDetailViewModel.cs" />
     <Compile Include="ViewModels\PublishersViewModel.cs" />
@@ -247,6 +249,9 @@
     </Compile>
     <Compile Include="Views\LanguageDetailView.xaml.cs">
       <DependentUpon>LanguageDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PublisherDetailView.xaml.cs">
       <DependentUpon>PublisherDetailView.xaml</DependentUpon>
@@ -289,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LanguageDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

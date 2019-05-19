@@ -21,6 +21,9 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
 
+            builder.RegisterType<MainPageViewModel>().As<IMainPageViewModel>();
+            builder.RegisterType<MainPageViewModel>().Keyed<ISelectedViewModel>(nameof(MainPageViewModel));
+
             builder.RegisterType<BookDetailViewModel>().As<IBookDetailViewModel>();
             builder.RegisterType<BookDetailViewModel>()
                 .Keyed<IDetailViewModel>(nameof(BookDetailViewModel));
