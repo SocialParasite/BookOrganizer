@@ -15,210 +15,211 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <ScrollViewer>
         <Grid>
-            <Border
-                Margin="2"
-                HorizontalAlignment="Right"
-                BorderThickness="1">
-                <ToggleButton x:Name="EditModeActiveToggleButton" Style="{StaticResource ToggleButtonStyle}">
-                    <TextBlock VerticalAlignment="Center" Text="Edit Mode" />
-                </ToggleButton>
-            </Border>
-        </Grid>
-
-        <Grid Grid.Row="1" Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MaxWidth="{Binding UserMode.Item4, Converter={StaticResource BoolToMaxConverter}}" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid>
+                <Border
+                    Margin="2"
+                    HorizontalAlignment="Right"
+                    BorderThickness="1">
+                    <ToggleButton x:Name="EditModeActiveToggleButton" Style="{StaticResource ToggleButtonStyle}">
+                        <TextBlock VerticalAlignment="Center" Text="Edit Mode" />
+                    </ToggleButton>
+                </Border>
+            </Grid>
 
-            <TextBox
-                x:Name="fullNameTextBox"
-                Grid.ColumnSpan="2"
-                BorderThickness="0"
-                FontSize="48"
-                FontWeight="Bold"
-                Style="{StaticResource TextBoxStyles}"
-                Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}">
-                <TextBox.Text>
-                    <MultiBinding StringFormat="{}{1}, {0}">
-                        <Binding Path="FirstName" />
-                        <Binding Path="LastName" />
-                    </MultiBinding>
-                </TextBox.Text>
-            </TextBox>
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MaxWidth="{Binding UserMode.Item4, Converter={StaticResource BoolToMaxConverter}}" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <Label
-                x:Name="lastNameLabel"
-                Content="Surname:"
-                FontWeight="Bold"
-                Style="{StaticResource LabelStyles}"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-            <TextBox
-                x:Name="lastNameTextBox"
-                Grid.Column="1"
-                MinWidth="300"
-                MaxWidth="500"
-                Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-            <Label
-                x:Name="firstNameLabel"
-                Grid.Row="1"
-                Content="Forename(s):"
-                FontWeight="Bold"
-                Style="{StaticResource LabelStyles}"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-            <TextBox
-                x:Name="firstNameTextBox"
-                Grid.Row="1"
-                Grid.Column="1"
-                MinWidth="300"
-                MaxWidth="500"
-                Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-            <Button
-                Grid.RowSpan="3"
-                Grid.Column="2"
-                MaxWidth="600"
-                MaxHeight="600"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Left"
-                Command="{Binding AddAuthorPictureCommand}"
-                IsEnabled="{Binding UserMode.Item4}">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Image x:Name="authorImage" Source="{Binding SelectedItem.MugShotPath}" />
-                        <!--<Image x:Name="authorImage">
+                <TextBox
+                    x:Name="fullNameTextBox"
+                    Grid.ColumnSpan="2"
+                    BorderThickness="0"
+                    FontSize="48"
+                    FontWeight="Bold"
+                    Style="{StaticResource TextBoxStyles}"
+                    Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}">
+                    <TextBox.Text>
+                        <MultiBinding StringFormat="{}{1}, {0}">
+                            <Binding Path="FirstName" />
+                            <Binding Path="LastName" />
+                        </MultiBinding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <Label
+                    x:Name="lastNameLabel"
+                    Content="Surname:"
+                    FontWeight="Bold"
+                    Style="{StaticResource LabelStyles}"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                <TextBox
+                    x:Name="lastNameTextBox"
+                    Grid.Column="1"
+                    MinWidth="300"
+                    MaxWidth="500"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                <Label
+                    x:Name="firstNameLabel"
+                    Grid.Row="1"
+                    Content="Forename(s):"
+                    FontWeight="Bold"
+                    Style="{StaticResource LabelStyles}"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                <TextBox
+                    x:Name="firstNameTextBox"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    MinWidth="300"
+                    MaxWidth="500"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                <Button
+                    Grid.RowSpan="3"
+                    Grid.Column="2"
+                    MaxWidth="600"
+                    MaxHeight="600"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding AddAuthorPictureCommand}"
+                    IsEnabled="{Binding UserMode.Item4}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image x:Name="authorImage" Source="{Binding SelectedItem.MugShotPath}" />
+                            <!--<Image x:Name="authorImage">
                             <Image.Source>
                                 <BitmapImage CreateOptions="IgnoreImageCache" UriSource="{Binding SelectedItem.MugShotPath}" />
                             </Image.Source>
                         </Image>-->
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
-            <GroupBox
-                x:Name="bioGroupBox"
-                Grid.Row="2"
-                Grid.ColumnSpan="2"
-                Width="600"
-                MaxHeight="600"
-                Margin="5"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Header="Biography">
-                <TextBox
-                    x:Name="bioTextBlock"
-                    VerticalContentAlignment="Top"
-                    AcceptsReturn="True"
-                    BorderThickness="0"
-                    FontSize="16"
-                    Style="{StaticResource EditableTextBoxStyles}"
-                    Text="{Binding SelectedItem.Biography, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap"
-                    VerticalScrollBarVisibility="Auto" />
-            </GroupBox>
-        </Grid>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MaxWidth="{Binding UserMode.Item4, Converter={StaticResource BoolToMaxConverter}}" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <GroupBox
+                    x:Name="bioGroupBox"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Width="600"
+                    MaxHeight="600"
+                    Margin="5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Header="Biography">
+                    <TextBox
+                        x:Name="bioTextBlock"
+                        VerticalContentAlignment="Top"
+                        AcceptsReturn="True"
+                        BorderThickness="0"
+                        FontSize="16"
+                        Style="{StaticResource EditableTextBoxStyles}"
+                        Text="{Binding SelectedItem.Biography, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MaxWidth="{Binding UserMode.Item4, Converter={StaticResource BoolToMaxConverter}}" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <GroupBox
-                x:Name="bibliographyGroupBox"
-                Grid.Column="1"
-                Width="500"
-                MaxWidth="600"
-                MaxHeight="500"
-                Margin="10"
-                HorizontalAlignment="Left"
-                FontWeight="Bold"
-                Header="Bibliography:">
-                <ListBox
-                    x:Name="bibliographyListBox"
-                    HorizontalContentAlignment="Stretch"
-                    BorderThickness="0"
-                    ItemsSource="{Binding SelectedItem.BooksLink}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <Label>
-                                    <Label.Content>
-                                        <Grid MaxWidth="550">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="50" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Image
-                                                x:Name="bookCoverImage"
-                                                MaxWidth="75"
-                                                MaxHeight="75"
-                                                Source="{Binding Book.BookCoverPicturePath}" />
-                                            <TextBlock
-                                                x:Name="basicLabelTextBlock"
-                                                Grid.Column="1"
-                                                Margin="20,0,0,0"
-                                                Text="{Binding Book.Title}"
-                                                TextWrapping="Wrap">
-                                                <TextBlock.InputBindings>
-                                                    <MouseBinding
-                                                        Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                                        CommandParameter="{Binding Book.Id}"
-                                                        MouseAction="LeftDoubleClick" />
-                                                </TextBlock.InputBindings>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Label.Content>
-                                </Label>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </GroupBox>
-        </Grid>
+                <GroupBox
+                    x:Name="bibliographyGroupBox"
+                    Grid.Column="1"
+                    Width="500"
+                    MaxWidth="600"
+                    MaxHeight="500"
+                    Margin="10"
+                    HorizontalAlignment="Left"
+                    FontWeight="Bold"
+                    Header="Bibliography:">
+                    <ListBox
+                        x:Name="bibliographyListBox"
+                        HorizontalContentAlignment="Stretch"
+                        BorderThickness="0"
+                        ItemsSource="{Binding SelectedItem.BooksLink}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Label>
+                                        <Label.Content>
+                                            <Grid MaxWidth="550">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image
+                                                    x:Name="bookCoverImage"
+                                                    MaxWidth="75"
+                                                    MaxHeight="75"
+                                                    Source="{Binding Book.BookCoverPicturePath}" />
+                                                <TextBlock
+                                                    x:Name="basicLabelTextBlock"
+                                                    Grid.Column="1"
+                                                    Margin="20,0,0,0"
+                                                    Text="{Binding Book.Title}"
+                                                    TextWrapping="Wrap">
+                                                    <TextBlock.InputBindings>
+                                                        <MouseBinding
+                                                            Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                                            CommandParameter="{Binding Book.Id}"
+                                                            MouseAction="LeftDoubleClick" />
+                                                    </TextBlock.InputBindings>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Label.Content>
+                                    </Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </GroupBox>
+            </Grid>
 
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="150" />
-            </Grid.ColumnDefinitions>
-            <Button
-                x:Name="SaveAuthorDetailsButton"
-                Grid.Column="1"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Left"
-                Command="{Binding SaveItemCommand}"
-                Content="Save"
-                Style="{StaticResource UpdateButtonStyle}" />
-            <Button
-                x:Name="DeleteAuthorButton"
-                Grid.Column="2"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Left"
-                Command="{Binding DeleteItemCommand}"
-                Content="Delete"
-                Style="{StaticResource UpdateButtonStyle}" />
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="SaveAuthorDetailsButton"
+                    Grid.Column="1"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SaveItemCommand}"
+                    Content="Save"
+                    Style="{StaticResource UpdateButtonStyle}" />
+                <Button
+                    x:Name="DeleteAuthorButton"
+                    Grid.Column="2"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding DeleteItemCommand}"
+                    Content="Delete"
+                    Style="{StaticResource UpdateButtonStyle}" />
+            </Grid>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

@@ -15,62 +15,62 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Label
-            x:Name="nameLabel"
-            Grid.Row="1"
-            Content="Language: "
-            Style="{StaticResource LabelStyles}" />
-        <TextBox
-            x:Name="nameTextBox"
-            Grid.Row="1"
-            Grid.Column="1"
-            MinWidth="300"
-            MaxWidth="700"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            VerticalContentAlignment="Bottom"
-            BorderThickness="1"
-            FontSize="48"
-            Style="{StaticResource ValidationTextBoxStyle}"
-            Text="{Binding LanguageName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            TextWrapping="Wrap" />
-
-        <Grid Grid.Row="3">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
-            <Button
-                x:Name="SaveLanguageButton"
+            <Label
+                x:Name="nameLabel"
+                Grid.Row="1"
+                Content="Language: "
+                Style="{StaticResource LabelStyles}" />
+            <TextBox
+                x:Name="nameTextBox"
+                Grid.Row="1"
                 Grid.Column="1"
-                Margin="50,0,0,0"
+                MinWidth="300"
+                MaxWidth="700"
                 HorizontalAlignment="Left"
-                Command="{Binding SaveItemCommand}"
-                Content="Save"
-                Style="{StaticResource UpdateButtonStyle}" />
-            <Button
-                x:Name="DeletePublisherButton"
-                Grid.Column="2"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Left"
-                Command="{Binding DeleteItemCommand}"
-                Content="Delete"
-                Style="{StaticResource UpdateButtonStyle}" />
-        </Grid>
-    </Grid>
+                VerticalAlignment="Bottom"
+                VerticalContentAlignment="Bottom"
+                BorderThickness="1"
+                FontSize="48"
+                Style="{StaticResource ValidationTextBoxStyle}"
+                Text="{Binding LanguageName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextWrapping="Wrap" />
 
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="SaveLanguageButton"
+                    Grid.Column="1"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SaveItemCommand}"
+                    Content="Save"
+                    Style="{StaticResource UpdateButtonStyle}" />
+                <Button
+                    x:Name="DeletePublisherButton"
+                    Grid.Column="2"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding DeleteItemCommand}"
+                    Content="Delete"
+                    Style="{StaticResource UpdateButtonStyle}" />
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

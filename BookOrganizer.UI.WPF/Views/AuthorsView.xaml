@@ -105,6 +105,7 @@
                 Content="Add new author" />
         </Grid>
         <Grid Grid.Row="2">
+            <ScrollViewer>
             <ItemsControl
                 x:Name="AuthorList"
                 ItemTemplate="{StaticResource UserDataTemplate}"
@@ -126,6 +127,7 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
+                </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

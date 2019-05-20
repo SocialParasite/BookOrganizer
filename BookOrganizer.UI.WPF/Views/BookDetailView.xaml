@@ -24,6 +24,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+        <ScrollViewer>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -553,4 +554,5 @@
 
         </Grid>
     </Grid>
+            </ScrollViewer>
 </UserControl>
