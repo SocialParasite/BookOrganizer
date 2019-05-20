@@ -16,43 +16,46 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <GroupBox
-        Margin="5"
+    <WrapPanel
+        MaxWidth="{Binding}"
         HorizontalAlignment="Stretch"
         VerticalAlignment="Stretch">
-        <GroupBox.Header>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                <Label
-                    Content="&#xE792;"
-                    FontFamily="Segoe MDL2 Assets"
-                    Style="{StaticResource LabelStyles}" />
-                <Label Content="Add new items:" Style="{StaticResource LabelStyles}" />
-            </StackPanel>
-        </GroupBox.Header>
-        <WrapPanel
-            MaxWidth="{Binding}"
+        <GroupBox
+            Margin="5"
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
-            <Button
-                x:Name="AddBookButton"
-                Content="Add a new book"
-                Style="{StaticResource MainPageButtonStyle}" />
-            <Button
-                x:Name="AddLanguageButton"
-                Content="Add a new language"
-                Style="{StaticResource MainPageButtonStyle}" />
-            <Button
-                x:Name="AddPublisherButton"
-                Content="Add a new publisher"
-                Style="{StaticResource MainPageButtonStyle}" />
-            <Button
-                x:Name="AddSeriesButton"
-                Content="Add a new series"
-                Style="{StaticResource MainPageButtonStyle}" />
-            <Button
-                x:Name="AddAuthorButton"
-                Content="Add a new author"
-                Style="{StaticResource MainPageButtonStyle}" />
-        </WrapPanel>
-    </GroupBox>
+            VerticalAlignment="Stretch"
+            BorderThickness="2">
+            <GroupBox.Header>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <Label
+                        Content="&#xE792;"
+                        FontFamily="Segoe MDL2 Assets"
+                        Style="{StaticResource LabelStyles}" />
+                    <Label Content="Add new items:" Style="{StaticResource LabelStyles}" />
+                </StackPanel>
+            </GroupBox.Header>
+            <WrapPanel>
+                <Button
+                    x:Name="AddBookButton"
+                    Content="Add a new book"
+                    Style="{StaticResource MainPageButtonStyle}" />
+                <Button
+                    x:Name="AddLanguageButton"
+                    Content="Add a new language"
+                    Style="{StaticResource MainPageButtonStyle}" />
+                <Button
+                    x:Name="AddPublisherButton"
+                    Content="Add a new publisher"
+                    Style="{StaticResource MainPageButtonStyle}" />
+                <Button
+                    x:Name="AddSeriesButton"
+                    Content="Add a new series"
+                    Style="{StaticResource MainPageButtonStyle}" />
+                <Button
+                    x:Name="AddAuthorButton"
+                    Content="Add a new author"
+                    Style="{StaticResource MainPageButtonStyle}" />
+            </WrapPanel>
+        </GroupBox>
+    </WrapPanel>
 </UserControl>
