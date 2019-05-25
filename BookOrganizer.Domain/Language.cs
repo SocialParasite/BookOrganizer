@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BookOrganizer.Domain
 {
-    public class Language : IIdentifiable
+    public class Language : BaseDomainEntity, IIdentifiable
     {
         private string _languageName;
 
@@ -25,6 +25,8 @@ namespace BookOrganizer.Domain
                     throw new ArgumentOutOfRangeException(nameof(LanguageName), "Language name should be 1-32 characters long.");
 
                 _languageName = value;
+
+                OnPropertyChanged();
             }
         }
     }

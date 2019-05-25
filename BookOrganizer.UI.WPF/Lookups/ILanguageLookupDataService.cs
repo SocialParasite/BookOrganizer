@@ -8,7 +8,7 @@ namespace BookOrganizer.UI.WPF.Lookups
     public interface ILanguageLookupDataService
     {
         Task<IEnumerable<LookupItem>> GetLanguageLookupAsync();
-
-        Task<Language> GetLanguageById(Guid languageId);
+        Task<Guid> GetLanguageId();
+        //Task<Language> GetLanguageById(Guid languageId);
     }
 }

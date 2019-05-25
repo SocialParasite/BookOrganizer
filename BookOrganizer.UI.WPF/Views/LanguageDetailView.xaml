@@ -47,7 +47,34 @@
                 Style="{StaticResource ValidationTextBoxStyle}"
                 Text="{Binding LanguageName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap" />
-
+            <GroupBox
+                x:Name="LanguageListGroupBox"
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="100,5,5,5"
+                Header="Available languages">
+                <ListBox x:Name="LanguagesListBox" ItemsSource="{Binding Languages}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock
+                                    x:Name="basicLabelTextBlock"
+                                    Grid.Column="1"
+                                    Margin="20,0,0,0"
+                                    Text="{Binding DisplayMember}"
+                                    TextWrapping="Wrap">
+                                    <TextBlock.InputBindings>
+                                        <MouseBinding
+                                            Command="{Binding DataContext.ChangeEditedLanguageCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                            CommandParameter="{Binding Id}"
+                                            MouseAction="LeftDoubleClick" />
+                                    </TextBlock.InputBindings>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -63,7 +90,7 @@
                     Content="Save"
                     Style="{StaticResource UpdateButtonStyle}" />
                 <Button
-                    x:Name="DeletePublisherButton"
+                    x:Name="DeleteLanguageButton"
                     Grid.Column="2"
                     Margin="50,0,0,0"
                     HorizontalAlignment="Left"

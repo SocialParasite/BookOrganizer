@@ -1,5 +1,4 @@
 ﻿using BookOrganizer.Data.SqlServer;
-using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -35,25 +34,6 @@ namespace BookOrganizer.UI.WPF.Lookups
                             DisplayMember = $"{b.Title} ({b.ReleaseYear})",
                             Picture = b.BookCoverPicturePath ?? placeholderPic,
                             ViewModelName = nameof(BookDetailViewModel)
-                        })
-                    .ToListAsync();
-            }
-        }
-
-        public async Task<IEnumerable<LookupItem>> GetLanguageLookupAsync()
-        {
-            using (var ctx = _contextCreator())
-            {
-                return await ctx.Languages
-                    .AsNoTracking()
-                    .OrderBy(l => l.LanguageName)
-                    .Select(l =>
-                        new LookupItem
-                        {
-                            Id = l.Id,
-                            DisplayMember = l.LanguageName,
-                            Picture = null,
-                            ViewModelName = null //nameof(LanguageDetailViewModel)
                         })
                     .ToListAsync();
             }
@@ -97,13 +77,34 @@ namespace BookOrganizer.UI.WPF.Lookups
             }
         }
 
-        public async Task<Language> GetLanguageById(Guid languageId)
+        public async Task<IEnumerable<LookupItem>> GetLanguageLookupAsync()
         {
             using (var ctx = _contextCreator())
             {
                 return await ctx.Languages
                     .AsNoTracking()
-                    .FirstAsync(l => l.Id == languageId);
+                    .OrderBy(l => l.LanguageName)
+                    .Select(l =>
+                        new LookupItem
+                        {
+                            Id = l.Id,
+                            DisplayMember = l.LanguageName,
+                            Picture = null,
+                            ViewModelName = nameof(LanguageDetailViewModel)
+                        })
+                    .ToListAsync();
+            }
+        }
+
+        public async Task<Guid> GetLanguageId()
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Languages
+                    .AsNoTracking()
+                    .OrderBy(l => l.LanguageName)
+                    .Select(l => l.Id)
+                    .FirstOrDefaultAsync();
             }
         }
 

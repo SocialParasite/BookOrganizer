@@ -1,4 +1,5 @@
 ﻿using BookOrganizer.UI.WPF.Events;
+using BookOrganizer.UI.WPF.Lookups;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -9,10 +10,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
     public class MainPageViewModel : IMainPageViewModel
     {
         private readonly IEventAggregator eventAggregator;
+        private readonly ILanguageLookupDataService languageLookup;
 
-        public MainPageViewModel(IEventAggregator eventAggregator)
+        public MainPageViewModel(IEventAggregator eventAggregator, ILanguageLookupDataService languageLookup)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.languageLookup = languageLookup ?? throw new ArgumentNullException(nameof(languageLookup));
 
             AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
             EditLanguagesCommand = new DelegateCommand(OnEditLanguagesExecute);
@@ -33,9 +36,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
                        });
         }
 
-        private void OnEditLanguagesExecute()
+        private async void OnEditLanguagesExecute()
         {
-            throw new NotImplementedException();
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                           .Publish(new OpenDetailViewEventArgs
+                           {
+                               Id = await languageLookup.GetLanguageId(),
+                               ViewModelName = nameof(LanguageDetailViewModel)
+                           });
         }
 
     }
