@@ -43,6 +43,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             IsMenuBarVisible = false;
 
+            OnOpenSelectedViewExecute(nameof(MainPageViewModel));
+
             SubscribeToEvents();
         }
 

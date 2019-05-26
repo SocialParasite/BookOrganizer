@@ -33,5 +33,10 @@ namespace BookOrganizer.UI.WPF.Repositories
 
         public bool HasChanges()
             => context.ChangeTracker.HasChanges();
+
+        public void ResetTracking(TEntity entity)
+        {
+            context.Entry(entity).State = EntityState.Unchanged;
+        }
     }
 }

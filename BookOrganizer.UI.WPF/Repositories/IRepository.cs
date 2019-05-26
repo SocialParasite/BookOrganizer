@@ -16,5 +16,7 @@ namespace BookOrganizer.UI.WPF.Repositories
         Task SaveAsync();
 
         bool HasChanges();
+
+        void ResetTracking(T entity);
     }
 }

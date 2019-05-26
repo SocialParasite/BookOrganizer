@@ -3,6 +3,7 @@ using BookOrganizer.UI.WPF.Enums;
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
+using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -99,6 +100,22 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async void OnChangeEditedLanguageExecute(Guid? languageId)
         {
+            if (this.Repository.HasChanges())
+            {
+                var result = await metroDialogService
+                   .ShowOkCancelDialogAsync(
+                   "You have made changes. Changing editable language will loose all unsaved changes. Are you sure you still want to switch?",
+                   "Close the view?");
+
+                if (result == MessageDialogResult.Canceled)
+                {
+                    return;
+                }
+            }
+
+            Repository.ResetTracking(SelectedItem);
+            HasChanges = Repository.HasChanges();
+
             await LoadAsync((Guid)languageId);
         }
     }
