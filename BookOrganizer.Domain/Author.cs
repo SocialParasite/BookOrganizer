@@ -10,6 +10,7 @@ namespace BookOrganizer.Domain
         private string _firstName;
         private string _lastName;
         private string biography;
+        private string _mugShotPath;
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -46,8 +47,6 @@ namespace BookOrganizer.Domain
         }
 
         public DateTime? DateOfBirth { get; set; }
-
-        private string _mugShotPath;
 
         public string MugShotPath
         {

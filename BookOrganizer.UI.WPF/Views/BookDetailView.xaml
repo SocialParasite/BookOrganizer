@@ -24,535 +24,535 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-        <ScrollViewer>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <ScrollViewer>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="125" />
-            </Grid.ColumnDefinitions>
-
-            <Border
-                Grid.Column="4"
-                Margin="2"
-                BorderThickness="1">
-                <ToggleButton x:Name="EditModeActiveToggleButton" Style="{StaticResource ToggleButtonStyle}">
-                    <TextBlock VerticalAlignment="Center" Text="Edit Mode" />
-                </ToggleButton>
-            </Border>
-        </Grid>
-
-        <Grid Grid.Row="1" Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="150" />
-                <ColumnDefinition Width="Auto" MinWidth="150" />
-                <ColumnDefinition Width="Auto" MinWidth="10" />
-                <ColumnDefinition Width="Auto" MinWidth="150" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="50" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
-            <TextBox
-                x:Name="titleTextBox"
-                Grid.Column="0"
-                Grid.ColumnSpan="4"
-                MaxWidth="800"
-                FontSize="48"
-                Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                TextWrapping="Wrap" />
-
-            <Button
-                Grid.Row="1"
-                Grid.RowSpan="7"
-                Grid.Column="4"
-                Grid.ColumnSpan="2"
-                MaxWidth="600"
-                MaxHeight="600"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Left"
-                Command="{Binding AddBookCoverImageCommand}"
-                IsEnabled="{Binding UserMode.Item4}">
-                <Button.Template>
-                    <ControlTemplate>
-                        <Image x:Name="bookCoverImage" Source="{Binding SelectedItem.BookCoverPicturePath}" />
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-
-            <Label
-                x:Name="releaseYearLabel"
-                Grid.Row="1"
-                Content="Release Year:"
-                Style="{StaticResource LabelStyles}" />
-            <TextBox
-                x:Name="releaseYearTextBox"
-                Grid.Row="1"
-                Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding SelectedReleaseYear}"
-                Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
-            <ComboBox
-                x:Name="releaseYearComboBox"
-                Grid.Row="1"
-                Grid.Column="1"
-                ItemsSource="{Binding YearsList}"
-                MaxDropDownHeight="200"
-                ScrollViewer.CanContentScroll="True"
-                SelectedValue="{Binding SelectedReleaseYear, Mode=TwoWay}"
-                Style="{StaticResource ComboBoxStyles}"
-                VirtualizingStackPanel.IsVirtualizing="True"
-                VirtualizingStackPanel.VirtualizationMode="Recycling">
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding ReleaseYearSelectionChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-
-            <Label
-                x:Name="pageCountLabel"
-                Grid.Row="2"
-                Content="Pages: "
-                Style="{StaticResource LabelStyles}" />
-            <TextBox
-                x:Name="pageCountTextBox"
-                Grid.Row="2"
-                Grid.Column="1"
-                Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding PageCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
-
-            <Label
-                x:Name="wordCountLabel"
-                Grid.Row="2"
-                Grid.Column="2"
-                Content="Words:"
-                Style="{StaticResource LabelStyles}" />
-            <TextBox
-                x:Name="wordCountTextBox"
-                Grid.Row="2"
-                Grid.Column="3"
-                Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding WordCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
-
-            <Label
-                x:Name="publisherLabel"
-                Grid.Row="3"
-                Content="Publisher: "
-                Style="{StaticResource LabelStyles}" />
-            <TextBlock
-                x:Name="publisherTextBlock"
-                Grid.Row="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="3"
-                Margin="1"
-                VerticalAlignment="Center"
-                Background="{Binding HighlightBrush}"
-                FontSize="24"
-                Text="{Binding SelectedPublisher.DisplayMember}"
-                Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}">
-                <TextBlock.InputBindings>
-                    <MouseBinding
-                        Command="{Binding ShowSelectedPublisherCommand}"
-                        CommandParameter="{Binding SelectedItem.Publisher.Id}"
-                        MouseAction="LeftDoubleClick" />
-                </TextBlock.InputBindings>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseEnter">
-                        <i:InvokeCommandAction Command="{Binding HighlightMouseOverCommand}" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseLeave">
-                        <i:InvokeCommandAction Command="{Binding HighlightMouseLeaveCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TextBlock>
-            <ComboBox
-                x:Name="publisherComboBox"
-                Grid.Row="3"
-                Grid.Column="1"
-                IsEditable="True"
-                IsTextSearchEnabled="True"
-                ItemsSource="{Binding Publishers}"
-                SelectedItem="{Binding SelectedPublisher, Mode=TwoWay}"
-                Style="{StaticResource ComboBoxStyles}"
-                TextSearch.TextPath="DisplayMember">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding DisplayMember}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding PublisherSelectionChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-            <Button
-                x:Name="addNewPublisherButton"
-                Grid.Row="3"
-                Grid.Column="2"
-                Width="50"
-                Margin="5"
-                Command="{Binding AddNewPublisherCommand}"
-                Content="New"
-                FontSize="12"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-
-            <Label
-                x:Name="languageLabel"
-                Grid.Row="4"
-                Content="Language: "
-                Style="{StaticResource LabelStyles}" />
-            <TextBox
-                x:Name="languageTextBox"
-                Grid.Row="4"
-                Grid.ColumnSpan="3"
-                BorderThickness="0"
-                IsReadOnly="True"
-                Style="{StaticResource TextBoxStyles}"
-                Text="{Binding SelectedLanguage.DisplayMember}"
-                Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
-            <ComboBox
-                x:Name="languageComboBox"
-                Grid.Row="4"
-                Grid.Column="1"
-                IsEditable="True"
-                IsTextSearchEnabled="True"
-                ItemsSource="{Binding Languages}"
-                SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
-                Style="{StaticResource ComboBoxStyles}"
-                TextSearch.TextPath="DisplayMember">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding DisplayMember}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding LanguageSelectionChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-            <Button
-                x:Name="addNewLanguageButton"
-                Grid.Row="4"
-                Grid.Column="2"
-                Width="50"
-                Margin="5"
-                Command="{Binding AddNewLanguageCommand}"
-                Content="New"
-                FontSize="12"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-
-            <Label
-                x:Name="isbnLabel"
-                Grid.Row="5"
-                Content="ISBN: "
-                Style="{StaticResource LabelStyles}" />
-            <TextBox
-                x:Name="isnbTextBox"
-                Grid.Row="5"
-                Grid.ColumnSpan="3"
-                Style="{StaticResource ValidationTextBoxStyle}"
-                Text="{Binding ISBN, UpdateSourceTrigger=PropertyChanged}" />
-
-            <GroupBox
-                x:Name="descriptionGroupBox"
-                Grid.Row="6"
-                Grid.ColumnSpan="4"
-                Header="Description">
-                <TextBox
-                    x:Name="descriptionTextBlock"
-                    Grid.Row="7"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="4"
-                    MaxWidth="600"
-                    AcceptsReturn="True"
-                    FontSize="16"
-                    Style="{StaticResource EditableTextBoxStyles}"
-                    Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap"
-                    VerticalScrollBarVisibility="Auto" />
-            </GroupBox>
-        </Grid>
-
-        <Grid Grid.Row="2" Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="250" />
-                <ColumnDefinition Width="Auto" MinWidth="300" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" MinHeight="75" />
-                <RowDefinition Height="Auto" MinHeight="75" />
-                <RowDefinition Height="Auto" MinHeight="75" />
-                <RowDefinition x:Name="EditButtonsGridRow" Height="Auto" />
-            </Grid.RowDefinitions>
-            <Label
-                x:Name="authorLabel"
-                Content="Select book author: "
-                Style="{StaticResource LabelStyles}"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-            <ComboBox
-                x:Name="authorComboBox"
-                Grid.Column="1"
-                IsEditable="True"
-                IsTextSearchEnabled="True"
-                ItemsSource="{Binding Authors}"
-                Style="{StaticResource ComboBoxStyles}"
-                TextSearch.TextPath="DisplayMember">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock FontSize="24">
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{1}">
-                                        <Binding Path="Id" />
-                                        <Binding Path="DisplayMember" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <Grid Grid.Column="2">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="125" />
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    Grid.Column="4"
+                    Margin="2"
+                    BorderThickness="1">
+                    <ToggleButton x:Name="EditModeActiveToggleButton" Style="{StaticResource ToggleButtonStyle}">
+                        <TextBlock VerticalAlignment="Center" Text="Edit Mode" />
+                    </ToggleButton>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="150" />
+                    <ColumnDefinition Width="Auto" MinWidth="150" />
+                    <ColumnDefinition Width="Auto" MinWidth="10" />
+                    <ColumnDefinition Width="Auto" MinWidth="150" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button
-                    x:Name="authorButton"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBox
+                    x:Name="titleTextBox"
                     Grid.Column="0"
-                    Width="50"
-                    Margin="5"
-                    Command="{Binding AddAuthorAsABookAuthorCommand}"
-                    CommandParameter="{Binding ElementName=authorComboBox, Path=SelectedItem}"
-                    Content="+"
-                    FontSize="24"
-                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                    Grid.ColumnSpan="4"
+                    MaxWidth="800"
+                    FontSize="48"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap" />
+
                 <Button
-                    x:Name="addNewAuthorButton"
+                    Grid.Row="1"
+                    Grid.RowSpan="7"
+                    Grid.Column="4"
+                    Grid.ColumnSpan="2"
+                    MaxWidth="600"
+                    MaxHeight="600"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding AddBookCoverImageCommand}"
+                    IsEnabled="{Binding UserMode.Item4}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image x:Name="bookCoverImage" Source="{Binding SelectedItem.BookCoverPicturePath}" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Label
+                    x:Name="releaseYearLabel"
+                    Grid.Row="1"
+                    Content="Release Year:"
+                    Style="{StaticResource LabelStyles}" />
+                <TextBox
+                    x:Name="releaseYearTextBox"
+                    Grid.Row="1"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding SelectedReleaseYear}"
+                    Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
+                <ComboBox
+                    x:Name="releaseYearComboBox"
+                    Grid.Row="1"
                     Grid.Column="1"
+                    ItemsSource="{Binding YearsList}"
+                    MaxDropDownHeight="200"
+                    ScrollViewer.CanContentScroll="True"
+                    SelectedValue="{Binding SelectedReleaseYear, Mode=TwoWay}"
+                    Style="{StaticResource ComboBoxStyles}"
+                    VirtualizingStackPanel.IsVirtualizing="True"
+                    VirtualizingStackPanel.VirtualizationMode="Recycling">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding ReleaseYearSelectionChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
+                <Label
+                    x:Name="pageCountLabel"
+                    Grid.Row="2"
+                    Content="Pages: "
+                    Style="{StaticResource LabelStyles}" />
+                <TextBox
+                    x:Name="pageCountTextBox"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding PageCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label
+                    x:Name="wordCountLabel"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Content="Words:"
+                    Style="{StaticResource LabelStyles}" />
+                <TextBox
+                    x:Name="wordCountTextBox"
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding WordCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label
+                    x:Name="publisherLabel"
+                    Grid.Row="3"
+                    Content="Publisher: "
+                    Style="{StaticResource LabelStyles}" />
+                <TextBlock
+                    x:Name="publisherTextBlock"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Margin="1"
+                    VerticalAlignment="Center"
+                    Background="{Binding HighlightBrush}"
+                    FontSize="24"
+                    Text="{Binding SelectedPublisher.DisplayMember}"
+                    Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}">
+                    <TextBlock.InputBindings>
+                        <MouseBinding
+                            Command="{Binding ShowSelectedPublisherCommand}"
+                            CommandParameter="{Binding SelectedItem.Publisher.Id}"
+                            MouseAction="LeftDoubleClick" />
+                    </TextBlock.InputBindings>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding HighlightMouseOverCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding HighlightMouseLeaveCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBlock>
+                <ComboBox
+                    x:Name="publisherComboBox"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    IsEditable="True"
+                    IsTextSearchEnabled="True"
+                    ItemsSource="{Binding Publishers}"
+                    SelectedItem="{Binding SelectedPublisher, Mode=TwoWay}"
+                    Style="{StaticResource ComboBoxStyles}"
+                    TextSearch.TextPath="DisplayMember">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayMember}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding PublisherSelectionChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <Button
+                    x:Name="addNewPublisherButton"
+                    Grid.Row="3"
+                    Grid.Column="2"
                     Width="50"
                     Margin="5"
-                    Command="{Binding AddNewAuthorCommand}"
+                    Command="{Binding AddNewPublisherCommand}"
                     Content="New"
                     FontSize="12"
                     Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+
+                <Label
+                    x:Name="languageLabel"
+                    Grid.Row="4"
+                    Content="Language: "
+                    Style="{StaticResource LabelStyles}" />
+                <TextBox
+                    x:Name="languageTextBox"
+                    Grid.Row="4"
+                    Grid.ColumnSpan="3"
+                    BorderThickness="0"
+                    IsReadOnly="True"
+                    Style="{StaticResource TextBoxStyles}"
+                    Text="{Binding SelectedLanguage.DisplayMember}"
+                    Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
+                <ComboBox
+                    x:Name="languageComboBox"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    IsEditable="True"
+                    IsTextSearchEnabled="True"
+                    ItemsSource="{Binding Languages}"
+                    SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+                    Style="{StaticResource ComboBoxStyles}"
+                    TextSearch.TextPath="DisplayMember">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayMember}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding LanguageSelectionChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <Button
+                    x:Name="addNewLanguageButton"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Width="50"
+                    Margin="5"
+                    Command="{Binding AddNewLanguageCommand}"
+                    Content="New"
+                    FontSize="12"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+
+                <Label
+                    x:Name="isbnLabel"
+                    Grid.Row="5"
+                    Content="ISBN: "
+                    Style="{StaticResource LabelStyles}" />
+                <TextBox
+                    x:Name="isnbTextBox"
+                    Grid.Row="5"
+                    Grid.ColumnSpan="3"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding ISBN, UpdateSourceTrigger=PropertyChanged}" />
+
+                <GroupBox
+                    x:Name="descriptionGroupBox"
+                    Grid.Row="6"
+                    Grid.ColumnSpan="4"
+                    Header="Description">
+                    <TextBox
+                        x:Name="descriptionTextBlock"
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        MaxWidth="600"
+                        AcceptsReturn="True"
+                        FontSize="16"
+                        Style="{StaticResource EditableTextBoxStyles}"
+                        Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </GroupBox>
             </Grid>
 
-            <GroupBox
-                Grid.Row="1"
-                Grid.ColumnSpan="2"
-                Margin="5"
-                Header="Book Authors:">
+            <Grid Grid.Row="2" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="250" />
+                    <ColumnDefinition Width="Auto" MinWidth="300" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MinHeight="75" />
+                    <RowDefinition Height="Auto" MinHeight="75" />
+                    <RowDefinition Height="Auto" MinHeight="75" />
+                    <RowDefinition x:Name="EditButtonsGridRow" Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label
+                    x:Name="authorLabel"
+                    Content="Select book author: "
+                    Style="{StaticResource LabelStyles}"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                <ComboBox
+                    x:Name="authorComboBox"
+                    Grid.Column="1"
+                    IsEditable="True"
+                    IsTextSearchEnabled="True"
+                    ItemsSource="{Binding Authors}"
+                    Style="{StaticResource ComboBoxStyles}"
+                    TextSearch.TextPath="DisplayMember">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="24">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{1}">
+                                            <Binding Path="Id" />
+                                            <Binding Path="DisplayMember" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        x:Name="authorButton"
+                        Grid.Column="0"
+                        Width="50"
+                        Margin="5"
+                        Command="{Binding AddAuthorAsABookAuthorCommand}"
+                        CommandParameter="{Binding ElementName=authorComboBox, Path=SelectedItem}"
+                        Content="+"
+                        FontSize="24"
+                        Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                    <Button
+                        x:Name="addNewAuthorButton"
+                        Grid.Column="1"
+                        Width="50"
+                        Margin="5"
+                        Command="{Binding AddNewAuthorCommand}"
+                        Content="New"
+                        FontSize="12"
+                        Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                </Grid>
+
+                <GroupBox
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Margin="5"
+                    Header="Book Authors:">
+                    <ListBox
+                        x:Name="authorListBox"
+                        ItemsSource="{Binding SelectedItem.AuthorsLink}"
+                        Style="{StaticResource ListBoxBaseStyle}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock FontSize="24">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{1}, {0}">
+                                                <Binding Path="Author.FirstName" />
+                                                <Binding Path="Author.LastName" />
+                                                <Binding Path="Id" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                        <TextBlock.InputBindings>
+                                            <MouseBinding
+                                                Command="{Binding DataContext.ShowSelectedAuthorCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                                CommandParameter="{Binding Author.Id}"
+                                                MouseAction="LeftDoubleClick" />
+                                        </TextBlock.InputBindings>
+                                    </TextBlock>
+                                    <Button
+                                        x:Name="authorListButton"
+                                        Grid.Column="1"
+                                        Width="30"
+                                        Height="30"
+                                        Command="{Binding DataContext.RemoveAuthorAsABookAuthorCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                        CommandParameter="{Binding Author.Id}"
+                                        Content="-"
+                                        Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </GroupBox>
+
+                <Label
+                    x:Name="bookSeriesLabel"
+                    Grid.Row="2"
+                    Content="{Binding SelectedItem.BookSeries.Name}"
+                    FontWeight="Bold"
+                    Style="{StaticResource LabelStyles}">
+                    <Label.InputBindings>
+                        <MouseBinding
+                            Command="{Binding ShowSelectedSeriesCommand}"
+                            CommandParameter="{Binding SelectedItem.BookSeries.Id}"
+                            MouseAction="LeftDoubleClick" />
+                    </Label.InputBindings>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding HighlightMouseOverCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding HighlightMouseLeaveCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
                 <ListBox
-                    x:Name="authorListBox"
-                    ItemsSource="{Binding SelectedItem.AuthorsLink}"
+                    x:Name="booksInSeriesListBox"
+                    Grid.Row="3"
+                    ItemsSource="{Binding Source={StaticResource ReadOrder}}"
                     Style="{StaticResource ListBoxBaseStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="24" Text="{Binding Book.Title}">
+                                    <TextBlock.InputBindings>
+                                        <MouseBinding
+                                            Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                            CommandParameter="{Binding Book.Id}"
+                                            MouseAction="LeftDoubleClick" />
+                                    </TextBlock.InputBindings>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <CheckBox
+                    x:Name="isReadCheckBox"
+                    Grid.Row="4"
+                    Content="I have read this book."
+                    FontSize="18"
+                    IsChecked="{Binding SelectedItem.IsRead}" />
+                <Label
+                    x:Name="ReadDatesLabel"
+                    Grid.Row="5"
+                    VerticalAlignment="Top"
+                    VerticalContentAlignment="Top"
+                    Content="Read dates: "
+                    Style="{StaticResource LabelStyles}"
+                    Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}" />
+                <ListBox
+                    x:Name="ReadDatesListView"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    BorderThickness="0"
+                    ItemsSource="{Binding SelectedItem.ReadDates}"
+                    Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock FontSize="24">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{1}, {0}">
-                                            <Binding Path="Author.FirstName" />
-                                            <Binding Path="Author.LastName" />
-                                            <Binding Path="Id" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                    <TextBlock.InputBindings>
-                                        <MouseBinding
-                                            Command="{Binding DataContext.ShowSelectedAuthorCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                            CommandParameter="{Binding Author.Id}"
-                                            MouseAction="LeftDoubleClick" />
-                                    </TextBlock.InputBindings>
-                                </TextBlock>
+                                <Label
+                                    Content="{Binding ReadDate}"
+                                    ContentStringFormat="dd.MM.yyyy"
+                                    Style="{StaticResource LabelStyles}" />
                                 <Button
-                                    x:Name="authorListButton"
+                                    x:Name="removeReadDateButton"
                                     Grid.Column="1"
                                     Width="30"
                                     Height="30"
-                                    Command="{Binding DataContext.RemoveAuthorAsABookAuthorCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                    CommandParameter="{Binding Author.Id}"
+                                    Command="{Binding DataContext.RemoveDateAsABookReadDateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                    CommandParameter="{Binding ReadDate}"
                                     Content="-"
                                     Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
+
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </GroupBox>
+                <Label
+                    x:Name="NewReadDateLabel"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Content="Select read date:"
+                    Style="{StaticResource LabelStyles}"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                <DatePicker
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Height="50"
+                    DisplayDateEnd="{x:Static sys:DateTime.Today}"
+                    FontSize="24"
+                    SelectedDate="{Binding NewReadDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                <Button
+                    x:Name="AddReadDateButton"
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    Width="50"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SetReadDateCommand}"
+                    Content="+"
+                    Style="{StaticResource UpdateButtonStyle}"
+                    ToolTip="Add selected date as books read date."
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
 
-            <Label
-                x:Name="bookSeriesLabel"
-                Grid.Row="2"
-                Content="{Binding SelectedItem.BookSeries.Name}"
-                FontWeight="Bold"
-                Style="{StaticResource LabelStyles}">
-                <Label.InputBindings>
-                    <MouseBinding
-                        Command="{Binding ShowSelectedSeriesCommand}"
-                        CommandParameter="{Binding SelectedItem.BookSeries.Id}"
-                        MouseAction="LeftDoubleClick" />
-                </Label.InputBindings>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseEnter">
-                        <i:InvokeCommandAction Command="{Binding HighlightMouseOverCommand}" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseLeave">
-                        <i:InvokeCommandAction Command="{Binding HighlightMouseLeaveCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Label>
-            <ListBox
-                x:Name="booksInSeriesListBox"
-                Grid.Row="3"
-                ItemsSource="{Binding Source={StaticResource ReadOrder}}"
-                Style="{StaticResource ListBoxBaseStyle}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock FontSize="24" Text="{Binding Book.Title}">
-                                <TextBlock.InputBindings>
-                                    <MouseBinding
-                                        Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                        CommandParameter="{Binding Book.Id}"
-                                        MouseAction="LeftDoubleClick" />
-                                </TextBlock.InputBindings>
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                <Button
+                    x:Name="SaveBookDetailsButton"
+                    Grid.Row="7"
+                    Grid.Column="2"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SaveItemCommand}"
+                    Content="Save"
+                    Style="{StaticResource UpdateButtonStyle}" />
+                <Button
+                    x:Name="DeleteBookDetailsButton"
+                    Grid.Row="7"
+                    Grid.Column="3"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding DeleteItemCommand}"
+                    Content="Delete"
+                    Style="{StaticResource UpdateButtonStyle}" />
 
-            <CheckBox
-                x:Name="isReadCheckBox"
-                Grid.Row="4"
-                Content="I have read this book."
-                FontSize="18"
-                IsChecked="{Binding SelectedItem.IsRead}" />
-            <Label
-                x:Name="ReadDatesLabel"
-                Grid.Row="5"
-                VerticalAlignment="Top"
-                VerticalContentAlignment="Top"
-                Content="Read dates: "
-                Style="{StaticResource LabelStyles}"
-                Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}" />
-            <ListBox
-                x:Name="ReadDatesListView"
-                Grid.Row="5"
-                Grid.Column="1"
-                BorderThickness="0"
-                ItemsSource="{Binding SelectedItem.ReadDates}"
-                Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Label
-                                Content="{Binding ReadDate}"
-                                ContentStringFormat="dd.MM.yyyy"
-                                Style="{StaticResource LabelStyles}" />
-                            <Button
-                                x:Name="removeReadDateButton"
-                                Grid.Column="1"
-                                Width="30"
-                                Height="30"
-                                Command="{Binding DataContext.RemoveDateAsABookReadDateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
-                                CommandParameter="{Binding ReadDate}"
-                                Content="-"
-                                Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
-
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Label
-                x:Name="NewReadDateLabel"
-                Grid.Row="4"
-                Grid.Column="1"
-                Content="Select read date:"
-                Style="{StaticResource LabelStyles}"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-            <DatePicker
-                Grid.Row="4"
-                Grid.Column="2"
-                Height="50"
-                DisplayDateEnd="{x:Static sys:DateTime.Today}"
-                FontSize="24"
-                SelectedDate="{Binding NewReadDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-            <Button
-                x:Name="AddReadDateButton"
-                Grid.Row="4"
-                Grid.Column="3"
-                Width="50"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Left"
-                Command="{Binding SetReadDateCommand}"
-                Content="+"
-                Style="{StaticResource UpdateButtonStyle}"
-                ToolTip="Add selected date as books read date."
-                Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-
-            <Button
-                x:Name="SaveBookDetailsButton"
-                Grid.Row="7"
-                Grid.Column="2"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Left"
-                Command="{Binding SaveItemCommand}"
-                Content="Save"
-                Style="{StaticResource UpdateButtonStyle}" />
-            <Button
-                x:Name="DeleteBookDetailsButton"
-                Grid.Row="7"
-                Grid.Column="3"
-                Margin="50,0,0,0"
-                HorizontalAlignment="Left"
-                Command="{Binding DeleteItemCommand}"
-                Content="Delete"
-                Style="{StaticResource UpdateButtonStyle}" />
-
+            </Grid>
         </Grid>
-    </Grid>
-            </ScrollViewer>
+    </ScrollViewer>
 </UserControl>

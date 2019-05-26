@@ -9,6 +9,7 @@ namespace BookOrganizer.Domain
     {
         public static string SetPicturePath(string path, string subDir)
         {
+            // TODO: Allow user to change folder
             var pictureName = Path.GetFileName(path);
 
             var envPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);

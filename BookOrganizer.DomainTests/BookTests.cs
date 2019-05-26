@@ -48,7 +48,7 @@ namespace BookOrganizer.DomainTests
         [InlineData(0)]
         [InlineData(11_546)]
         [InlineData(10_001)]
-        public void TryingToSetBookPageCountLessThan1OrAbove10000_ThrowsArgumentOutOfRangeException(int pageCount)
+        public void TryingToSetBookPageCountLessThanOneOrOver10000_ThrowsArgumentOutOfRangeException(int pageCount)
         {
             var book = new Book();
             Action action = () => book.PageCount = pageCount;
@@ -89,5 +89,47 @@ namespace BookOrganizer.DomainTests
 
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
+
+        [Theory]
+        [InlineData(-1)]
+        public void TryingToSetBookWordCountNegative_ThrowsArgumentOutOfRangeException(int wordCount)
+        {
+            var book = new Book();
+            Action action = () => book.WordCount = wordCount;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void BookDescriptionShouldAcceptStringInput()
+        {
+            var book = new Book();
+            book.Description = string.Empty;
+
+            book.Description.Should().BeOfType<string>();
+            book.Description.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void BookIsReadShouldAcceptBoolInput()
+        {
+            var book = new Book();
+            book.IsRead = true;
+
+            book.IsRead.Should().BeTrue();
+        }
+
+        [Fact]
+        public void BookCoverPicturesAreStoredUnderCurrentUsersProfileInCoversSubfolder()
+        {
+            var book = new Book();
+
+            book.BookCoverPicturePath = @"C:\temp\testingBookCoverPath\fake.jpg";
+
+            var test = "C:\\Users\\tonij\\Pictures\\BookOrganizer\\Covers\\fake.jpg";
+
+            book.BookCoverPicturePath.Should().Equals(test);
+        }
+
     }
 }
