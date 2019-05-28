@@ -49,7 +49,7 @@ namespace BookOrganizer.UI.WPFTests
         {
             var raised = viewModel.IsPropertyChangedRaised(() =>
             {
-                viewModel.SelectedVM = default(ISelectedViewModel);
+                viewModel.SelectedVM = default;
             }, nameof(viewModel.SelectedVM));
 
             raised.Should().BeTrue();
@@ -60,10 +60,28 @@ namespace BookOrganizer.UI.WPFTests
         {
             var raised = viewModel.IsPropertyChangedRaised(() =>
             {
-                viewModel.SelectedDetailViewModel = default(IDetailViewModel);
+                viewModel.SelectedDetailViewModel = default;
             }, nameof(viewModel.SelectedDetailViewModel));
 
             raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void NewMainView_DetailViewModels_ShouldBeEmpty()
+        {
+            viewModel.DetailViewModels.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void NewMainView_TEMP_DetailViewModels_ShouldBeEmpty()
+        {
+            viewModel.TEMP_DetailViewModels.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void NewSeriesIsMenuBarVisible_ShouldBeFalse()
+        {
+            viewModel.IsMenuBarVisible.Should().BeFalse();
         }
     }
 }

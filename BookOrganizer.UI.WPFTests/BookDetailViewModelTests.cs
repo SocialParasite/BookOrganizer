@@ -40,6 +40,89 @@ namespace BookOrganizer.UI.WPFTests
         }
 
         [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void WhenBookTitleIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
+        {
+            Action action = () => viewModel.Title = name;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void WhenTryingToSetBookTitleLongerThan256Characters_ThrowsArgumentOutOfRangeException()
+        {
+            Action action = ()
+                => viewModel.Title = "Spicy jalapeno bacon ipsum dolor amet prosciutto swine andouille hamburger tri-tip ground round pork " +
+                "belly. Capicola chuck andouille, short ribs turducken salami short loin filet mignon biltong pork belly fatback. " +
+                "Drumstick jowl pork chop, short ribs prosciutto picanha pork landjaeger pork loin.";
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(2501)]
+        public void TryingToSetReleaseYearLessThan1OrMoreThan2500_ThrowArgumentOutException(int year)
+        {
+            Action action = () => viewModel.ReleaseYear = year;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(11_546)]
+        [InlineData(10_001)]
+        public void TryingToSetBookPageCountLessThanOneOrOver10000_ThrowsArgumentOutOfRangeException(int pageCount)
+        {
+            Action action = () => viewModel.PageCount = pageCount;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData("0553103547")]
+        [InlineData("000224585X")]
+        [InlineData("0553106635")]
+        [InlineData("0002247437")]
+        [InlineData("9780553801477")]
+        [InlineData("9781566199094")]
+        [InlineData("9781402894626")]
+        [InlineData("")]
+        public void BookIsbnAcceptsStandardDefinedISBN10Or13ValueOrEmptyString(string isbn)
+        {
+            viewModel.ISBN = isbn;
+
+            viewModel.ISBN.Should().BeOfType(typeof(string)).And.Equals(isbn);
+        }
+
+        [Theory]
+        [InlineData("9780553801477Y")]
+        [InlineData("000224585Z")]
+        [InlineData("ABCDEFGHI")]
+        [InlineData("978055380147XX")]
+        [InlineData("000224585ZRR")]
+        [InlineData("ABCDEFGHIJKLM")]
+        public void TryingToSetBookIsbnNonStandardOrNonEmptyValue_ThrowArgumentOutOfRangeException(string isbn)
+        {
+            Action action = () => viewModel.ISBN = isbn;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        public void TryingToSetBookWordCountNegative_ThrowsArgumentOutOfRangeException(int wordCount)
+        {
+            Action action = () => viewModel.WordCount = wordCount;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+
+        [Theory]
         [InlineData("SelectedReleaseYear")]
         [InlineData("SelectedBookId")]
         [InlineData("SelectedPublisherId")]
@@ -75,5 +158,13 @@ namespace BookOrganizer.UI.WPFTests
 
             raised.Should().BeTrue();
         }
+
+        [Fact]
+        public void NewBooksId_ShouldHaveDefaultValue()
+        {
+            viewModel.SelectedItem.Should().BeOfType<Book>();
+            viewModel.SelectedItem.Id.Should().Equals(default(Guid));
+        }
+
     }
 }

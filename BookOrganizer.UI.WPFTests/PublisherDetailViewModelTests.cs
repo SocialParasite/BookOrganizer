@@ -6,6 +6,7 @@ using BookOrganizer.UI.WPFTests.Extensions;
 using FluentAssertions;
 using Moq;
 using Prism.Events;
+using System;
 using Xunit;
 
 namespace BookOrganizer.UI.WPFTests
@@ -28,6 +29,26 @@ namespace BookOrganizer.UI.WPFTests
                 publishersRepoMock.Object);
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void WhenPublisherNameIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
+        {
+            Action action = () => viewModel.Name = name;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void TryingToSetPublisherNameLongerThan64Characters_ThrowsArgumentOutOfRangeException()
+        {
+            Action action = ()
+                => viewModel.Name = "Spicy jalapeno bacon ipsum dolor amet prosciutto swine andouille hamburger tri-tip ground round pork";
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+
         [Fact]
         public void Name_ShouldRaise_PropertyChangedEvent()
         {
@@ -38,5 +59,13 @@ namespace BookOrganizer.UI.WPFTests
 
             raised.Should().BeTrue();
         }
+
+        [Fact]
+        public void NewPublishersId_ShouldHaveDefaultValue()
+        {
+            viewModel.SelectedItem.Should().BeOfType<Publisher>();
+            viewModel.SelectedItem.Id.Should().Equals(default(Guid));
+        }
+
     }
 }

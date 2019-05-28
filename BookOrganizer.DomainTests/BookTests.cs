@@ -10,7 +10,7 @@ namespace BookOrganizer.DomainTests
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void WhenBookNameIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
+        public void WhenBookTitleIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
         {
             var book = new Book();
 

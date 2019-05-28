@@ -6,6 +6,7 @@ using BookOrganizer.UI.WPFTests.Extensions;
 using FluentAssertions;
 using Moq;
 using Prism.Events;
+using System;
 using Xunit;
 
 namespace BookOrganizer.UI.WPFTests
@@ -28,6 +29,26 @@ namespace BookOrganizer.UI.WPFTests
                 authorsRepoMock.Object);
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData("Nicolaus Authoritus Maximus Nicolaus Authoritus Maximus")]
+        public void GivenFirstNameLessThan1OrOver50Characters_ThrowsArgumentOutOfRangeException(string firstName)
+        {
+            Action action = () => viewModel.FirstName = firstName;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("Nicolaus Authoritus Maximus Nicolaus Authoritus Maximus")]
+        public void GivenLastNameLessThan1OrOver50Characters_ThrowsArgumentOutOfRangeException(string lastName)
+        {
+            Action action = () => viewModel.LastName = lastName;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
         [Fact]
         public void FirstName_ShouldRaise_PropertyChangedEvent()
         {
@@ -48,6 +69,13 @@ namespace BookOrganizer.UI.WPFTests
             }, nameof(viewModel.LastName));
 
             raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void NewAuthorsId_ShouldHaveDefaultValue()
+        {
+            viewModel.SelectedItem.Should().BeOfType<Author>();
+            viewModel.SelectedItem.Id.Should().Equals(default(Guid));
         }
     }
 }

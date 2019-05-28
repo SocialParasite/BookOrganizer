@@ -7,6 +7,7 @@ using BookOrganizer.UI.WPFTests.Extensions;
 using FluentAssertions;
 using Moq;
 using Prism.Events;
+using System;
 using Xunit;
 
 namespace BookOrganizer.UI.WPFTests
@@ -33,6 +34,28 @@ namespace BookOrganizer.UI.WPFTests
                 bookLookupDataServiceMock.Object);
         }
 
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void WhenSeriesNameIsSetNullOrEmpty_ThrowsArgumentOutOfRangeException(string name)
+        {
+            Action action = () => viewModel.Name = name;
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void WhenTryingToSetSeriesNameLongerThan256Characters_ThrowsArgumentOutOfRangeException()
+        {
+            Action action = ()
+                => viewModel.Name = "Spicy jalapeno bacon ipsum dolor amet prosciutto swine andouille hamburger tri-tip ground round pork " +
+                "belly. Capicola chuck andouille, short ribs turducken salami short loin filet mignon biltong pork belly fatback. " +
+                "Drumstick jowl pork chop, short ribs prosciutto picanha pork landjaeger pork loin.";
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+
         [Fact]
         public void Name_ShouldRaise_PropertyChangedEvent()
         {
@@ -42,6 +65,27 @@ namespace BookOrganizer.UI.WPFTests
             }, nameof(viewModel.Name));
 
             raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void NewSeriesId_ShouldHaveDefaultValue()
+        {
+            viewModel.SelectedItem.Should().BeOfType<Series>();
+            viewModel.SelectedItem.Id.Should().Equals(default(Guid));
+
+            viewModel.AllBooks.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void NewSeriesAllBooks_ShouldBeEmpty()
+        {
+            viewModel.AllBooks.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void NewSeriesBooks_ShouldBeEmpty()
+        {
+            viewModel.Books.Should().BeEmpty();
         }
     }
 }
