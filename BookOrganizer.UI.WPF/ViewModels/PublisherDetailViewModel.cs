@@ -47,11 +47,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public async override Task LoadAsync(Guid id)
         {
-            SelectedItem = await Repository.GetSelectedAsync(id) ?? null;
+            SelectedItem = await Repository.GetSelectedAsync(id) ?? new Publisher();
 
             Id = id;
 
-            if (Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            if (Id != default)
             {
                 TabTitle = SelectedItem.Name;
                 Name = SelectedItem.Name;

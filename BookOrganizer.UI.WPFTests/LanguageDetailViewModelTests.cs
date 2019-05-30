@@ -1,4 +1,5 @@
 ﻿using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Enums;
 using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using Xunit;
 
 namespace BookOrganizer.UI.WPFTests
@@ -80,5 +82,16 @@ namespace BookOrganizer.UI.WPFTests
         {
             viewModel.Languages.Should().BeEmpty();
         }
+
+        [Fact]
+        public async void OpeningALanguageDetailViewWithANewLanguage_ShouldByDefaultOpenAsEditable()
+        {
+            await viewModel.LoadAsync(default(Guid));
+            viewModel.UserMode.Item1.Should().BeFalse();
+            viewModel.UserMode.Item2.Should().Equals(DetailViewState.EditMode);
+            viewModel.UserMode.Item3.Should().Equals(Brushes.LightGreen);
+            viewModel.UserMode.Item4.Should().BeTrue();
+        }
+
     }
 }

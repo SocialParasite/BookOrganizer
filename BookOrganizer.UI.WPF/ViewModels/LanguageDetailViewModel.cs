@@ -63,7 +63,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public async override Task LoadAsync(Guid id)
         {
-            SelectedItem = await Repository.GetSelectedAsync(id) ?? null;
+            SelectedItem = await Repository.GetSelectedAsync(id) ?? new Language();
 
             Id = id;
 

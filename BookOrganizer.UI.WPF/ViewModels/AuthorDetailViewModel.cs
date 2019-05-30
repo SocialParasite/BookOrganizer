@@ -75,11 +75,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public async override Task LoadAsync(Guid id)
         {
-            SelectedItem = await Repository.GetSelectedAsync(id) ?? null;
+            SelectedItem = await Repository.GetSelectedAsync(id) ?? new Author();
 
             Id = id;
 
-            if (Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            if (Id != default)
             {
                 LastName = SelectedItem.LastName;
                 FirstName = SelectedItem.FirstName;

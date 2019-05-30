@@ -291,11 +291,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public async override Task LoadAsync(Guid id)
         {
-            SelectedItem = await Repository.GetSelectedAsync(id) ?? null;
+            SelectedItem = await Repository.GetSelectedAsync(id)
+                ?? new Book();
 
             Id = id;
 
-            if (Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            if (Id != default)
             {
                 TabTitle = SelectedItem.Title;
                 Title = SelectedItem.Title;
@@ -305,7 +306,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 PageCount = SelectedItem.PageCount;
             }
             else
-                this.SwitchEditableStateExecute();
+            {
+                SwitchEditableStateExecute();
+            }
 
             SetDefaultBookCoverIfNoneSet();
             SetDefaultBookTitleIfNoneSet();
@@ -382,7 +385,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             await InitializePublisherCollection();
             await InitializeAuthorCollection();
 
-            ReleaseYear = SelectedReleaseYear;
+            ReleaseYear = SelectedReleaseYear == 0 ? 1 : SelectedReleaseYear;
 
             async Task InitializeLanguageCollection()
             {
