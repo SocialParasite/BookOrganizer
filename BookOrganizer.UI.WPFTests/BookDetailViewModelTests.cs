@@ -178,5 +178,12 @@ namespace BookOrganizer.UI.WPFTests
             viewModel.UserMode.Item4.Should().BeTrue();
         }
 
+        [Fact]
+        public async void NewBookCoverPath_ShouldBeSetToPlaceholderImage()
+        {
+            await viewModel.LoadAsync(default);
+            viewModel.SelectedItem.BookCoverPicturePath.Should().EndWith("placeholder.png");
+        }
+
     }
 }

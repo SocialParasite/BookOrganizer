@@ -78,5 +78,12 @@ namespace BookOrganizer.UI.WPFTests
             viewModel.UserMode.Item3.Should().Equals(Brushes.LightGreen);
             viewModel.UserMode.Item4.Should().BeTrue();
         }
+
+        [Fact]
+        public async void NewPublisherLogoPath_ShouldBeSetToPlaceholderImage()
+        {
+            await viewModel.LoadAsync(default);
+            viewModel.SelectedItem.LogoPath.Should().EndWith("placeholder.png");
+        }
     }
 }

@@ -91,5 +91,11 @@ namespace BookOrganizer.UI.WPFTests
             viewModel.UserMode.Item4.Should().BeTrue();
         }
 
+        [Fact]
+        public async void NewAuthorMugShotPath_ShouldBeSetToPlaceholderImage()
+        {
+            await viewModel.LoadAsync(default);
+            viewModel.SelectedItem.MugShotPath.Should().EndWith("placeholder.png");
+        }
     }
 }
