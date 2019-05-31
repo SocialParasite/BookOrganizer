@@ -1,5 +1,6 @@
 ﻿using Autofac.Features.Indexed;
 using BookOrganizer.UI.WPF.Lookups;
+using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
 using BookOrganizer.UI.WPFTests.Extensions;
 using FluentAssertions;
@@ -12,7 +13,7 @@ namespace BookOrganizer.UI.WPFTests
     public class MainViewModelTests
     {
         private Mock<IEventAggregator> eventAggregatorMock;
-        private Mock<IBookLookupDataService> bookLookupServiceMock;
+        private Mock<IMetroDialogService> metroDialogServiceMock;
         private Mock<IIndex<string, IDetailViewModel>> detailViewModelCreatorMock;
         private Mock<IIndex<string, ISelectedViewModel>> viewModelCreatorMock;
 
@@ -23,12 +24,12 @@ namespace BookOrganizer.UI.WPFTests
             eventAggregatorMock = new Mock<IEventAggregator>();
             detailViewModelCreatorMock = new Mock<IIndex<string, IDetailViewModel>>();
             viewModelCreatorMock = new Mock<IIndex<string, ISelectedViewModel>>();
-            bookLookupServiceMock = new Mock<IBookLookupDataService>();
+            metroDialogServiceMock = new Mock<IMetroDialogService>();
 
             viewModel = new MainViewModel(eventAggregatorMock.Object,
                 detailViewModelCreatorMock.Object,
                 viewModelCreatorMock.Object,
-                bookLookupServiceMock.Object);
+                metroDialogServiceMock.Object);
         }
 
         [Fact]

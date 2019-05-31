@@ -1,12 +1,11 @@
 ﻿using Autofac.Features.Indexed;
 using BookOrganizer.UI.WPF.Events;
-using BookOrganizer.UI.WPF.Lookups;
+using BookOrganizer.UI.WPF.Services;
 using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
@@ -17,8 +16,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private IDetailViewModel _selectedDetailViewModel;
         private IIndex<string, IDetailViewModel> detailViewModelCreator;
         private IIndex<string, ISelectedViewModel> viewModelCreator;
-        private readonly IBookLookupDataService bookLookupDataService;
-
+        private readonly IMetroDialogService metroDialogService;
         private ISelectedViewModel selectedVM;
         private bool isViewVisible;
         private bool isMenuBarVisible;
@@ -26,11 +24,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public MainViewModel(IEventAggregator eventAggregator,
                               IIndex<string, IDetailViewModel> detailViewModelCreator,
                               IIndex<string, ISelectedViewModel> viewModelCreator,
-                              IBookLookupDataService bookLookupDataService)
+                              IMetroDialogService metroDialogService)
         {
             this.detailViewModelCreator = detailViewModelCreator ?? throw new ArgumentNullException(nameof(detailViewModelCreator));
             this.viewModelCreator = viewModelCreator ?? throw new ArgumentNullException(nameof(viewModelCreator));
-            this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
+            this.metroDialogService = metroDialogService ?? throw new ArgumentNullException(nameof(metroDialogService));
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 
             DetailViewModels = new ObservableCollection<IDetailViewModel>();
@@ -123,7 +121,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    //TODO
+                    await metroDialogService.ShowInfoDialogAsync(ex.Message);
                     return;
                 }
 
@@ -207,7 +205,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void OnSaveDetailsView(OpenDetailViewEventArgs args)
         {
-            RemoveDetailViewModel(Guid.Parse("00000000-0000-0000-0000-000000000000"), args.ViewModelName);
+            RemoveDetailViewModel(default, args.ViewModelName);
 
             OnOpenDetailViewMatchingSelectedId(args);
         }
