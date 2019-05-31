@@ -15,12 +15,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             where T : class, IIdentifiable
     {
         private List<LookupItem> entityCollection;
+        public readonly IEventAggregator eventAggregator;
 
         public BaseViewModel(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
-            //RefreshCommand = new DelegateCommand(OnRefreshExecute);
-            //SortByCommand = new DelegateCommand<object>(OnSortByExecute);
 
             AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
 
@@ -29,14 +28,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                            OnItemNameLabelMouseLeftButtonUpCanExecute);
         }
 
-        public readonly IEventAggregator eventAggregator;
-
         public IEnumerable<LookupItem> Items;
-
         public IRepository<T> Repository;
-
-        //public ICommand RefreshCommand { get; }
-        //public ICommand SortByCommand { get; }
         public ICommand AddNewItemCommand { get; }
         public ICommand ItemNameLabelMouseLeftButtonUpCommand { get; }
 
@@ -74,19 +67,5 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                        ViewModelName = item.ViewModelName
                                    });
         }
-
-
-        //public abstract void SortEntityCollection(IEnumerable<T> itemList, string orderBy);
-
-        //public virtual void OnSortByExecute(object selectedValue)
-        //{
-        //    if (selectedValue.ToString() == "A-Z")
-        //        SortEntityCollection(items, "asc");
-        //    else
-        //        SortEntityCollection(items, "desc");
-        //}
-
-        //private async void OnRefreshExecute()
-        //    => await InitializeRepositoryAsync();
     }
 }

@@ -45,19 +45,5 @@ namespace BookOrganizer.UI.WPFTests
             book.Should().NotBeNull();
             book.DisplayMember.Should().BeEquivalentTo("The Book");
         }
-
-        [Fact(Skip ="SelectedBook removed")]
-        public void ShouldPublish_OpenDetailViewEvent_WhenSelectedBookIsChanged()
-        {
-            var eventMock = new Mock<OpenDetailViewEvent>();
-
-            eventAggregatorMock
-              .Setup(ea => ea.GetEvent<OpenDetailViewEvent>())
-              .Returns(eventMock.Object);
-
-            //viewModel.SelectedBook = new OpenDetailViewEventArgs() { Id = new Guid(), ViewModelName = nameof(BooksViewModel) };
-
-            //eventMock.Verify(e => e.Publish(viewModel.SelectedBook), Times.Once);
-        }
     }
 }
