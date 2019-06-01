@@ -4,9 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:local="clr-namespace:BookOrganizer.UI.WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:BookOrganizer.UI.WPF.Views"
     xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPF.ViewModels"
@@ -52,6 +49,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:MainPageViewModel}">
                 <view:MainPageView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SettingsViewModel}">
+                <view:SettingsView />
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
@@ -170,7 +170,8 @@
             <Controls:HamburgerMenu.OptionsItemsSource>
                 <Controls:HamburgerMenuItemCollection>
                     <Controls:HamburgerMenuGlyphItem
-                        Command="{Binding OpenSettingsMenuCommand}"
+                        Command="{Binding OpenSelectedViewCommand}"
+                        CommandParameter="SettingsViewModel"
                         Glyph="&#xE713;"
                         Label="Settings"
                         Tag="Settings" />

@@ -227,6 +227,7 @@
     <Compile Include="ViewModels\Interfaces\IPublishersViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISelectedViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ISettingsViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISeriesViewModel.cs" />
     <Compile Include="ViewModels\LanguageDetailViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="ViewModels\PublishersViewModel.cs" />
     <Compile Include="ViewModels\SeriesDetailViewModel.cs" />
     <Compile Include="ViewModels\SeriesViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AuthorDetailView.xaml.cs">
       <DependentUpon>AuthorDetailView.xaml</DependentUpon>
@@ -265,6 +267,9 @@
     </Compile>
     <Compile Include="Views\SeriesView.xaml.cs">
       <DependentUpon>SeriesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -315,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SeriesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
