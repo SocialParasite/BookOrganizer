@@ -65,7 +65,6 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<SeriesRepository>().AsImplementedInterfaces();
             builder.RegisterType<LanguageRepository>().AsImplementedInterfaces();
 
-            builder.RegisterType<SettingsViewModel>().As<ISettingsViewModel>();
             builder.RegisterType<SettingsViewModel>().Keyed<ISelectedViewModel>(nameof(SettingsViewModel));
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf();
