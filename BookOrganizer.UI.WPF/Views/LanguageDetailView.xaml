@@ -61,6 +61,7 @@
                                     x:Name="basicLabelTextBlock"
                                     Grid.Column="1"
                                     Margin="20,0,0,0"
+                                    FontSize="24"
                                     Text="{Binding DisplayMember}"
                                     TextWrapping="Wrap">
                                     <TextBlock.InputBindings>

@@ -19,7 +19,7 @@ namespace BookOrganizer.UI.WPF
             mainWindow.Show();
 
             var dbConnectivity = new DbConnectivityTester(container.Resolve<IMetroDialogService>());
-            await dbConnectivity.DbConnectivityCheck();
+            await dbConnectivity.DbConnectivityCheckAsync();
         }
 
     }
