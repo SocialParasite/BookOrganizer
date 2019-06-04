@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class PublishersViewModel : BaseViewModel<Publisher>, IPublishersViewModel
+    public class PublishersViewModel : BaseViewModel<Publisher>
     {
         private readonly IPublisherLookupDataService publisherLookupDataService;
 

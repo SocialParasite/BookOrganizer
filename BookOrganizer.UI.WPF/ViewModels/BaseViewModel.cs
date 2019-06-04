@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public abstract class BaseViewModel<T> : ViewModelBase
+    public abstract class BaseViewModel<T> : ViewModelBase, ISelectedViewModel
             where T : class, IIdentifiable
     {
         private List<LookupItem> entityCollection;

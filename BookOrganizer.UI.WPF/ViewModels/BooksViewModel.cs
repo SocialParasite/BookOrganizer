@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class BooksViewModel : BaseViewModel<Book>, IBooksViewModel
+    public class BooksViewModel : BaseViewModel<Book>
     {
         private readonly IBookLookupDataService bookLookupDataService;
 

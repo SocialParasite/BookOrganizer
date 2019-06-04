@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class SeriesDetailViewModel : BaseDetailViewModel<Series>, ISeriesDetailViewModel, IDropTarget
+    public class SeriesDetailViewModel : BaseDetailViewModel<Series>, IDropTarget
     {
         private readonly IBookLookupDataService bookLookupDataService;
         private string name;

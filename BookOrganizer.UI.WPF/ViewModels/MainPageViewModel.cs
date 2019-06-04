@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class MainPageViewModel : IMainPageViewModel
+    public class MainPageViewModel: ISelectedViewModel
     {
         private readonly IEventAggregator eventAggregator;
         private readonly ILanguageLookupDataService languageLookup;

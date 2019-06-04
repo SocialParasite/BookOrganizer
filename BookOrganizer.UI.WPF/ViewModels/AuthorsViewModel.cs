@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class AuthorsViewModel : BaseViewModel<Author>, IAuthorsViewModel
+    public class AuthorsViewModel : BaseViewModel<Author>
     {
         private readonly IAuthorLookupDataService authorLookupDataService;
         public AuthorsViewModel(IEventAggregator eventAggregator,

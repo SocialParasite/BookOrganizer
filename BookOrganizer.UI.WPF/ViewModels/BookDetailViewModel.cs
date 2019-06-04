@@ -16,7 +16,7 @@ using System.Windows.Media;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class BookDetailViewModel : BaseDetailViewModel<Book>, IBookDetailViewModel
+    public class BookDetailViewModel : BaseDetailViewModel<Book>
     {
         private readonly ILanguageLookupDataService languageLookupDataService;
         private readonly IPublisherLookupDataService publisherLookupDataService;

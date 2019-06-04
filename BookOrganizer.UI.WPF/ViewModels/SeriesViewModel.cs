@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class SeriesViewModel : BaseViewModel<Series>, ISeriesViewModel
+    public class SeriesViewModel : BaseViewModel<Series>
     {
         private readonly ISeriesLookupDataService seriesLookupDataService;
 

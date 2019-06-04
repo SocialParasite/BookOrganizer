@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class AuthorDetailViewModel : BaseDetailViewModel<Author>, IAuthorDetailViewModel
+    public class AuthorDetailViewModel : BaseDetailViewModel<Author>
     {
         private string firstName;
         private string lastName;

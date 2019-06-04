@@ -17,7 +17,7 @@ using System.Windows.Media;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {
-    public class LanguageDetailViewModel : BaseDetailViewModel<Language>, ILanguageDetailViewModel
+    public class LanguageDetailViewModel : BaseDetailViewModel<Language>
     {
         private readonly ILanguageLookupDataService languageLookupService;
         private string languageName;

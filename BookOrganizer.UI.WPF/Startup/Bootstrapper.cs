@@ -21,38 +21,28 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
 
-            builder.RegisterType<MainPageViewModel>().As<IMainPageViewModel>();
             builder.RegisterType<MainPageViewModel>().Keyed<ISelectedViewModel>(nameof(MainPageViewModel));
 
-            builder.RegisterType<BookDetailViewModel>().As<IBookDetailViewModel>();
             builder.RegisterType<BookDetailViewModel>()
                 .Keyed<IDetailViewModel>(nameof(BookDetailViewModel));
 
-            builder.RegisterType<BooksViewModel>().As<IBooksViewModel>();
             builder.RegisterType<BooksViewModel>().Keyed<ISelectedViewModel>(nameof(BooksViewModel));
 
-            builder.RegisterType<SeriesViewModel>().As<ISeriesViewModel>();
             builder.RegisterType<SeriesViewModel>().Keyed<ISelectedViewModel>(nameof(SeriesViewModel));
 
-            builder.RegisterType<SeriesDetailViewModel>().As<ISeriesDetailViewModel>();
             builder.RegisterType<SeriesDetailViewModel>()
                 .Keyed<IDetailViewModel>(nameof(SeriesDetailViewModel));
 
-            builder.RegisterType<PublishersViewModel>().As<IPublishersViewModel>();
             builder.RegisterType<PublishersViewModel>().Keyed<ISelectedViewModel>(nameof(PublishersViewModel));
 
-            builder.RegisterType<PublisherDetailViewModel>().As<IPublisherDetailViewModel>();
             builder.RegisterType<PublisherDetailViewModel>()
                 .Keyed<IDetailViewModel>(nameof(PublisherDetailViewModel));
 
-            builder.RegisterType<AuthorsViewModel>().As<IAuthorsViewModel>();
             builder.RegisterType<AuthorsViewModel>().Keyed<ISelectedViewModel>(nameof(AuthorsViewModel));
 
-            builder.RegisterType<AuthorDetailViewModel>().As<IAuthorDetailViewModel>();
             builder.RegisterType<AuthorDetailViewModel>()
                 .Keyed<IDetailViewModel>(nameof(AuthorDetailViewModel));
 
-            builder.RegisterType<LanguageDetailViewModel>().As<ILanguageDetailViewModel>();
             builder.RegisterType<LanguageDetailViewModel>().Keyed<IDetailViewModel>(nameof(LanguageDetailViewModel));
 
             builder.RegisterType<BooksView>().AsSelf();
