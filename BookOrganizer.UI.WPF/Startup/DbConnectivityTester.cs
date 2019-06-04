@@ -50,8 +50,7 @@ namespace BookOrganizer.UI.WPF.Startup
                         .ShowInfoDialogAsync($"Book Organizer database couldn't be opened. " +
                         $"This might be because the database is down or it doesn't exist. \r\rError message(s):\r{ex.Message}");
 
-                    if(await metroDialogService.ShowOkCancelDialogAsync("Would you like to create a database now?", "Create database?")
-                        == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative)
+                    if (await ShouldDatabaseBeCreated())
                     {
                         await CreateDatabase();
                     }
@@ -61,6 +60,12 @@ namespace BookOrganizer.UI.WPF.Startup
             }
 
             connection.Dispose();
+        }
+
+        private async Task<bool> ShouldDatabaseBeCreated()
+        {
+            return await metroDialogService.ShowOkCancelDialogAsync("Would you like to create a database now?", "Create database?")
+                                    == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative;
         }
 
         private async Task CreateDatabase()
