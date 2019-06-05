@@ -14,7 +14,7 @@ namespace BookOrganizer.UI.WPF.Repositories
 
         public async override Task<Author> GetSelectedAsync(Guid id)
         {
-            if (id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            if (id != default)
                 return await context.Authors
                     .Include(b => b.Nationality)
                     .Include(b => b.BooksLink)

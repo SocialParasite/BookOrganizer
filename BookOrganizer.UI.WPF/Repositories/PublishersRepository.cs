@@ -14,7 +14,7 @@ namespace BookOrganizer.UI.WPF.Repositories
 
         public async override Task<Publisher> GetSelectedAsync(Guid id)
         {
-            return id != Guid.Parse("00000000-0000-0000-0000-000000000000")
+            return id != default
                 ? await context.Publishers
                     .Include(b => b.Books)
                     .FirstOrDefaultAsync(b => b.Id == id)
