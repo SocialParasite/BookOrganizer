@@ -11,3 +11,7 @@ Book/author/publisher details view:
 Edit book details:
 ![](EditBook.gif)
 
+
+Edit series:
+![](EditSeries.gif)
+
