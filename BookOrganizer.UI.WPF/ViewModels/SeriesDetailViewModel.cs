@@ -154,9 +154,23 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     }
                 }
 
+                RefreshSeriesReadOrder();
+
                 SetChangeTracker();
             }
 
+        }
+
+        private void RefreshSeriesReadOrder()
+        {
+            var temporaryReadOrderCollection = new ObservableCollection<SeriesReadOrder>();
+            temporaryReadOrderCollection.AddRange(SelectedItem.SeriesReadOrder.OrderBy(a => a.Instalment));
+            SelectedItem.SeriesReadOrder.Clear();
+
+            foreach (var item in temporaryReadOrderCollection)
+            {
+                SelectedItem.SeriesReadOrder.Add(item);
+            }
         }
 
         private bool OnAddBookToSeriesCanExecute(Guid? id)
@@ -278,14 +292,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
                 SelectedItem.SeriesReadOrder.Add(sourceItem);
 
-                var temporaryReadOrderCollection = new ObservableCollection<SeriesReadOrder>();
-                temporaryReadOrderCollection.AddRange(SelectedItem.SeriesReadOrder.OrderBy(a => a.Instalment));
-                SelectedItem.SeriesReadOrder.Clear();
-
-                foreach (var item in temporaryReadOrderCollection)
-                {
-                    SelectedItem.SeriesReadOrder.Add(item);
-                }
+                RefreshSeriesReadOrder();
             }
             SetChangeTracker();
         }
