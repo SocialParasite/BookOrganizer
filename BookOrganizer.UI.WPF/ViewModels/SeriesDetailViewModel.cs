@@ -97,6 +97,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             async Task PopulateAllBooksCollection()
             {
+                AllBooks.Clear();
                 foreach (var item in await GetBookList())
                 {
                     AllBooks.Add(item);
@@ -268,6 +269,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     if (item.Instalment > originalSourceInstalment && item.Instalment <= sourceItem.Instalment)
                     {
                         item.Instalment--;
+                    }
+                    else if (item.Instalment < originalSourceInstalment && item.Instalment >= sourceItem.Instalment)
+                    {
+                        item.Instalment++;
                     }
                 }
 
