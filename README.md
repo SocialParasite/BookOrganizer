@@ -13,5 +13,6 @@ Edit book details:
 
 
 Edit series:
+
 ![](EditSeries.gif)
 
