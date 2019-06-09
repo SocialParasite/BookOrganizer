@@ -5,4 +5,4 @@ This first version, let's call it 0.9 as it's still missing some features that I
 
 
 Book/author/publisher details view:
-
+![](BookDetails.gif)
