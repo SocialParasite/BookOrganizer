@@ -1,5 +1,4 @@
-﻿using BookOrganizer.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +8,5 @@ namespace BookOrganizer.UI.WPF.Lookups
     {
         Task<IEnumerable<LookupItem>> GetLanguageLookupAsync();
         Task<Guid> GetLanguageId();
-        //Task<Language> GetLanguageById(Guid languageId);
     }
 }
