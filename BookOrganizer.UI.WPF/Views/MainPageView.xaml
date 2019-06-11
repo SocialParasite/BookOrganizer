@@ -16,10 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <WrapPanel
-        MaxWidth="{Binding}"
-        HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch">
+    <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <GroupBox
             x:Name="AddItemsGroupBox"
             Margin="5"
@@ -37,6 +34,12 @@
             </GroupBox.Header>
             <WrapPanel>
                 <Button
+                    x:Name="AddAuthorButton"
+                    Command="{Binding AddNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:AuthorDetailViewModel}"
+                    Content="Add a new author"
+                    Style="{StaticResource MainPageButtonStyle}" />
+                <Button
                     x:Name="AddBookButton"
                     Command="{Binding AddNewItemCommand}"
                     CommandParameter="{x:Type viewModel:BookDetailViewModel}"
@@ -49,6 +52,12 @@
                     Content="Add a new language"
                     Style="{StaticResource MainPageButtonStyle}" />
                 <Button
+                    x:Name="AddNationalityButton"
+                    Command="{Binding AddNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:NationalityDetailViewModel}"
+                    Content="Add a new nationality"
+                    Style="{StaticResource MainPageButtonStyle}" />
+                <Button
                     x:Name="AddPublisherButton"
                     Command="{Binding AddNewItemCommand}"
                     CommandParameter="{x:Type viewModel:PublisherDetailViewModel}"
@@ -59,12 +68,6 @@
                     Command="{Binding AddNewItemCommand}"
                     CommandParameter="{x:Type viewModel:SeriesDetailViewModel}"
                     Content="Add a new series"
-                    Style="{StaticResource MainPageButtonStyle}" />
-                <Button
-                    x:Name="AddAuthorButton"
-                    Command="{Binding AddNewItemCommand}"
-                    CommandParameter="{x:Type viewModel:AuthorDetailViewModel}"
-                    Content="Add a new author"
                     Style="{StaticResource MainPageButtonStyle}" />
             </WrapPanel>
         </GroupBox>
@@ -86,10 +89,11 @@
             </GroupBox.Header>
             <WrapPanel>
                 <Button
-                    x:Name="EditLanguagesButton"
-                    Command="{Binding EditLanguagesCommand}"
-                    Content="Edit book languages"
-                    Style="{StaticResource MainPageButtonStyle}" />
+                    x:Name="EditFormatsButton"
+                    Content="Edit book formats"
+                    IsEnabled="False"
+                    Style="{StaticResource MainPageButtonStyle}"
+                    ToolTip="Placeholder. Will be in version 1.0!" />
                 <Button
                     x:Name="EditGenresButton"
                     Content="Edit genres"
@@ -97,11 +101,15 @@
                     Style="{StaticResource MainPageButtonStyle}"
                     ToolTip="Placeholder. Will be in version 1.0!" />
                 <Button
-                    x:Name="EditFormatsButton"
-                    Content="Edit book formats"
-                    IsEnabled="False"
-                    Style="{StaticResource MainPageButtonStyle}"
-                    ToolTip="Placeholder. Will be in version 1.0!" />
+                    x:Name="EditLanguagesButton"
+                    Command="{Binding EditLanguagesCommand}"
+                    Content="Edit book languages"
+                    Style="{StaticResource MainPageButtonStyle}" />
+                <Button
+                    x:Name="EditNationalitiesButton"
+                    Command="{Binding EditNationalitiesCommand}"
+                    Content="Edit nationalities"
+                    Style="{StaticResource MainPageButtonStyle}" />
             </WrapPanel>
         </GroupBox>
     </WrapPanel>

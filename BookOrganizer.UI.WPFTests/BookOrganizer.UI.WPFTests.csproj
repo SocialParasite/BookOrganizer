@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorDetailViewModelTests.cs" />
+    <Compile Include="NationalityDetailViewModelTests .cs" />
     <Compile Include="LanguageDetailViewModelTests.cs" />
     <Compile Include="SeriesDetailViewModelTests.cs" />
     <Compile Include="PublisherDetailViewModelTests.cs" />

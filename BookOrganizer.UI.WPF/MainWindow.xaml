@@ -47,6 +47,9 @@
             <DataTemplate DataType="{x:Type viewModel:LanguageDetailViewModel}">
                 <view:LanguageDetailView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:NationalityDetailViewModel}">
+                <view:NationalityDetailView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:MainPageViewModel}">
                 <view:MainPageView />
             </DataTemplate>
@@ -113,6 +116,10 @@
                     Command="{Binding CreateNewItemCommand}"
                     CommandParameter="{x:Type viewModel:LanguageDetailViewModel}"
                     Header="Language" />
+                <MenuItem
+                    Command="{Binding CreateNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:NationalityDetailViewModel}"
+                    Header="Nationality" />
                 <MenuItem
                     Command="{Binding CreateNewItemCommand}"
                     CommandParameter="{x:Type viewModel:PublisherDetailViewModel}"

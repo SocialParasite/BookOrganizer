@@ -181,6 +181,8 @@
     </ApplicationDefinition>
     <Compile Include="Converters\InvertedBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToMaxConverter.cs" />
+    <Compile Include="Lookups\INationalityLookupDataService.cs" />
+    <Compile Include="Repositories\NationalityRepository.cs" />
     <Compile Include="Startup\DbConnectivityTester.cs" />
     <Compile Include="Enums\DetailViewState.cs" />
     <Compile Include="Events\SavedDetailsViewEvent.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="ViewModels\LanguageDetailViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\NationalityDetailViewModel.cs" />
     <Compile Include="ViewModels\PublisherDetailViewModel.cs" />
     <Compile Include="ViewModels\PublishersViewModel.cs" />
     <Compile Include="ViewModels\SeriesDetailViewModel.cs" />
@@ -244,6 +247,9 @@
     </Compile>
     <Compile Include="Views\MainPageView.xaml.cs">
       <DependentUpon>MainPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NationalityDetailView.xaml.cs">
+      <DependentUpon>NationalityDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PublisherDetailView.xaml.cs">
       <DependentUpon>PublisherDetailView.xaml</DependentUpon>
@@ -293,6 +299,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NationalityDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
