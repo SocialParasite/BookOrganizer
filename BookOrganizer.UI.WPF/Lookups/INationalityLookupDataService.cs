@@ -6,7 +6,7 @@ namespace BookOrganizer.UI.WPF.Lookups
 {
     public interface INationalityLookupDataService
     {
-        Task<IEnumerable<LookupItem>> GetNationLookupAsync();
+        Task<IEnumerable<LookupItem>> GetNationalityLookupAsync();
 
         Task<Guid> GetNationalityId();
     }

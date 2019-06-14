@@ -97,7 +97,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetListOfNations()
-            => await nationalityLookupService.GetNationLookupAsync();
+            => await nationalityLookupService.GetNationalityLookupAsync();
 
         private async void OnChangeEditedNationExecute(Guid? nationalityId)
         {

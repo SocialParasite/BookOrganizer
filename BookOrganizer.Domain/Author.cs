@@ -65,6 +65,8 @@ namespace BookOrganizer.Domain
             set { biography = value; OnPropertyChanged(); }
         }
 
+        public Guid? NationalityId { get; set; }
+
 
         // Navigation properties
         public ICollection<BookAuthors> BooksLink { get; set; }

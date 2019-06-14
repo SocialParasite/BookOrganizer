@@ -126,7 +126,7 @@ namespace BookOrganizer.UI.WPF.Lookups
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetNationLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetNationalityLookupAsync()
         {
             using (var ctx = _contextCreator())
             {

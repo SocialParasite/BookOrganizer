@@ -1,5 +1,6 @@
 ﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Enums;
+using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
@@ -18,6 +19,7 @@ namespace BookOrganizer.UI.WPFTests
         private Mock<IEventAggregator> eventAggregatorMock;
         private Mock<IMetroDialogService> metroDialogServiceMock;
         private Mock<IRepository<Author>> authorsRepoMock;
+        private Mock<INationalityLookupDataService> nationalityLookupDataServiceMock;
         private AuthorDetailViewModel viewModel;
 
         public AuthorDetailViewModelTests()
@@ -25,10 +27,12 @@ namespace BookOrganizer.UI.WPFTests
             eventAggregatorMock = new Mock<IEventAggregator>();
             metroDialogServiceMock = new Mock<IMetroDialogService>();
             authorsRepoMock = new Mock<IRepository<Author>>();
+            nationalityLookupDataServiceMock = new Mock<INationalityLookupDataService>();
 
             viewModel = new AuthorDetailViewModel(eventAggregatorMock.Object,
                 metroDialogServiceMock.Object,
-                authorsRepoMock.Object);
+                authorsRepoMock.Object,
+                nationalityLookupDataServiceMock.Object);
         }
 
         [Theory]

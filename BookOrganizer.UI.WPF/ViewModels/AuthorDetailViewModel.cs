@@ -1,10 +1,14 @@
 ﻿using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Lookups;
 using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using Prism.Commands;
 using Prism.Events;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -14,20 +18,28 @@ namespace BookOrganizer.UI.WPF.ViewModels
     {
         private string firstName;
         private string lastName;
+        private LookupItem selectedNationality;
+        private readonly INationalityLookupDataService nationalityLookupDataService;
 
         public AuthorDetailViewModel(IEventAggregator eventAggregator,
             IMetroDialogService metroDialogService,
-            IRepository<Author> authorRepo)
+            IRepository<Author> authorRepo,
+            INationalityLookupDataService nationalityLookupDataService)
             : base(eventAggregator, metroDialogService)
         {
             Repository = authorRepo ?? throw new ArgumentNullException(nameof(authorRepo));
+            this.nationalityLookupDataService = nationalityLookupDataService
+                ?? throw new ArgumentNullException(nameof(nationalityLookupDataService));
 
             AddAuthorPictureCommand = new DelegateCommand(OnAddAuthorPictureExecute);
+            NationalitySelectionChangedCommand = new DelegateCommand(OnNationalitySelectionChangedExecute);
 
             SelectedItem = new Author();
+            Nationalities = new ObservableCollection<LookupItem>();
         }
 
-        public ICommand AddAuthorPictureCommand { get; set; }
+        public ICommand AddAuthorPictureCommand { get; }
+        public ICommand NationalitySelectionChangedCommand { get; }
 
         [MinLength(1, ErrorMessage = "Authors first name should be at minimum 1 character long.")]
         [MaxLength(50, ErrorMessage = "Authors first name should be at maximum 50 character long.")]
@@ -63,6 +75,14 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
+        public LookupItem SelectedNationality
+        {
+            get { return selectedNationality; }
+            set { selectedNationality = value; OnPropertyChanged(); }
+        }
+
+        public ObservableCollection<LookupItem> Nationalities { get; set; }
+
         private void SetTabTitle()
             => TabTitle = $"{LastName}, {FirstName}";
 
@@ -90,6 +110,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             SetDefaultAuthorPicIfNoneSet();
 
+            InitiliazeSelectedNationalityIfNoneSet();
+
             SelectedItem.PropertyChanged += (s, e) =>
             {
                 SetChangeTracker();
@@ -100,6 +122,60 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 if (SelectedItem.MugShotPath is null)
                     SelectedItem.MugShotPath = FileExplorerService.GetImagePath();
             }
+
+            void InitiliazeSelectedNationalityIfNoneSet()
+            {
+                if (SelectedNationality is null)
+                {
+                    if (SelectedItem.Nationality != null)
+                    {
+                        SelectedNationality =
+                            new LookupItem
+                            {
+                                Id = SelectedItem.Nationality.Id,
+                                DisplayMember = SelectedItem.Nationality is null
+                                ? new Nationality().Name = ""
+                                : SelectedItem.Nationality.Name
+                            };
+                    }
+                }
+            }
         }
+
+        public override async void SwitchEditableStateExecute()
+        {
+            base.SwitchEditableStateExecute();
+
+            await InitializeNationalityCollection();
+
+            async Task InitializeNationalityCollection()
+            {
+                if (!Nationalities.Any())
+                {
+                    Nationalities.Clear();
+
+                    foreach (var item in await GetNationalityList())
+                    {
+                        Nationalities.Add(item);
+                    }
+
+                    if (SelectedItem.Nationality != null)
+                        SelectedNationality = Nationalities.FirstOrDefault(n => n.Id == SelectedItem.Nationality.Id);
+                }
+            }
+        }
+
+        private async Task<IEnumerable<LookupItem>> GetNationalityList()
+            => await nationalityLookupDataService.GetNationalityLookupAsync();
+
+        private void OnNationalitySelectionChangedExecute()
+        {
+            if (SelectedNationality != null && Nationalities.Any())
+            {
+                SelectedItem.NationalityId = SelectedNationality.Id;
+                SetChangeTracker();
+            }
+        }
+
     }
 }
