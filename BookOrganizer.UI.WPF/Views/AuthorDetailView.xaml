@@ -4,8 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:local="clr-namespace:BookOrganizer.UI.WPF.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     d:DesignHeight="1050"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -123,16 +123,24 @@
                     Content="Date of Birth:"
                     FontWeight="Bold"
                     Style="{StaticResource LabelStyles}" />
-                <TextBox
-                    x:Name="dobTextBox"
+                <Label
+                    x:Name="dobLabelContent"
                     Grid.Row="2"
                     Grid.Column="2"
                     MinWidth="100"
                     MaxWidth="300"
-                    Style="{StaticResource ValidationTextBoxStyle}"
-                    Text="{Binding DateOfBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding SelectedItem.DateOfBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ContentStringFormat="dd.MM.yyyy"
+                    Style="{StaticResource LabelStyles}"
+                    Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
+                <DatePicker
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Height="50"
+                    DisplayDateEnd="{x:Static sys:DateTime.Today}"
+                    FontSize="24"
+                    SelectedDate="{Binding SelectedItem.DateOfBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-
                 <Label
                     x:Name="nationalityLabel"
                     Grid.Row="3"
@@ -144,7 +152,6 @@
                     x:Name="nationalityTextBox"
                     Grid.Row="3"
                     Grid.Column="2"
-                    Grid.ColumnSpan="3"
                     MinWidth="100"
                     MaxWidth="300"
                     BorderThickness="0"
