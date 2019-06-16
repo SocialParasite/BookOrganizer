@@ -74,8 +74,6 @@ namespace BookOrganizer.UI.WPFTests
         {
             viewModel.SelectedItem.Should().BeOfType<Series>();
             viewModel.SelectedItem.Id.Should().Equals(default(Guid));
-
-            viewModel.AllBooks.Should().BeEmpty();
         }
 
         [Fact]

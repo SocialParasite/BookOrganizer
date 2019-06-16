@@ -101,5 +101,11 @@ namespace BookOrganizer.UI.WPFTests
             await viewModel.LoadAsync(default);
             viewModel.SelectedItem.MugShotPath.Should().EndWith("placeholder.png");
         }
+
+        [Fact]
+        public void NewAuthorNationalities_ShouldBeEmpty()
+        {
+            viewModel.Nationalities.Should().BeEmpty();
+        }
     }
 }
