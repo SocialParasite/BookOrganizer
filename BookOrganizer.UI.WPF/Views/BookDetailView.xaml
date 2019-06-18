@@ -31,6 +31,11 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
@@ -61,9 +66,9 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <!--<RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />-->
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -91,7 +96,7 @@
                 <TextBox
                     x:Name="titleTextBox"
                     Grid.Column="1"
-                    Grid.ColumnSpan="4"
+                    Grid.ColumnSpan="5"
                     MaxWidth="800"
                     FontSize="48"
                     Style="{StaticResource ValidationTextBoxStyle}"
@@ -307,7 +312,7 @@
                 </Grid.RowDefinitions>
                 <GroupBox
                     x:Name="descriptionGroupBox"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="3"
                     Margin="5"
                     Header="Description">
                     <TextBox
@@ -330,6 +335,7 @@
                     x:Name="authorComboBox"
                     Grid.Row="1"
                     Grid.Column="1"
+                    HorizontalAlignment="Left"
                     IsEditable="True"
                     IsTextSearchEnabled="True"
                     ItemsSource="{Binding Authors}"
@@ -379,7 +385,7 @@
 
                 <GroupBox
                     Grid.Row="2"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="3"
                     Margin="5"
                     Header="Book Authors:">
                     <ListBox
@@ -423,7 +429,7 @@
                     </ListBox>
                 </GroupBox>
 
-                <Label
+                <!--<Label
                     x:Name="bookSeriesLabel"
                     Grid.Row="3"
                     Content="{Binding SelectedItem.BookSeries.Name}"
@@ -446,7 +452,7 @@
                 </Label>
                 <ListBox
                     x:Name="booksInSeriesListBox"
-                    Grid.Row="4"
+                    Grid.Row="4" MaxWidth="400"
                     ItemsSource="{Binding Source={StaticResource ReadOrder}}"
                     Style="{StaticResource ListBoxBaseStyle}">
                     <ListBox.ItemTemplate>
@@ -463,7 +469,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </ListBox>-->
 
                 <CheckBox
                     x:Name="isReadCheckBox"
@@ -558,6 +564,59 @@
                     Content="Delete"
                     Style="{StaticResource UpdateButtonStyle}" />
 
+            </Grid>
+            <GridSplitter
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="1"
+                Width="5"
+                HorizontalAlignment="Stretch" />
+
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label
+                    x:Name="bookSeriesLabel"
+                    Content="{Binding SelectedItem.BookSeries.Name}"
+                    FontWeight="Bold"
+                    Style="{StaticResource LabelStyles}">
+                    <Label.InputBindings>
+                        <MouseBinding
+                            Command="{Binding ShowSelectedSeriesCommand}"
+                            CommandParameter="{Binding SelectedItem.BookSeries.Id}"
+                            MouseAction="LeftDoubleClick" />
+                    </Label.InputBindings>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding HighlightMouseOverCommand}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding HighlightMouseLeaveCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Label>
+                <ListBox
+                    x:Name="booksInSeriesListBox"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Source={StaticResource ReadOrder}}"
+                    Style="{StaticResource ListBoxBaseStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock FontSize="14" Text="{Binding Book.Title}">
+                                    <TextBlock.InputBindings>
+                                        <MouseBinding
+                                            Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                            CommandParameter="{Binding Book.Id}"
+                                            MouseAction="LeftDoubleClick" />
+                                    </TextBlock.InputBindings>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Grid>
         </Grid>
     </ScrollViewer>
