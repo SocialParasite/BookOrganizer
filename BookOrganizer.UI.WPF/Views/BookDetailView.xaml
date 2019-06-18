@@ -52,10 +52,11 @@
 
             <Grid Grid.Row="1" Margin="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="150" />
-                    <ColumnDefinition Width="Auto" MinWidth="150" />
-                    <ColumnDefinition Width="Auto" MinWidth="10" />
-                    <ColumnDefinition Width="Auto" MinWidth="150" />
+                    <ColumnDefinition Width="Auto" MinWidth="100" />
+                    <ColumnDefinition Width="Auto" MinWidth="5" />
+                    <ColumnDefinition Width="Auto" MinWidth="100" />
+                    <ColumnDefinition Width="Auto" MinWidth="100" />
+                    <ColumnDefinition Width="Auto" MinWidth="100" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -71,25 +72,13 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBox
-                    x:Name="titleTextBox"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="4"
-                    MaxWidth="800"
-                    FontSize="48"
-                    Style="{StaticResource ValidationTextBoxStyle}"
-                    Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap" />
-
                 <Button
-                    Grid.Row="1"
                     Grid.RowSpan="7"
-                    Grid.Column="4"
-                    Grid.ColumnSpan="2"
-                    MaxWidth="600"
-                    MaxHeight="600"
-                    Margin="50,0,0,0"
+                    MaxWidth="400"
+                    MaxHeight="400"
+                    Margin="0,0,5,0"
                     HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
                     Command="{Binding AddBookCoverImageCommand}"
                     IsEnabled="{Binding UserMode.Item4}">
                     <Button.Template>
@@ -99,21 +88,33 @@
                     </Button.Template>
                 </Button>
 
+                <TextBox
+                    x:Name="titleTextBox"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="4"
+                    MaxWidth="800"
+                    FontSize="48"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap" />
+
                 <Label
                     x:Name="releaseYearLabel"
                     Grid.Row="1"
+                    Grid.Column="2"
                     Content="Release Year:"
                     Style="{StaticResource LabelStyles}" />
                 <TextBox
                     x:Name="releaseYearTextBox"
                     Grid.Row="1"
+                    Grid.Column="3"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding SelectedReleaseYear}"
                     Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
                 <ComboBox
                     x:Name="releaseYearComboBox"
                     Grid.Row="1"
-                    Grid.Column="1"
+                    Grid.Column="3"
                     ItemsSource="{Binding YearsList}"
                     MaxDropDownHeight="200"
                     ScrollViewer.CanContentScroll="True"
@@ -136,37 +137,39 @@
                 <Label
                     x:Name="pageCountLabel"
                     Grid.Row="2"
+                    Grid.Column="2"
                     Content="Pages: "
                     Style="{StaticResource LabelStyles}" />
                 <TextBox
                     x:Name="pageCountTextBox"
                     Grid.Row="2"
-                    Grid.Column="1"
+                    Grid.Column="3"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding PageCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label
                     x:Name="wordCountLabel"
                     Grid.Row="2"
-                    Grid.Column="2"
+                    Grid.Column="4"
                     Content="Words:"
                     Style="{StaticResource LabelStyles}" />
                 <TextBox
                     x:Name="wordCountTextBox"
                     Grid.Row="2"
-                    Grid.Column="3"
+                    Grid.Column="5"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding WordCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label
                     x:Name="publisherLabel"
                     Grid.Row="3"
+                    Grid.Column="2"
                     Content="Publisher: "
                     Style="{StaticResource LabelStyles}" />
                 <TextBlock
                     x:Name="publisherTextBlock"
                     Grid.Row="3"
-                    Grid.Column="1"
+                    Grid.Column="3"
                     Grid.ColumnSpan="3"
                     Margin="1"
                     VerticalAlignment="Center"
@@ -192,7 +195,7 @@
                 <ComboBox
                     x:Name="publisherComboBox"
                     Grid.Row="3"
-                    Grid.Column="1"
+                    Grid.Column="3"
                     IsEditable="True"
                     IsTextSearchEnabled="True"
                     ItemsSource="{Binding Publishers}"
@@ -213,7 +216,7 @@
                 <Button
                     x:Name="addNewPublisherButton"
                     Grid.Row="3"
-                    Grid.Column="2"
+                    Grid.Column="4"
                     Width="50"
                     Margin="5"
                     Command="{Binding AddNewPublisherCommand}"
@@ -224,11 +227,13 @@
                 <Label
                     x:Name="languageLabel"
                     Grid.Row="4"
+                    Grid.Column="2"
                     Content="Language: "
                     Style="{StaticResource LabelStyles}" />
                 <TextBox
                     x:Name="languageTextBox"
                     Grid.Row="4"
+                    Grid.Column="3"
                     Grid.ColumnSpan="3"
                     BorderThickness="0"
                     IsReadOnly="True"
@@ -238,7 +243,7 @@
                 <ComboBox
                     x:Name="languageComboBox"
                     Grid.Row="4"
-                    Grid.Column="1"
+                    Grid.Column="3"
                     IsEditable="True"
                     IsTextSearchEnabled="True"
                     ItemsSource="{Binding Languages}"
@@ -259,7 +264,7 @@
                 <Button
                     x:Name="addNewLanguageButton"
                     Grid.Row="4"
-                    Grid.Column="2"
+                    Grid.Column="4"
                     Width="50"
                     Margin="5"
                     Command="{Binding AddNewLanguageCommand}"
@@ -270,33 +275,16 @@
                 <Label
                     x:Name="isbnLabel"
                     Grid.Row="5"
+                    Grid.Column="2"
                     Content="ISBN: "
                     Style="{StaticResource LabelStyles}" />
                 <TextBox
                     x:Name="isnbTextBox"
                     Grid.Row="5"
-                    Grid.ColumnSpan="3"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="2"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding ISBN, UpdateSourceTrigger=PropertyChanged}" />
-
-                <GroupBox
-                    x:Name="descriptionGroupBox"
-                    Grid.Row="6"
-                    Grid.ColumnSpan="4"
-                    Header="Description">
-                    <TextBox
-                        x:Name="descriptionTextBlock"
-                        Grid.Row="7"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="4"
-                        MaxWidth="600"
-                        AcceptsReturn="True"
-                        FontSize="16"
-                        Style="{StaticResource EditableTextBoxStyles}"
-                        Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}"
-                        TextWrapping="Wrap"
-                        VerticalScrollBarVisibility="Auto" />
-                </GroupBox>
             </Grid>
 
             <Grid Grid.Row="2" Margin="5">
@@ -311,18 +299,36 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" MinHeight="75" />
                     <RowDefinition Height="Auto" MinHeight="75" />
                     <RowDefinition Height="Auto" MinHeight="75" />
                     <RowDefinition x:Name="EditButtonsGridRow" Height="Auto" />
                 </Grid.RowDefinitions>
+                <GroupBox
+                    x:Name="descriptionGroupBox"
+                    Grid.ColumnSpan="2"
+                    Margin="5"
+                    Header="Description">
+                    <TextBox
+                        x:Name="descriptionTextBlock"
+                        MaxWidth="600"
+                        AcceptsReturn="True"
+                        FontSize="16"
+                        Style="{StaticResource EditableTextBoxStyles}"
+                        Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </GroupBox>
                 <Label
                     x:Name="authorLabel"
+                    Grid.Row="1"
                     Content="Select book author: "
                     Style="{StaticResource LabelStyles}"
                     Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
                 <ComboBox
                     x:Name="authorComboBox"
+                    Grid.Row="1"
                     Grid.Column="1"
                     IsEditable="True"
                     IsTextSearchEnabled="True"
@@ -344,7 +350,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Grid Grid.Column="2">
+                <Grid Grid.Row="1" Grid.Column="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60" />
                         <ColumnDefinition Width="60" />
@@ -372,7 +378,7 @@
                 </Grid>
 
                 <GroupBox
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.ColumnSpan="2"
                     Margin="5"
                     Header="Book Authors:">
@@ -419,7 +425,7 @@
 
                 <Label
                     x:Name="bookSeriesLabel"
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Content="{Binding SelectedItem.BookSeries.Name}"
                     FontWeight="Bold"
                     Style="{StaticResource LabelStyles}">
@@ -440,7 +446,7 @@
                 </Label>
                 <ListBox
                     x:Name="booksInSeriesListBox"
-                    Grid.Row="3"
+                    Grid.Row="4"
                     ItemsSource="{Binding Source={StaticResource ReadOrder}}"
                     Style="{StaticResource ListBoxBaseStyle}">
                     <ListBox.ItemTemplate>
@@ -461,13 +467,13 @@
 
                 <CheckBox
                     x:Name="isReadCheckBox"
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Content="I have read this book."
                     FontSize="18"
                     IsChecked="{Binding SelectedItem.IsRead}" />
                 <Label
                     x:Name="ReadDatesLabel"
-                    Grid.Row="5"
+                    Grid.Row="6"
                     VerticalAlignment="Top"
                     VerticalContentAlignment="Top"
                     Content="Read dates: "
@@ -475,7 +481,7 @@
                     Visibility="{Binding Path=SelectedItem.IsRead, Converter={StaticResource BoolToVis}}" />
                 <ListBox
                     x:Name="ReadDatesListView"
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="1"
                     BorderThickness="0"
                     ItemsSource="{Binding SelectedItem.ReadDates}"
@@ -507,13 +513,13 @@
                 </ListBox>
                 <Label
                     x:Name="NewReadDateLabel"
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="1"
                     Content="Select read date:"
                     Style="{StaticResource LabelStyles}"
                     Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
                 <DatePicker
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="2"
                     Height="50"
                     DisplayDateEnd="{x:Static sys:DateTime.Today}"
@@ -522,7 +528,7 @@
                     Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
                 <Button
                     x:Name="AddReadDateButton"
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="3"
                     Width="50"
                     Margin="50,0,0,0"
@@ -535,7 +541,7 @@
 
                 <Button
                     x:Name="SaveBookDetailsButton"
-                    Grid.Row="7"
+                    Grid.Row="8"
                     Grid.Column="2"
                     Margin="50,0,0,0"
                     HorizontalAlignment="Left"
@@ -544,7 +550,7 @@
                     Style="{StaticResource UpdateButtonStyle}" />
                 <Button
                     x:Name="DeleteBookDetailsButton"
-                    Grid.Row="7"
+                    Grid.Row="8"
                     Grid.Column="3"
                     Margin="50,0,0,0"
                     HorizontalAlignment="Left"
