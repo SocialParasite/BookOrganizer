@@ -76,6 +76,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Languages = new ObservableCollection<LookupItem>();
             Publishers = new ObservableCollection<LookupItem>();
             Authors = new ObservableCollection<LookupItem>();
+            BookFormats = new ObservableCollection<LookupItem>();
 
             SelectedItem = new Book();
 
@@ -157,6 +158,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             get { return selectedLanguage; }
             set { selectedLanguage = value; OnPropertyChanged(); }
         }
+
+        public ObservableCollection<LookupItem> BookFormats { get; set; }
 
         public ObservableCollection<LookupItem> Publishers { get; set; }
 

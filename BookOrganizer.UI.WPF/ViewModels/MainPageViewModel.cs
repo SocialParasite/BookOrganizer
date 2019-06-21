@@ -12,25 +12,28 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly IEventAggregator eventAggregator;
         private readonly ILanguageLookupDataService languageLookup;
         private readonly INationalityLookupDataService nationalityLookupDataService;
+        private readonly IFormatLookupDataService formatLookupDataService;
 
         public MainPageViewModel(IEventAggregator eventAggregator, ILanguageLookupDataService languageLookup,
-            INationalityLookupDataService nationalityLookupDataService)
+            INationalityLookupDataService nationalityLookupDataService,
+            IFormatLookupDataService formatLookupDataService)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.languageLookup = languageLookup ?? throw new ArgumentNullException(nameof(languageLookup));
             this.nationalityLookupDataService = nationalityLookupDataService ?? throw new ArgumentNullException(nameof(nationalityLookupDataService));
+            this.formatLookupDataService = formatLookupDataService ?? throw new ArgumentNullException(nameof(formatLookupDataService));
 
             AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
             EditLanguagesCommand = new DelegateCommand(OnEditLanguagesExecute);
             EditNationalitiesCommand = new DelegateCommand(OnEditNationalitiesExecute);
+            EditBookFormatsCommand = new DelegateCommand(OnEditBookFormatsExecute);
         }
-
-
 
         // Taken from BaseViewModel. Repeat or create a new base for just this?
         public ICommand AddNewItemCommand { get; }
         public ICommand EditLanguagesCommand { get; }
         public ICommand EditNationalitiesCommand { get; }
+        public ICommand EditBookFormatsCommand { get; }
 
         private void OnAddNewItemExecute(Type itemType)
         {
@@ -59,6 +62,16 @@ namespace BookOrganizer.UI.WPF.ViewModels
                             Id = await nationalityLookupDataService.GetNationalityId(),
                             ViewModelName = nameof(NationalityDetailViewModel)
                         });
+        }
+
+        private async void OnEditBookFormatsExecute()
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                           .Publish(new OpenDetailViewEventArgs
+                           {
+                               Id = await formatLookupDataService.GetFormatId(),
+                               ViewModelName = nameof(FormatDetailViewModel)
+                           });
         }
     }
 }

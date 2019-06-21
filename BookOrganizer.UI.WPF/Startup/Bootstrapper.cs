@@ -47,6 +47,8 @@ namespace BookOrganizer.UI.WPF.Startup
 
             builder.RegisterType<NationalityDetailViewModel>().Keyed<IDetailViewModel>(nameof(NationalityDetailViewModel));
 
+            builder.RegisterType<FormatDetailViewModel>().Keyed<IDetailViewModel>(nameof(FormatDetailViewModel));
+
             builder.RegisterType<BooksView>().AsSelf();
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
@@ -57,6 +59,7 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<SeriesRepository>().AsImplementedInterfaces();
             builder.RegisterType<LanguageRepository>().AsImplementedInterfaces();
             builder.RegisterType<NationalityRepository>().AsImplementedInterfaces();
+            builder.RegisterType<FormatRepository>().AsImplementedInterfaces();
 
             builder.RegisterType<SettingsViewModel>().Keyed<ISelectedViewModel>(nameof(SettingsViewModel));
 

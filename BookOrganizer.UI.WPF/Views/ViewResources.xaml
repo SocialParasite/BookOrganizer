@@ -42,12 +42,12 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background" Value="{Binding UserMode.Item3}" />
         <Setter Property="Command" Value="{Binding SwitchEditableStateCommand}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
     </Style>
 
     <!--  Label Styles  -->
     <Style x:Key="LabelStyles" TargetType="Label">
-        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="1" />
     </Style>
@@ -58,12 +58,10 @@
         BasedOn="{StaticResource MetroComboBox}"
         TargetType="ComboBox">
         <Setter Property="Margin" Value="1" />
-        <Setter Property="FontSize" Value="24" />
-        <Setter Property="Height" Value="40" />
-        <Setter Property="Width" Value="200" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Visibility" Value="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
 
     <!--  TextBox Styles  -->
@@ -72,7 +70,7 @@
         BasedOn="{StaticResource MetroTextBox}"
         TargetType="TextBox">
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Grid.Column" Value="1" />
         <Setter Property="Margin" Value="1" />
     </Style>
@@ -111,8 +109,9 @@
 
     <!--  ListBox Styles  -->
     <Style x:Key="ListBoxBaseStyle" TargetType="ListBox">
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <!--<Setter Property="HorizontalContentAlignment" Value="Stretch" />-->
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
 

@@ -106,28 +106,28 @@
         </Grid>
         <Grid Grid.Row="2">
             <ScrollViewer>
-            <ItemsControl
-                x:Name="AuthorList"
-                ItemTemplate="{StaticResource UserDataTemplate}"
-                ItemsSource="{Binding EntityCollection}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel>
-                            <i:Interaction.Behaviors>
-                                <ei:FluidMoveBehavior AppliesTo="Children" Duration="0:0:0.5">
-                                    <ei:FluidMoveBehavior.EaseY>
-                                        <CubicEase EasingMode="EaseInOut" />
-                                    </ei:FluidMoveBehavior.EaseY>
-                                    <ei:FluidMoveBehavior.EaseX>
-                                        <CubicEase EasingMode="EaseInOut" />
-                                    </ei:FluidMoveBehavior.EaseX>
-                                </ei:FluidMoveBehavior>
-                            </i:Interaction.Behaviors>
-                        </WrapPanel>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-                </ScrollViewer>
+                <ItemsControl
+                    x:Name="AuthorList"
+                    ItemTemplate="{StaticResource UserDataTemplate}"
+                    ItemsSource="{Binding EntityCollection}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel>
+                                <i:Interaction.Behaviors>
+                                    <ei:FluidMoveBehavior AppliesTo="Children" Duration="0:0:0.5">
+                                        <ei:FluidMoveBehavior.EaseY>
+                                            <CubicEase EasingMode="EaseInOut" />
+                                        </ei:FluidMoveBehavior.EaseY>
+                                        <ei:FluidMoveBehavior.EaseX>
+                                            <CubicEase EasingMode="EaseInOut" />
+                                        </ei:FluidMoveBehavior.EaseX>
+                                    </ei:FluidMoveBehavior>
+                                </i:Interaction.Behaviors>
+                            </WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

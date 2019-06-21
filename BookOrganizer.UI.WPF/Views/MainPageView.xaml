@@ -46,6 +46,12 @@
                     Content="Add a new book"
                     Style="{StaticResource MainPageButtonStyle}" />
                 <Button
+                    x:Name="AddFormatButton"
+                    Command="{Binding AddNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:FormatDetailViewModel}"
+                    Content="Add a new book format"
+                    Style="{StaticResource MainPageButtonStyle}" />
+                <Button
                     x:Name="AddLanguageButton"
                     Command="{Binding AddNewItemCommand}"
                     CommandParameter="{x:Type viewModel:LanguageDetailViewModel}"
@@ -90,10 +96,9 @@
             <WrapPanel>
                 <Button
                     x:Name="EditFormatsButton"
+                    Command="{Binding EditBookFormatsCommand}"
                     Content="Edit book formats"
-                    IsEnabled="False"
-                    Style="{StaticResource MainPageButtonStyle}"
-                    ToolTip="Placeholder. Will be in version 1.0!" />
+                    Style="{StaticResource MainPageButtonStyle}" />
                 <Button
                     x:Name="EditGenresButton"
                     Content="Edit genres"
