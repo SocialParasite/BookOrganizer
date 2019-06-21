@@ -32,11 +32,16 @@ namespace BookOrganizer.UI.WPF.Repositories
                     .Include(b => b.BookSeries)
                     .ThenInclude(s => s.SeriesReadOrder)
                     .Include(b => b.ReadDates)
+                    .Include(b => b.FormatLink)
+                    .ThenInclude(f => f.Format)
                     .FirstOrDefaultAsync(b => b.Id == id)
                 : new Book();
         }
 
         public async Task<Author> GetBookAuthorById(Guid authorId)
             => await context.Authors.SingleAsync(a => a.Id == authorId);
+
+        public async Task<Format> GetBookFormatById(Guid formatId)
+            => await context.Formats.SingleAsync(f => f.Id == formatId);
     }
 }

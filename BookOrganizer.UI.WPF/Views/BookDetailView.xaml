@@ -24,13 +24,23 @@
                 <ResourceDictionary>
                     <DataTemplate x:Key="BookFormatDataTemplate">
                         <StackPanel HorizontalAlignment="Stretch">
-                            <Grid x:Name="BookFormatDTGrid" MinHeight="100">
+                            <Grid x:Name="BookFormatDTGrid">
                                 <CheckBox
                                     x:Name="BookFormatNameCheckBox"
-                                    Width="100"
                                     Height="{Binding Path=Height, ElementName=BookFormatDTGrid}"
-                                    Margin="1"
-                                    HorizontalAlignment="Stretch" />
+                                    Margin="1" 
+                                    HorizontalAlignment="Stretch" 
+                                    Content="{Binding Item1.DisplayMember}"
+                                    IsChecked="{Binding Item2, Mode=OneWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.BookFormatSelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1}" />
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.BookFormatSelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
                             </Grid>
                         </StackPanel>
                     </DataTemplate>
@@ -614,12 +624,12 @@
                 Header="Formats"
                 IsExpanded="False">
                 <ItemsControl
-                    x:Name="AuthorList"
+                    x:Name="BookFormatsList"
                     ItemTemplate="{StaticResource BookFormatDataTemplate}"
-                    ItemsSource="{Binding BookFormatCollection}">
+                    ItemsSource="{Binding AllBookFormats}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel />
+                            <WrapPanel Orientation="Vertical" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
