@@ -47,6 +47,9 @@
             <DataTemplate DataType="{x:Type viewModel:LanguageDetailViewModel}">
                 <view:LanguageDetailView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:FormatDetailViewModel}">
+                <view:FormatDetailView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:NationalityDetailViewModel}">
                 <view:NationalityDetailView />
             </DataTemplate>

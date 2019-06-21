@@ -67,7 +67,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             Id = id;
 
-            if (Id != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            if (Id != default)
             {
                 LanguageName = SelectedItem.LanguageName;
 

@@ -22,6 +22,7 @@ namespace BookOrganizer.UI.WPFTests
         private Mock<ILanguageLookupDataService> languageLookupDataServiceMock;
         private Mock<IPublisherLookupDataService> publisherLookupDataServiceMock;
         private Mock<IAuthorLookupDataService> authorLookupDataServiceMock;
+        private Mock<IFormatLookupDataService> formatLookupDataServiceMock;
         private BookDetailViewModel viewModel;
 
         public BookDetailViewModelTests()
@@ -32,13 +33,15 @@ namespace BookOrganizer.UI.WPFTests
             languageLookupDataServiceMock = new Mock<ILanguageLookupDataService>();
             publisherLookupDataServiceMock = new Mock<IPublisherLookupDataService>();
             authorLookupDataServiceMock = new Mock<IAuthorLookupDataService>();
+            formatLookupDataServiceMock = new Mock<IFormatLookupDataService>();
 
             viewModel = new BookDetailViewModel(eventAggregatorMock.Object,
                 metroDialogServiceMock.Object,
                 booksRepoMock.Object,
                 languageLookupDataServiceMock.Object,
                 publisherLookupDataServiceMock.Object,
-                authorLookupDataServiceMock.Object);
+                authorLookupDataServiceMock.Object,
+                formatLookupDataServiceMock.Object);
         }
 
         [Theory]

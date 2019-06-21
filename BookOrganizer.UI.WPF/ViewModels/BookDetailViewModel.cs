@@ -21,6 +21,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly ILanguageLookupDataService languageLookupDataService;
         private readonly IPublisherLookupDataService publisherLookupDataService;
         private readonly IAuthorLookupDataService authorLookupDataService;
+        private readonly IFormatLookupDataService formatLookupDataService;
         private SolidColorBrush highlightBrush;
         private DateTime newReadDate;
         private LookupItem selectedLanguage;
@@ -42,7 +43,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             IRepository<Book> booksRepo,
             ILanguageLookupDataService languageLookupDataService,
             IPublisherLookupDataService publisherLookupDataService,
-            IAuthorLookupDataService authorLookupDataService)
+            IAuthorLookupDataService authorLookupDataService,
+            IFormatLookupDataService formatLookupDataService)
             : base(eventAggregator, metroDialogService)
         {
             this.languageLookupDataService = languageLookupDataService
@@ -51,6 +53,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
             this.authorLookupDataService = authorLookupDataService
                 ?? throw new ArgumentNullException(nameof(authorLookupDataService));
+            this.formatLookupDataService = formatLookupDataService
+                ?? throw new ArgumentNullException(nameof(formatLookupDataService));
 
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
             HighlightMouseLeaveCommand = new DelegateCommand(HighlightMouseLeaveExecute);
@@ -69,6 +73,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 = new DelegateCommand<Guid?>(OnShowSelectedPublisherExecute, OnShowSelectedPublisherCanExecute);
             ShowSelectedAuthorCommand = new DelegateCommand<Guid?>(OnShowSelectedAuthorExecute, OnShowSelectedAuthorCanExecute);
             ShowSelectedSeriesCommand = new DelegateCommand<Guid?>(OnShowSelectedSeriesExecute, OnShowSelectedSeriesCanExecute);
+            BookFormatSelectionChangedCommand = new DelegateCommand<LookupItem>(OnBookFormatSelectionChangedExecute);
 
             Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
@@ -76,6 +81,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Languages = new ObservableCollection<LookupItem>();
             Publishers = new ObservableCollection<LookupItem>();
             Authors = new ObservableCollection<LookupItem>();
+            AllBookFormats = new ObservableCollection<Tuple<LookupItem, bool>>();
 
             SelectedItem = new Book();
 
@@ -98,6 +104,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand ShowSelectedPublisherCommand { get; }
         public ICommand ShowSelectedAuthorCommand { get; }
         public ICommand ShowSelectedSeriesCommand { get; }
+        public ICommand BookFormatSelectionChangedCommand { get; }
 
         public Guid SelectedPublisherId
         {
@@ -157,6 +164,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             get { return selectedLanguage; }
             set { selectedLanguage = value; OnPropertyChanged(); }
         }
+
+        public ObservableCollection<Tuple<LookupItem, bool>> AllBookFormats { get; set; } // LookupItem => (LookupItem, bool)??
 
         public ObservableCollection<LookupItem> Publishers { get; set; }
 
@@ -315,6 +324,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             InitiliazeSelectedLanguageIfNoneSet();
             InitializeSelectedPublisherIfNoneSet();
             SetBooksSelectedReleaseYear();
+            InitializeAllBookFormats();
 
             SelectedItem.PropertyChanged += (s, e) =>
             {
@@ -375,6 +385,23 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     ? DateTime.Today.Year
                     : SelectedItem.ReleaseYear;
             }
+
+            void InitializeAllBookFormats()
+            {
+                if (SelectedItem.FormatLink != null)
+                {
+                    if (!AllBookFormats.Any())
+                    {
+                        AllBookFormats.Clear();
+
+                        foreach (var item in SelectedItem.FormatLink)
+                        {
+                            var newLookupItem = new LookupItem { Id = item.Format.Id, DisplayMember = item.Format.Name };
+                            AllBookFormats.Add((newLookupItem, true).ToTuple());
+                        }
+                    }
+                }
+            }
         }
 
         public async override void SwitchEditableStateExecute()
@@ -384,6 +411,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             await InitializeLanguageCollection();
             await InitializePublisherCollection();
             await InitializeAuthorCollection();
+            await InitializeAllBookFormatsCollection();
 
             ReleaseYear = SelectedReleaseYear == 0 ? 1 : SelectedReleaseYear;
 
@@ -431,6 +459,39 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     }
                 }
             }
+
+            async Task InitializeAllBookFormatsCollection()
+            {
+                if (UserMode.Item1 == false)
+                {
+                    foreach (var item in await GetBookFormatList())
+                    {
+                        if (AllBookFormats.Any(i => i.Item1.Id == item.Id))
+                        {
+                            continue;
+                        }
+                        AllBookFormats.Add((item, false).ToTuple());
+                    }
+                }
+                else
+                {
+                    var tempBookFormatsCollection = new ObservableCollection<Tuple<LookupItem, bool>>();
+                    foreach (var item in AllBookFormats)
+                    {
+                        if (item.Item2 == true)
+                        {
+                            tempBookFormatsCollection.Add(item);
+                        }
+                    }
+                    AllBookFormats.Clear();
+
+                    foreach (var item in tempBookFormatsCollection)
+                    {
+                        AllBookFormats.Add(item);
+                    }
+                }
+            }
+
         }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()
@@ -441,6 +502,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async Task<IEnumerable<LookupItem>> GetAuthorList()
             => await authorLookupDataService.GetAuthorLookupAsync();
+
+        private async Task<IEnumerable<LookupItem>> GetBookFormatList()
+        => await formatLookupDataService.GetFormatLookupAsync();
 
         private async void RemoveAuthorExecute(Guid? authorId)
         {
@@ -507,6 +571,29 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 SetChangeTracker();
             }
         }
+
+        private async void OnBookFormatSelectionChangedExecute(LookupItem lookupItem)
+        {
+            if (AllBookFormats.Any(bf => bf.Item1.Id == lookupItem.Id && bf.Item2 == false))
+            {
+                var newFormat = await (Repository as IBookRepository).GetBookFormatById(lookupItem.Id);
+
+                SelectedItem.FormatLink.Add(new BooksFormats
+                {
+                    FormatId = newFormat.Id,
+                    Format = newFormat,
+                    Book = SelectedItem,
+                    BookId = SelectedItem.Id
+                });
+            }
+            else if (AllBookFormats.Any(bf => bf.Item1.Id == lookupItem.Id && bf.Item2 == true))
+            {
+                var item = SelectedItem.FormatLink.Single(f => f.FormatId == lookupItem.Id);
+                SelectedItem.FormatLink.Remove(item);
+            }
+            SetChangeTracker();
+        }
+
 
         private bool OnShowSelectedAuthorCanExecute(Guid? id)
             => (id is null || id == Guid.Empty) ? false : true;

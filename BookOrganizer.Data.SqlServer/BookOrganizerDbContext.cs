@@ -33,6 +33,7 @@ namespace BookOrganizer.Data.SqlServer
 
             modelBuilder.ApplyConfiguration(new BookAuthorConfig());
             modelBuilder.ApplyConfiguration(new BookGenreConfig());
+            modelBuilder.ApplyConfiguration(new BookFormatConfig());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

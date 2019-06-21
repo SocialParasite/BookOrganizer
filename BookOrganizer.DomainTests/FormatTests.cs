@@ -30,27 +30,27 @@ namespace BookOrganizer.DomainTests
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        public void WhenFormatAbbreveationIsSetNullOrEmpty_ThrowsArgumentOutOfException(string abbreveation)
-        {
-            var format = new Format();
+        //[Theory]
+        //[InlineData("")]
+        //[InlineData(null)]
+        //public void WhenFormatAbbreveationIsSetNullOrEmpty_ThrowsArgumentOutOfException(string abbreveation)
+        //{
+        //    var format = new Format();
 
-            Action action = () => format.Abbreveation = abbreveation;
+        //    Action action = () => format.Abbreveation = abbreveation;
 
-            action.Should().Throw<ArgumentOutOfRangeException>();
-        }
+        //    action.Should().Throw<ArgumentOutOfRangeException>();
+        //}
 
-        [Fact]
-        public void TryingToSetFormatAbbreveationLongerThan16Characters_ThrowsArgumentOutOfRangeException()
-        {
-            var format = new Format();
+        //[Fact]
+        //public void TryingToSetFormatAbbreveationLongerThan16Characters_ThrowsArgumentOutOfRangeException()
+        //{
+        //    var format = new Format();
 
-            Action action = ()
-                => format.Abbreveation = "portableformatdoc";
+        //    Action action = ()
+        //        => format.Abbreveation = "portableformatdoc";
 
-            action.Should().Throw<ArgumentOutOfRangeException>();
-        }
+        //    action.Should().Throw<ArgumentOutOfRangeException>();
+        //}
     }
 }
