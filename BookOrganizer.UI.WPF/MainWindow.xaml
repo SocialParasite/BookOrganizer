@@ -117,6 +117,10 @@
                     Header="Book" />
                 <MenuItem
                     Command="{Binding CreateNewItemCommand}"
+                    CommandParameter="{x:Type viewModel:FormatDetailViewModel}"
+                    Header="Book Format" />
+                <MenuItem
+                    Command="{Binding CreateNewItemCommand}"
                     CommandParameter="{x:Type viewModel:LanguageDetailViewModel}"
                     Header="Language" />
                 <MenuItem
