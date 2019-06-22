@@ -23,7 +23,7 @@
                 </ResourceDictionary>
                 <ResourceDictionary>
                     <DataTemplate x:Key="BookFormatDataTemplate">
-                        <StackPanel HorizontalAlignment="Stretch">
+                        <StackPanel>
                             <Grid x:Name="BookFormatDTGrid">
                                 <CheckBox
                                     x:Name="BookFormatNameCheckBox"
@@ -496,6 +496,7 @@
                     x:Name="booksInSeriesListBox"
                     Grid.Row="4"
                     Grid.ColumnSpan="2"
+                    MinWidth="300"
                     ItemsSource="{Binding Source={StaticResource ReadOrder}}"
                     Style="{StaticResource ListBoxBaseStyle}">
                     <ListBox.ItemTemplate>
@@ -600,32 +601,38 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-                <Button
-                    x:Name="SaveBookDetailsButton"
-                    Grid.Row="8"
-                    Grid.Column="2"
-                    Margin="50,0,0,0"
-                    HorizontalAlignment="Left"
-                    Command="{Binding SaveItemCommand}"
-                    Content="Save"
-                    Style="{StaticResource UpdateButtonStyle}" />
-                <Button
-                    x:Name="DeleteBookDetailsButton"
-                    Grid.Row="8"
-                    Grid.Column="3"
-                    Margin="50,0,0,0"
-                    HorizontalAlignment="Left"
-                    Command="{Binding DeleteItemCommand}"
-                    Content="Delete"
-                    Style="{StaticResource UpdateButtonStyle}" />
+                <Grid Grid.Row="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="350" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        x:Name="SaveBookDetailsButton"
+                        Grid.Column="1"
+                        Margin="50,0,0,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding SaveItemCommand}"
+                        Content="Save"
+                        Style="{StaticResource UpdateButtonStyle}" />
+                    <Button
+                        x:Name="DeleteBookDetailsButton"
+                        Grid.Column="2"
+                        Margin="50,0,0,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding DeleteItemCommand}"
+                        Content="Delete"
+                        Style="{StaticResource UpdateButtonStyle}" />
+                </Grid>
 
             </Grid>
 
             <Expander
                 Grid.Row="1"
                 Grid.Column="2"
-                MinWidth="100"
                 Margin="5"
+                VerticalAlignment="Top"
                 Header="Formats"
                 IsExpanded="True">
                 <ItemsControl
