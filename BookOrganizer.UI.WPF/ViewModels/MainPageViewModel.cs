@@ -13,20 +13,24 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly ILanguageLookupDataService languageLookup;
         private readonly INationalityLookupDataService nationalityLookupDataService;
         private readonly IFormatLookupDataService formatLookupDataService;
+        private readonly IGenreLookupDataService genreLookupDataService;
 
         public MainPageViewModel(IEventAggregator eventAggregator, ILanguageLookupDataService languageLookup,
             INationalityLookupDataService nationalityLookupDataService,
-            IFormatLookupDataService formatLookupDataService)
+            IFormatLookupDataService formatLookupDataService,
+            IGenreLookupDataService genreLookupDataService)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.languageLookup = languageLookup ?? throw new ArgumentNullException(nameof(languageLookup));
             this.nationalityLookupDataService = nationalityLookupDataService ?? throw new ArgumentNullException(nameof(nationalityLookupDataService));
             this.formatLookupDataService = formatLookupDataService ?? throw new ArgumentNullException(nameof(formatLookupDataService));
+            this.genreLookupDataService = genreLookupDataService ?? throw new ArgumentNullException(nameof(genreLookupDataService));
 
             AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
             EditLanguagesCommand = new DelegateCommand(OnEditLanguagesExecute);
             EditNationalitiesCommand = new DelegateCommand(OnEditNationalitiesExecute);
             EditBookFormatsCommand = new DelegateCommand(OnEditBookFormatsExecute);
+            EditBookGenresCommand = new DelegateCommand(OnEditBookGenresExecute);
         }
 
         // Taken from BaseViewModel. Repeat or create a new base for just this?
@@ -34,6 +38,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand EditLanguagesCommand { get; }
         public ICommand EditNationalitiesCommand { get; }
         public ICommand EditBookFormatsCommand { get; }
+        public ICommand EditBookGenresCommand { get; }
 
         private void OnAddNewItemExecute(Type itemType)
         {
@@ -73,5 +78,17 @@ namespace BookOrganizer.UI.WPF.ViewModels
                                ViewModelName = nameof(FormatDetailViewModel)
                            });
         }
+
+        private async void OnEditBookGenresExecute()
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                           .Publish(new OpenDetailViewEventArgs
+                           {
+                               Id = await genreLookupDataService.GetGenreId(),
+                               ViewModelName = nameof(GenreDetailViewModel)
+                           });
+
+        }
+
     }
 }

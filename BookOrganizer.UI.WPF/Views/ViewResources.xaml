@@ -109,7 +109,6 @@
 
     <!--  ListBox Styles  -->
     <Style x:Key="ListBoxBaseStyle" TargetType="ListBox">
-        <!--<Setter Property="HorizontalContentAlignment" Value="Stretch" />-->
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="BorderThickness" Value="0" />

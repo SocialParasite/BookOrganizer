@@ -25,6 +25,8 @@ namespace BookOrganizer.Domain
                     throw new ArgumentOutOfRangeException(nameof(Name), "Format name should be 1-32 characters long.");
 
                 _name = value;
+
+                OnPropertyChanged();
             }
         }
 
