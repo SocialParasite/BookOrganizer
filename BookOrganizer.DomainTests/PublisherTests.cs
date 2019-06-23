@@ -53,5 +53,55 @@ namespace BookOrganizer.DomainTests
             publisher.LogoPath.Should().Equals(test);
         }
 
+
+        [Fact]
+        public void PublisherName_ShouldRaise_PropertyChangedEvent()
+        {
+            var publisher = new Publisher();
+            var raised = false;
+
+            publisher.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            publisher.Name = "Storytellers Inc.";
+
+            raised.Should().BeTrue();
+        }
+
+
+        [Fact]
+        public void LogoPath_ShouldRaise_PropertyChangedEvent()
+        {
+            var publisher = new Publisher();
+            var raised = false;
+
+            publisher.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            publisher.LogoPath = @"C:\temp";
+
+            raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Description_ShouldRaise_PropertyChangedEvent()
+        {
+            var publisher = new Publisher();
+            var raised = false;
+
+            publisher.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            publisher.Description = "Storytellers Inc. was established because the name happened to be unregistered at a time.";
+
+            raised.Should().BeTrue();
+        }
+
     }
 }

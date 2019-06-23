@@ -29,5 +29,22 @@ namespace BookOrganizer.DomainTests
 
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
+
+        [Fact]
+        public void LanguageName_ShouldRaise_PropertyChangedEvent()
+        {
+            var language = new Language();
+            var raised = false;
+
+            language.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            language.LanguageName = "english";
+
+            raised.Should().BeTrue();
+        }
+
     }
 }

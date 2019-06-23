@@ -29,5 +29,21 @@ namespace BookOrganizer.DomainTests
 
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
+
+        [Fact]
+        public void Name_ShouldRaise_PropertyChangedEvent()
+        {
+            var genre = new Genre();
+            var raised = false;
+
+            genre.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            genre.Name = "sci-fi";
+
+            raised.Should().BeTrue();
+        }
     }
 }

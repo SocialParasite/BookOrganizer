@@ -24,6 +24,8 @@ namespace BookOrganizer.Domain
                     throw new ArgumentOutOfRangeException(nameof(Name), "Nations name should be 1-32 characters long.");
 
                 _name = value;
+
+                OnPropertyChanged();
             }
         }
 
