@@ -8,5 +8,7 @@ namespace BookOrganizer.UI.WPF.Repositories
     {
         Task<Author> GetBookAuthorById(Guid authorId);
         Task<Format> GetBookFormatById(Guid formatId);
+
+        Task<Genre> GetBookGenreById(Guid genreId);
     }
 }
