@@ -131,5 +131,131 @@ namespace BookOrganizer.DomainTests
             book.BookCoverPicturePath.Should().Equals(test);
         }
 
+        [Fact]
+        public void BookFirstName_ShouldRaise_PropertyChangedEvent()
+        {
+            var book = new Book();
+            var raised = false;
+
+            book.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            book.Title = "Book of books";
+
+            raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void BookISBN_ShouldRaise_PropertyChangedEvent()
+        {
+            var book = new Book();
+            var raised = false;
+
+            book.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            book.ISBN = "9783161484100";
+
+            raised.Should().BeTrue();
+        }
+        [Fact]
+        public void ReleaseYear_ShouldRaise_PropertyChangedEvent()
+        {
+            var book = new Book();
+            var raised = false;
+
+            book.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            book.ReleaseYear = DateTime.Today.Year;
+
+            raised.Should().BeTrue();
+        }
+        [Fact]
+        public void BookCoverPicturePath_ShouldRaise_PropertyChangedEvent()
+        {
+            var book = new Book();
+            var raised = false;
+
+            book.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            book.BookCoverPicturePath = @"C:\temp";
+
+            raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Description_ShouldRaise_PropertyChangedEvent()
+        {
+            var book = new Book();
+            var raised = false;
+
+            book.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            book.Description = "Book of books is all you need to read.";
+
+            raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void PageCount_ShouldRaise_PropertyChangedEvent()
+        {
+            var book = new Book();
+            var raised = false;
+
+            book.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            book.PageCount = 111;
+
+            raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void WordCount_ShouldRaise_PropertyChangedEvent()
+        {
+            var book = new Book();
+            var raised = false;
+
+            book.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            book.WordCount = 1234;
+
+            raised.Should().BeTrue();
+        }
+
+        [Fact]
+        public void IsRead_ShouldRaise_PropertyChangedEvent()
+        {
+            var book = new Book();
+            var raised = false;
+
+            book.PropertyChanged += (Sender, e) =>
+            {
+                raised = true;
+            };
+
+            book.IsRead = true;
+
+            raised.Should().BeTrue();
+        }
+
     }
 }

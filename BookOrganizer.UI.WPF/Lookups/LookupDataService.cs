@@ -12,7 +12,7 @@ namespace BookOrganizer.UI.WPF.Lookups
     public class LookupDataService : IBookLookupDataService, ILanguageLookupDataService,
                                      IPublisherLookupDataService, IAuthorLookupDataService,
                                      ISeriesLookupDataService, INationalityLookupDataService,
-                                     IFormatLookupDataService
+                                     IFormatLookupDataService, IGenreLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
         private readonly string placeholderPic = FileExplorerService.GetImagePath();
@@ -188,5 +188,37 @@ namespace BookOrganizer.UI.WPF.Lookups
                     .FirstOrDefaultAsync();
             }
         }
+
+        public async Task<IEnumerable<LookupItem>> GetGenreLookupAsync()
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Genres
+                    .AsNoTracking()
+                    .OrderBy(f => f.Name)
+                    .Select(f =>
+                        new LookupItem
+                        {
+                            Id = f.Id,
+                            DisplayMember = f.Name,
+                            Picture = null,
+                            ViewModelName = nameof(GenreDetailViewModel)
+                        })
+                    .ToListAsync();
+            }
+        }
+
+        public async Task<Guid> GetGenreId()
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Genres
+                    .AsNoTracking()
+                    .OrderBy(f => f.Name)
+                    .Select(f => f.Id)
+                    .FirstOrDefaultAsync();
+            }
+        }
+
     }
 }

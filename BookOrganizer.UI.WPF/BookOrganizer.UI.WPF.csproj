@@ -181,8 +181,10 @@
     </ApplicationDefinition>
     <Compile Include="Converters\InvertedBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToMaxConverter.cs" />
+    <Compile Include="Lookups\IGenreLookupDataService.cs" />
     <Compile Include="Lookups\IFormatLookupDataService.cs" />
     <Compile Include="Lookups\INationalityLookupDataService.cs" />
+    <Compile Include="Repositories\GenreRepository.cs" />
     <Compile Include="Repositories\FormatRepository.cs" />
     <Compile Include="Repositories\NationalityRepository.cs" />
     <Compile Include="Startup\DbConnectivityTester.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BookDetailViewModel.cs" />
     <Compile Include="ViewModels\BooksViewModel.cs" />
+    <Compile Include="ViewModels\GenreDetailViewModel.cs" />
     <Compile Include="ViewModels\FormatDetailViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISelectedViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDetailViewModel.cs" />
@@ -247,6 +250,9 @@
     </Compile>
     <Compile Include="Views\FormatDetailView.xaml.cs">
       <DependentUpon>FormatDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GenreDetailView.xaml.cs">
+      <DependentUpon>GenreDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LanguageDetailView.xaml.cs">
       <DependentUpon>LanguageDetailView.xaml</DependentUpon>
@@ -301,6 +307,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FormatDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GenreDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

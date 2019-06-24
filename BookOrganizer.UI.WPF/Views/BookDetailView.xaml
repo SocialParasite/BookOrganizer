@@ -45,6 +45,30 @@
                         </StackPanel>
                     </DataTemplate>
                 </ResourceDictionary>
+                <ResourceDictionary>
+                    <DataTemplate x:Key="BookGenreDataTemplate">
+                        <StackPanel>
+                            <Grid x:Name="BookGenreDTGrid">
+                                <CheckBox
+                                    x:Name="BookGenreNameCheckBox"
+                                    Height="{Binding Path=Height, ElementName=BookGenreDTGrid}"
+                                    Margin="1"
+                                    HorizontalAlignment="Stretch"
+                                    Content="{Binding Item1.DisplayMember}"
+                                    IsChecked="{Binding Item2, Mode=OneWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.BookGenreSelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1}" />
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.BookGenreSelectionChangedCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding Item1}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                            </Grid>
+                        </StackPanel>
+                    </DataTemplate>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -628,24 +652,48 @@
 
             </Grid>
 
-            <Expander
+            <Grid
                 Grid.Row="1"
-                Grid.Column="2"
-                Margin="5"
-                VerticalAlignment="Top"
-                Header="Formats"
-                IsExpanded="True">
-                <ItemsControl
-                    x:Name="BookFormatsList"
-                    ItemTemplate="{StaticResource BookFormatDataTemplate}"
-                    ItemsSource="{Binding AllBookFormats}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </Expander>
+                Grid.RowSpan="2"
+                Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Expander
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    Header="Formats"
+                    IsExpanded="True">
+                    <ItemsControl
+                        x:Name="BookFormatsList"
+                        ItemTemplate="{StaticResource BookFormatDataTemplate}"
+                        ItemsSource="{Binding AllBookFormats}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Expander>
+                <Expander
+                    Grid.Row="1"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    Header="Genres"
+                    IsExpanded="True">
+                    <ItemsControl
+                        x:Name="BookGenresList"
+                        ItemTemplate="{StaticResource BookGenreDataTemplate}"
+                        ItemsSource="{Binding AllBookGenres}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </Expander>
+            </Grid>
         </Grid>
     </ScrollViewer>
 </UserControl>

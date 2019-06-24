@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace BookOrganizer.Domain
 {
-    public class Genre
+    public class Genre : BaseDomainEntity, IIdentifiable
     {
         private string _name;
 
@@ -26,6 +25,8 @@ namespace BookOrganizer.Domain
                     throw new ArgumentOutOfRangeException(nameof(Name), "Genres name should be 1-32 characters long.");
 
                 _name = value;
+
+                OnPropertyChanged();
             }
         }
 

@@ -22,6 +22,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         private readonly IPublisherLookupDataService publisherLookupDataService;
         private readonly IAuthorLookupDataService authorLookupDataService;
         private readonly IFormatLookupDataService formatLookupDataService;
+        private readonly IGenreLookupDataService genreLookupDataService;
         private SolidColorBrush highlightBrush;
         private DateTime newReadDate;
         private LookupItem selectedLanguage;
@@ -44,7 +45,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             ILanguageLookupDataService languageLookupDataService,
             IPublisherLookupDataService publisherLookupDataService,
             IAuthorLookupDataService authorLookupDataService,
-            IFormatLookupDataService formatLookupDataService)
+            IFormatLookupDataService formatLookupDataService,
+            IGenreLookupDataService genreLookupDataService)
             : base(eventAggregator, metroDialogService)
         {
             this.languageLookupDataService = languageLookupDataService
@@ -55,6 +57,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 ?? throw new ArgumentNullException(nameof(authorLookupDataService));
             this.formatLookupDataService = formatLookupDataService
                 ?? throw new ArgumentNullException(nameof(formatLookupDataService));
+            this.genreLookupDataService = genreLookupDataService
+                ?? throw new ArgumentNullException(nameof(genreLookupDataService));
 
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
             HighlightMouseLeaveCommand = new DelegateCommand(HighlightMouseLeaveExecute);
@@ -74,6 +78,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             ShowSelectedAuthorCommand = new DelegateCommand<Guid?>(OnShowSelectedAuthorExecute, OnShowSelectedAuthorCanExecute);
             ShowSelectedSeriesCommand = new DelegateCommand<Guid?>(OnShowSelectedSeriesExecute, OnShowSelectedSeriesCanExecute);
             BookFormatSelectionChangedCommand = new DelegateCommand<LookupItem>(OnBookFormatSelectionChangedExecute);
+            BookGenreSelectionChangedCommand = new DelegateCommand<LookupItem>(OnBookGenreSelectionChangedExecute);
 
             Repository = booksRepo ?? throw new ArgumentNullException(nameof(booksRepo));
 
@@ -105,6 +110,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         public ICommand ShowSelectedAuthorCommand { get; }
         public ICommand ShowSelectedSeriesCommand { get; }
         public ICommand BookFormatSelectionChangedCommand { get; }
+        public ICommand BookGenreSelectionChangedCommand { get; }
 
         public Guid SelectedPublisherId
         {
@@ -165,7 +171,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { selectedLanguage = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Tuple<LookupItem, bool>> AllBookFormats { get; set; } // LookupItem => (LookupItem, bool)??
+        public ObservableCollection<Tuple<LookupItem, bool>> AllBookFormats { get; set; }
+
+        public ObservableCollection<Tuple<LookupItem, bool>> AllBookGenres { get; set; } = new ObservableCollection<Tuple<LookupItem, bool>>();
 
         public ObservableCollection<LookupItem> Publishers { get; set; }
 
@@ -325,6 +333,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             InitializeSelectedPublisherIfNoneSet();
             SetBooksSelectedReleaseYear();
             InitializeAllBookFormats();
+            InitializeAllBookGenres();
 
             SelectedItem.PropertyChanged += (s, e) =>
             {
@@ -402,6 +411,23 @@ namespace BookOrganizer.UI.WPF.ViewModels
                     }
                 }
             }
+
+            void InitializeAllBookGenres()
+            {
+                if (SelectedItem.GenreLink != null)
+                {
+                    if (!AllBookGenres.Any())
+                    {
+                        AllBookGenres.Clear();
+
+                        foreach (var item in SelectedItem.GenreLink)
+                        {
+                            var newLookupItem = new LookupItem { Id = item.Genre.Id, DisplayMember = item.Genre.Name };
+                            AllBookGenres.Add((newLookupItem, true).ToTuple());
+                        }
+                    }
+                }
+            }
         }
 
         public async override void SwitchEditableStateExecute()
@@ -412,6 +438,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             await InitializePublisherCollection();
             await InitializeAuthorCollection();
             await InitializeAllBookFormatsCollection();
+            await InitializeAllBookGenresCollection();
 
             ReleaseYear = SelectedReleaseYear == 0 ? 1 : SelectedReleaseYear;
 
@@ -492,6 +519,37 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 }
             }
 
+            async Task InitializeAllBookGenresCollection()
+            {
+                if (UserMode.Item1 == false)
+                {
+                    foreach (var item in await GetBookGenreList())
+                    {
+                        if (AllBookGenres.Any(i => i.Item1.Id == item.Id))
+                        {
+                            continue;
+                        }
+                        AllBookGenres.Add((item, false).ToTuple());
+                    }
+                }
+                else
+                {
+                    var tempBookGenresCollection = new ObservableCollection<Tuple<LookupItem, bool>>();
+                    foreach (var item in AllBookGenres)
+                    {
+                        if (item.Item2 == true)
+                        {
+                            tempBookGenresCollection.Add(item);
+                        }
+                    }
+                    AllBookGenres.Clear();
+
+                    foreach (var item in tempBookGenresCollection)
+                    {
+                        AllBookGenres.Add(item);
+                    }
+                }
+            }
         }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()
@@ -505,6 +563,9 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private async Task<IEnumerable<LookupItem>> GetBookFormatList()
         => await formatLookupDataService.GetFormatLookupAsync();
+
+        private async Task<IEnumerable<LookupItem>> GetBookGenreList()
+        => await genreLookupDataService.GetGenreLookupAsync();
 
         private async void RemoveAuthorExecute(Guid? authorId)
         {
@@ -594,6 +655,26 @@ namespace BookOrganizer.UI.WPF.ViewModels
             SetChangeTracker();
         }
 
+        private async void OnBookGenreSelectionChangedExecute(LookupItem lookupItem)
+        {
+            if (AllBookGenres.Any(bg => bg.Item1.Id == lookupItem.Id && bg.Item2 == false))
+            {
+                var newGenre = await (Repository as IBookRepository).GetBookGenreById(lookupItem.Id);
+
+                SelectedItem.GenreLink.Add(new BookGenres
+                {
+                    GenreId = newGenre.Id,
+                    Genre = newGenre,
+                    Book = SelectedItem,
+                    BookId = SelectedItem.Id
+                });
+            }
+            else if (AllBookGenres.Any(bg => bg.Item1.Id == lookupItem.Id && bg.Item2 == true))
+            {
+                var item = SelectedItem.GenreLink.Single(g => g.GenreId == lookupItem.Id);
+                SelectedItem.GenreLink.Remove(item);
+            }
+        }
 
         private bool OnShowSelectedAuthorCanExecute(Guid? id)
             => (id is null || id == Guid.Empty) ? false : true;

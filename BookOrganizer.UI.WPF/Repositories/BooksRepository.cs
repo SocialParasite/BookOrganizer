@@ -34,6 +34,8 @@ namespace BookOrganizer.UI.WPF.Repositories
                     .Include(b => b.ReadDates)
                     .Include(b => b.FormatLink)
                     .ThenInclude(f => f.Format)
+                    .Include(g => g.GenreLink)
+                    .ThenInclude(g => g.Genre)
                     .FirstOrDefaultAsync(b => b.Id == id)
                 : new Book();
         }
@@ -43,5 +45,8 @@ namespace BookOrganizer.UI.WPF.Repositories
 
         public async Task<Format> GetBookFormatById(Guid formatId)
             => await context.Formats.SingleAsync(f => f.Id == formatId);
+
+        public async Task<Genre> GetBookGenreById(Guid genreId)
+            => await context.Genres.SingleAsync(g => g.Id == genreId);
     }
 }
