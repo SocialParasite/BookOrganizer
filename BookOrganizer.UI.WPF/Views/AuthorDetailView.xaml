@@ -129,8 +129,7 @@
                     Grid.Column="2"
                     MinWidth="100"
                     MaxWidth="300"
-                    Content="{Binding SelectedItem.DateOfBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    ContentStringFormat="dd.MM.yyyy"
+                    Content="{Binding SelectedItem.DateOfBirth, Converter={StaticResource DobCountAge}}"
                     Style="{StaticResource LabelStyles}"
                     Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
                 <DatePicker

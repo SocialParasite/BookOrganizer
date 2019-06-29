@@ -50,11 +50,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Errors = new Dictionary<string, List<string>>();
         }
 
-        public ICommand SwitchEditableStateCommand { get; set; }
-        public ICommand SaveItemCommand { get; set; }
-        public ICommand DeleteItemCommand { get; set; }
-        public ICommand CloseDetailViewCommand { get; set; }
-        public ICommand ShowSelectedBookCommand { get; set; }
+        public ICommand SwitchEditableStateCommand { get; }
+        public ICommand SaveItemCommand { get; }
+        public ICommand DeleteItemCommand { get; }
+        public ICommand CloseDetailViewCommand { get; }
+        public ICommand ShowSelectedBookCommand { get; }
 
         public T SelectedItem
         {
@@ -163,11 +163,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
             => SelectedBookId = (Guid)id;
 
         private bool SaveItemCanExecute()
-            => (!HasErrors) && (HasChanges || SelectedItem.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"));
+            => (!HasErrors) && (HasChanges || SelectedItem.Id == default);
 
         private async void SaveItemExecute()
         {
-            if (this.Repository.HasChanges() || SelectedItem.Id == Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            if (this.Repository.HasChanges() || SelectedItem.Id == default)
             {
                 var isNewItem = false;
 

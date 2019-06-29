@@ -196,7 +196,6 @@
                 <GroupBox
                     x:Name="bookSeriesLabel"
                     Grid.Column="1"
-                    Width="500"
                     MaxWidth="600"
                     MaxHeight="500"
                     Margin="10"
@@ -243,7 +242,7 @@
                                                 x:Name="basicLabelTextBlock"
                                                 Grid.Column="2"
                                                 Margin="20,0,0,0"
-                                                FontSize="24"
+                                                FontSize="18"
                                                 Text="{Binding Book.Title}"
                                                 TextWrapping="Wrap" />
                                             <TextBlock
