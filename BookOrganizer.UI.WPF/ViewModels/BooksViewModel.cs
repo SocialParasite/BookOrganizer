@@ -28,7 +28,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             Items = await bookLookupDataService.GetBookLookupAsync();
 
-            EntityCollection = Items.OrderBy(b => b.DisplayMember).ToList();
+            EntityCollection = Items
+                .OrderBy(b => b.DisplayMember
+                    .StartsWith("A ", StringComparison.OrdinalIgnoreCase)
+                    || b.DisplayMember.StartsWith("The ", StringComparison.OrdinalIgnoreCase)
+                    ? b.DisplayMember.Substring(b.DisplayMember.IndexOf(" ") + 1)
+                    : b.DisplayMember)
+                .ToList();
         }
     }
 }
