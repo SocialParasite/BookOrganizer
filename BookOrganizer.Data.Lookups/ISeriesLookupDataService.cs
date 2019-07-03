@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.UI.WPF.Lookups
+namespace BookOrganizer.Data.Lookups
 {
     public interface ISeriesLookupDataService
     {
-        Task<IEnumerable<LookupItem>> GetSeriesLookupAsync();
+        Task<IEnumerable<LookupItem>> GetSeriesLookupAsync(string viewModelName);
     }
 }

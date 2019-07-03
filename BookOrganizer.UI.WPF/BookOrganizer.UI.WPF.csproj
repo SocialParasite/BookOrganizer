@@ -182,12 +182,6 @@
     <Compile Include="Converters\DobCountAge.cs" />
     <Compile Include="Converters\InvertedBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToMaxConverter.cs" />
-    <Compile Include="Lookups\IGenreLookupDataService.cs" />
-    <Compile Include="Lookups\IFormatLookupDataService.cs" />
-    <Compile Include="Lookups\INationalityLookupDataService.cs" />
-    <Compile Include="Repositories\GenreRepository.cs" />
-    <Compile Include="Repositories\FormatRepository.cs" />
-    <Compile Include="Repositories\NationalityRepository.cs" />
     <Compile Include="Startup\DbConnectivityTester.cs" />
     <Compile Include="Enums\DetailViewState.cs" />
     <Compile Include="Events\SavedDetailsViewEvent.cs" />
@@ -197,22 +191,6 @@
     <Compile Include="Events\OpenItemMatchingSelectedSeriesIdEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedPublisherIdEvent.cs" />
     <Compile Include="Events\OpenItemMatchingSelectedBookIdEvent.cs" />
-    <Compile Include="Lookups\IBookLookupDataService.cs" />
-    <Compile Include="Lookups\IAuthorLookupDataService.cs" />
-    <Compile Include="Lookups\ISeriesLookupDataService.cs" />
-    <Compile Include="Lookups\IPublisherLookupDataService.cs" />
-    <Compile Include="Lookups\ILanguageLookupDataService.cs" />
-    <Compile Include="Lookups\LookupDataService.cs" />
-    <Compile Include="Lookups\LookupItem.cs" />
-    <Compile Include="Repositories\LanguageRepository.cs" />
-    <Compile Include="Repositories\BaseRepository.cs" />
-    <Compile Include="Repositories\BooksRepository.cs" />
-    <Compile Include="Repositories\ISeriesRepository.cs" />
-    <Compile Include="Repositories\IBookRepository.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\AuthorsRepository.cs" />
-    <Compile Include="Repositories\PublishersRepository.cs" />
-    <Compile Include="Repositories\SeriesRepository.cs" />
     <Compile Include="Services\FileExplorerService.cs" />
     <Compile Include="Services\IMetroDialogService.cs" />
     <Compile Include="Services\MetroDialogService.cs" />
@@ -380,6 +358,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BookOrganizer.Data.Lookups\BookOrganizer.Data.Lookups.csproj">
+      <Project>{f064afcb-cf84-4f9c-b801-d0e5848df9d5}</Project>
+      <Name>BookOrganizer.Data.Lookups</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookOrganizer.Data.Repositories\BookOrganizer.Data.Repositories.csproj">
+      <Project>{ceb76a6e-36a1-450e-a66e-5960945d534a}</Project>
+      <Name>BookOrganizer.Data.Repositories</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BookOrganizer.Data.SqlServer\BookOrganizer.Data.SqlServer.csproj">
       <Project>{3c4dcd61-c093-4488-89c1-844628adba5c}</Project>
       <Name>BookOrganizer.Data.SqlServer</Name>

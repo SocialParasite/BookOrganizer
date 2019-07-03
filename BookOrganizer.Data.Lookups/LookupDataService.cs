@@ -1,13 +1,11 @@
 ﻿using BookOrganizer.Data.SqlServer;
-using BookOrganizer.UI.WPF.Services;
-using BookOrganizer.UI.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.UI.WPF.Lookups
+namespace BookOrganizer.Data.Lookups
 {
     public class LookupDataService : IBookLookupDataService, ILanguageLookupDataService,
                                      IPublisherLookupDataService, IAuthorLookupDataService,
@@ -15,14 +13,14 @@ namespace BookOrganizer.UI.WPF.Lookups
                                      IFormatLookupDataService, IGenreLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
-        private readonly string placeholderPic = FileExplorerService.GetImagePath();
+        private readonly string placeholderPic = ""; // FileExplorerService.GetImagePath();
 
         public LookupDataService(Func<BookOrganizerDbContext> contextCreator)
         {
             _contextCreator = contextCreator;
         }
 
-        public async Task<IEnumerable<LookupItem>> GetBookLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetBookLookupAsync(string viewModelName)
         {
             using (var ctx = _contextCreator())
             {
@@ -34,13 +32,13 @@ namespace BookOrganizer.UI.WPF.Lookups
                             Id = b.Id,
                             DisplayMember = $"{b.Title} ({b.ReleaseYear})",
                             Picture = b.BookCoverPicturePath ?? placeholderPic,
-                            ViewModelName = nameof(BookDetailViewModel)
+                            ViewModelName = viewModelName
                         })
                     .ToListAsync();
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetPublisherLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetPublisherLookupAsync(string viewModelName)
         {
             using (var ctx = _contextCreator())
             {
@@ -53,13 +51,13 @@ namespace BookOrganizer.UI.WPF.Lookups
                             Id = p.Id,
                             DisplayMember = p.Name,
                             Picture = p.LogoPath ?? placeholderPic,
-                            ViewModelName = nameof(PublisherDetailViewModel)
+                            ViewModelName = viewModelName
                         })
                     .ToListAsync();
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetAuthorLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetAuthorLookupAsync(string viewModelName)
         {
             using (var ctx = _contextCreator())
             {
@@ -72,13 +70,13 @@ namespace BookOrganizer.UI.WPF.Lookups
                             Id = a.Id,
                             DisplayMember = $"{a.LastName}, {a.FirstName}",
                             Picture = a.MugShotPath ?? placeholderPic,
-                            ViewModelName = nameof(AuthorDetailViewModel)
+                            ViewModelName = viewModelName
                         })
                     .ToListAsync();
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetLanguageLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetLanguageLookupAsync(string viewModelName)
         {
             using (var ctx = _contextCreator())
             {
@@ -91,7 +89,7 @@ namespace BookOrganizer.UI.WPF.Lookups
                             Id = l.Id,
                             DisplayMember = l.LanguageName,
                             Picture = null,
-                            ViewModelName = nameof(LanguageDetailViewModel)
+                            ViewModelName = viewModelName
                         })
                     .ToListAsync();
             }
@@ -109,7 +107,7 @@ namespace BookOrganizer.UI.WPF.Lookups
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetSeriesLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetSeriesLookupAsync(string viewModelName)
         {
             using (var ctx = _contextCreator())
             {
@@ -121,13 +119,13 @@ namespace BookOrganizer.UI.WPF.Lookups
                             Id = s.Id,
                             DisplayMember = s.Name,
                             Picture = placeholderPic,
-                            ViewModelName = nameof(SeriesDetailViewModel)
+                            ViewModelName = viewModelName
                         })
                     .ToListAsync();
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetNationalityLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetNationalityLookupAsync(string viewModelName)
         {
             using (var ctx = _contextCreator())
             {
@@ -140,7 +138,7 @@ namespace BookOrganizer.UI.WPF.Lookups
                             Id = n.Id,
                             DisplayMember = n.Name,
                             Picture = null,
-                            ViewModelName = nameof(NationalityDetailViewModel)
+                            ViewModelName = viewModelName
                         })
                     .ToListAsync();
             }
@@ -158,7 +156,7 @@ namespace BookOrganizer.UI.WPF.Lookups
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetFormatLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetFormatLookupAsync(string viewModelName)
         {
             using (var ctx = _contextCreator())
             {
@@ -171,7 +169,7 @@ namespace BookOrganizer.UI.WPF.Lookups
                             Id = f.Id,
                             DisplayMember = f.Name,
                             Picture = null,
-                            ViewModelName = nameof(FormatDetailViewModel)
+                            ViewModelName = viewModelName
                         })
                     .ToListAsync();
             }
@@ -189,7 +187,7 @@ namespace BookOrganizer.UI.WPF.Lookups
             }
         }
 
-        public async Task<IEnumerable<LookupItem>> GetGenreLookupAsync()
+        public async Task<IEnumerable<LookupItem>> GetGenreLookupAsync(string viewModelName)
         {
             using (var ctx = _contextCreator())
             {
@@ -202,7 +200,7 @@ namespace BookOrganizer.UI.WPF.Lookups
                             Id = f.Id,
                             DisplayMember = f.Name,
                             Picture = null,
-                            ViewModelName = nameof(GenreDetailViewModel)
+                            ViewModelName = viewModelName
                         })
                     .ToListAsync();
             }

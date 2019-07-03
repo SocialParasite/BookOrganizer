@@ -1,6 +1,6 @@
 ﻿using BookOrganizer.Domain;
-using BookOrganizer.UI.WPF.Lookups;
-using BookOrganizer.UI.WPF.Repositories;
+using BookOrganizer.Data.Lookups;
+using BookOrganizer.Data.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using Prism.Commands;
 using Prism.Events;
@@ -166,7 +166,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetNationalityList()
-            => await nationalityLookupDataService.GetNationalityLookupAsync();
+            => await nationalityLookupDataService.GetNationalityLookupAsync(nameof(NationalityDetailViewModel));
 
         private void OnNationalitySelectionChangedExecute()
         {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.UI.WPF.Repositories
+namespace BookOrganizer.Data.Repositories
 {
     public class SeriesRepository : BaseRepository<Series, BookOrganizerDbContext>, ISeriesRepository
     {

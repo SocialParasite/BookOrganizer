@@ -1,5 +1,4 @@
-﻿using BookOrganizer.UI.WPF.Events;
-using BookOrganizer.UI.WPF.Lookups;
+﻿using BookOrganizer.Data.Lookups;
 using BookOrganizer.UI.WPF.ViewModels;
 using FluentAssertions;
 using Moq;
@@ -23,7 +22,7 @@ namespace BookOrganizer.UI.WPFTests
             eventAggregatorMock = new Mock<IEventAggregator>();
             bookLookupServiceMock = new Mock<IBookLookupDataService>();
 
-            bookLookupServiceMock.Setup(dp => dp.GetBookLookupAsync())
+            bookLookupServiceMock.Setup(dp => dp.GetBookLookupAsync(nameof(BookDetailViewModel)))
                 .ReturnsAsync(new List<LookupItem>
                 {
                     new LookupItem { Id = Guid.NewGuid(), DisplayMember = "The Book" },

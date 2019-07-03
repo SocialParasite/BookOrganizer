@@ -1,7 +1,7 @@
 ﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Events;
-using BookOrganizer.UI.WPF.Lookups;
-using BookOrganizer.UI.WPF.Repositories;
+using BookOrganizer.Data.Lookups;
+using BookOrganizer.Data.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using Prism.Commands;
 using Prism.Events;
@@ -553,19 +553,19 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()
-            => await publisherLookupDataService.GetPublisherLookupAsync();
+            => await publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
 
         private async Task<IEnumerable<LookupItem>> GetLanguageList()
-            => await languageLookupDataService.GetLanguageLookupAsync();
+            => await languageLookupDataService.GetLanguageLookupAsync(nameof(LanguageDetailViewModel));
 
         private async Task<IEnumerable<LookupItem>> GetAuthorList()
-            => await authorLookupDataService.GetAuthorLookupAsync();
+            => await authorLookupDataService.GetAuthorLookupAsync(nameof(AuthorDetailViewModel));
 
         private async Task<IEnumerable<LookupItem>> GetBookFormatList()
-        => await formatLookupDataService.GetFormatLookupAsync();
+        => await formatLookupDataService.GetFormatLookupAsync(nameof(FormatDetailViewModel));
 
         private async Task<IEnumerable<LookupItem>> GetBookGenreList()
-        => await genreLookupDataService.GetGenreLookupAsync();
+        => await genreLookupDataService.GetGenreLookupAsync(nameof(GenreDetailViewModel));
 
         private async void RemoveAuthorExecute(Guid? authorId)
         {

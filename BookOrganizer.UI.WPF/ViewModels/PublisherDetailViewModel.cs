@@ -1,5 +1,5 @@
 ﻿using BookOrganizer.Domain;
-using BookOrganizer.UI.WPF.Repositories;
+using BookOrganizer.Data.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using Prism.Commands;
 using Prism.Events;

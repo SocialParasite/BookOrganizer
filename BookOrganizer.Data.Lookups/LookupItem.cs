@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BookOrganizer.UI.WPF.Lookups
+namespace BookOrganizer.Data.Lookups
 {
     public class LookupItem
     {

@@ -1,4 +1,4 @@
-﻿using BookOrganizer.UI.WPF.Lookups;
+﻿using BookOrganizer.Data.Lookups;
 using BookOrganizer.UI.WPF.ViewModels;
 using FluentAssertions;
 using Moq;
@@ -22,7 +22,7 @@ namespace BookOrganizer.UI.WPFTests
             eventAggregatorMock = new Mock<IEventAggregator>();
             seriesLookupServiceMock = new Mock<ISeriesLookupDataService>();
 
-            seriesLookupServiceMock.Setup(dp => dp.GetSeriesLookupAsync())
+            seriesLookupServiceMock.Setup(dp => dp.GetSeriesLookupAsync(nameof(SeriesDetailViewModel)))
                 .ReturnsAsync(new List<LookupItem>
                 {
                     new LookupItem { Id = Guid.NewGuid(), DisplayMember = "A Song of Ice and Fire" },

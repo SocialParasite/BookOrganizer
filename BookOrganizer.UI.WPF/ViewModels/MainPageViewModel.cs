@@ -1,5 +1,5 @@
-﻿using BookOrganizer.UI.WPF.Events;
-using BookOrganizer.UI.WPF.Lookups;
+﻿using BookOrganizer.Data.Lookups;
+using BookOrganizer.UI.WPF.Events;
 using Prism.Commands;
 using Prism.Events;
 using System;

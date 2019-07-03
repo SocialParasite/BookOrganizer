@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.UI.WPF.Lookups
+namespace BookOrganizer.Data.Lookups
 {
     public interface IBookLookupDataService
     {
-        Task<IEnumerable<LookupItem>> GetBookLookupAsync();
+        Task<IEnumerable<LookupItem>> GetBookLookupAsync(string viewModelName);
         //Task<Book> GetBookById(Guid bookId);
     }
 }

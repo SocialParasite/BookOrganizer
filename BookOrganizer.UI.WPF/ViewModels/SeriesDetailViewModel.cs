@@ -1,6 +1,6 @@
-﻿using BookOrganizer.Domain;
-using BookOrganizer.UI.WPF.Lookups;
-using BookOrganizer.UI.WPF.Repositories;
+﻿using BookOrganizer.Data.Lookups;
+using BookOrganizer.Data.Repositories;
+using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Services;
 using GongSolutions.Wpf.DragDrop;
 using Prism.Commands;
@@ -230,7 +230,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetBookList()
-            => await bookLookupDataService.GetBookLookupAsync();
+            => await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel));
 
         private async void OnAddSeriesPictureExecute()
         {

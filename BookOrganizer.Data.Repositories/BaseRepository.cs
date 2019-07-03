@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookOrganizer.Data.SqlServer;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.UI.WPF.Repositories
+namespace BookOrganizer.Data.Repositories
 {
     public class BaseRepository<TEntity, TContext> : IRepository<TEntity>
         where TEntity : class
-        where TContext : DbContext
+        where TContext : BookOrganizerDbContext
     {
         protected readonly TContext context;
 

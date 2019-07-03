@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.UI.WPF.Lookups
+namespace BookOrganizer.Data.Lookups
 {
     public interface ILanguageLookupDataService
     {
-        Task<IEnumerable<LookupItem>> GetLanguageLookupAsync();
+        Task<IEnumerable<LookupItem>> GetLanguageLookupAsync(string viewModelName);
         Task<Guid> GetLanguageId();
     }
 }

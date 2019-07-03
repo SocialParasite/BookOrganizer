@@ -1,7 +1,7 @@
-﻿using BookOrganizer.Domain;
+﻿using BookOrganizer.Data.Lookups;
+using BookOrganizer.Data.Repositories;
+using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Enums;
-using BookOrganizer.UI.WPF.Lookups;
-using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
@@ -96,7 +96,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetFormatList()
-            => await formatLookupService.GetFormatLookupAsync();
+            => await formatLookupService.GetFormatLookupAsync(nameof(FormatDetailViewModel));
 
         private async void OnChangeEditedFormatExecute(Guid? formatId)
         {

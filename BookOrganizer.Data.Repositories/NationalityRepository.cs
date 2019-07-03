@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.UI.WPF.Repositories
+namespace BookOrganizer.Data.Repositories
 {
     public class NationalityRepository : BaseRepository<Nationality, BookOrganizerDbContext>
     {

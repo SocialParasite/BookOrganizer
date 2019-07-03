@@ -1,4 +1,4 @@
-﻿using BookOrganizer.UI.WPF.Lookups;
+﻿using BookOrganizer.Data.Lookups;
 using BookOrganizer.UI.WPF.ViewModels;
 using FluentAssertions;
 using Moq;
@@ -22,7 +22,7 @@ namespace BookOrganizer.UI.WPFTests
             eventAggregatorMock = new Mock<IEventAggregator>();
             authorLookupServiceMock = new Mock<IAuthorLookupDataService>();
 
-            authorLookupServiceMock.Setup(dp => dp.GetAuthorLookupAsync())
+            authorLookupServiceMock.Setup(dp => dp.GetAuthorLookupAsync(nameof(AuthorDetailViewModel)))
                 .ReturnsAsync(new List<LookupItem>
                 {
                     new LookupItem { Id = Guid.NewGuid(), DisplayMember = "King, Stephen" },
