@@ -13,11 +13,12 @@ namespace BookOrganizer.Data.Lookups
                                      IFormatLookupDataService, IGenreLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
-        private readonly string placeholderPic = ""; // FileExplorerService.GetImagePath();
+        private readonly string placeholderPic;
 
-        public LookupDataService(Func<BookOrganizerDbContext> contextCreator)
+        public LookupDataService(Func<BookOrganizerDbContext> contextCreator, string imagePath)
         {
             _contextCreator = contextCreator;
+            placeholderPic = imagePath;
         }
 
         public async Task<IEnumerable<LookupItem>> GetBookLookupAsync(string viewModelName)
@@ -118,7 +119,7 @@ namespace BookOrganizer.Data.Lookups
                         {
                             Id = s.Id,
                             DisplayMember = s.Name,
-                            Picture = placeholderPic,
+                            Picture = s.PicturePath ?? placeholderPic,
                             ViewModelName = viewModelName
                         })
                     .ToListAsync();

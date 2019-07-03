@@ -6,6 +6,7 @@ using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
 using BookOrganizer.UI.WPF.Views;
 using Prism.Events;
+using Autofac.Core;
 
 namespace BookOrganizer.UI.WPF.Startup
 {
@@ -52,7 +53,8 @@ namespace BookOrganizer.UI.WPF.Startup
 
             builder.RegisterType<BooksView>().AsSelf();
 
-            builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
+            builder.RegisterType<LookupDataService>().AsImplementedInterfaces()
+                .WithParameter("imagePath", FileExplorerService.GetImagePath());
 
             builder.RegisterType<BooksRepository>().AsImplementedInterfaces();
             builder.RegisterType<PublishersRepository>().AsImplementedInterfaces();
