@@ -1,7 +1,7 @@
 ﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Events;
-using BookOrganizer.UI.WPF.Lookups;
-using BookOrganizer.UI.WPF.Repositories;
+using BookOrganizer.Data.Lookups;
+using BookOrganizer.Data.Repositories;
 using Prism.Commands;
 using Prism.Events;
 using System;

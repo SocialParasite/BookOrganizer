@@ -1,7 +1,7 @@
-﻿using BookOrganizer.Domain;
+﻿using BookOrganizer.Data.Lookups;
+using BookOrganizer.Data.Repositories;
+using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Enums;
-using BookOrganizer.UI.WPF.Lookups;
-using BookOrganizer.UI.WPF.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;
@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -97,7 +96,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetListOfNations()
-            => await nationalityLookupService.GetNationalityLookupAsync();
+            => await nationalityLookupService.GetNationalityLookupAsync(nameof(NationalityDetailViewModel));
 
         private async void OnChangeEditedNationExecute(Guid? nationalityId)
         {

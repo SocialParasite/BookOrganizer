@@ -11,6 +11,7 @@
 *.userprefs
 connectionString.json
 BookOrganizer.TestConsoleUI
+appsettings.json
 
 # Build results
 [Dd]ebug/

@@ -1,5 +1,5 @@
-﻿using BookOrganizer.Domain;
-using BookOrganizer.UI.WPF.Lookups;
+﻿using BookOrganizer.Data.Lookups;
+using BookOrganizer.Domain;
 using Prism.Events;
 using System;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public override async Task InitializeRepositoryAsync()
         {
-            Items = await publisherLookupDataService.GetPublisherLookupAsync();
+            Items = await publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
 
             EntityCollection = Items.OrderBy(p => p.DisplayMember).ToList();
         }
