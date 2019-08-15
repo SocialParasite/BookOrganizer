@@ -20,18 +20,19 @@ namespace BookOrganizer.UI.Web.Controllers
             this.authorsRepository = authorsRepository ?? throw new ArgumentNullException(nameof(authorsRepository));
         }
 
-        public async Task<string> Index()
+        public async Task<IActionResult> Index()
         {
             var authors = await authorLookupDataService.GetAuthorLookupAsync(nameof(AuthorsViewModel));
-
-            return authors.FirstOrDefault().DisplayMember;
+            var vm = new AuthorsViewModel() { Authors = authors };
+            return View(vm);
         }
 
-        public async Task<ViewResult> Details(Guid? authorId)
+        public async Task<IActionResult> Details(Guid? Id)
         {
-            if (authorId == null) authorId = Guid.Parse("5CCE28E1-5958-E811-A2D3-FCAA1497E0B4");
-            var author = await authorsRepository.GetSelectedAsync((Guid)authorId);
-            var vm = new AuthorDetailsViewModel() { FirstName = author.FirstName, LastName = author.LastName };
+            if (Id == null) throw new ArgumentNullException(nameof(Id));
+
+            var author = await authorsRepository.GetSelectedAsync((Guid)Id);
+            var vm = new AuthorDetailsViewModel(author); 
 
             return View(vm);
         }
