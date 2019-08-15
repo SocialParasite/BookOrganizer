@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BookOrganizer.Data.Lookups;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace BookOrganizer.UI.Web
 {
@@ -35,7 +37,6 @@ namespace BookOrganizer.UI.Web
             services.AddDbContext<BookOrganizerDbContext>(
                 options => options.UseSqlServer(connString));
 
-            //services.AddTransient<Func<BookOrganizerDbContext>>(ctx => () => ctx.GetService<BookOrganizerDbContext>());
             services.AddTransient<IRepository<Author>, AuthorsRepository>();
             services.AddTransient<IAuthorLookupDataService, LookupDataService>(ctx =>
             {
