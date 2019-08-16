@@ -7,30 +7,23 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.Web.Models
 {
-    public class AuthorDetailsViewModel
+    public class AuthorDetailsViewModel : BaseDetailViewModel<Author>
     {
         public AuthorDetailsViewModel(Author selectedAuthor)
         {
-            SelectedAuthor = selectedAuthor ?? throw new ArgumentNullException(nameof(selectedAuthor));
-        }
-
-        public Author SelectedAuthor { get; set; }
-
-        public string AuthorPicture
-        {
-            get => $"~/Authorpics/{System.IO.Path.GetFileName(SelectedAuthor.MugShotPath)}";
+            SelectedItem = selectedAuthor ?? throw new ArgumentNullException(nameof(selectedAuthor));
         }
 
         public string AuthorDOB
         {
             get
             {
-                return SelectedAuthor.DateOfBirth != null
-                    ? $"{SelectedAuthor.DateOfBirth:dd.MM.yyyy} ({(int)Math.Floor((DateTime.Now - (DateTime)SelectedAuthor.DateOfBirth).TotalDays / 365.25D)} years)"
+                return SelectedItem.DateOfBirth != null
+                    ? $"{SelectedItem.DateOfBirth:dd.MM.yyyy} ({(int)Math.Floor((DateTime.Now - (DateTime)SelectedItem.DateOfBirth).TotalDays / 365.25D)} years)"
                     : String.Empty;
             }
         }
 
-        public string Nationality { get => SelectedAuthor.Nationality?.Name; }
+        public string Nationality { get => SelectedItem.Nationality?.Name; }
     }
 }

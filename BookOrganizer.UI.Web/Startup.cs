@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BookOrganizer.Data.Lookups;
 using BookOrganizer.Data.Repositories;
@@ -43,6 +44,12 @@ namespace BookOrganizer.UI.Web
                 return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
             });
 
+            services.AddTransient<IRepository<Book>, BooksRepository>();
+            services.AddTransient<IBookLookupDataService, LookupDataService>(ctx =>
+            {
+                return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
+            });
+
             services.AddMvc();
         }
 
@@ -63,5 +70,6 @@ namespace BookOrganizer.UI.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
     }
 }

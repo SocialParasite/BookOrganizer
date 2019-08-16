@@ -1,6 +1,6 @@
 ﻿@model BookOrganizer.UI.Web.Models.AuthorDetailsViewModel
 @{
-    ViewData["Title"] = $"{Model.SelectedAuthor.LastName}, {Model.SelectedAuthor.FirstName}";
+    ViewData["Title"] = $"{Model.SelectedItem.LastName}, {Model.SelectedItem.FirstName}";
 }
 
 <div style="position:absolute;opacity:0.9;width:auto;left:8px;right:10px;">
@@ -8,7 +8,7 @@
         <div class="gridwrapper" style="height:auto;">
             <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
                 <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
-                    @Model.SelectedAuthor.LastName, @Model.SelectedAuthor.FirstName
+                    @Model.SelectedItem.LastName, @Model.SelectedItem.FirstName
                 </div>
                 <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
                     @Model.AuthorDOB
@@ -20,27 +20,23 @@
             </div>
             <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
                 <div style="border:none;width:100%;height:92%;">
-                    <img src="@Url.Content(Model.AuthorPicture)" asp-append-version="true">
+                    <img src="@Url.Content($"~/AuthorPics/{Model.GetItemPicture(Model.SelectedItem.MugShotPath)}")" asp-append-version="true">
                 </div>
             </div>
         </div>
         <div class="gridwrapper" style="height:auto;width:50%">
             <div class="gridcontent" style="width:100%;background:white;border:hidden">
-                @Model.SelectedAuthor.Biography
+                @Model.SelectedItem.Biography
             </div>
         </div>
         <div class="gridwrapper" style="height:auto;width:50%">
             <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
-                @foreach (var book in Model.SelectedAuthor.BooksLink)
+                @foreach (var book in Model.SelectedItem.BooksLink)
                 {
                     <form asp-controller="Book" asp-action="Details" asp-route-id="@book.BookId">
                         <button type="submit" class="btn-outline-secondary text-left" style="height:auto;width:100%;margin:10px;padding:5px;">
                             <span style="align-items:start;">
-                                @{
-                                    var pictureName = System.IO.Path.GetFileName(book.Book.BookCoverPicturePath);
-                                    var picturePath = $"~/Covers/{pictureName}";
-                                }
-                                <img src="@Url.Content(picturePath)" asp-append-version="true" width="50" height="75">
+                                <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(book.Book.BookCoverPicturePath)}")" asp-append-version="true" width="50" height="75">
 
                                 @book.Book.Title
                             </span>
@@ -49,7 +45,6 @@
                 }
             </div>
         </div>
-
     </div>
 </div>
 
