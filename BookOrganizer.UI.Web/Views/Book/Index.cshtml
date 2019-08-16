@@ -10,7 +10,7 @@
                 <button type="submit" class="btn-outline-secondary text-left" style="height:100px;width:250px;margin:10px;overflow:hidden; text-overflow: ellipsis; white-space: nowrap;">
                     @{
                         var pictureName = System.IO.Path.GetFileName(book.Picture);
-                        var picturePath = $"Covers/{pictureName}";
+                        var picturePath = $"~/Covers/{System.Net.WebUtility.UrlEncode(pictureName)}";
                     }
                     <img src="@Url.Content(picturePath)" asp-append-version="true" width="50" height="75">
 

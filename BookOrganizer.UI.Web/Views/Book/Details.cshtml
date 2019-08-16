@@ -72,5 +72,39 @@
                 }
             </div>
         </div>
+
+        <div class="gridwrapper" style="height:auto;width:50%">
+            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+                @foreach (var readDate in Model.SelectedItem.ReadDates)
+                {
+                    <ul>
+                        @readDate.ReadDate
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="gridwrapper" style="height:auto;width:50%">
+            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+                @foreach (var format in Model.SelectedItem.FormatLink)
+                {
+                    <ul>
+                        @format.Format.Name
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="gridwrapper" style="height:auto;width:50%">
+            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+                @foreach (var genre in Model.SelectedItem.GenreLink)
+                {
+                    <ul>
+                        @genre.Genre.Name
+                    </ul>
+                }
+            </div>
+        </div>
+
     </div>
 </div>

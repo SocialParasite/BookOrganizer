@@ -11,7 +11,7 @@
 
                     @{
                         var pictureName = System.IO.Path.GetFileName(author.Picture);
-                        var picturePath = $"AuthorPics/{pictureName}";
+                        var picturePath = $"AuthorPics/{System.Net.WebUtility.UrlEncode(pictureName)}";
                     }
                     <img src="@Url.Content(picturePath)" asp-append-version="true" width="75" height="75">
 

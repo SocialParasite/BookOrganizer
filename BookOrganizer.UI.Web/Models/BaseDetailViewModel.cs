@@ -11,6 +11,6 @@ namespace BookOrganizer.UI.Web.Models
         public T SelectedItem { get; set; }
 
         public string GetItemPicture(string path) 
-            => System.IO.Path.GetFileName(path);
+            => System.Net.WebUtility.UrlEncode(System.IO.Path.GetFileName(path));
     }
 }
