@@ -7,6 +7,11 @@
     <div>
         <div class="gridwrapper" style="height:auto;">
             <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
+                <div style="border:none;width:100%;height:92%;">
+                    <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(Model.SelectedItem.BookCoverPicturePath)}")" asp-append-version="true">
+                </div>
+            </div>
+            <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
                 <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
                     @Model.SelectedItem.Title (@Model.SelectedItem.ReleaseYear)
                 </div>
@@ -24,11 +29,6 @@
                 </div>
                 <div style="border:none;width:100%;height:15%;"></div>
             </div>
-            <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
-                <div style="border:none;width:100%;height:92%;">
-                    <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(Model.SelectedItem.BookCoverPicturePath)}")" asp-append-version="true">
-                </div>
-            </div>
         </div>
         <div class="gridwrapper" style="height:auto;width:50%">
             <div class="gridcontent" style="width:100%;background:white;border:hidden">
@@ -36,8 +36,8 @@
             </div>
         </div>
         <div class="gridwrapper" style="height:auto;width:50%">
+            <h2>Books in series:</h2>
             <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
-
                 @if (Model.SelectedItem.BookSeries != null)
                 {
                     @foreach (var book in Model.SelectedItem.BookSeries?.SeriesReadOrder)
@@ -56,25 +56,25 @@
             </div>
         </div>
 
-        <div class="gridwrapper" style="height:auto;width:50%">
-            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+        <div class="gridwrapper" style="height:auto;width:50%;">
+            <h2>Author(s):</h2>
+            <ul class="gridcontent" style="width:90%;background:white;border-right-color:transparent;list-style-type:none;">
                 @foreach (var author in Model.SelectedItem.AuthorsLink)
                 {
-                    <form asp-controller="Author" asp-action="Details" asp-route-id="@author.AuthorId">
-                        <button type="submit" class="btn-outline-secondary text-left" style="height:auto;width:100%;margin:10px;padding:5px;">
-                            <span style="align-items:start;">
-                                <img src="@Url.Content($"~/AuthorPics/{Model.GetItemPicture(author.Author.MugShotPath)}")" asp-append-version="true" width="50" height="75">
+                    <li>
+                        <a asp-controller="Author" asp-action="Details" asp-route-id="@author.AuthorId">
+                            <img src="@Url.Content($"~/AuthorPics/{Model.GetItemPicture(author.Author.MugShotPath)}")" asp-append-version="true" width="50" height="65">
 
-                                @author.Author.LastName, @author.Author.FirstName
-                            </span>
-                        </button>
-                    </form>
+                            @author.Author.LastName, @author.Author.FirstName
+                        </a>
+                    </li>
                 }
-            </div>
+            </ul>
         </div>
 
         <div class="gridwrapper" style="height:auto;width:50%">
             <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+                <h2>Books read dates:</h2>
                 @foreach (var readDate in Model.SelectedItem.ReadDates)
                 {
                     <ul>
@@ -85,6 +85,7 @@
         </div>
 
         <div class="gridwrapper" style="height:auto;width:50%">
+            <h2>Format(s):</h2>
             <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
                 @foreach (var format in Model.SelectedItem.FormatLink)
                 {
@@ -96,6 +97,7 @@
         </div>
 
         <div class="gridwrapper" style="height:auto;width:50%">
+            <h2>Genre(s):</h2>
             <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
                 @foreach (var genre in Model.SelectedItem.GenreLink)
                 {
