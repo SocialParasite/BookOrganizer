@@ -50,7 +50,12 @@ namespace BookOrganizer.UI.Web
                 return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
             });
 
-            services.AddMvc();
+            services.AddTransient<INationalityLookupDataService, LookupDataService>(ctx =>
+            {
+                return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
+            });
+
+            services.AddMvc(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

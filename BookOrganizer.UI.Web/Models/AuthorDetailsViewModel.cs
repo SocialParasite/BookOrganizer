@@ -1,4 +1,5 @@
-﻿using BookOrganizer.Domain;
+﻿using BookOrganizer.Data.Lookups;
+using BookOrganizer.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,5 +26,11 @@ namespace BookOrganizer.UI.Web.Models
         }
 
         public string Nationality { get => SelectedItem.Nationality?.Name; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DOB => SelectedItem.DateOfBirth;
+
+        public List<LookupItem> Nationalities { get; set; }
     }
 }

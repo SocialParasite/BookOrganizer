@@ -5,8 +5,6 @@
 
 <div style="position:absolute;opacity:0.9;width:auto;left:8px;right:10px;">
     <div>
-        @Html.ActionLink("Edit", "Edit", new { Id = Model.SelectedItem.Id })
-
         <div class="gridwrapper" style="height:auto;">
             <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
                 <div style="border:none;width:100%;height:92%;">
@@ -14,21 +12,26 @@
                 </div>
             </div>
             <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
+                @Html.LabelFor(model => model.SelectedItem.LastName)
+                <input type="text" class="form-control form-rounded" style="width:100%;height:15%;margin-bottom:10px;" value="@Model.SelectedItem.LastName" />
+                @Html.LabelFor(model => model.SelectedItem.FirstName)
+                <input type="text" class="form-control form-rounded" style="width:100%;height:15%;margin-bottom:10px;" value="@Model.SelectedItem.FirstName" />
+
+                @Html.LabelFor(model => model.SelectedItem.DateOfBirth)
+                <input type="date" class="form-control form-rounded" style="width:100%;height:15%;margin-bottom:10px;" value="@Html.DisplayFor(x => Model.DOB)" />
+
+                @Html.LabelFor(model => model.SelectedItem.Nationality)
                 <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
-                    @Model.SelectedItem.LastName, @Model.SelectedItem.FirstName
-                </div>
-                <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
-                    @Model.AuthorDOB
-                </div>
-                <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
-                    @Model.Nationality
+                    @Html.DropDownListFor(m => m.SelectedItem.NationalityId,
+                                            new SelectList(Model.Nationalities, "Id", "DisplayMember"))
                 </div>
                 <div style="border:none;width:100%;height:15%;"></div>
             </div>
         </div>
         <div class="gridwrapper" style="height:auto;width:50%">
             <div class="gridcontent" style="width:100%;background:white;border:hidden">
-                @Model.SelectedItem.Biography
+                @Html.LabelFor(model => model.SelectedItem.Biography)
+                <textarea rows="10" class="form-control form-rounded">@Model.SelectedItem.Biography </textarea>
             </div>
         </div>
         <div class="gridwrapper" style="height:auto;width:50%">
@@ -49,4 +52,3 @@
         </div>
     </div>
 </div>
-

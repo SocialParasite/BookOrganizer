@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOrganizer.Data.Lookups"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{3F710F31-D914-4AF7-B5BA-7B69D1193FFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOrganizer.UI.WebTests", "BookOrganizer.UI.WebTests\BookOrganizer.UI.WebTests.csproj", "{71FAAA85-3216-4DBD-88E1-53278D70432D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{F064AFCB-CF84-4F9C-B801-D0E5848DF9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F064AFCB-CF84-4F9C-B801-D0E5848DF9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F064AFCB-CF84-4F9C-B801-D0E5848DF9D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71FAAA85-3216-4DBD-88E1-53278D70432D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71FAAA85-3216-4DBD-88E1-53278D70432D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71FAAA85-3216-4DBD-88E1-53278D70432D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71FAAA85-3216-4DBD-88E1-53278D70432D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{588EF6BE-4B19-4843-8F83-10594F8B57FC} = {3F710F31-D914-4AF7-B5BA-7B69D1193FFE}
 		{CEB76A6E-36A1-450E-A66E-5960945D534A} = {CFC9BCB1-B96F-43DB-8C9D-5632663931B5}
 		{F064AFCB-CF84-4F9C-B801-D0E5848DF9D5} = {CFC9BCB1-B96F-43DB-8C9D-5632663931B5}
+		{71FAAA85-3216-4DBD-88E1-53278D70432D} = {102869BD-6572-4E4B-8295-5BDD9C7E4F5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88707A94-E3ED-4E8D-8673-C6E2571320AF}
