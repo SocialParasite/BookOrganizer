@@ -1,4 +1,4 @@
-﻿using BookOrganizer.Data.Lookups;
+﻿using BookOrganizer.DA;
 using System.Collections.Generic;
 
 namespace BookOrganizer.UI.Web.Models

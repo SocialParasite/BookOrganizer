@@ -1,4 +1,4 @@
-﻿using BookOrganizer.Data.Lookups;
+﻿using BookOrganizer.DA;
 using BookOrganizer.UI.WPF.Events;
 using Prism.Commands;
 using Prism.Events;
