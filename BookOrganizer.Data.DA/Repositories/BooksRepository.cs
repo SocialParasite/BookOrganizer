@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.Data.Repositories
+namespace BookOrganizer.DA
 {
     public class BooksRepository : BaseRepository<Book, BookOrganizerDbContext>, IBookRepository
     {

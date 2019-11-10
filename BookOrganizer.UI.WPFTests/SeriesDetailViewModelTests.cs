@@ -1,7 +1,7 @@
 ﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Enums;
 using BookOrganizer.Data.Lookups;
-using BookOrganizer.Data.Repositories;
+using BookOrganizer.DA;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
 using BookOrganizer.UI.WPFTests.Extensions;

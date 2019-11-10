@@ -2,11 +2,9 @@
 using BookOrganizer.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.Data.Repositories
+namespace BookOrganizer.DA
 {
     public class NationalityRepository : BaseRepository<Nationality, BookOrganizerDbContext>
     {

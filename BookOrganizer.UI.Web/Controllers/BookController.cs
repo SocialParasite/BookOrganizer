@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookOrganizer.Data.Lookups;
-using BookOrganizer.Data.Repositories;
+﻿using BookOrganizer.Data.Lookups;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
