@@ -1,4 +1,5 @@
 ﻿using BookOrganizer.Data.SqlServer;
+using BookOrganizer.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

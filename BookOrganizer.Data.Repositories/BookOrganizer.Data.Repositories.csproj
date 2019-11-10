@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookOrganizer.Data.SqlServer\BookOrganizer.Data.SqlServer.csproj" />
+    <ProjectReference Include="..\BookOrganizer.Domain\BookOrganizer.Domain.csproj" />
   </ItemGroup>
 
 </Project>
