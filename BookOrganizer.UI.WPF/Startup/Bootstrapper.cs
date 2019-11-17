@@ -3,7 +3,6 @@ using BookOrganizer.DA;
 using BookOrganizer.Data.SqlServer;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
-using BookOrganizer.UI.WPF.Views;
 using Prism.Events;
 
 namespace BookOrganizer.UI.WPF.Startup

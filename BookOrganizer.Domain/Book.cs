@@ -148,7 +148,11 @@ namespace BookOrganizer.Domain
         public ICollection<BooksReadDate> ReadDates { get; set; }
         public ICollection<BookGenres> GenreLink { get; set; }
         public ICollection<BooksFormats> FormatLink { get; set; }
+
+        [Obsolete]
         public Series BookSeries { get; set; }
+
+        public ICollection<BooksSeries> BooksSeries { get; set; }
 
         public bool ValidateIsbn(string isbn)
         {
