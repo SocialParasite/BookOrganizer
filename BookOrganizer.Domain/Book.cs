@@ -13,6 +13,7 @@ namespace BookOrganizer.Domain
         {
             AuthorsLink = new ObservableCollection<BookAuthors>();
             ReadDates = new ObservableCollection<BooksReadDate>();
+            BooksSeries = new ObservableCollection<BooksSeries>();
         }
 
         private string _title;
