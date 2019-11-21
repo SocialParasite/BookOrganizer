@@ -1,4 +1,4 @@
-﻿using BookOrganizer.Data.SqlServer;
+using BookOrganizer.Data.SqlServer;
 using BookOrganizer.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,8 +22,12 @@ namespace BookOrganizer.DA
         {
             return id != default
                 ? await context.Series
-                    .Include(b => b.BooksInSeries)
+                    .Include(b => b.BooksSeries)
+                    .ThenInclude(s => s.Series)
+                    .ThenInclude(sr => sr.SeriesReadOrder)
+                    .ThenInclude(b => b.Book)
                     .Include(b => b.SeriesReadOrder)
+                    .ThenInclude(b => b.Book)
                     .FirstOrDefaultAsync(b => b.Id == id)
                 : new Series();
         }

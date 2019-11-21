@@ -3,10 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BookOrganizer.Data.SqlServer.Migrations
 {
-    public partial class BooksSeries : Migration
+    public partial class booksSeries : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Books_Series_BookSeriesId",
+                table: "Books");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Books_BookSeriesId",
+                table: "Books");
+
+            migrationBuilder.DropColumn(
+                name: "BookSeriesId",
+                table: "Books");
+
             migrationBuilder.CreateTable(
                 name: "BooksSeries",
                 columns: table => new
@@ -47,6 +59,24 @@ namespace BookOrganizer.Data.SqlServer.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BooksSeries");
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "BookSeriesId",
+                table: "Books",
+                nullable: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_BookSeriesId",
+                table: "Books",
+                column: "BookSeriesId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Books_Series_BookSeriesId",
+                table: "Books",
+                column: "BookSeriesId",
+                principalTable: "Series",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }

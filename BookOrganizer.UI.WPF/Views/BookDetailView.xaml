@@ -16,9 +16,8 @@
                 <ResourceDictionary Source="ViewResources.xaml" />
                 <ResourceDictionary>
                     <CollectionViewSource x:Key="BooksSeriesList" Source="{Binding SelectedItem.BooksSeries}">
-                        <!--<CollectionViewSource x:Key="ReadOrder" Source="{Binding SelectedItem.BookSeries.SeriesReadOrder}">-->
                         <CollectionViewSource.SortDescriptions>
-                            <componentModel:SortDescription PropertyName="Instalment" />
+                            <componentModel:SortDescription PropertyName="Series.SeriesReadOrder.Instalment" />
                         </CollectionViewSource.SortDescriptions>
                     </CollectionViewSource>
                 </ResourceDictionary>

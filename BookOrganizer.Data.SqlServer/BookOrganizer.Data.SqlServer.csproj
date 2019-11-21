@@ -6,6 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191117095213_BooksSeries.cs" />
+    <Compile Remove="Migrations\20191117095213_BooksSeries.Designer.cs" />
+    <Compile Remove="Migrations\20191119172431_SeriesIdRemoved.cs" />
+    <Compile Remove="Migrations\20191119172431_SeriesIdRemoved.Designer.cs" />
+    <Compile Remove="Migrations\20191120163902_booksSeries2.cs" />
+    <Compile Remove="Migrations\20191120163902_booksSeries2.Designer.cs" />
+    <Compile Remove="Migrations\20191120164043_booksSeries2.cs" />
+    <Compile Remove="Migrations\20191120164043_booksSeries2.Designer.cs" />
+    <Compile Remove="Migrations\20191120164732_booksSeries.cs" />
+    <Compile Remove="Migrations\20191120164732_booksSeries.Designer.cs" />
+    <Compile Remove="Migrations\20191120164935_booksSeries.cs" />
+    <Compile Remove="Migrations\20191120164935_booksSeries.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
       <PrivateAssets>all</PrivateAssets>

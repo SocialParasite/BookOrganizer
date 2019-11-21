@@ -21,7 +21,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             InitializeRepositoryAsync();
         }
 
-        public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
+        //public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
 
 
         public override async Task InitializeRepositoryAsync()

@@ -26,7 +26,6 @@ namespace BookOrganizer.Data.SqlServer
         public DbSet<Series> Series { get; set; }
         public DbSet<SeriesReadOrder> SeriesReadOrder { get; set; }
         public DbSet<Settings> Settings { get; set; }
-        public DbSet<BooksSeries> BooksSeries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +34,7 @@ namespace BookOrganizer.Data.SqlServer
             modelBuilder.ApplyConfiguration(new BookAuthorConfig());
             modelBuilder.ApplyConfiguration(new BookGenreConfig());
             modelBuilder.ApplyConfiguration(new BookFormatConfig());
+            modelBuilder.ApplyConfiguration(new BookSeriesConfig());
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

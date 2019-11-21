@@ -1,4 +1,4 @@
-﻿using BookOrganizer.DA;
+using BookOrganizer.DA;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Services;
 using GongSolutions.Wpf.DragDrop;
@@ -115,8 +115,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
             {
                 if (!Books.Any())
                 {
-                    var tempBookCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
-                                                     .Any(x => x.Id == item.Id))
+                    var tempBookCollection = AllBooks.Where(item => !SelectedItem.BooksSeries //.BooksInSeries
+                                                     .Any(x => x.SeriesId == SelectedItem.Id && x.BookId == item.Id))
                                                      .OrderBy(b => b.DisplayMember);
 
                     PopulateBooksCollection(tempBookCollection);
@@ -132,13 +132,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
             else
             {
-                var book = SelectedItem.BooksInSeries.First(b => b.Id == id);
-                SelectedItem.BooksInSeries.Remove(book);
+                var booksSeries = SelectedItem.BooksSeries.Where(s => s.SeriesId == SelectedItem.Id && s.BookId == id).First();
+                SelectedItem.BooksSeries.Remove(booksSeries);
 
                 var sro = SelectedItem.SeriesReadOrder.First(b => b.BookId == id);
                 SelectedItem.SeriesReadOrder.Remove(sro);
 
-                Books.Add(new LookupItem { Id = book.Id, DisplayMember = book.Title, Picture = book.BookCoverPicturePath });
+                Books.Add(new LookupItem { Id = booksSeries.BookId, DisplayMember = booksSeries.Book.Title, Picture = booksSeries.Book.BookCoverPicturePath });
 
                 var countOfBooksInSeries = SelectedItem.SeriesReadOrder.Count();
                 SelectedItem.NumberOfBooks = countOfBooksInSeries;
@@ -179,7 +179,8 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             var addedBook = await (Repository as ISeriesRepository).GetBookById((Guid)id);
 
-            SelectedItem.BooksInSeries.Add(addedBook);
+            var booksSeries = new BooksSeries { Book = addedBook, BookId = addedBook.Id, Series = SelectedItem, SeriesId = SelectedItem.Id };
+            SelectedItem.BooksSeries.Add(booksSeries);
 
             SelectedItem.SeriesReadOrder.Add(new SeriesReadOrder
             {
@@ -201,18 +202,18 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             if (filter != string.Empty && filter != null)
             {
-                var filteredCollection = AllBooks.Where(item => !SelectedItem.BooksInSeries
-                                                 .Any(x => x.Id == item.Id))
+                var filteredCollection = AllBooks.Where(item => !SelectedItem.BooksSeries
+                                                 .Any(x => x.SeriesId == SelectedItem.Id && x.BookId == item.Id))
                                                  .Where(item => item.DisplayMember
                                                     .IndexOf(filter, StringComparison.OrdinalIgnoreCase) != -1)
                                                  .OrderBy(b => b.DisplayMember);
-
+                
                 PopulateBooksCollection(filteredCollection);
             }
             else
             {
-                var allExcludingBooksInSeries = AllBooks.Where(item => !SelectedItem.BooksInSeries
-                                                        .Any(x => x.Id == item.Id))
+                var allExcludingBooksInSeries = AllBooks.Where(item => !SelectedItem.BooksSeries
+                                                        .Any(x => x.SeriesId ==  SelectedItem.Id && x.BookId == item.Id))
                                                         .OrderBy(b => b.DisplayMember);
 
                 PopulateBooksCollection(allExcludingBooksInSeries);
