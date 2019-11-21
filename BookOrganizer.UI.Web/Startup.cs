@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using BookOrganizer.Data.Lookups;
-using BookOrganizer.Data.Repositories;
+﻿using BookOrganizer.DA;
 using BookOrganizer.Data.SqlServer;
 using BookOrganizer.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 
 namespace BookOrganizer.UI.Web
 {
@@ -43,7 +33,18 @@ namespace BookOrganizer.UI.Web
                 return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
             });
 
-            services.AddMvc();
+            services.AddTransient<IRepository<Book>, BooksRepository>();
+            services.AddTransient<IBookLookupDataService, LookupDataService>(ctx =>
+            {
+                return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
+            });
+
+            services.AddTransient<INationalityLookupDataService, LookupDataService>(ctx =>
+            {
+                return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
+            });
+
+            services.AddMvc(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,5 +64,6 @@ namespace BookOrganizer.UI.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
     }
 }

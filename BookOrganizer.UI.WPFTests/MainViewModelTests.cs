@@ -1,5 +1,5 @@
 ﻿using Autofac.Features.Indexed;
-using BookOrganizer.Data.Lookups;
+using BookOrganizer.DA;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
 using BookOrganizer.UI.WPFTests.Extensions;

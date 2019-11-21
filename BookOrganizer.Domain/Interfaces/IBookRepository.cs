@@ -1,8 +1,7 @@
-﻿using BookOrganizer.Domain;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.Data.Repositories
+namespace BookOrganizer.Domain
 {
     public interface IBookRepository : IRepository<Book>
     {

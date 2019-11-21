@@ -1,5 +1,4 @@
-﻿using BookOrganizer.Data.Lookups;
-using BookOrganizer.Data.Repositories;
+﻿using BookOrganizer.DA;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Enums;
 using BookOrganizer.UI.WPF.Services;

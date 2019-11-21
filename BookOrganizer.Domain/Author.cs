@@ -9,7 +9,7 @@ namespace BookOrganizer.Domain
     {
         private string _firstName;
         private string _lastName;
-        private string biography;
+        private string _biography;
         private string _mugShotPath;
         private DateTime? _dateOfBirth;
 
@@ -70,8 +70,8 @@ namespace BookOrganizer.Domain
 
         public string Biography
         {
-            get { return biography; }
-            set { biography = value; OnPropertyChanged(); }
+            get { return _biography; }
+            set { _biography = value; OnPropertyChanged(); }
         }
 
         public Guid? NationalityId { get; set; }

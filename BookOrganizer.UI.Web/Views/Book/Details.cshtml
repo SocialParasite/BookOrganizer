@@ -1,0 +1,112 @@
+﻿@model BookOrganizer.UI.Web.Models.BookDetailsViewModel
+@{
+    ViewData["Title"] = $"{Model.SelectedItem.Title}";
+}
+
+<div style="position:absolute;opacity:0.9;width:auto;left:8px;right:10px;">
+    <div>
+        <div class="gridwrapper" style="height:auto;">
+            <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
+                <div style="border:none;width:100%;height:92%;">
+                    <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(Model.SelectedItem.BookCoverPicturePath)}")" asp-append-version="true">
+                </div>
+            </div>
+            <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
+                <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
+                    @Model.SelectedItem.Title (@Model.SelectedItem.ReleaseYear)
+                </div>
+                <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
+                    @Model.SelectedItem.ISBN
+                </div>
+                <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
+                    Pages: @Model.SelectedItem.PageCount Words: @Model.SelectedItem.WordCount
+                </div>
+                <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
+                    @Model.SelectedItem.Language?.LanguageName
+                </div>
+                <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
+                    @Model.SelectedItem.Publisher?.Name
+                </div>
+                <div style="border:none;width:100%;height:15%;"></div>
+            </div>
+        </div>
+        <div class="gridwrapper" style="height:auto;width:50%">
+            <div class="gridcontent" style="width:100%;background:white;border:hidden">
+                @Model.SelectedItem.Description
+            </div>
+        </div>
+        <div class="gridwrapper" style="height:auto;width:50%">
+            <h2>Books in series:</h2>
+            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+                @if (Model.SelectedItem.BookSeries != null)
+                {
+                    @foreach (var book in Model.SelectedItem.BookSeries?.First().SeriesReadOrder)
+                    {
+                        <form asp-controller="Book" asp-action="Details" asp-route-id="@book.BookId">
+                            <button type="submit" class="btn-outline-secondary text-left" style="height:auto;width:100%;margin:10px;padding:5px;">
+                                <span style="align-items:start;">
+                                    <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(book.Book.BookCoverPicturePath)}")" asp-append-version="true" width="50" height="75">
+
+                                    @book.Book.Title
+                                </span>
+                            </button>
+                        </form>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="gridwrapper" style="height:auto;width:50%;">
+            <h2>Author(s):</h2>
+            <ul class="gridcontent" style="width:90%;background:white;border-right-color:transparent;list-style-type:none;">
+                @foreach (var author in Model.SelectedItem.AuthorsLink)
+                {
+                    <li>
+                        <a asp-controller="Author" asp-action="Details" asp-route-id="@author.AuthorId">
+                            <img src="@Url.Content($"~/AuthorPics/{Model.GetItemPicture(author.Author.MugShotPath)}")" asp-append-version="true" width="50" height="65">
+
+                            @author.Author.LastName, @author.Author.FirstName
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="gridwrapper" style="height:auto;width:50%">
+            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+                <h2>Books read dates:</h2>
+                @foreach (var readDate in Model.SelectedItem.ReadDates)
+                {
+                    <ul>
+                        @readDate.ReadDate
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="gridwrapper" style="height:auto;width:50%">
+            <h2>Format(s):</h2>
+            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+                @foreach (var format in Model.SelectedItem.FormatLink)
+                {
+                    <ul>
+                        @format.Format.Name
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="gridwrapper" style="height:auto;width:50%">
+            <h2>Genre(s):</h2>
+            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+                @foreach (var genre in Model.SelectedItem.GenreLink)
+                {
+                    <ul>
+                        @genre.Genre.Name
+                    </ul>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

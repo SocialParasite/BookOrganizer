@@ -1,12 +1,9 @@
 ﻿using Autofac;
+using BookOrganizer.DA;
 using BookOrganizer.Data.SqlServer;
-using BookOrganizer.Data.Lookups;
-using BookOrganizer.Data.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
-using BookOrganizer.UI.WPF.Views;
 using Prism.Events;
-using Autofac.Core;
 
 namespace BookOrganizer.UI.WPF.Startup
 {
@@ -22,50 +19,20 @@ namespace BookOrganizer.UI.WPF.Startup
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
 
-            builder.RegisterType<MainPageViewModel>().Keyed<ISelectedViewModel>(nameof(MainPageViewModel));
+            builder.RegisterAssemblyTypes(typeof(MainPageViewModel).Assembly)
+                .Where(type => type.Name.EndsWith("ViewModel"))
+                .Keyed<ISelectedViewModel>(c => c.Name);
 
-            builder.RegisterType<BookDetailViewModel>()
-                .Keyed<IDetailViewModel>(nameof(BookDetailViewModel));
-
-            builder.RegisterType<BooksViewModel>().Keyed<ISelectedViewModel>(nameof(BooksViewModel));
-
-            builder.RegisterType<SeriesViewModel>().Keyed<ISelectedViewModel>(nameof(SeriesViewModel));
-
-            builder.RegisterType<SeriesDetailViewModel>()
-                .Keyed<IDetailViewModel>(nameof(SeriesDetailViewModel));
-
-            builder.RegisterType<PublishersViewModel>().Keyed<ISelectedViewModel>(nameof(PublishersViewModel));
-
-            builder.RegisterType<PublisherDetailViewModel>()
-                .Keyed<IDetailViewModel>(nameof(PublisherDetailViewModel));
-
-            builder.RegisterType<AuthorsViewModel>().Keyed<ISelectedViewModel>(nameof(AuthorsViewModel));
-
-            builder.RegisterType<AuthorDetailViewModel>()
-                .Keyed<IDetailViewModel>(nameof(AuthorDetailViewModel));
-
-            builder.RegisterType<LanguageDetailViewModel>().Keyed<IDetailViewModel>(nameof(LanguageDetailViewModel));
-
-            builder.RegisterType<NationalityDetailViewModel>().Keyed<IDetailViewModel>(nameof(NationalityDetailViewModel));
-
-            builder.RegisterType<FormatDetailViewModel>().Keyed<IDetailViewModel>(nameof(FormatDetailViewModel));
-            builder.RegisterType<GenreDetailViewModel>().Keyed<IDetailViewModel>(nameof(GenreDetailViewModel));
-
-            builder.RegisterType<BooksView>().AsSelf();
+            builder.RegisterAssemblyTypes(typeof(BookDetailViewModel).Assembly)
+                .Where(type => type.Name.EndsWith("DetailViewModel"))
+                .Keyed<IDetailViewModel>(c => c.Name);
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces()
                 .WithParameter("imagePath", FileExplorerService.GetImagePath());
 
-            builder.RegisterType<BooksRepository>().AsImplementedInterfaces();
-            builder.RegisterType<PublishersRepository>().AsImplementedInterfaces();
-            builder.RegisterType<AuthorsRepository>().AsImplementedInterfaces();
-            builder.RegisterType<SeriesRepository>().AsImplementedInterfaces();
-            builder.RegisterType<LanguageRepository>().AsImplementedInterfaces();
-            builder.RegisterType<NationalityRepository>().AsImplementedInterfaces();
-            builder.RegisterType<FormatRepository>().AsImplementedInterfaces();
-            builder.RegisterType<GenreRepository>().AsImplementedInterfaces();
-
-            builder.RegisterType<SettingsViewModel>().Keyed<ISelectedViewModel>(nameof(SettingsViewModel));
+            builder.RegisterAssemblyTypes(typeof(BooksRepository).Assembly)
+                .Where(type => type.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces();
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf();
 

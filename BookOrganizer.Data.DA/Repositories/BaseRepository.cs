@@ -1,10 +1,11 @@
 ﻿using BookOrganizer.Data.SqlServer;
+using BookOrganizer.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.Data.Repositories
+namespace BookOrganizer.DA
 {
     public class BaseRepository<TEntity, TContext> : IRepository<TEntity>
         where TEntity : class

@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookOrganizer.Data.Lookups\BookOrganizer.Data.Lookups.csproj" />
-    <ProjectReference Include="..\BookOrganizer.Data.Repositories\BookOrganizer.Data.Repositories.csproj" />
+    <ProjectReference Include="..\BookOrganizer.Data.DA\BookOrganizer.Data.DA.csproj" />
     <ProjectReference Include="..\BookOrganizer.Data.SqlServer\BookOrganizer.Data.SqlServer.csproj" />
     <ProjectReference Include="..\BookOrganizer.Domain\BookOrganizer.Domain.csproj" />
   </ItemGroup>

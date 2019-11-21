@@ -54,8 +54,6 @@ namespace BookOrganizer.Data.SqlServer.Migrations
 
                     b.Property<string>("BookCoverPicturePath");
 
-                    b.Property<Guid?>("BookSeriesId");
-
                     b.Property<string>("Description");
 
                     b.Property<string>("ISBN")
@@ -78,8 +76,6 @@ namespace BookOrganizer.Data.SqlServer.Migrations
                     b.Property<int>("WordCount");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BookSeriesId");
 
                     b.HasIndex("LanguageId");
 
@@ -156,6 +152,24 @@ namespace BookOrganizer.Data.SqlServer.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("BooksReadDate");
+                });
+
+            modelBuilder.Entity("BookOrganizer.Domain.BooksSeries", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BookId");
+
+                    b.Property<Guid>("SeriesId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("SeriesId");
+
+                    b.ToTable("BooksSeries");
                 });
 
             modelBuilder.Entity("BookOrganizer.Domain.Format", b =>
@@ -293,10 +307,6 @@ namespace BookOrganizer.Data.SqlServer.Migrations
 
             modelBuilder.Entity("BookOrganizer.Domain.Book", b =>
                 {
-                    b.HasOne("BookOrganizer.Domain.Series", "BookSeries")
-                        .WithMany("BooksInSeries")
-                        .HasForeignKey("BookSeriesId");
-
                     b.HasOne("BookOrganizer.Domain.Language", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
@@ -352,6 +362,19 @@ namespace BookOrganizer.Data.SqlServer.Migrations
                     b.HasOne("BookOrganizer.Domain.Book")
                         .WithMany("ReadDates")
                         .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BookOrganizer.Domain.BooksSeries", b =>
+                {
+                    b.HasOne("BookOrganizer.Domain.Book", "Book")
+                        .WithMany("BooksSeries")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookOrganizer.Domain.Series", "Series")
+                        .WithMany("BooksSeries")
+                        .HasForeignKey("SeriesId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -1,7 +1,6 @@
 ﻿using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Enums;
 using BookOrganizer.UI.WPF.Events;
-using BookOrganizer.Data.Repositories;
 using BookOrganizer.UI.WPF.Services;
 using MahApps.Metro.Controls.Dialogs;
 using Prism.Commands;

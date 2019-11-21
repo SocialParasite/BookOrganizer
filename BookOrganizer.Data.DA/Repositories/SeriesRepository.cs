@@ -1,10 +1,10 @@
-﻿using BookOrganizer.Data.SqlServer;
+using BookOrganizer.Data.SqlServer;
 using BookOrganizer.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.Data.Repositories
+namespace BookOrganizer.DA
 {
     public class SeriesRepository : BaseRepository<Series, BookOrganizerDbContext>, ISeriesRepository
     {
@@ -22,8 +22,12 @@ namespace BookOrganizer.Data.Repositories
         {
             return id != default
                 ? await context.Series
-                    .Include(b => b.BooksInSeries)
+                    .Include(b => b.BooksSeries)
+                    .ThenInclude(s => s.Series)
+                    .ThenInclude(sr => sr.SeriesReadOrder)
+                    .ThenInclude(b => b.Book)
                     .Include(b => b.SeriesReadOrder)
+                    .ThenInclude(b => b.Book)
                     .FirstOrDefaultAsync(b => b.Id == id)
                 : new Series();
         }

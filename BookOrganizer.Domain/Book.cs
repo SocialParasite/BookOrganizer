@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +13,7 @@ namespace BookOrganizer.Domain
         {
             AuthorsLink = new ObservableCollection<BookAuthors>();
             ReadDates = new ObservableCollection<BooksReadDate>();
+            BooksSeries = new ObservableCollection<BooksSeries>();
         }
 
         private string _title;
@@ -148,7 +149,8 @@ namespace BookOrganizer.Domain
         public ICollection<BooksReadDate> ReadDates { get; set; }
         public ICollection<BookGenres> GenreLink { get; set; }
         public ICollection<BooksFormats> FormatLink { get; set; }
-        public Series BookSeries { get; set; }
+
+        public ICollection<BooksSeries> BooksSeries { get; set; }
 
         public bool ValidateIsbn(string isbn)
         {

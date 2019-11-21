@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.Data.Repositories
+namespace BookOrganizer.Domain
 {
     public interface IRepository<T> where T : class
     {

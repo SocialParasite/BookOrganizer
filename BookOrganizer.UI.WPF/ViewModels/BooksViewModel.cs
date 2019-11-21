@@ -1,4 +1,4 @@
-﻿using BookOrganizer.Data.Lookups;
+﻿using BookOrganizer.DA;
 using BookOrganizer.Domain;
 using Prism.Events;
 using System;
@@ -21,7 +21,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             InitializeRepositoryAsync();
         }
 
-        public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
+        //public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
 
 
         public override async Task InitializeRepositoryAsync()

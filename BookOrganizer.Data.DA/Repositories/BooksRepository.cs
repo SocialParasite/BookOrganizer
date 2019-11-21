@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.Data.Repositories
+namespace BookOrganizer.DA
 {
     public class BooksRepository : BaseRepository<Book, BookOrganizerDbContext>, IBookRepository
     {
@@ -27,10 +27,10 @@ namespace BookOrganizer.Data.Repositories
                     .Include(b => b.Language)
                     .Include(b => b.AuthorsLink)
                     .ThenInclude(a => a.Author)
-                    .Include(b => b.BookSeries)
-                    .ThenInclude(s => s.BooksInSeries)
-                    .Include(b => b.BookSeries)
-                    .ThenInclude(s => s.SeriesReadOrder)
+                    .Include(b => b.BooksSeries)
+                    .ThenInclude(s => s.Series)
+                    .ThenInclude(sr => sr.SeriesReadOrder)
+                    .ThenInclude(b => b.Book)
                     .Include(b => b.ReadDates)
                     .Include(b => b.FormatLink)
                     .ThenInclude(f => f.Format)

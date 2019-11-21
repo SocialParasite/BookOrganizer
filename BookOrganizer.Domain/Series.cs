@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +15,6 @@ namespace BookOrganizer.Domain
 
         public Series()
         {
-            BooksInSeries = new ObservableCollection<Book>();
             SeriesReadOrder = new ObservableCollection<SeriesReadOrder>();
         }
 
@@ -63,9 +62,9 @@ namespace BookOrganizer.Domain
             get { return description; }
             set { description = value; OnPropertyChanged(); }
         }
+        
+        public ICollection<BooksSeries> BooksSeries { get; set; }
 
-        // Navigation properties
-        public ICollection<Book> BooksInSeries { get; set; }
         public ICollection<SeriesReadOrder> SeriesReadOrder { get; set; }
     }
 }

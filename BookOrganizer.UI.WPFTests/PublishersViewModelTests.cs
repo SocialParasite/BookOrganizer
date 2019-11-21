@@ -1,4 +1,4 @@
-﻿using BookOrganizer.Data.Lookups;
+﻿using BookOrganizer.DA;
 using BookOrganizer.UI.WPF.ViewModels;
 using FluentAssertions;
 using Moq;
