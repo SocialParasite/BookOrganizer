@@ -8,7 +8,8 @@
     <converters:BoolToMaxConverter x:Key="BoolToMaxConverter" />
     <converters:InvertedBooleanToVisibilityConverter x:Key="InvBoolToVis" />
     <converters:DobCountAge x:Key="DobCountAge" />
-    
+    <converters:BookSeriesHeader x:Key="BookSeriesHeader" />
+
     <!--  Button Styles  -->
     <Style
         x:Key="MainPageButtonStyle"

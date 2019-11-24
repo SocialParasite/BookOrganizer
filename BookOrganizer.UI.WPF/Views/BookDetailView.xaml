@@ -367,6 +367,15 @@
                     HorizontalAlignment="Left"
                     Header="Description"
                     IsExpanded="True">
+                    <Expander.Style>
+                        <Style BasedOn="{StaticResource MetroExpander}" TargetType="Expander">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItem.Description}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Expander.Style>
                     <TextBox
                         x:Name="descriptionTextBlock"
                         Width="{Binding ElementName=descriptionExpander, Path=ActualWidth}"
@@ -493,67 +502,69 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </GroupBox>
-                <ListBox
-                    x:Name="BooksSeriesListBox"
+                <GroupBox
+                    x:Name="SeriesGroupBox"
                     Grid.Row="3"
                     Grid.RowSpan="2"
-                    Grid.ColumnSpan="2"
-                    ItemsSource="{Binding Source={StaticResource BooksSeriesList}}"
-                    Style="{StaticResource ListBoxBaseStyle}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Label
-                                    x:Name="bookSeriesLabel"
-                                    Content="{Binding Series.Name}"
-                                    FontWeight="Bold"
-                                    Style="{StaticResource LabelStyles}">
-                                    <Label.InputBindings>
-                                        <MouseBinding
-                                            Command="{Binding DataContext.ShowSelectedSeriesCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
-                                            CommandParameter="{Binding Series.Id}"
-                                            MouseAction="LeftDoubleClick" />
-                                    </Label.InputBindings>
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseEnter">
-                                            <i:InvokeCommandAction Command="{Binding HighlightMouseOverCommand}" />
-                                        </i:EventTrigger>
-                                        <i:EventTrigger EventName="MouseLeave">
-                                            <i:InvokeCommandAction Command="{Binding HighlightMouseLeaveCommand}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Label>
-                                <ListBox
-                                    x:Name="booksInSeriesListBox"
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="2"
-                                    MinWidth="300"
-                                    ItemsSource="{Binding Series.SeriesReadOrder}"
-                                    Style="{StaticResource ListBoxBaseStyle}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                FontSize="16"
-                                                Text="{Binding Book.Title}"
-                                                TextWrapping="Wrap">
-                                                <TextBlock.InputBindings>
-                                                    <MouseBinding
-                                                        Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
-                                                        CommandParameter="{Binding Book.Id}"
-                                                        MouseAction="LeftDoubleClick" />
-                                                </TextBlock.InputBindings>
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    Width="700"
+                    Margin="5"
+                    Header="{Binding SelectedItem.BooksSeries.Count, Converter={StaticResource BookSeriesHeader}}">
+                    <GroupBox.Style>
+                        <Style BasedOn="{StaticResource MetroGroupBox}" TargetType="GroupBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItem.BooksSeries.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </GroupBox.Style>
+                    <ListView
+                        x:Name="BooksSeriesListBox"
+                        Width="{Binding ElementName=SeriesGroupBox, Path=ActualWidth}"
+                        ItemsSource="{Binding Source={StaticResource BooksSeriesList}}"
+                        Style="{StaticResource ListBoxBaseStyle}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Expander
+                                    x:Name="bookSeriesExpander"
+                                    Margin="0,5,5,5"
+                                    FontWeight="Bold">
+                                    <Expander.Header>
+                                        <Label Content="{Binding Series.Name}" Style="{StaticResource LabelStyles}">
+                                            <Label.InputBindings>
+                                                <MouseBinding
+                                                    Command="{Binding DataContext.ShowSelectedSeriesCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                    CommandParameter="{Binding Series.Id}"
+                                                    MouseAction="LeftDoubleClick" />
+                                            </Label.InputBindings>
+                                        </Label>
+                                    </Expander.Header>
+                                    <ListView
+                                        x:Name="booksInSeriesListBox"
+                                        MinWidth="300"
+                                        ItemsSource="{Binding Series.SeriesReadOrder}"
+                                        Style="{StaticResource ListBoxBaseStyle}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock
+                                                    FontSize="16"
+                                                    Text="{Binding Book.Title}"
+                                                    TextWrapping="Wrap">
+                                                    <TextBlock.InputBindings>
+                                                        <MouseBinding
+                                                            Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                            CommandParameter="{Binding Book.Id}"
+                                                            MouseAction="LeftDoubleClick" />
+                                                    </TextBlock.InputBindings>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Expander>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </GroupBox>
                 <Grid Grid.Row="5" Grid.ColumnSpan="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
