@@ -12,60 +12,64 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <DataTemplate x:Key="UserDataTemplate">
-            <StackPanel HorizontalAlignment="Stretch">
-                <Grid x:Name="UserDTGrid" MinHeight="100">
-                    <Label
-                        x:Name="PublisherCollectionPublisherNameLabel"
-                        Width="400"
-                        Height="{Binding Path=Height, ElementName=UserDTGrid}"
-                        Margin="1"
-                        HorizontalAlignment="Stretch">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseLeftButtonUp">
-                                <i:InvokeCommandAction Command="{Binding DataContext.ItemNameLabelMouseLeftButtonUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <Label.Template>
-                            <ControlTemplate TargetType="{x:Type Label}">
-                                <Label
-                                    x:Name="textBlockLabel"
-                                    Background="WhiteSmoke"
-                                    BorderBrush="SteelBlue"
-                                    BorderThickness="1"
-                                    FontSize="18">
-                                    <Label.Content>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="50" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Image
-                                                x:Name="publisherLogo"
-                                                MaxWidth="75"
-                                                MaxHeight="75"
-                                                Source="{Binding Picture}" />
-                                            <TextBlock
-                                                x:Name="BasicLabelTextBlock"
-                                                Grid.Column="1"
-                                                Margin="20,0,0,0"
-                                                Text="{Binding DisplayMember}"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
-                                    </Label.Content>
-                                </Label>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="Label.IsMouseOver" Value="True">
-                                        <Setter TargetName="textBlockLabel" Property="Background" Value="LightSkyBlue" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Label.Template>
-                    </Label>
-                </Grid>
-            </StackPanel>
-        </DataTemplate>
-
+        <ResourceDictionary>
+            <DataTemplate x:Key="UserDataTemplate">
+                <StackPanel HorizontalAlignment="Stretch">
+                    <Grid x:Name="UserDTGrid" MinHeight="100">
+                        <Label
+                            x:Name="PublisherCollectionPublisherNameLabel"
+                            Width="400"
+                            Height="{Binding Path=Height, ElementName=UserDTGrid}"
+                            Margin="1"
+                            HorizontalAlignment="Stretch">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding DataContext.ItemNameLabelMouseLeftButtonUpCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <Label.Template>
+                                <ControlTemplate TargetType="{x:Type Label}">
+                                    <Label
+                                        x:Name="textBlockLabel"
+                                        Background="WhiteSmoke"
+                                        BorderBrush="SteelBlue"
+                                        BorderThickness="1"
+                                        FontSize="18">
+                                        <Label.Content>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image
+                                                    x:Name="publisherLogo"
+                                                    MaxWidth="75"
+                                                    MaxHeight="75"
+                                                    Source="{Binding Picture}" />
+                                                <TextBlock
+                                                    x:Name="BasicLabelTextBlock"
+                                                    Grid.Column="1"
+                                                    Margin="20,0,0,0"
+                                                    Text="{Binding DisplayMember}"
+                                                    TextWrapping="Wrap" />
+                                            </Grid>
+                                        </Label.Content>
+                                    </Label>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="Label.IsMouseOver" Value="True">
+                                            <Setter TargetName="textBlockLabel" Property="Background" Value="LightSkyBlue" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Label.Template>
+                        </Label>
+                    </Grid>
+                </StackPanel>
+            </DataTemplate>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ViewResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
@@ -86,12 +90,15 @@
                 <ColumnDefinition Width="*" MinWidth="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Label
+                x:Name="SearchLabel"
+                Content="Search: "
+                Style="{StaticResource LabelStyles}" />
             <TextBox
                 x:Name="SearchTextBox"
                 Grid.ColumnSpan="2"
                 Width="250"
-                VerticalContentAlignment="Center"
-                FontSize="16"
+                Style="{StaticResource TextBoxStyles}"
                 Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 Grid.Column="4"
