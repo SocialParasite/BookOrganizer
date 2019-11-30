@@ -85,6 +85,13 @@
                 <ColumnDefinition Width="*" MinWidth="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <TextBox
+                x:Name="SearchTextBox"
+                Grid.ColumnSpan="2"
+                Width="250"
+                VerticalContentAlignment="Center"
+                FontSize="16"
+                Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 Grid.Column="4"
                 Width="75"
@@ -109,7 +116,7 @@
                 <ItemsControl
                     x:Name="AuthorList"
                     ItemTemplate="{StaticResource UserDataTemplate}"
-                    ItemsSource="{Binding EntityCollection}">
+                    ItemsSource="{Binding FilteredEntityCollection}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel>

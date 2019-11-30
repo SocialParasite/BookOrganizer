@@ -183,6 +183,7 @@
     <Compile Include="Converters\DobCountAge.cs" />
     <Compile Include="Converters\InvertedBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToMaxConverter.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Startup\DbConnectivityTester.cs" />
     <Compile Include="Enums\DetailViewState.cs" />
     <Compile Include="Events\SavedDetailsViewEvent.cs" />
