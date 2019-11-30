@@ -518,12 +518,11 @@
                             </Style.Triggers>
                         </Style>
                     </GroupBox.Style>
-                    <ListView
-                        x:Name="BooksSeriesListBox"
+                    <ItemsControl
+                        x:Name="BooksSeriesItemsControl"
                         Width="{Binding ElementName=SeriesGroupBox, Path=ActualWidth}"
-                        ItemsSource="{Binding Source={StaticResource BooksSeriesList}}"
-                        Style="{StaticResource ListBoxBaseStyle}">
-                        <ListView.ItemTemplate>
+                        ItemsSource="{Binding Source={StaticResource BooksSeriesList}}">
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Expander
                                     x:Name="bookSeriesExpander"
@@ -539,12 +538,12 @@
                                             </Label.InputBindings>
                                         </Label>
                                     </Expander.Header>
-                                    <ListView
+                                    <ListBox
                                         x:Name="booksInSeriesListBox"
                                         MinWidth="300"
                                         ItemsSource="{Binding Series.SeriesReadOrder}"
                                         Style="{StaticResource ListBoxBaseStyle}">
-                                        <ListView.ItemTemplate>
+                                        <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock
                                                     FontSize="16"
@@ -558,12 +557,12 @@
                                                     </TextBlock.InputBindings>
                                                 </TextBlock>
                                             </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
                                 </Expander>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </GroupBox>
                 <Grid Grid.Row="5" Grid.ColumnSpan="4">
                     <Grid.ColumnDefinitions>
