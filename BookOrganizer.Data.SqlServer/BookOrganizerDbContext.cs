@@ -6,7 +6,7 @@ namespace BookOrganizer.Data.SqlServer
 {
     public class BookOrganizerDbContext : DbContext
     {
-        private string connectionString;
+        public string connectionString;
         public static IConfigurationRoot Configuration { get; private set; }
 
         public BookOrganizerDbContext() { }
@@ -40,11 +40,8 @@ namespace BookOrganizer.Data.SqlServer
         {
             if (connectionString is null)
             {
-                IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("connectionString.json");
+                connectionString = ConnectivityService.GetConnectionString();
 
-                Configuration = builder.Build();
-
-                connectionString = Configuration.GetConnectionString("BookOrganizerDbDEV");
                 optionsBuilder.UseSqlServer(connectionString);
             }
             else

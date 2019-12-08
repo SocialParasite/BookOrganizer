@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using BookOrganizer.Data.SqlServer;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.Startup;
 using System.Windows;
@@ -18,9 +19,9 @@ namespace BookOrganizer.UI.WPF
             var mainWindow = container.Resolve<MainWindow>();
             mainWindow.Show();
 
-            var dbConnectivity = new DbConnectivityTester(container.Resolve<IMetroDialogService>());
+            var dbConnectivity = new DbConnectivityTester(container.Resolve<IMetroDialogService>(), 
+                                                          container.Resolve<BookOrganizerDbContext>().connectionString);
             await dbConnectivity.DbConnectivityCheckAsync();
         }
-
     }
 }
