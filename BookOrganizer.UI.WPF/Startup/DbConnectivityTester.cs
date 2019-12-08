@@ -70,7 +70,7 @@ namespace BookOrganizer.UI.WPF.Startup
 
         private async Task CreateDatabase()
         {
-            var context = new BookOrganizerDbContext();
+            var context = new BookOrganizerDbContext(connectionString);
             await context.Database.EnsureCreatedAsync();
             Application.Current.MainWindow.Close();
         }

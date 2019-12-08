@@ -3,7 +3,10 @@ using BookOrganizer.DA;
 using BookOrganizer.Data.SqlServer;
 using BookOrganizer.UI.WPF.Services;
 using BookOrganizer.UI.WPF.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Prism.Events;
+using System.IO;
 
 namespace BookOrganizer.UI.WPF.Startup
 {
@@ -34,9 +37,28 @@ namespace BookOrganizer.UI.WPF.Startup
                 .Where(type => type.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
 
-            builder.RegisterType<BookOrganizerDbContext>().AsSelf();
+            var startupDb = GetStartupDatabase();
+            var connectionString = ConnectivityService.GetConnectionString(startupDb);
+
+            builder.RegisterType<BookOrganizerDbContext>().AsSelf().WithParameter("connectionString", connectionString);
 
             return builder.Build();
+        }
+
+        string GetStartupDatabase()
+        {
+            string connectionString = null;
+
+            if (File.Exists(@"Startup\settings.json"))
+            {
+                var settingsFile = File.ReadAllText(@"Startup\settings.json");
+
+                JObject jobj = (JObject)JsonConvert.DeserializeObject(settingsFile);
+                Settings settings = jobj.ToObject<Settings>();
+                connectionString = settings.StartupDatabase;
+            }
+
+            return connectionString;
         }
     }
 }

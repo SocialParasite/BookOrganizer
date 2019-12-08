@@ -12,6 +12,7 @@
 connectionString.json
 BookOrganizer.TestConsoleUI
 appsettings.json
+settings.json
 
 # Build results
 [Dd]ebug/
