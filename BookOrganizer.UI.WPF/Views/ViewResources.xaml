@@ -9,6 +9,7 @@
     <converters:InvertedBooleanToVisibilityConverter x:Key="InvBoolToVis" />
     <converters:DobCountAge x:Key="DobCountAge" />
     <converters:BookSeriesHeader x:Key="BookSeriesHeader" />
+    <converters:RowHasValuesConverter x:Key="RowHasValuesConverter" />
 
     <!--  Button Styles  -->
     <Style
