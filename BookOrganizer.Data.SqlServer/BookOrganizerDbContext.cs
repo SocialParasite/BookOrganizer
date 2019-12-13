@@ -41,11 +41,8 @@ namespace BookOrganizer.Data.SqlServer
             if (connectionString is null)
             {
                 connectionString = ConnectivityService.GetConnectionString();
-
-                optionsBuilder.UseSqlServer(connectionString);
             }
-            else
-                optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(connectionString);
 
             base.OnConfiguring(optionsBuilder);
         }

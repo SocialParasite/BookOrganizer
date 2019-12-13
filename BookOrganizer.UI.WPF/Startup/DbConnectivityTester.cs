@@ -1,6 +1,5 @@
 ﻿using BookOrganizer.Data.SqlServer;
 using BookOrganizer.UI.WPF.Services;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -13,7 +12,6 @@ namespace BookOrganizer.UI.WPF.Startup
     {
         private readonly IMetroDialogService metroDialogService;
         private string connectionString;
-        public static IConfigurationRoot Configuration { get; private set; }
 
         public DbConnectivityTester(IMetroDialogService metroDialogService, string connString = null)
         {
@@ -22,11 +20,7 @@ namespace BookOrganizer.UI.WPF.Startup
 
             if (connectionString is null)
             {
-                IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("connectionString.json");
-
-                Configuration = builder.Build();
-
-                connectionString = Configuration.GetConnectionString("BookOrganizerDbDEV");
+                connectionString = ConnectivityService.GetConnectionString();
             }
         }
 
