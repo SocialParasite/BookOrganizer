@@ -112,6 +112,11 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
             foreach (var db in Databases)
             {
+                if (db.Identifier is null || db.Server is null || db.Database is null)
+                {
+                    continue;
+                }
+
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
                 builder["Server"] = db.Server;
                 builder["Trusted_Connection"] = db.Trusted_Connection;
@@ -137,7 +142,10 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         private void OnRemoveConnectionStringExecute(string id)
         {
-            Databases.Remove(Databases.First(i => i.Identifier == id));
+            if (id != null || id != Databases.LastOrDefault().Identifier)
+            {
+                Databases.Remove(Databases.First(i => i.Identifier == id));
+            }
         }
 
     }
