@@ -180,7 +180,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BookSeriesHeader.cs" />
-    <Compile Include="Converters\BoolToAsteriskConverter.cs" />
     <Compile Include="Converters\DobCountAge.cs" />
     <Compile Include="Converters\InvertedBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToMaxConverter.cs" />
