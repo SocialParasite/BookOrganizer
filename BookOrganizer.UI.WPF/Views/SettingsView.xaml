@@ -91,7 +91,8 @@
             Margin="0,10,0,10"
             HorizontalContentAlignment="Right"
             Content="Path to book covers: "
-            Style="{StaticResource LabelStyles}" />
+            Style="{StaticResource LabelStyles}"
+            Visibility="Hidden" />
         <TextBox
             x:Name="StoragePathTextBox"
             Grid.Row="1"
@@ -99,14 +100,16 @@
             HorizontalAlignment="Stretch"
             Opacity="90"
             Style="{StaticResource TextBoxStyles}"
-            Text="{Binding StoragePath, Mode=TwoWay}" />
+            Text="{Binding StoragePath, Mode=TwoWay}"
+            Visibility="Hidden" />
         <Label
             x:Name="SPChoiceLabel"
             Grid.Row="2"
             Margin="0,10,0,10"
             HorizontalContentAlignment="Right"
             Content="Copy or move old files to new location? "
-            Style="{StaticResource LabelStyles}" />
+            Style="{StaticResource LabelStyles}"
+            Visibility="Hidden" />
         <ComboBox
             x:Name="StoragePathComboBox"
             Grid.Row="2"
@@ -116,7 +119,8 @@
             HorizontalAlignment="Left"
             ItemsSource="{Binding Source={StaticResource FileActions}}"
             SelectedValue="{Binding FileActionMode, Mode=TwoWay}"
-            Style="{StaticResource ComboBoxStyles}" />
+            Style="{StaticResource ComboBoxStyles}"
+            Visibility="Hidden" />
 
         <Label
             x:Name="ResolutionLabel"
@@ -167,7 +171,8 @@
                 HorizontalAlignment="Left"
                 Content="Save as default"
                 FontSize="18"
-                IsChecked="{Binding WillBeSavedAsDefault, Mode=TwoWay}" />
+                IsChecked="{Binding WillBeSavedAsDefault, Mode=TwoWay}"
+                Visibility="Hidden" />
         </Grid>
         <Button
             x:Name="ApplyButton"
