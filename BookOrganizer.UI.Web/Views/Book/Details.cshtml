@@ -38,9 +38,9 @@
         <div class="gridwrapper" style="height:auto;width:50%">
             <h2>Books in series:</h2>
             <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
-                @if (Model.SelectedItem.BookSeries != null)
+                @if (Model.SelectedItem.BooksSeries != null)
                 {
-                    @foreach (var book in Model.SelectedItem.BookSeries?.First().SeriesReadOrder)
+                    @foreach (var book in Model.SelectedItem.BooksSeries?.First().Series.SeriesReadOrder)
                     {
                         <form asp-controller="Book" asp-action="Details" asp-route-id="@book.BookId">
                             <button type="submit" class="btn-outline-secondary text-left" style="height:auto;width:100%;margin:10px;padding:5px;">
