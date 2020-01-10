@@ -15,7 +15,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             this.seriesLookupDataService = seriesLookupDataService;
 
-            InitializeRepositoryAsync();
+            Init();
+        }
+
+        public Task Init()
+        {
+            return InitializeRepositoryAsync();
         }
 
         public async override Task InitializeRepositoryAsync()

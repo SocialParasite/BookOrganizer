@@ -18,7 +18,12 @@ namespace BookOrganizer.UI.WPF.ViewModels
             this.publisherLookupDataService = publisherLookupDataService
                 ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
 
-            InitializeRepositoryAsync();
+            Init();
+        }
+
+        public Task Init()
+        {
+            return InitializeRepositoryAsync();
         }
 
         public override async Task InitializeRepositoryAsync()

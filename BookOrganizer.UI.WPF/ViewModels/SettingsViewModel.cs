@@ -50,7 +50,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             set { fileActionMode = value; OnPropertyChanged(); }
         }
 
-        private async Task InitializeRepositoryAsync()
+        private void InitializeRepositoryAsync()
         {
             ReadSettings();
 

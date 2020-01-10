@@ -18,11 +18,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
         {
             this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
 
-            InitializeRepositoryAsync();
+            Init();
         }
 
-        //public ICommand BookTitleLabelMouseLeftButtonUpCommand { get; }
-
+        public Task Init()
+        {
+            return InitializeRepositoryAsync();
+        }
 
         public override async Task InitializeRepositoryAsync()
         {
