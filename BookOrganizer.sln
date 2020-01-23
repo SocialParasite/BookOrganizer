@@ -32,6 +32,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{AABD3D26-DA44-47BD-B09A-723C2B981A75}"
+	ProjectSection(SolutionItems) = preProject
+		Book_Statistics.sql = Book_Statistics.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -239,6 +244,7 @@ Global
 		{183F67BF-2B62-40C8-A481-E1AFD060D949} = {102869BD-6572-4E4B-8295-5BDD9C7E4F5E}
 		{D07AF52F-7E62-4D99-A063-CB4A861C300F} = {3F710F31-D914-4AF7-B5BA-7B69D1193FFE}
 		{C2136CC2-84E6-46A8-BD0B-88BAEC035980} = {3F710F31-D914-4AF7-B5BA-7B69D1193FFE}
+		{AABD3D26-DA44-47BD-B09A-723C2B981A75} = {CFC9BCB1-B96F-43DB-8C9D-5632663931B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88707A94-E3ED-4E8D-8673-C6E2571320AF}

@@ -7,16 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="bootstrap" Version="4.3.1" />
+    <PackageReference Include="bootstrap" Version="4.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BookOrganizer.Data.DA\BookOrganizer.Data.DA.csproj" />
     <ProjectReference Include="..\BookOrganizer.Data.SqlServer\BookOrganizer.Data.SqlServer.csproj" />
     <ProjectReference Include="..\BookOrganizer.Domain\BookOrganizer.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AuthorPics\George_R._R._Martin.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="AuthorPics\placeholder.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="AuthorPics\RickUmali.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
