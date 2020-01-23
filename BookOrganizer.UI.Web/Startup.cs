@@ -44,6 +44,12 @@ namespace BookOrganizer.UI.Web
                 return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
             });
 
+            services.AddTransient<IRepository<Publisher>, PublishersRepository>();
+            services.AddTransient<IPublisherLookupDataService, LookupDataService>(ctx =>
+            {
+                return new LookupDataService(() => ctx.GetService<BookOrganizerDbContext>(), "temp");
+            });
+
             services.AddMvc(); 
         }
 

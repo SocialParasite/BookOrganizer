@@ -19,7 +19,7 @@
                     @Model.SelectedItem.ISBN
                 </div>
                 <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
-                    Pages: @Model.SelectedItem.PageCount Words: @Model.SelectedItem.WordCount
+                    Pages: @String.Format("{0:N0}", @Model.SelectedItem.PageCount) Words: @String.Format("{0:N0}", @Model.SelectedItem.WordCount)
                 </div>
                 <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
                     @Model.SelectedItem.Language?.LanguageName
@@ -38,7 +38,7 @@
         <div class="gridwrapper" style="height:auto;width:50%">
             <h2>Books in series:</h2>
             <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
-                @if (Model.SelectedItem.BooksSeries != null)
+                @if (Model.SelectedItem.BooksSeries.Count > 0)
                 {
                     @foreach (var book in Model.SelectedItem.BooksSeries?.First().Series.SeriesReadOrder)
                     {
@@ -64,7 +64,7 @@
                     <li>
                         <a asp-controller="Author" asp-action="Details" asp-route-id="@author.AuthorId">
                             <img src="@Url.Content($"~/AuthorPics/{Model.GetItemPicture(author.Author.MugShotPath)}")" asp-append-version="true" width="50" height="65">
-
+                            
                             @author.Author.LastName, @author.Author.FirstName
                         </a>
                     </li>

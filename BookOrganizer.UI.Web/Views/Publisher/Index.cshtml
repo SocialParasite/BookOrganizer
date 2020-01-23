@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Publishers";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var publisher in Model.Publishers)
+        {
+            <form asp-controller="Publisher" asp-action="Details" asp-route-id="@publisher.Id">
+                <button type="submit" class="btn-light" style="height:100px;width:250px;margin:10px">
+
+                    @{
+                        var pictureName = System.IO.Path.GetFileName(publisher.Picture);
+                        var picturePath = $"PublisherPics/{System.Net.WebUtility.UrlEncode(pictureName)}";
+                    }
+                    <img src="@Url.Content(picturePath)" asp-append-version="true" width="75" height="75">
+
+                    @publisher.DisplayMember
+                </button>
+            </form>
+        }
+    </div>
+</div>
