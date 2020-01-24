@@ -1,4 +1,4 @@
-﻿@model BookOrganizer.UI.Web.Models.BookDetailsViewModel
+﻿@model BookOrganizer.UI.Web.Models.BookDetailViewModel
 @{
     ViewData["Title"] = $"{Model.SelectedItem.Title}";
 }
@@ -64,7 +64,7 @@
                     <li>
                         <a asp-controller="Author" asp-action="Details" asp-route-id="@author.AuthorId">
                             <img src="@Url.Content($"~/AuthorPics/{Model.GetItemPicture(author.Author.MugShotPath)}")" asp-append-version="true" width="50" height="65">
-                            
+
                             @author.Author.LastName, @author.Author.FirstName
                         </a>
                     </li>

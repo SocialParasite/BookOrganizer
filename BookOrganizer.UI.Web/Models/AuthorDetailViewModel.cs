@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.Web.Models
 {
-    public class AuthorDetailsViewModel : BaseDetailViewModel<Author>
+    public class AuthorDetailViewModel : BaseDetailViewModel<Author>
     {
-        public AuthorDetailsViewModel(Author selectedAuthor)
+        public AuthorDetailViewModel(Author selectedAuthor)
         {
             SelectedItem = selectedAuthor ?? throw new ArgumentNullException(nameof(selectedAuthor));
         }

@@ -35,7 +35,7 @@ namespace BookOrganizer.UI.Web.Controllers
             if (Id == null) throw new ArgumentNullException(nameof(Id));
 
             var author = await authorsRepository.GetSelectedAsync((Guid)Id);
-            var vm = new AuthorDetailsViewModel(author); 
+            var vm = new AuthorDetailViewModel(author); 
 
             return View(vm);
         }
@@ -48,9 +48,9 @@ namespace BookOrganizer.UI.Web.Controllers
 
                 var author = await authorsRepository.GetSelectedAsync((Guid)Id);
 
-                var nationalities = await nationalityLookupDataService.GetNationalityLookupAsync(nameof(AuthorDetailsViewModel));
+                var nationalities = await nationalityLookupDataService.GetNationalityLookupAsync(nameof(AuthorDetailViewModel));
 
-                var vm = new AuthorDetailsViewModel(author);
+                var vm = new AuthorDetailViewModel(author);
 
                 vm.Nationalities = nationalities.ToList();
 

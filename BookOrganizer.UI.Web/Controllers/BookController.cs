@@ -31,7 +31,7 @@ namespace BookOrganizer.UI.Web.Controllers
             if (id is null) throw new ArgumentNullException(nameof(id));
 
             var book = await booksRepository.GetSelectedAsync((Guid)id);
-            var vm = new BookDetailsViewModel(book);
+            var vm = new BookDetailViewModel(book);
 
             return View(vm);
         }

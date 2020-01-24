@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Series";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var series in Model.Series)
+        {
+            <form asp-controller="Series" asp-action="Details" asp-route-id="@series.Id">
+                <button type="submit" class="btn-light" style="height:100px;width:250px;margin:10px">
+
+                    @{
+                        var pictureName = System.IO.Path.GetFileName(series.Picture);
+                        var picturePath = $"SeriesPictures/{System.Net.WebUtility.UrlEncode(pictureName)}";
+                    }
+                    <img src="@Url.Content(picturePath)" asp-append-version="true" width="75" height="75">
+
+                    @series.DisplayMember
+                </button>
+            </form>
+        }
+    </div>
+</div>

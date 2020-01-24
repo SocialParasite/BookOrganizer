@@ -7,9 +7,9 @@ using BookOrganizer.Domain;
 
 namespace BookOrganizer.UI.Web.Models
 {
-    public class PublisherDetailsViewModel : BaseDetailViewModel<Publisher>
+    public class PublisherDetailViewModel : BaseDetailViewModel<Publisher>
     {
-        public PublisherDetailsViewModel(Publisher selectedPublisher)
+        public PublisherDetailViewModel(Publisher selectedPublisher)
         {
             SelectedItem = selectedPublisher ?? throw new ArgumentNullException(nameof(selectedPublisher));
         }

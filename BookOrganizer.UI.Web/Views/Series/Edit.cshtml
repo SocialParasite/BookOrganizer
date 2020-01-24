@@ -1,40 +1,39 @@
-﻿@model BookOrganizer.UI.Web.Models.PublisherDetailViewModel
+﻿@model BookOrganizer.UI.Web.Models.SeriesDetailViewModel
 @{
     ViewData["Title"] = $"{Model.SelectedItem.Name}";
 }
 
 <div style="position:absolute;opacity:0.9;width:auto;left:8px;right:10px;">
     <div>
-        @Html.ActionLink("Edit", "Edit", new { Id = Model.SelectedItem.Id })
-
         <div class="gridwrapper" style="height:auto;">
             <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
                 <div style="border:none;width:100%;height:92%;">
-                    <img src="@Url.Content($"~/PublisherPics/{Model.GetItemPicture(Model.SelectedItem.LogoPath)}")" asp-append-version="true">
+                    <img src="@Url.Content($"~/SeriesPictures/{Model.GetItemPicture(Model.SelectedItem.PicturePath)}")" asp-append-version="true">
                 </div>
             </div>
             <div class="gridcontent" style="background-color:#ffffff;border:none;width:25%;padding-top:15px;">
-                <div style="border:none;width:100%;height:15%;margin-bottom:10px;">
-                    @Model.SelectedItem.Name
-                </div>
+                @Html.LabelFor(model => model.SelectedItem.Name)
+                <input type="text" class="form-control form-rounded" style="width:100%;height:15%;margin-bottom:10px;" value="@Model.SelectedItem.Name" />
+
                 <div style="border:none;width:100%;height:15%;"></div>
             </div>
         </div>
         <div class="gridwrapper" style="height:auto;width:50%">
             <div class="gridcontent" style="width:100%;background:white;border:hidden">
-                @Model.SelectedItem.Description
+                @Html.LabelFor(model => model.SelectedItem.Description)
+                <textarea rows="10" class="form-control form-rounded">@Model.SelectedItem.Description </textarea>
             </div>
         </div>
         <div class="gridwrapper" style="height:auto;width:50%">
             <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
-                @foreach (var book in Model.SelectedItem.Books)
+                @foreach (var book in Model.SelectedItem.SeriesReadOrder)
                 {
                     <form asp-controller="Book" asp-action="Details" asp-route-id="@book.Id">
                         <button type="submit" class="btn-outline-secondary text-left" style="height:auto;width:100%;margin:10px;padding:5px;">
                             <span style="align-items:start;">
-                                <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(book.BookCoverPicturePath)}")" asp-append-version="true" width="50" height="75">
+                                <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(book.Book.BookCoverPicturePath)}")" asp-append-version="true" width="50" height="75">
 
-                                @book.Title
+                                @book.Book.Title
                             </span>
                         </button>
                     </form>
@@ -43,4 +42,3 @@
         </div>
     </div>
 </div>
-

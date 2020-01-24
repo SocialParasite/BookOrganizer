@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BookOrganizer.DA;
 using BookOrganizer.Domain;
@@ -33,25 +31,25 @@ namespace BookOrganizer.UI.Web.Controllers
             if (Id == null) throw new ArgumentNullException(nameof(Id));
 
             var publisher = await publishersRepository.GetSelectedAsync((Guid)Id);
-            var vm = new PublisherDetailsViewModel(publisher);
+            var vm = new PublisherDetailViewModel(publisher);
 
             return View(vm);
         }
 
-        //public async Task<IActionResult> Edit(Guid? Id)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (Id == null) throw new ArgumentNullException(nameof(Id));
+        public async Task<IActionResult> Edit(Guid? Id)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Id == null) throw new ArgumentNullException(nameof(Id));
 
-        //        var publisher = await publishersRepository.GetSelectedAsync((Guid)Id);
+                var publisher = await publishersRepository.GetSelectedAsync((Guid)Id);
 
-        //        var vm = new PublisherDetailsViewModel(publisher);
+                var vm = new PublisherDetailViewModel(publisher);
 
-        //        return View(vm);
-        //    }
+                return View(vm);
+            }
 
-        //    return Redirect("/");
-        //}
+            return Redirect("/");
+        }
     }
 }
