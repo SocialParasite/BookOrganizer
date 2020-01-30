@@ -86,7 +86,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
             Publishers = new ObservableCollection<LookupItem>();
             Authors = new ObservableCollection<LookupItem>();
             AllBookFormats = new ObservableCollection<Tuple<LookupItem, bool>>();
-
+            AllBookGenres = new ObservableCollection<Tuple<LookupItem, bool>>(); 
             SelectedItem = new Book();
 
             YearsList = PopulateYearsMenu();
@@ -172,7 +172,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public ObservableCollection<Tuple<LookupItem, bool>> AllBookFormats { get; set; }
 
-        public ObservableCollection<Tuple<LookupItem, bool>> AllBookGenres { get; set; } = new ObservableCollection<Tuple<LookupItem, bool>>();
+        public ObservableCollection<Tuple<LookupItem, bool>> AllBookGenres { get; set; }
 
         public ObservableCollection<LookupItem> Publishers { get; set; }
 
@@ -673,6 +673,7 @@ namespace BookOrganizer.UI.WPF.ViewModels
                 var item = SelectedItem.GenreLink.Single(g => g.GenreId == lookupItem.Id);
                 SelectedItem.GenreLink.Remove(item);
             }
+            SetChangeTracker();
         }
 
         private bool OnShowSelectedAuthorCanExecute(Guid? id)

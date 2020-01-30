@@ -90,7 +90,15 @@ namespace BookOrganizer.UI.WPF.ViewModels
             }
         }
 
-        public bool IsViewVisible { get => isViewVisible; set { isViewVisible = value; OnPropertyChanged(); } }
+        public bool IsViewVisible 
+        {
+            get => isViewVisible;
+            set
+            {
+                isViewVisible = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool IsMenuBarVisible { get => isMenuBarVisible; set { isMenuBarVisible = value; OnPropertyChanged(); } }
 

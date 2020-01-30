@@ -10,6 +10,7 @@
     <converters:DobCountAge x:Key="DobCountAge" />
     <converters:BookSeriesHeader x:Key="BookSeriesHeader" />
     <converters:RowHasValuesConverter x:Key="RowHasValuesConverter" />
+    <converters:NullToEditableDescriptionConverter x:Key="NullToEditableDescriptionConverter" />
 
     <!--  Button Styles  -->
     <Style

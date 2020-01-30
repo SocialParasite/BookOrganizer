@@ -371,7 +371,14 @@
                         <Style BasedOn="{StaticResource MetroExpander}" TargetType="Expander">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding SelectedItem.Description}" Value="{x:Null}">
-                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Setter Property="Visibility">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource NullToEditableDescriptionConverter}">
+                                                <Binding Path="SelectedItem.Description" />
+                                                <Binding Path="UserMode.Item4" />
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
