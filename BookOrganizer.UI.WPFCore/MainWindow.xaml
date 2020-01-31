@@ -5,9 +5,58 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BookOrganizer.UI.WPFCore"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MainWindow"
+    xmlns:view="clr-namespace:BookOrganizer.UI.WPFCore.Views"
+    xmlns:viewModel="clr-namespace:BookOrganizer.UI.WPFCore.ViewModels"
+    x:Name="BookOrganizerMainWindow"
+    Title="Book Organizer"
     Width="800"
     Height="450"
     mc:Ignorable="d">
-    <Grid />
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes\BookOrganizer.UI.WPFCore.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type viewModel:MainPageViewModel}">
+                <view:MainPageView />
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel>
+        <Label Visibility="{Binding IsViewVisible, Converter={StaticResource BoolToVis}}">
+            <ContentControl Width="{Binding ElementName=BookOrganizerMainWindow, Path=ActualWidth}" Content="{Binding SelectedVM}" />
+        </Label>
+        <TabControl
+            x:Name="SecondaryTabControl"
+            ItemsSource="{Binding DetailViewModels}"
+            SelectedItem="{Binding SelectedDetailViewModel}">
+            <TabControl.ItemContainerStyle>
+                <Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="TabItem">
+                    <Setter Property="Background" Value="Azure" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="2" />
+                </Style>
+            </TabControl.ItemContainerStyle>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding TabTitle}" />
+                        <TextBlock
+                            Foreground="Red"
+                            Text="*"
+                            Visibility="{Binding HasChanges, Converter={StaticResource BoolToVis}}" />
+                        <Button
+                            Margin="7,0,0,0"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Top"
+                            Command="{Binding CloseDetailViewCommand}"
+                            Content="X"
+                            FontSize="16"
+                            FontWeight="Bold" />
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
+    </DockPanel>
 </Window>
