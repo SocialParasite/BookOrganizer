@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Autofac.Features.Indexed;
@@ -49,6 +47,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             if (eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>() != null)
             {
+                this.eventAggregator.GetEvent<OpenItemViewEvent>()
+                    .Subscribe(OnOpenSelectedItemView);
+
                 //this.eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
                 //        .Subscribe(OnOpenBookMatchingSelectedId);
 
@@ -111,6 +112,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
+        private void OnOpenSelectedItemView(OpenItemViewEventArgs args)
+        {
+            OnOpenSelectedViewExecute(args.ViewModelName);
+        }
+
         private async void OnOpenDetailViewMatchingSelectedId(OpenDetailViewEventArgs args)
         {
             var detailViewModel = DetailViewModels
@@ -145,69 +151,69 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             IsViewVisible = true;
         }
 
-        //private void OnOpenBookMatchingSelectedId(Guid bookId)
-        //{
-        //    OnOpenDetailViewMatchingSelectedId(
-        //       new OpenDetailViewEventArgs
-        //       {
-        //           Id = bookId,
-        //           ViewModelName = nameof(BookDetailViewModel)
-        //       });
-        //}
+        private void OnOpenBookMatchingSelectedId(Guid bookId)
+        {
+            OnOpenDetailViewMatchingSelectedId(
+               new OpenDetailViewEventArgs
+               {
+                   Id = bookId,
+                   ViewModelName = nameof(BookDetailViewModel)
+               });
+        }
 
-        //private void OnOpenPublisherMatchingSelectedId(Guid publisherId)
-        //{
-        //    OnOpenDetailViewMatchingSelectedId(
-        //        new OpenDetailViewEventArgs
-        //        {
-        //            Id = publisherId,
-        //            ViewModelName = nameof(PublisherDetailViewModel)
-        //        });
-        //}
+        private void OnOpenPublisherMatchingSelectedId(Guid publisherId)
+        {
+            OnOpenDetailViewMatchingSelectedId(
+                new OpenDetailViewEventArgs
+                {
+                    Id = publisherId,
+                    ViewModelName = nameof(PublisherDetailViewModel)
+                });
+        }
 
-        //private void OnOpenAuthorMatchingSelectedId(Guid authorId)
-        //{
-        //    OnOpenDetailViewMatchingSelectedId(
-        //        new OpenDetailViewEventArgs
-        //        {
-        //            Id = authorId,
-        //            ViewModelName = nameof(AuthorDetailViewModel)
-        //        });
-        //}
+        private void OnOpenAuthorMatchingSelectedId(Guid authorId)
+        {
+            OnOpenDetailViewMatchingSelectedId(
+                new OpenDetailViewEventArgs
+                {
+                    Id = authorId,
+                    ViewModelName = nameof(AuthorDetailViewModel)
+                });
+        }
 
-        //private void OnOpenSeriesMatchingSelectedId(Guid seriesId)
-        //{
-        //    OnOpenDetailViewMatchingSelectedId(
-        //        new OpenDetailViewEventArgs
-        //        {
-        //            Id = seriesId,
-        //            ViewModelName = nameof(SeriesDetailViewModel)
-        //        });
-        //}
+        private void OnOpenSeriesMatchingSelectedId(Guid seriesId)
+        {
+            OnOpenDetailViewMatchingSelectedId(
+                new OpenDetailViewEventArgs
+                {
+                    Id = seriesId,
+                    ViewModelName = nameof(SeriesDetailViewModel)
+                });
+        }
 
-        //private void CloseDetailsView(CloseDetailsViewEventArgs args)
-        //{
-        //    RemoveDetailViewModel(args.Id, args.ViewModelName);
-        //}
+        private void CloseDetailsView(CloseDetailsViewEventArgs args)
+        {
+            RemoveDetailViewModel(args.Id, args.ViewModelName);
+        }
 
-        //private void RemoveDetailViewModel(Guid id, string viewModelName)
-        //{
-        //    var detailViewModel = DetailViewModels
-        //        .SingleOrDefault(vm => vm.Id == id
-        //        && vm.GetType().Name == viewModelName);
+        private void RemoveDetailViewModel(Guid id, string viewModelName)
+        {
+            var detailViewModel = DetailViewModels
+                .SingleOrDefault(vm => vm.Id == id
+                && vm.GetType().Name == viewModelName);
 
-        //    if (detailViewModel != null)
-        //    {
-        //        DetailViewModels.Remove(detailViewModel);
-        //    }
-        //}
+            if (detailViewModel != null)
+            {
+                DetailViewModels.Remove(detailViewModel);
+            }
+        }
 
-        //private void OnSaveDetailsView(OpenDetailViewEventArgs args)
-        //{
-        //    RemoveDetailViewModel(default, args.ViewModelName);
+        private void OnSaveDetailsView(OpenDetailViewEventArgs args)
+        {
+            RemoveDetailViewModel(default, args.ViewModelName);
 
-        //    OnOpenDetailViewMatchingSelectedId(args);
-        //}
+            OnOpenDetailViewMatchingSelectedId(args);
+        }
         //private void OnShowMenuExecute()
         //{
         //    IsMenuBarVisible = !IsMenuBarVisible;

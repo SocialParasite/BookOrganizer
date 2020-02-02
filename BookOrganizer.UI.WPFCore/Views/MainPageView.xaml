@@ -26,18 +26,22 @@
                 <Button
                     x:Name="ShowAuthorButton"
                     Command="{Binding ShowItemsCommand}"
+                    CommandParameter="{x:Type viewModel:AuthorsViewModel}"
                     Content="Authors" />
                 <Button
                     x:Name="ShowBookButton"
                     Command="{Binding ShowItemsCommand}"
+                    CommandParameter="{x:Type viewModel:BooksViewModel}"
                     Content="Books" />
                 <Button
                     x:Name="ShowPublisherButton"
                     Command="{Binding ShowItemsCommand}"
+                    CommandParameter="{x:Type viewModel:PublishersViewModel}"
                     Content="Publishers" />
                 <Button
                     x:Name="ShowSeriesButton"
                     Command="{Binding ShowItemsCommand}"
+                    CommandParameter="{x:Type viewModel:SeriesViewModel}"
                     Content="Series" />
             </WrapPanel>
         </GroupBox>
@@ -59,6 +63,7 @@
                     Command="{Binding AddNewItemCommand}"
                     CommandParameter="{x:Type viewModel:AuthorDetailViewModel}"
                     Content="Add a new author" />
+                <!--  TODO: Change command paramter to string?  -->
                 <Button
                     x:Name="AddBookButton"
                     Command="{Binding AddNewItemCommand}"

@@ -20,6 +20,18 @@
             <DataTemplate DataType="{x:Type viewModel:MainPageViewModel}">
                 <view:MainPageView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AuthorsViewModel}">
+                <view:BaseView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
+                <view:BaseView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PublishersViewModel}">
+                <view:BaseView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SeriesViewModel}">
+                <view:BaseView />
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
 

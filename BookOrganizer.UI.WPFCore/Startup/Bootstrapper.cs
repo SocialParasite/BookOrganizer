@@ -20,7 +20,7 @@ namespace BookOrganizer.UI.WPFCore.Startup
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
 
-            builder.RegisterAssemblyTypes(typeof(MainPageViewModel).Assembly)
+            builder.RegisterAssemblyTypes(typeof(AuthorsViewModel).Assembly)
                 .Where(type => type.Name.EndsWith("ViewModel"))
                 .Keyed<ISelectedViewModel>(c => c.Name);
 

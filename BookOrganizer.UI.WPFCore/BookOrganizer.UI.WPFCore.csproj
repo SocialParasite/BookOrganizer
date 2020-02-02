@@ -33,4 +33,10 @@
     <ProjectReference Include="..\BookOrganizer.Domain\BookOrganizer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\packages\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

@@ -29,6 +29,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             this.formatLookupDataService = formatLookupDataService ?? throw new ArgumentNullException(nameof(formatLookupDataService));
             this.genreLookupDataService = genreLookupDataService ?? throw new ArgumentNullException(nameof(genreLookupDataService));
 
+            ShowItemsCommand = new DelegateCommand<Type>(OnShowItemsExecute);
+
             AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
             EditLanguagesCommand = new DelegateCommand(OnEditLanguagesExecute);
             EditNationalitiesCommand = new DelegateCommand(OnEditNationalitiesExecute);
@@ -36,11 +38,21 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             EditBookGenresCommand = new DelegateCommand(OnEditBookGenresExecute);
         }
 
+        public ICommand ShowItemsCommand { get; }
         public ICommand AddNewItemCommand { get; }
         public ICommand EditLanguagesCommand { get; }
         public ICommand EditNationalitiesCommand { get; }
         public ICommand EditBookFormatsCommand { get; }
         public ICommand EditBookGenresCommand { get; }
+
+        private void OnShowItemsExecute(Type itemType)
+        {
+            eventAggregator.GetEvent<OpenItemViewEvent>()
+           .Publish(new OpenItemViewEventArgs
+           {
+               ViewModelName = Type.GetType(itemType.FullName).Name
+           });
+        }
 
         private void OnAddNewItemExecute(Type itemType)
         {
