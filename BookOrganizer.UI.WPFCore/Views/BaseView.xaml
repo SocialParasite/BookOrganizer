@@ -86,23 +86,26 @@
                 <ColumnDefinition Width="*" MinWidth="100" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label x:Name="SearchLabel" Content="Search: " />
+            <Label
+                x:Name="SearchLabel"
+                Content="Search: "
+                Style="{StaticResource LabelStyles}" />
             <TextBox
                 x:Name="SearchTextBox"
+                Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Width="250"
+                Style="{StaticResource TextBoxStyles}"
                 Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 x:Name="AddNewItemButton"
                 Grid.Column="6"
                 Height="50"
-                MinWidth="75"
                 Margin="0,0,15,0"
                 HorizontalAlignment="Right"
                 Command="{Binding AddNewItemCommand}"
                 CommandParameter="{x:Type viewModel:AuthorDetailViewModel}"
                 Content="Add new item" />
-            <!--  TODO: Change command parameter to string?  -->
         </Grid>
         <Grid Grid.Row="2">
             <ScrollViewer>
