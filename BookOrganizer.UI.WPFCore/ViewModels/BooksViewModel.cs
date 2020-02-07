@@ -1,10 +1,10 @@
-﻿using BookOrganizer.DA;
-using BookOrganizer.Domain;
-using Prism.Events;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using BookOrganizer.DA;
+using BookOrganizer.Domain;
+using Prism.Events;
+using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
@@ -13,15 +13,16 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private readonly IBookLookupDataService bookLookupDataService;
 
         public BooksViewModel(IEventAggregator eventAggregator,
-                              IBookLookupDataService bookLookupDataService)
-            : base(eventAggregator)
+                              IBookLookupDataService bookLookupDataService,
+                              ILogger logger)
+            : base(eventAggregator, logger)
         {
             this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
 
             Init();
         }
 
-        public Task Init() 
+        private Task Init() 
             => InitializeRepositoryAsync();
 
         public override async Task InitializeRepositoryAsync()

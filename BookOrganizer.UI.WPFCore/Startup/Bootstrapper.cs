@@ -5,6 +5,7 @@ using BookOrganizer.UI.WPFCore.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Prism.Events;
+using Serilog;
 using System.IO;
 
 namespace BookOrganizer.UI.WPFCore.Startup
@@ -34,6 +35,13 @@ namespace BookOrganizer.UI.WPFCore.Startup
             builder.RegisterAssemblyTypes(typeof(BooksRepository).Assembly)
                 .Where(type => type.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
+
+            builder.Register<ILogger>((_)
+                => new LoggerConfiguration()
+                    .WriteTo.File("Log-{Date}.txt", rollingInterval: RollingInterval.Day)
+                    .WriteTo.Seq("http://localhost:5341/")
+                    .CreateLogger())
+                .SingleInstance();
 
             //var startupDb = GetStartupDatabase();
             //var connectionString = ConnectivityService.GetConnectionString(startupDb);

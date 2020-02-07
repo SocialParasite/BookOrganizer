@@ -9,6 +9,7 @@ using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Extensions;
 using Prism.Commands;
 using Prism.Events;
+using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
@@ -17,10 +18,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
     {
         private List<LookupItem> entityCollection;
         public readonly IEventAggregator eventAggregator;
-
-        public BaseViewModel(IEventAggregator eventAggregator)
+        protected readonly ILogger logger;
+        
+        public BaseViewModel(IEventAggregator eventAggregator,
+                             ILogger logger)
         {
-            this.eventAggregator = eventAggregator;
+            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
 

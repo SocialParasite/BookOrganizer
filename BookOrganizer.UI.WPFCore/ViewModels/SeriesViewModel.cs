@@ -1,6 +1,7 @@
 ﻿using BookOrganizer.DA;
 using BookOrganizer.Domain;
 using Prism.Events;
+using Serilog;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,15 +12,16 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private readonly ISeriesLookupDataService seriesLookupDataService;
 
         public SeriesViewModel(IEventAggregator eventAggregator, 
-                               ISeriesLookupDataService seriesLookupDataService)
-            : base(eventAggregator)
+                               ISeriesLookupDataService seriesLookupDataService,
+                               ILogger logger)
+            : base(eventAggregator, logger)
         {
             this.seriesLookupDataService = seriesLookupDataService;
 
             Init();
         }
 
-        public Task Init() 
+        private Task Init() 
             => InitializeRepositoryAsync();
 
         public async override Task InitializeRepositoryAsync()
