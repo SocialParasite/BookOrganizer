@@ -25,9 +25,9 @@ namespace BookOrganizer.Domain
 
                 return fullPath;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw; //TODO:
+                throw;
             }
         }
     }
