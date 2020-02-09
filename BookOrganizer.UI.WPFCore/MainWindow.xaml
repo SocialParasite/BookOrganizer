@@ -3,6 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:BookOrganizer.UI.WPFCore"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:BookOrganizer.UI.WPFCore.Views"
@@ -32,43 +34,153 @@
             <DataTemplate DataType="{x:Type viewModel:SeriesViewModel}">
                 <view:BaseView />
             </DataTemplate>
+
+            <Style x:Key="FadeOutMenu" TargetType="{x:Type Label}">
+                <Setter Property="Height" Value="10" />
+                <Style.Triggers>
+                    <EventTrigger RoutedEvent="Control.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Height"
+                                    To="60"
+                                    Duration="0:0:0.3">
+                                    <!--<DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut" />
+                                    </DoubleAnimation.EasingFunction>-->
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Control.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    AccelerationRatio="0.5"
+                                    BeginTime="0:0:3"
+                                    DecelerationRatio="0.5"
+                                    Storyboard.TargetProperty="Height"
+                                    From="60"
+                                    To="10"
+                                    Duration="0:0:2" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
-    <DockPanel>
-        <Label Visibility="{Binding IsViewVisible, Converter={StaticResource BoolToVis}}">
-            <ContentControl Width="{Binding ElementName=BookOrganizerMainWindow, Path=ActualWidth}" Content="{Binding SelectedVM}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label
+            x:Name="ToolbarLabel"
+            HorizontalAlignment="Stretch"
+            Style="{StaticResource FadeOutMenu}">
+            <Label.Content>
+                <DockPanel>
+                    <Button CommandParameter="MainPageViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\home(24px).png" />
+                            <Label Content="Home" />
+                        </StackPanel>
+                    </Button>
+                    <Button CommandParameter="BooksViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\book (24px).png" />
+                            <Label Content="Books" />
+                        </StackPanel>
+                    </Button>
+                    <Button CommandParameter="SeriesViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\saga(24px).png" />
+                            <Label Content="Series" />
+                        </StackPanel>
+                    </Button>
+                    <Button CommandParameter="AuthorsViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\professions-and-jobs(24px).png" />
+                            <Label Content="Authors" />
+                        </StackPanel>
+                    </Button>
+                    <Button CommandParameter="PublishersViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\agency(24px).png" />
+                            <Label Content="Publishers" />
+                        </StackPanel>
+                    </Button>
+                    <Button CommandParameter="SettingsViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\industry(24px).png" />
+                            <Label Content="Settings" />
+                        </StackPanel>
+                    </Button>
+                </DockPanel>
+            </Label.Content>
         </Label>
-        <TabControl
-            x:Name="SecondaryTabControl"
-            ItemsSource="{Binding DetailViewModels}"
-            SelectedItem="{Binding SelectedDetailViewModel}">
-            <TabControl.ItemContainerStyle>
-                <Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="TabItem">
-                    <Setter Property="Background" Value="Azure" />
-                    <Setter Property="BorderBrush" Value="Transparent" />
-                    <Setter Property="BorderThickness" Value="2" />
-                </Style>
-            </TabControl.ItemContainerStyle>
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding TabTitle}" />
-                        <TextBlock
-                            Foreground="Red"
-                            Text="*"
-                            Visibility="{Binding HasChanges, Converter={StaticResource BoolToVis}}" />
-                        <Button
-                            Margin="7,0,0,0"
-                            HorizontalContentAlignment="Right"
-                            VerticalContentAlignment="Top"
-                            Command="{Binding CloseDetailViewCommand}"
-                            Content="X"
-                            FontSize="16"
-                            FontWeight="Bold" />
-                    </StackPanel>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-        </TabControl>
-    </DockPanel>
+
+        <!--<DockPanel>
+        -->
+        <!--  info messages, e.g. book added to db  -->
+        <!--
+        </DockPanel>-->
+
+        <DockPanel Grid.Row="1">
+            <Label Visibility="{Binding IsViewVisible, Converter={StaticResource BoolToVis}}">
+                <ContentControl Width="{Binding ElementName=BookOrganizerMainWindow, Path=ActualWidth}" Content="{Binding SelectedVM}" />
+            </Label>
+            <TabControl
+                x:Name="SecondaryTabControl"
+                ItemsSource="{Binding DetailViewModels}"
+                SelectedItem="{Binding SelectedDetailViewModel}">
+                <TabControl.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource {x:Type TabItem}}" TargetType="TabItem">
+                        <Setter Property="Background" Value="Azure" />
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="2" />
+                    </Style>
+                </TabControl.ItemContainerStyle>
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding TabTitle}" />
+                            <TextBlock
+                                Foreground="Red"
+                                Text="*"
+                                Visibility="{Binding HasChanges, Converter={StaticResource BoolToVis}}" />
+                            <Button
+                                Margin="7,0,0,0"
+                                HorizontalContentAlignment="Right"
+                                VerticalContentAlignment="Top"
+                                Command="{Binding CloseDetailViewCommand}"
+                                Content="X"
+                                FontSize="16"
+                                FontWeight="Bold" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+            </TabControl>
+        </DockPanel>
+    </Grid>
 </Window>

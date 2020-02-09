@@ -67,6 +67,13 @@
         <Setter Property="Template" Value="{StaticResource ButtonTemplate}" />
     </Style>
 
+    <Style x:Key="NavigationMenuButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="5,0,5,0" />
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Command" Value="{Binding OpenSelectedViewCommand}" />
+    </Style>
+
     <Style BasedOn="{StaticResource BaseButtonStyle}" TargetType="{x:Type Button}" />
 
 </ResourceDictionary>
