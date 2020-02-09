@@ -13,6 +13,7 @@
     Title="Book Organizer"
     Width="1080"
     Height="800"
+    MinWidth="400"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>

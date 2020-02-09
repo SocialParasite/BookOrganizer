@@ -18,7 +18,7 @@
                     <Grid x:Name="UserDTGrid" MinHeight="100">
                         <Label
                             x:Name="ItemCollectionAuthorNameLabel"
-                            Width="400"
+                            Width="300"
                             Height="{Binding Path=Height, ElementName=UserDTGrid}"
                             Margin="1"
                             HorizontalAlignment="Stretch">
@@ -34,7 +34,7 @@
                                         Background="WhiteSmoke"
                                         BorderBrush="SteelBlue"
                                         BorderThickness="1"
-                                        FontSize="18">
+                                        FontSize="12">
                                         <Label.Content>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -77,13 +77,9 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" MaxWidth="150" />
-                <ColumnDefinition Width="*" MinWidth="150" />
-                <ColumnDefinition Width="*" MaxWidth="150" />
-                <ColumnDefinition Width="*" MinWidth="150" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" MinWidth="100" />
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="*" MinWidth="160" />
+                <ColumnDefinition Width="*" MinWidth="120" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label
@@ -93,13 +89,11 @@
             <TextBox
                 x:Name="SearchTextBox"
                 Grid.Column="1"
-                Grid.ColumnSpan="2"
-                Width="250"
-                Style="{StaticResource TextBoxStyles}"
+                MinWidth="150"
                 Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 x:Name="AddNewItemButton"
-                Grid.Column="6"
+                Grid.Column="2"
                 Height="50"
                 Margin="0,0,15,0"
                 HorizontalAlignment="Right"
