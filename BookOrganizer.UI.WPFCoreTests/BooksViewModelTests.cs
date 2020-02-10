@@ -38,6 +38,13 @@ namespace BookOrganizer.UI.WPFCoreTests
             
             await viewModel.InitializeRepositoryAsync();
             viewModel.EntityCollection.Count.Should().Equals(2);
+        }
+
+        [Fact]
+        public async Task Book_In_Collection()
+        {
+            var viewModel = CreateViewModelWithBooks();
+            await viewModel.InitializeRepositoryAsync();
 
             var book = viewModel.EntityCollection.SingleOrDefault(f => f.DisplayMember == "The Book");
 

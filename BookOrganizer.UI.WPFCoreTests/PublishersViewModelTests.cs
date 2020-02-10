@@ -35,14 +35,22 @@ namespace BookOrganizer.UI.WPFCoreTests
         {
             var viewModel = CreateViewModelWithPublishers();
             viewModel.EntityCollection.Count.Should().Equals(0);
+
             await viewModel.InitializeRepositoryAsync();
 
             viewModel.EntityCollection.Count.Should().Equals(2);
+        }
 
-            var book = viewModel.EntityCollection.SingleOrDefault(f => f.DisplayMember == "Publisher 1");
+        [Fact]
+        public async Task Publisher_In_Collection()
+        {
+            var viewModel = CreateViewModelWithPublishers();
+            
+            await viewModel.InitializeRepositoryAsync();
+            var publisher = viewModel.EntityCollection.SingleOrDefault(f => f.DisplayMember == "Publisher 1");
 
-            book.Should().NotBeNull();
-            book.DisplayMember.Should().BeEquivalentTo("Publisher 1");
+            publisher.Should().NotBeNull();
+            publisher.DisplayMember.Should().BeEquivalentTo("Publisher 1");
         }
     }
 }

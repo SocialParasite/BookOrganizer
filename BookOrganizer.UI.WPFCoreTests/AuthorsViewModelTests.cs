@@ -40,6 +40,14 @@ namespace BookOrganizer.UI.WPFCoreTests
 
             await viewModel.InitializeRepositoryAsync();
             viewModel.EntityCollection.Count.Should().Equals(2);
+        }
+
+        [Fact]
+        public async Task Author_In_Collection()
+        {
+            var viewModel = CreateViewModelWithAuthors();
+            await viewModel.InitializeRepositoryAsync();
+
             var book = viewModel.EntityCollection.SingleOrDefault(f => f.DisplayMember == "King, Stephen");
 
             book.Should().NotBeNull();

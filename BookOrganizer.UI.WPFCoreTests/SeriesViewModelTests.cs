@@ -37,12 +37,19 @@ namespace BookOrganizer.UI.WPFCoreTests
             viewModel.EntityCollection.Count.Should().Equals(0);
             await viewModel.InitializeRepositoryAsync();
 
-            viewModel.EntityCollection.Count.Should().Equals(2);
+            viewModel.EntityCollection.Count.Should().Equals(2); 
+        }
 
-            var book = viewModel.EntityCollection.SingleOrDefault(f => f.DisplayMember == "A Song of Ice and Fire");
+        [Fact]
+        public async Task Series_In_Collection()
+        {
+            var viewModel = CreateViewModelWithSeries();
+            await viewModel.InitializeRepositoryAsync();
 
-            book.Should().NotBeNull();
-            book.DisplayMember.Should().BeEquivalentTo("A Song of Ice and Fire");
+            var series = viewModel.EntityCollection.SingleOrDefault(f => f.DisplayMember == "A Song of Ice and Fire");
+
+            series.Should().NotBeNull();
+            series.DisplayMember.Should().BeEquivalentTo("A Song of Ice and Fire");
         }
     }
 }
