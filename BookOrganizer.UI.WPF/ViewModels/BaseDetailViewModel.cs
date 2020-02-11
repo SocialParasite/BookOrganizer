@@ -92,7 +92,13 @@ namespace BookOrganizer.UI.WPF.ViewModels
 
         public virtual string TabTitle
         {
-            get { return tabTitle; }
+            get 
+            {
+                if (tabTitle.Length <= 50)
+                    return tabTitle;
+                else
+                    return tabTitle.Substring(0, 50) + "...";
+            }
             set { tabTitle = value; OnPropertyChanged(); }
         }
 
