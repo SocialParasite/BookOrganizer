@@ -137,13 +137,22 @@
                             <Label Content="Settings" />
                         </StackPanel>
                     </Button>
+                    <ToggleButton Style="{StaticResource NavigationMenuToggleButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\placeholder.png" />
+                            <Label Content="Autohide menu" />
+                        </StackPanel>
+                    </ToggleButton>
                 </DockPanel>
             </Label.Content>
         </Label>
 
         <!--<DockPanel>
         -->
-        <!--  info messages, e.g. book added to db  -->
+        <!--  info messages, e.g. book added to db??  -->
         <!--
         </DockPanel>-->
 

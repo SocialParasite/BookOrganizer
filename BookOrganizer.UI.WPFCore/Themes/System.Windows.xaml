@@ -6,5 +6,6 @@
         <ResourceDictionary Source="BaseResources.xaml" />
         <ResourceDictionary Source="Styles/ButtonStyles.xaml" />
         <ResourceDictionary Source="Styles/TextBoxStyles.xaml" />
+        <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
