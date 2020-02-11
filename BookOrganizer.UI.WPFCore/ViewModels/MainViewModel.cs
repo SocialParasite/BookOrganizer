@@ -100,15 +100,35 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
-        public bool IsMenuBarVisible 
+        public bool IsMenuBarVisible
         {
-            get => isMenuBarVisible; 
+            get => isMenuBarVisible;
             set
             {
-                isMenuBarVisible = value;
+                isMenuBarVisible = SwitchMenuVisibility(value);
                 OnPropertyChanged();
             }
         }
+
+        private bool SwitchMenuVisibility(bool value)
+        {
+            PinGlyph = value ? '\uE718' : '\uE77A';
+
+            return value;
+        }
+
+        private char pinGlyph;
+
+        public char PinGlyph
+        {
+            get { return pinGlyph; }
+            set
+            {
+                pinGlyph = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public ISelectedViewModel SelectedVM
         {

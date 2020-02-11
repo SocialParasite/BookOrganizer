@@ -46,19 +46,19 @@
                 <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Disabled.Border}" />
                 <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
             </Trigger>
-            <Trigger Property="IsChecked" Value="True">
+            <!--<Trigger Property="IsChecked" Value="True">
                 <Setter TargetName="border" Property="Background" Value="{StaticResource Button.Pressed.Background}" />
                 <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Pressed.Border}" />
-            </Trigger>
+            </Trigger>-->
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="NavigationMenuToggleButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Width" Value="100" />
+        <Setter Property="Width" Value="50" />
         <Setter Property="Height" Value="50" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="20" />
         <Setter Property="Margin" Value="5,0,5,0" />
-        <Setter Property="Background" Value="White" />
+        <Setter Property="Background" Value="FloralWhite" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template" Value="{StaticResource ToggleButtonTemplate}" />
     </Style>
