@@ -18,7 +18,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private IIndex<string, ISelectedViewModel> viewModelCreator;
         private ISelectedViewModel selectedVM;
         private bool isViewVisible;
-        //private bool isMenuBarVisible;
+        private bool isMenuBarVisible;
 
         public MainViewModel(IEventAggregator eventAggregator,
                               IIndex<string, IDetailViewModel> detailViewModelCreator,
@@ -35,7 +35,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             //ShowMenuCommand = new DelegateCommand(OnShowMenuExecute);
             CreateNewItemCommand = new DelegateCommand<Type>(OnCreateNewItemExecute);
 
-            //IsMenuBarVisible = false;
+            IsMenuBarVisible = true;
 
             OnOpenSelectedViewExecute(nameof(MainPageViewModel));
 
@@ -100,7 +100,15 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
-        //public bool IsMenuBarVisible { get => isMenuBarVisible; set { isMenuBarVisible = value; OnPropertyChanged(); } }
+        public bool IsMenuBarVisible 
+        {
+            get => isMenuBarVisible; 
+            set
+            {
+                isMenuBarVisible = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ISelectedViewModel SelectedVM
         {
