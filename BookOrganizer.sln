@@ -35,11 +35,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{AABD3D26-DA44-47BD-B09A-723C2B981A75}"
 	ProjectSection(SolutionItems) = preProject
 		Book_Statistics.sql = Book_Statistics.sql
+		BooksReadByMonthInSpecifiedYear.sql = BooksReadByMonthInSpecifiedYear.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOrganizer.UI.WPFCore", "BookOrganizer.UI.WPFCore\BookOrganizer.UI.WPFCore.csproj", "{C01028E7-D4D8-42E8-A12B-AE047E0BC772}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookOrganizer.UI.WPFCoreTests", "BookOrganizer.UI.WPFCoreTests\BookOrganizer.UI.WPFCoreTests.csproj", "{B2A33E59-6A2B-4AE3-B277-53CC9028F600}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOrganizer.UI.WPFCoreTests", "BookOrganizer.UI.WPFCoreTests\BookOrganizer.UI.WPFCoreTests.csproj", "{B2A33E59-6A2B-4AE3-B277-53CC9028F600}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

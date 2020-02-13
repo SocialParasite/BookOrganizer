@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Resources\Images\agency%2824px%29.png" />
+    <None Remove="Resources\Images\analytics%2824px%29.png" />
     <None Remove="Resources\Images\book %28128px%29.png" />
     <None Remove="Resources\Images\book %2816px%29.png" />
     <None Remove="Resources\Images\book %2824px%29.png" />
@@ -52,6 +53,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\Images\agency(24px).png" />
+    <Resource Include="Resources\Images\analytics(24px).png" />
     <Resource Include="Resources\Images\book (24px).png" />
     <Resource Include="Resources\Images\home(24px).png" />
     <Resource Include="Resources\Images\industry(24px).png" />

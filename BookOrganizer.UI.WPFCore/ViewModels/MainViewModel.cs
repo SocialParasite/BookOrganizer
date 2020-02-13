@@ -242,10 +242,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
             OnOpenDetailViewMatchingSelectedId(args);
         }
-        //private void OnShowMenuExecute()
-        //{
-        //    IsMenuBarVisible = !IsMenuBarVisible;
-        //}
 
         private void OnCreateNewItemExecute(Type itemType)
         {

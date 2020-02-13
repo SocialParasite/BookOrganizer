@@ -13,8 +13,8 @@
     Title="Book Organizer"
     Width="1080"
     Height="800"
-    MinWidth="400"
-    Background="FloralWhite"
+    MinWidth="650"
+    Background="LightSteelBlue"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
@@ -132,6 +132,15 @@
                             <Label Content="Publishers" />
                         </StackPanel>
                     </Button>
+                    <Button CommandParameter="StatisticsViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\analytics(24px).png" />
+                            <Label Content="Statistics" />
+                        </StackPanel>
+                    </Button>
                     <Button CommandParameter="SettingsViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
                         <StackPanel Orientation="Vertical">
                             <Image
@@ -141,17 +150,14 @@
                             <Label Content="Settings" />
                         </StackPanel>
                     </Button>
-                    <ToggleButton IsChecked="{Binding IsMenuBarVisible, Mode=TwoWay}" Style="{StaticResource NavigationMenuToggleButtonStyle}">
+                    <ToggleButton IsChecked="{Binding IsMenuBarVisible}" Style="{StaticResource NavigationMenuToggleButtonStyle}">
                         <ToggleButton.Content>
                             <Label
                                 HorizontalContentAlignment="Center"
                                 Content="{Binding PinGlyph}"
                                 FontFamily="Segoe MDL2 Assets"
                                 FontSize="28" />
-                            <!--<Run FontFamily="Segoe MDL2 Assets" Text="&#xE77A;" />
-                                <Run Text="pin" />-->
                         </ToggleButton.Content>
-                        <!--  Source="Resources\Images\placeholder.png" />  -->
                     </ToggleButton>
                 </DockPanel>
             </Label.Content>
