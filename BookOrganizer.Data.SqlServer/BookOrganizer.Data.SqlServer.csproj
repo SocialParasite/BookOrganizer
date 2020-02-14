@@ -18,6 +18,8 @@
     <Compile Remove="Migrations\20191120164732_booksSeries.Designer.cs" />
     <Compile Remove="Migrations\20191120164935_booksSeries.cs" />
     <Compile Remove="Migrations\20191120164935_booksSeries.Designer.cs" />
+    <Compile Remove="Migrations\20200214125043_GetAnnualBookStatisticsInRange_SP.cs" />
+    <Compile Remove="Migrations\20200214125043_GetAnnualBookStatisticsInRange_SP.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
