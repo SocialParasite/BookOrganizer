@@ -7,6 +7,7 @@ using Autofac.Features.Indexed;
 using BookOrganizer.UI.WPFCore.Events;
 using Prism.Commands;
 using Prism.Events;
+using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
@@ -19,20 +20,24 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private ISelectedViewModel selectedVM;
         private bool isViewVisible;
         private bool isMenuBarVisible;
+        private char pinGlyph;
+        private readonly ILogger logger;
 
         public MainViewModel(IEventAggregator eventAggregator,
                               IIndex<string, IDetailViewModel> detailViewModelCreator,
-                              IIndex<string, ISelectedViewModel> viewModelCreator)
+                              IIndex<string, ISelectedViewModel> viewModelCreator,
+                              ILogger logger)
         {
             this.detailViewModelCreator = detailViewModelCreator ?? throw new ArgumentNullException(nameof(detailViewModelCreator));
             this.viewModelCreator = viewModelCreator ?? throw new ArgumentNullException(nameof(viewModelCreator));
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             DetailViewModels = new ObservableCollection<IDetailViewModel>();
             TEMP_DetailViewModels = new ObservableCollection<IDetailViewModel>();
 
             OpenSelectedViewCommand = new DelegateCommand<string>(OnOpenSelectedViewExecute);
-            //ShowMenuCommand = new DelegateCommand(OnShowMenuExecute);
+            
             CreateNewItemCommand = new DelegateCommand<Type>(OnCreateNewItemExecute);
 
             IsMenuBarVisible = true;
@@ -117,8 +122,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             return value;
         }
 
-        private char pinGlyph;
-
         public char PinGlyph
         {
             get { return pinGlyph; }
@@ -128,7 +131,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         public ISelectedViewModel SelectedVM
         {
@@ -161,6 +163,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                    logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
                     return;
                 }
 

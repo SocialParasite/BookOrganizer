@@ -5,6 +5,7 @@ using Serilog;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
@@ -28,9 +29,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public override async Task InitializeRepositoryAsync()
         {
-            Items = await publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
+            try
+            {
+                Items = await publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
 
-            EntityCollection = Items.OrderBy(p => p.DisplayMember).ToList();
+                EntityCollection = Items.OrderBy(p => p.DisplayMember).ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
+            }
         }
     }
 }

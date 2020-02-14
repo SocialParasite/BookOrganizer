@@ -34,8 +34,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 Items = await authorLookupDataService.GetAuthorLookupAsync(nameof(AuthorDetailViewModel)).ConfigureAwait(false);
 
                 EntityCollection = Items.OrderBy(p => p.DisplayMember).ToList();
-
-                logger.Information("GetAuthorLookupAsync() executed succesfully. {Timestamp}", DateTime.UtcNow);
             }
             catch (Exception ex)
             {

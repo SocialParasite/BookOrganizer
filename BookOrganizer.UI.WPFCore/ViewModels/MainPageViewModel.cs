@@ -48,10 +48,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private void OnShowItemsExecute(Type itemType)
         {
             eventAggregator.GetEvent<OpenItemViewEvent>()
-           .Publish(new OpenItemViewEventArgs
-           {
-               ViewModelName = Type.GetType(itemType.FullName).Name
-           });
+                           .Publish(new OpenItemViewEventArgs
+                           {
+                               ViewModelName = Type.GetType(itemType.FullName).Name
+                           });
         }
 
         private void OnAddNewItemExecute(Type itemType)
