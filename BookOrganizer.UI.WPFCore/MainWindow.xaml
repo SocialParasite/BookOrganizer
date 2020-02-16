@@ -36,6 +36,9 @@
             <DataTemplate DataType="{x:Type viewModel:SeriesViewModel}">
                 <view:BaseView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:BookStatisticsViewModel}">
+                <view:BookStatisticsView />
+            </DataTemplate>
 
             <Style x:Key="FadeOutMenu" TargetType="{x:Type Label}">
                 <Setter Property="Height" Value="10" />
@@ -132,7 +135,7 @@
                             <Label Content="Publishers" />
                         </StackPanel>
                     </Button>
-                    <Button CommandParameter="StatisticsViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                    <Button CommandParameter="BookStatisticsViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
                         <StackPanel Orientation="Vertical">
                             <Image
                                 Width="24"

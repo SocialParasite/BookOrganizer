@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using BookOrganizer.DA;
+using BookOrganizer.Data.DA;
 using BookOrganizer.Data.SqlServer;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using Newtonsoft.Json;
@@ -31,6 +32,8 @@ namespace BookOrganizer.UI.WPFCore.Startup
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces()
                 .WithParameter("imagePath", ""); // FileExplorerService.GetImagePath());
+            
+            builder.RegisterType<BookStatisticsLookupDataService>().AsSelf();
 
             builder.RegisterAssemblyTypes(typeof(BooksRepository).Assembly)
                 .Where(type => type.Name.EndsWith("Repository"))
