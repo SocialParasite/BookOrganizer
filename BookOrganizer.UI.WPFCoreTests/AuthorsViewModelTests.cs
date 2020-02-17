@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using System.Linq;
 using Serilog;
+using BookOrganizer.Domain;
 
 namespace BookOrganizer.UI.WPFCoreTests
 {

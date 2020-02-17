@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BookOrganizer.DA;
+using BookOrganizer.Domain;
 
 namespace BookOrganizer.UI.Web.Models
 {

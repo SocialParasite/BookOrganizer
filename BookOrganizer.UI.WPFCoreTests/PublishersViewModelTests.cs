@@ -1,13 +1,13 @@
-﻿using BookOrganizer.DA;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BookOrganizer.Domain;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using FluentAssertions;
 using Moq;
 using Prism.Events;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BookOrganizer.UI.WPFCoreTests

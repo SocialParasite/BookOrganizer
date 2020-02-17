@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
-using BookOrganizer.DA;
+using BookOrganizer.Domain;
 using BookOrganizer.UI.WPFCore.Events;
 using Prism.Commands;
 using Prism.Events;

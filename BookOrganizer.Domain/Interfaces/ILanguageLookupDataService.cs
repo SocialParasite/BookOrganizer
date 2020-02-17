@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BookOrganizer.DA
+namespace BookOrganizer.Domain
 {
     public interface ILanguageLookupDataService
     {

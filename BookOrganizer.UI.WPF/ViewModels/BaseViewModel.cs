@@ -1,14 +1,13 @@
-﻿using BookOrganizer.DA;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Events;
 using BookOrganizer.UI.WPF.Extensions;
 using Prism.Commands;
 using Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {

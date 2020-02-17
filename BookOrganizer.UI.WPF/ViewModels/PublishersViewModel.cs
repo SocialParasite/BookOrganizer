@@ -1,9 +1,8 @@
-﻿using BookOrganizer.DA;
-using BookOrganizer.Domain;
-using Prism.Events;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using BookOrganizer.Domain;
+using Prism.Events;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {

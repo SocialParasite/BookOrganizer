@@ -1,11 +1,4 @@
-﻿using BookOrganizer.DA;
-using BookOrganizer.Domain;
-using BookOrganizer.UI.WPF.Enums;
-using BookOrganizer.UI.WPF.Services;
-using MahApps.Metro.Controls.Dialogs;
-using Prism.Commands;
-using Prism.Events;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using BookOrganizer.Domain;
+using BookOrganizer.UI.WPF.Enums;
+using BookOrganizer.UI.WPF.Services;
+using MahApps.Metro.Controls.Dialogs;
+using Prism.Commands;
+using Prism.Events;
 
 namespace BookOrganizer.UI.WPF.ViewModels
 {

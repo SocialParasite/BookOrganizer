@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BookOrganizer.DA
+namespace BookOrganizer.Domain
 {
     public class LookupItem
     {
