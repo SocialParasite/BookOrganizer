@@ -2,6 +2,8 @@
 using BookOrganizer.DA;
 using BookOrganizer.Data.DA;
 using BookOrganizer.Data.SqlServer;
+using BookOrganizer.Domain;
+using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,6 +23,8 @@ namespace BookOrganizer.UI.WPFCore.Startup
 
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
+
+            builder.RegisterType<AuthorService>().AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(typeof(AuthorsViewModel).Assembly)
                 .Where(type => type.Name.EndsWith("ViewModel"))

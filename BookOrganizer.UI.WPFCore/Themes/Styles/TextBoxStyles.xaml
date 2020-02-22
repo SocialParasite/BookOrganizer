@@ -37,10 +37,36 @@
 
     <Style x:Key="BaseTextBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="1" />
         <Setter Property="Height" Value="25" />
         <Setter Property="Template" Value="{StaticResource TextBoxTemplate}" />
+    </Style>
+
+    <Style x:Key="ValidationTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel>
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                        <TextBlock
+                            FontSize="14"
+                            Foreground="Red"
+                            Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,10,0,15" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="Template" Value="{StaticResource TextBoxTemplate}" />
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="Background" Value="Red" />
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style BasedOn="{StaticResource BaseTextBoxStyle}" TargetType="{x:Type TextBox}" />

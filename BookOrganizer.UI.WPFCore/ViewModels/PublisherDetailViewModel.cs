@@ -14,7 +14,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 {
     public class PublisherDetailViewModel : IDetailViewModel
     {
-        public Guid Id => throw new NotImplementedException();
+        public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Task LoadAsync(Guid id)
         {

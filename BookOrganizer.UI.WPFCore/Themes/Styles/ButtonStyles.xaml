@@ -64,7 +64,7 @@
     <Style x:Key="BaseButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="WhiteSmoke" />
         <Setter Property="Width" Value="100" />
-        <Setter Property="Height" Value="50" />
+        <Setter Property="Height" Value="35" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Template" Value="{StaticResource ButtonTemplate}" />
     </Style>

@@ -1,73 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using BookOrganizer.Domain;
-using BookOrganizer.UI.WPFCore.ViewModels;
 
 namespace BookOrganizer.UI.WPFCore.Wrappers
 {
-    public class AuthorWrapper : ViewModelBase
+    public class AuthorWrapper : BaseWrapper<Author>
     {
-        public readonly Author AuthorModel;
-
-        public AuthorWrapper(Author authorModel)
-        {
-            AuthorModel = authorModel ?? throw new ArgumentNullException(nameof(authorModel));
-        }
-
-        public Guid Id { get => AuthorModel.Id; }
-
+        public AuthorWrapper(Author model) : base(model) { }
+        
         public string FirstName
         {
-            get => AuthorModel.FirstName;
-            set
-            {
-                AuthorModel.FirstName = value;
-                OnPropertyChanged();
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public string LastName
         {
-            get => AuthorModel.LastName;
-            set
-            {
-                AuthorModel.LastName = value;
-                OnPropertyChanged();
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public DateTime? DateOfBirth
         {
-            get => AuthorModel.DateOfBirth;
-            set
-            {
-                AuthorModel.DateOfBirth = value;
-                OnPropertyChanged();
-            }
+            get { return GetValue<DateTime?>(); }
+            set { SetValue(value); }
         }
 
         public string MugShotPath
         {
-            get => AuthorModel.MugShotPath;
-            set
-            {
-                AuthorModel.MugShotPath = DomainHelpers.SetPicturePath(value, "AuthorPics");
-
-                OnPropertyChanged();
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public string Biography
         {
-            get => AuthorModel.Biography;
-            set { AuthorModel.Biography = value; OnPropertyChanged(); }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public Guid? NationalityId 
         {
-            get => AuthorModel.NationalityId;
-            set { AuthorModel.NationalityId = value; OnPropertyChanged(); }
+            get { return GetValue<Guid?>(); }
+            set { SetValue(value); }
         }
     }
 }

@@ -1,319 +1,234 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using BookOrganizer.Domain;
+using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore.Events;
+using BookOrganizer.UI.WPFCore.Wrappers;
 using Prism.Commands;
 using Prism.Events;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
-    public abstract class BaseDetailViewModel<T> //: ViewModelBase, IDetailViewModel, INotifyDataErrorInfo
+    public abstract class BaseDetailViewModel<T, TBase> : ViewModelBase, IDetailViewModel
+            where TBase: BaseWrapper<T>
             where T : class, IIdentifiable
     {
-        //protected readonly IEventAggregator eventAggregator;
-        //protected IRepository<T> Repository;
+        protected readonly IEventAggregator eventAggregator;
 
-        //private Guid id;
-        //private T selectedItem;
-        //private Tuple<bool, DetailViewState, SolidColorBrush, bool> userMode;
-        //private bool hasChanges;
-        //private Guid selectedBookId;
-        //private string tabTitle;
+        private Tuple<bool, DetailViewState, SolidColorBrush, bool> userMode;
+        private bool hasChanges;
+        private Guid selectedBookId;
+        private string tabTitle;
 
-        //public BaseDetailViewModel(IEventAggregator eventAggregator)
-        //{
-        //    this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+        public BaseDetailViewModel(IEventAggregator eventAggregator, IRepository<T> repository)
+        {
+            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));            
+            Repository = repository;
 
-        //    SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
-        //    SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)
-        //        .ObservesProperty(() => HasChanges)
-        //        .ObservesProperty(() => HasErrors);
-        //    DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
-        //    CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
-        //    ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
+            SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
+            SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute);
+            DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
+            CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
+            ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
 
-        //    UserMode = (true, DetailViewState.ViewMode, Brushes.LightGray, false).ToTuple();
+            UserMode = (true, DetailViewState.ViewMode, Brushes.LightGray, false).ToTuple();
+        }
 
-        //    Errors = new Dictionary<string, List<string>>();
-        //}
+        public ICommand SwitchEditableStateCommand { get; }
+        public ICommand SaveItemCommand { get; }
+        public ICommand DeleteItemCommand { get; }
+        public ICommand CloseDetailViewCommand { get; }
+        public ICommand ShowSelectedBookCommand { get; }
 
-        //public ICommand SwitchEditableStateCommand { get; }
-        //public ICommand SaveItemCommand { get; }
-        //public ICommand DeleteItemCommand { get; }
-        //public ICommand CloseDetailViewCommand { get; }
-        //public ICommand ShowSelectedBookCommand { get; }
+        public abstract TBase SelectedItem { get; set; }
+        
+        public Tuple<bool, DetailViewState, SolidColorBrush, bool> UserMode
+        {
+            get => userMode;
+            set 
+            { 
+                userMode = value; 
+                OnPropertyChanged(); 
+            }
+        }
 
-        //public T SelectedItem
-        //{
-        //    get { return selectedItem; }
-        //    set
-        //    {
-        //        selectedItem = value ?? throw new ArgumentNullException(nameof(SelectedItem));
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public bool HasChanges
+        {
+            get => hasChanges;
+            set
+            {
+                if (hasChanges != value)
+                {
+                    hasChanges = value;
+                    OnPropertyChanged();
+                    ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                }
+            }
+        }
 
-        //public Guid Id
-        //{
-        //    get { return id; }
-        //    set { id = value; }
-        //}
+        public virtual string TabTitle
+        {
+            get
+            {
+                if (tabTitle.Length <= 50)
+                    return tabTitle;
+                else
+                    return tabTitle.Substring(0, 50) + "...";
+            }
+            set 
+            { 
+                tabTitle = value; 
+                OnPropertyChanged(); 
+            }
+        }
 
-        //public Tuple<bool, DetailViewState, SolidColorBrush, bool> UserMode
-        //{
-        //    get => userMode;
-        //    set { userMode = value; OnPropertyChanged(); }
-        //}
+        public Guid SelectedBookId
+        {
+            get => selectedBookId;
+            set
+            {
+                selectedBookId = value;
+                OnPropertyChanged();
+                if (selectedBookId != Guid.Empty)
+                {
+                    eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
+                                   .Publish(selectedBookId);
+                }
+            }
+        }
 
-        //public bool HasChanges
-        //{
-        //    get => hasChanges;
-        //    set
-        //    {
-        //        if (hasChanges != value)
-        //        {
-        //            hasChanges = value;
-        //            OnPropertyChanged();
-        //        }
-        //    }
-        //}
+        private Guid id;
+        public Guid Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
 
-        //public virtual string TabTitle
-        //{
-        //    get
-        //    {
-        //        if (tabTitle.Length <= 50)
-        //            return tabTitle;
-        //        else
-        //            return tabTitle.Substring(0, 50) + "...";
-        //    }
-        //    set { tabTitle = value; OnPropertyChanged(); }
-        //}
+        public IRepository<T> Repository { get; set; }
 
-        //public Guid SelectedBookId
-        //{
-        //    get => selectedBookId;
-        //    set
-        //    {
-        //        selectedBookId = value;
-        //        OnPropertyChanged();
-        //        if (selectedBookId != Guid.Empty)
-        //        {
-        //            eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
-        //                           .Publish(selectedBookId);
-        //        }
-        //    }
-        //}
+        protected void SetChangeTracker()
+        {
+            if (!HasChanges)
+            {
+                HasChanges = Repository.HasChanges();
+            }
+        }
 
-        //protected void SetChangeTracker()
-        //{
-        //    if (!HasChanges)
-        //    {
-        //        HasChanges = Repository.HasChanges();
-        //    }
-        //}
+        public abstract Task LoadAsync(Guid id);
+        public abstract TBase CreateWrapper(T entity);
 
-        //public abstract Task LoadAsync(Guid id);
-
-        //public virtual async Task OnOpenItemDetailsViewAsync(Guid id)
-        //    => SelectedItem = await Repository.GetSelectedAsync(id);
-
-        //public virtual void SwitchEditableStateExecute()
-        //{
-        //    if (UserMode.Item2 == DetailViewState.ViewMode)
-        //        UserMode = (!UserMode.Item1, DetailViewState.EditMode, Brushes.LightGreen, !UserMode.Item4).ToTuple();
-        //    else
-        //        UserMode = (!UserMode.Item1, DetailViewState.ViewMode, Brushes.LightGray, !UserMode.Item4).ToTuple();
-        //}
-
-        //private async void CloseDetailViewExecute()
-        //{
-        //    if (this.Repository.HasChanges())
-        //    {
-        //        //var result = await metroDialogService
-        //        //    .ShowOkCancelDialogAsync(
-        //        //    "You have made changes. Closing will loose all unsaved changes. Are you sure you still want to close this view?",
-        //        //    "Close the view?");
-
-        //        //if (result == MessageDialogResult.Canceled)
-        //        //{
-        //        //    return;
-        //        //}
-        //    }
-
-        //    eventAggregator.GetEvent<CloseDetailsViewEvent>()
-        //        .Publish(new CloseDetailsViewEventArgs
-        //        {
-        //            Id = this.Id,
-        //            ViewModelName = this.GetType().Name
-        //        });
-        //}
-
-        //private bool OnShowSelectedBookCanExecute(Guid? id)
-        //    => (id is null || id == Guid.Empty) ? false : true;
-
-        //public virtual void OnShowSelectedBookExecute(Guid? id)
-        //    => SelectedBookId = (Guid)id;
-
-        //private bool SaveItemCanExecute()
-        //    => (!HasErrors) && (HasChanges || SelectedItem.Id == default);
-
-        //private async void SaveItemExecute()
-        //{
-        //    if (this.Repository.HasChanges() || SelectedItem.Id == default)
-        //    {
-        //        var isNewItem = false;
-
-        //        //var resultWhenChanges = await metroDialogService
-        //        //    .ShowOkCancelDialogAsync(
-        //        //    "You are about to save your changes. This will overwrite the previous version. Are you sure?",
-        //        //    "Save changes?");
-
-        //        //if (resultWhenChanges == MessageDialogResult.Canceled)
-        //        //{
-        //        //    return;
-        //        //}
-
-        //        if (SelectedItem.Id == default)
-        //        {
-        //            isNewItem = true;
-        //        }
-
-        //        Repository.Update(SelectedItem);
-        //        await SaveRepository();
-
-        //        if (isNewItem)
-        //        {
-        //            eventAggregator.GetEvent<SavedDetailsViewEvent>()
-        //                .Publish(new OpenDetailViewEventArgs
-        //                {
-        //                    Id = SelectedItem.Id,
-        //                    ViewModelName = this.GetType().Name
-        //                });
-        //        }
-
-        //        HasChanges = false;
-        //    }
-        //    else
-        //    {
-        //        //var unmodifiedResult = metroDialogService.ShowInfoDialogAsync("You have no unsaved changes on this view.");
-        //    }
-
-        //}
-
-        //private async void DeleteItemExecute()
-        //{
-        //    //var result = await metroDialogService
-        //    //    .ShowOkCancelDialogAsync(
-        //    //    "You are about to delete an item. This operation cannot be undone. Are you sure?",
-        //    //    "Delete an item?");
-
-        //    //if (result == MessageDialogResult.Canceled)
-        //    //{
-        //    //    return;
-        //    //}
-        //    //else
-        //    {
-        //        Repository.Delete(SelectedItem);
-        //        await SaveRepository();
-        //    }
-        //}
-
-        //private async Task SaveRepository()
-        //    => await Repository.SaveAsync();
-
-        //public bool HasErrors => Errors.Any();
+        public virtual async Task OnOpenItemDetailsViewAsync(Guid id)
+        {
+            var entity = await Repository.GetSelectedAsync(id);
+            SelectedItem = CreateWrapper(entity);
+        }
 
 
-        //public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-        //public Dictionary<string, List<string>> Errors { get; set; }
-        //public IEnumerable GetErrors(string propertyName)
-        //{
-        //    return Errors.ContainsKey(propertyName) ? Errors[propertyName] : null;
-        //}
+        public virtual void SwitchEditableStateExecute()
+        {
+            if (UserMode.Item2 == DetailViewState.ViewMode)
+                UserMode = (!UserMode.Item1, DetailViewState.EditMode, Brushes.LightGreen, !UserMode.Item4).ToTuple();
+            else
+                UserMode = (!UserMode.Item1, DetailViewState.ViewMode, Brushes.LightGray, !UserMode.Item4).ToTuple();
+        }
 
-        //private void OnErrorsChanged(string propertyName)
-        //{
-        //    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        //}
+        private async void CloseDetailViewExecute()
+        {
+            if (Repository.HasChanges())
+            {
+                //var result = await metroDialogService
+                //    .ShowOkCancelDialogAsync(
+                //    "You have made changes. Closing will loose all unsaved changes. Are you sure you still want to close this view?",
+                //    "Close the view?");
 
-        //private void AddError(string propertyName, string error)
-        //{
-        //    if (!Errors.ContainsKey(propertyName))
-        //    {
-        //        Errors[propertyName] = new List<string>();
-        //    }
-        //    if (!Errors[propertyName].Contains(error))
-        //    {
-        //        Errors[propertyName].Add(error);
-        //        OnErrorsChanged(propertyName);
-        //    }
-        //}
+                //if (result == MessageDialogResult.Canceled)
+                //{
+                //    return;
+                //}
+            }
 
-        //private void ClearErrors(string propertyName)
-        //{
-        //    if (Errors.ContainsKey(propertyName))
-        //    {
-        //        Errors.Remove(propertyName);
-        //        OnErrorsChanged(propertyName);
-        //    }
-        //}
+            eventAggregator.GetEvent<CloseDetailsViewEvent>()
+                .Publish(new CloseDetailsViewEventArgs
+                {
+                    Id = SelectedItem.Model.Id,
+                    ViewModelName = this.GetType().Name
+                });
+        }
 
-        //public dynamic ValidateDataAnnotations(string propertyName, object currentValue)
-        //{
-        //    var results = new List<ValidationResult>();
-        //    var context = new ValidationContext(this) { MemberName = propertyName };
-        //    Validator.TryValidateProperty(currentValue, context, results);
+        private bool OnShowSelectedBookCanExecute(Guid? id)
+            => (id is null || id == Guid.Empty) ? false : true;
 
-        //    foreach (var result in results)
-        //    {
-        //        AddError(propertyName, result.ErrorMessage);
-        //    }
+        public virtual void OnShowSelectedBookExecute(Guid? id)
+            => SelectedBookId = (Guid)id;
 
-        //    switch (Type.GetTypeCode(GetType().GetProperty(propertyName).PropertyType))
-        //    {
-        //        case TypeCode.Int32:
-        //            return (int)currentValue;
-        //        case TypeCode.String:
-        //            return (string)currentValue;
-        //        default:
-        //            return currentValue;
-        //    }
-        //}
+        private bool SaveItemCanExecute()
+            => true; // (!HasErrors) && (HasChanges || SelectedItem.Id == default);
 
-        //public void ValidatePropertyInternal(string propertyName, object currentValue)
-        //{
-        //    ClearErrors(propertyName);
+        private async void SaveItemExecute()
+        {
+            if (this.Repository.HasChanges() || SelectedItem.Model.Id == default)
+            {
+                var isNewItem = false;
 
-        //    ValidateDataAnnotations(propertyName, currentValue);
+                //var resultWhenChanges = await metroDialogService
+                //    .ShowOkCancelDialogAsync(
+                //    "You are about to save your changes. This will overwrite the previous version. Are you sure?",
+                //    "Save changes?");
 
-        //    ValidateCustomErrors(propertyName);
-        //}
+                //if (resultWhenChanges == MessageDialogResult.Canceled)
+                //{
+                //    return;
+                //}
 
-        //public void ValidateCustomErrors(string propertyName)
-        //{
-        //    var errors = ValidateProperty(propertyName);
-        //    if (errors != null)
-        //    {
-        //        foreach (var error in errors)
-        //        {
-        //            AddError(propertyName, error);
-        //        }
-        //    }
-        //}
+                if (SelectedItem.Model.Id == default)
+                {
+                    isNewItem = true;
+                }
 
-        //protected virtual IEnumerable<string> ValidateProperty(string propertyName)
-        //{
-        //    return null;
-        //}
+                Repository.Update(SelectedItem.Model);
+                await SaveRepository();
 
+                if (isNewItem)
+                {
+                    eventAggregator.GetEvent<SavedDetailsViewEvent>()
+                        .Publish(new OpenDetailViewEventArgs
+                        {
+                            Id = SelectedItem.Model.Id,
+                            ViewModelName = this.GetType().Name
+                        });
+                }
+
+                HasChanges = false;
+            }
+            else
+            {
+                //var unmodifiedResult = metroDialogService.ShowInfoDialogAsync("You have no unsaved changes on this view.");
+            }
+
+        }
+
+        private async void DeleteItemExecute()
+        {
+            //var result = await metroDialogService
+            //    .ShowOkCancelDialogAsync(
+            //    "You are about to delete an item. This operation cannot be undone. Are you sure?",
+            //    "Delete an item?");
+
+            //if (result == MessageDialogResult.Canceled)
+            //{
+            //    return;
+            //}
+            //else
+            {
+                Repository.Delete(SelectedItem.Model);
+                await SaveRepository();
+            }
+        }
+
+        private async Task SaveRepository()
+            => await Repository.SaveAsync();
     }
 }

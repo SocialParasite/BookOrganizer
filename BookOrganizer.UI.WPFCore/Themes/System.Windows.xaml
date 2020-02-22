@@ -5,6 +5,8 @@
 
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
     <local:StyleConverter x:Key="StyleConverter" />
+    <local:DobCountAge x:Key="DobCountAge" />
+    <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="BaseResources.xaml" />

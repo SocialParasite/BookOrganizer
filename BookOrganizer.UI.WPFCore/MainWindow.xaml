@@ -39,6 +39,9 @@
             <DataTemplate DataType="{x:Type viewModel:BookStatisticsViewModel}">
                 <view:BookStatisticsView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
+                <view:AuthorDetailView />
+            </DataTemplate>
 
             <Style x:Key="FadeOutMenu" TargetType="{x:Type Label}">
                 <Setter Property="Height" Value="10" />
@@ -49,11 +52,7 @@
                                 <DoubleAnimation
                                     Storyboard.TargetProperty="Height"
                                     To="60"
-                                    Duration="0:0:0.3">
-                                    <!--<DoubleAnimation.EasingFunction>
-                                        <CubicEase EasingMode="EaseInOut" />
-                                    </DoubleAnimation.EasingFunction>-->
-                                </DoubleAnimation>
+                                    Duration="0:0:0.3" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
