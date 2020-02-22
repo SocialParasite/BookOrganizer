@@ -28,7 +28,10 @@ namespace BookOrganizer.UI.WPFCore.Wrappers
         public string MugShotPath
         {
             get { return GetValue<string>(); }
-            set { SetValue(value); }
+            set 
+            { 
+                SetValue(DomainHelpers.SetPicturePath(value, "AuthorPics"));
+            }
         }
 
         public string Biography

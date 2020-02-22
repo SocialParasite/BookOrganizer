@@ -23,16 +23,6 @@ namespace BookOrganizer.Domain
         public DateTime? DateOfBirth { get; set; }
 
         public string MugShotPath { get; set; }
-        //public string MugShotPath
-        //{
-        //    get => _mugShotPath;
-        //    set
-        //    {
-        //        _mugShotPath = DomainHelpers.SetPicturePath(value, "AuthorPics");
-
-        //        OnPropertyChanged();
-        //    }
-        //}
 
         public string Biography { get; set; }
 

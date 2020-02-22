@@ -1,4 +1,5 @@
-﻿using BookOrganizer.DA;
+﻿using System;
+using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Enums;
 using BookOrganizer.UI.WPF.Services;
@@ -7,8 +8,6 @@ using BookOrganizer.UI.WPFTests.Extensions;
 using FluentAssertions;
 using Moq;
 using Prism.Events;
-using System;
-using System.Windows.Media;
 using Xunit;
 
 namespace BookOrganizer.UI.WPFTests

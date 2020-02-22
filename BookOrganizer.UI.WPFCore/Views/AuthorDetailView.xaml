@@ -206,7 +206,8 @@
                         VerticalContentAlignment="Top"
                         AcceptsReturn="True"
                         BorderThickness="0"
-                        FontSize="16"
+                        FontSize="14"
+                        FontWeight="Regular"
                         Text="{Binding SelectedItem.Biography, UpdateSourceTrigger=PropertyChanged}"
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />

@@ -73,6 +73,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             get
             {
+                if (tabTitle is null) 
+                    return "";
                 if (tabTitle.Length <= 50)
                     return tabTitle;
                 else

@@ -30,6 +30,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             AddAuthorPictureCommand = new DelegateCommand(OnAddAuthorPictureExecute);
             NationalitySelectionChangedCommand = new DelegateCommand(OnNationalitySelectionChangedExecute);
 
+            SelectedItem = new AuthorWrapper(new Author());
+
             Nationalities = new ObservableCollection<LookupItem>();
         }
 
@@ -91,8 +93,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
             if (Id != default)
             {
-                //SelectedItem.Model.LastName = SelectedItem.Model.LastName; //??
-                //SelectedItem.Model.FirstName = SelectedItem.Model.FirstName; //??
                 SetTabTitle();
             }
             else
@@ -109,8 +109,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
             void SetDefaultAuthorPicIfNoneSet()
             {
-                //if (SelectedItem.MugShotPath is null)
-                //    SelectedItem.MugShotPath = FileExplorerService.GetImagePath();
+                if (SelectedItem.MugShotPath is null)
+                    SelectedItem.MugShotPath = FileExplorerService.GetImagePath();
             }
 
             void InitiliazeSelectedNationalityIfNoneSet()
