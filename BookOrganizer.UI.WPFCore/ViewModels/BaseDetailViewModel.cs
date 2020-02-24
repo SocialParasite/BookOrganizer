@@ -9,6 +9,7 @@ using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using Prism.Commands;
 using Prism.Events;
+using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
@@ -17,16 +18,21 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             where T : class, IIdentifiable
     {
         protected readonly IEventAggregator eventAggregator;
+        protected readonly ILogger logger;
+        protected readonly IDomainService<T> domainService;
 
         private Tuple<bool, DetailViewState, SolidColorBrush, bool> userMode;
         private bool hasChanges;
         private Guid selectedBookId;
         private string tabTitle;
+        private Guid id;
 
-        public BaseDetailViewModel(IEventAggregator eventAggregator, IRepository<T> repository)
+        public BaseDetailViewModel(IEventAggregator eventAggregator, ILogger logger, IDomainService<T> domainService)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));            
-            Repository = repository;
+            //Repository = repository;
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.domainService = domainService ?? throw new ArgumentNullException(nameof(domainService));
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
             SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute);
@@ -102,29 +108,28 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
-        private Guid id;
         public Guid Id
         {
             get { return id; }
             set { id = value; }
         }
 
-        public IRepository<T> Repository { get; set; }
+        //public IRepository<T> Repository { get; set; }
+
+        public abstract Task LoadAsync(Guid id);
+        public abstract TBase CreateWrapper(T entity);
 
         protected void SetChangeTracker()
         {
             if (!HasChanges)
             {
-                HasChanges = Repository.HasChanges();
+                HasChanges = domainService.Repository.HasChanges();
             }
         }
 
-        public abstract Task LoadAsync(Guid id);
-        public abstract TBase CreateWrapper(T entity);
-
         public virtual async Task OnOpenItemDetailsViewAsync(Guid id)
         {
-            var entity = await Repository.GetSelectedAsync(id);
+            var entity = await domainService.Repository.GetSelectedAsync(id);
             SelectedItem = CreateWrapper(entity);
         }
 
@@ -139,7 +144,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         private async void CloseDetailViewExecute()
         {
-            if (Repository.HasChanges())
+            if (domainService.Repository.HasChanges())
             {
                 //var result = await metroDialogService
                 //    .ShowOkCancelDialogAsync(
@@ -171,7 +176,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         private async void SaveItemExecute()
         {
-            if (this.Repository.HasChanges() || SelectedItem.Model.Id == default)
+            if (domainService.Repository.HasChanges() || SelectedItem.Model.Id == default)
             {
                 var isNewItem = false;
 
@@ -190,7 +195,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                     isNewItem = true;
                 }
 
-                Repository.Update(SelectedItem.Model);
+                domainService.Repository.Update(SelectedItem.Model);
                 await SaveRepository();
 
                 if (isNewItem)
@@ -225,12 +230,12 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             //}
             //else
             {
-                Repository.Delete(SelectedItem.Model);
+                domainService.Repository.Delete(SelectedItem.Model);
                 await SaveRepository();
             }
         }
 
         private async Task SaveRepository()
-            => await Repository.SaveAsync();
+            => await domainService.Repository.SaveAsync();
     }
 }

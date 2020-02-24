@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using BookOrganizer.DA;
 using BookOrganizer.Domain;
 using Prism.Events;
 using Serilog;

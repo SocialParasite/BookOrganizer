@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Windows.Media;
 using BookOrganizer.Domain;
+using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using FluentAssertions;
 using Moq;
 using Prism.Events;
+using Serilog;
 using Xunit;
 
 namespace BookOrganizer.UI.WPFCoreTests
@@ -14,19 +16,23 @@ namespace BookOrganizer.UI.WPFCoreTests
     public class AuthorDetailViewModelTests
     { 
         private Mock<IEventAggregator> eventAggregatorMock;
-        private Mock<IRepository<Author>> authorsRepoMock;
+        private Mock<ILogger> loggerMock;
+        private Mock<IDomainService<Author>> authorsDomainServiceMock;
         private Mock<INationalityLookupDataService> nationalityLookupDataServiceMock;
         private AuthorDetailViewModel viewModel;
 
         public AuthorDetailViewModelTests()
         {
             eventAggregatorMock = new Mock<IEventAggregator>();
-            authorsRepoMock = new Mock<IRepository<Author>>();
+            //authorsRepoMock = new Mock<IRepository<Author>>();
+            loggerMock = new Mock<ILogger>();
+            authorsDomainServiceMock = new Mock<IDomainService<Author>>();
             nationalityLookupDataServiceMock = new Mock<INationalityLookupDataService>();
 
             viewModel = new AuthorDetailViewModel(eventAggregatorMock.Object,
-                authorsRepoMock.Object,
-                nationalityLookupDataServiceMock.Object);
+                nationalityLookupDataServiceMock.Object,
+                loggerMock.Object,
+                authorsDomainServiceMock.Object);
         }
 
         [Fact]

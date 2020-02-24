@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
@@ -10,19 +11,21 @@ using BookOrganizer.UI.WPFCore.Services;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using Prism.Commands;
 using Prism.Events;
+using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
-    public class AuthorDetailViewModel : BaseDetailViewModel<Author, AuthorWrapper> 
+    public class AuthorDetailViewModel : BaseDetailViewModel<Author, AuthorWrapper>
     {
         private LookupItem selectedNationality;
         private readonly INationalityLookupDataService nationalityLookupDataService;
         private AuthorWrapper selectedItem;
 
         public AuthorDetailViewModel(IEventAggregator eventAggregator,
-            IRepository<Author> repository,
-            INationalityLookupDataService nationalityLookupDataService)
-            : base(eventAggregator, repository)
+                                     INationalityLookupDataService nationalityLookupDataService,
+                                     ILogger logger,
+                                     IDomainService<Author> domainService)
+            : base(eventAggregator, logger, domainService)
         {
             this.nationalityLookupDataService = nationalityLookupDataService
                 ?? throw new ArgumentNullException(nameof(nationalityLookupDataService));
@@ -45,7 +48,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         }
 
         public ObservableCollection<LookupItem> Nationalities { get; set; }
-        
+
         public override AuthorWrapper SelectedItem
         {
             get { return selectedItem; }
@@ -63,73 +66,90 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             SelectedItem.MugShotPath = FileExplorerService.BrowsePicture() ?? SelectedItem.MugShotPath;
 
-            await LoadAsync(SelectedItem.Id);
+            try
+            {
+                await LoadAsync(SelectedItem.Id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
+            }
         }
 
         public async override Task LoadAsync(Guid id)
         {
-            var author = await Repository.GetSelectedAsync(id) ?? new Author();
-            SelectedItem = CreateWrapper(author);
-            
-            SelectedItem.PropertyChanged += (s, e) =>
+            try
             {
-                if (!HasChanges)
+                var author = await domainService.Repository.GetSelectedAsync(id) ?? new Author();
+                SelectedItem = CreateWrapper(author);
+
+                SelectedItem.PropertyChanged += (s, e) =>
                 {
-                    HasChanges = Repository.HasChanges();
-                }
-                if (e.PropertyName == nameof(SelectedItem.HasErrors))
-                {
-                    ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
-                }
-                if (e.PropertyName == nameof(SelectedItem.FirstName)
-                    || e.PropertyName == nameof(SelectedItem.LastName))
+                    if (!HasChanges)
+                    {
+                        HasChanges = domainService.Repository.HasChanges();
+                    }
+                    if (e.PropertyName == nameof(SelectedItem.HasErrors))
+                    {
+                        ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                    }
+                    if (e.PropertyName == nameof(SelectedItem.FirstName)
+                        || e.PropertyName == nameof(SelectedItem.LastName))
+                    {
+                        SetTabTitle();
+                    }
+                };
+                ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+
+                Id = id;
+
+                if (Id != default)
                 {
                     SetTabTitle();
                 }
-            };
-            ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
+                else
+                    this.SwitchEditableStateExecute();
 
-            Id = id;
+                SetDefaultAuthorPicIfNoneSet();
 
-            if (Id != default)
-            {
-                SetTabTitle();
-            }
-            else
-                this.SwitchEditableStateExecute();
+                InitiliazeSelectedNationalityIfNoneSet();
 
-            SetDefaultAuthorPicIfNoneSet();
+                //SelectedItem.Model.PropertyChanged += (s, e) =>
+                //{
+                //    SetChangeTracker();
+                //};
 
-            InitiliazeSelectedNationalityIfNoneSet();
-
-            //SelectedItem.Model.PropertyChanged += (s, e) =>
-            //{
-            //    SetChangeTracker();
-            //};
-
-            void SetDefaultAuthorPicIfNoneSet()
-            {
-                if (SelectedItem.MugShotPath is null)
-                    SelectedItem.MugShotPath = FileExplorerService.GetImagePath();
-            }
-
-            void InitiliazeSelectedNationalityIfNoneSet()
-            {
-                if (SelectedNationality is null)
+                void SetDefaultAuthorPicIfNoneSet()
                 {
-                    if (SelectedItem.Model.Nationality != null)
+                    if (SelectedItem.MugShotPath is null)
+                        SelectedItem.MugShotPath = FileExplorerService.GetImagePath();
+                }
+
+                void InitiliazeSelectedNationalityIfNoneSet()
+                {
+                    if (SelectedNationality is null)
                     {
-                        SelectedNationality =
-                            new LookupItem
-                            {
-                                Id = SelectedItem.Model.Nationality.Id,
-                                DisplayMember = SelectedItem.Model.Nationality is null
-                                ? new Nationality().Name = ""
-                                : SelectedItem.Model.Nationality.Name
-                            };
+                        if (SelectedItem.Model.Nationality != null)
+                        {
+                            SelectedNationality =
+                                new LookupItem
+                                {
+                                    Id = SelectedItem.Model.Nationality.Id,
+                                    DisplayMember = SelectedItem.Model.Nationality is null
+                                    ? new Nationality().Name = ""
+                                    : SelectedItem.Model.Nationality.Name
+                                };
+                        }
                     }
                 }
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
+            }        
         }
 
         public override async void SwitchEditableStateExecute()
