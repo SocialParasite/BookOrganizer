@@ -18,19 +18,15 @@ namespace BookOrganizer.UI.WPFCoreTests
         private Mock<IEventAggregator> eventAggregatorMock;
         private Mock<ILogger> loggerMock;
         private Mock<IDomainService<Author>> authorsDomainServiceMock;
-        private Mock<INationalityLookupDataService> nationalityLookupDataServiceMock;
         private AuthorDetailViewModel viewModel;
 
         public AuthorDetailViewModelTests()
         {
             eventAggregatorMock = new Mock<IEventAggregator>();
-            //authorsRepoMock = new Mock<IRepository<Author>>();
             loggerMock = new Mock<ILogger>();
             authorsDomainServiceMock = new Mock<IDomainService<Author>>();
-            nationalityLookupDataServiceMock = new Mock<INationalityLookupDataService>();
 
             viewModel = new AuthorDetailViewModel(eventAggregatorMock.Object,
-                nationalityLookupDataServiceMock.Object,
                 loggerMock.Object,
                 authorsDomainServiceMock.Object);
         }

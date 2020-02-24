@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BookOrganizer.Domain.Services
 {
-    public class AuthorService : IDomainService<Author>
+    public class AuthorService : IAuthorService
     {
-        public IRepository<Author> Repository { get; set; }
+        public IRepository<Author> Repository { get;  }
+        public INationalityLookupDataService NationalityLookupDataService { get; }
 
-        public AuthorService(IRepository<Author> repository)
+        public AuthorService(IRepository<Author> repository, INationalityLookupDataService nationalityLookupDataService)
         {
             Repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            NationalityLookupDataService = nationalityLookupDataService ?? throw new ArgumentNullException(nameof(nationalityLookupDataService));
         }
-        
-        public Author CreateNewAuthor()
+
+        public Author CreateItem()
         {
             return new Author();
         }

@@ -18,22 +18,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
     public class AuthorDetailViewModel : BaseDetailViewModel<Author, AuthorWrapper>
     {
         private LookupItem selectedNationality;
-        private readonly INationalityLookupDataService nationalityLookupDataService;
         private AuthorWrapper selectedItem;
 
         public AuthorDetailViewModel(IEventAggregator eventAggregator,
-                                     INationalityLookupDataService nationalityLookupDataService,
                                      ILogger logger,
                                      IDomainService<Author> domainService)
             : base(eventAggregator, logger, domainService)
         {
-            this.nationalityLookupDataService = nationalityLookupDataService
-                ?? throw new ArgumentNullException(nameof(nationalityLookupDataService));
-
             AddAuthorPictureCommand = new DelegateCommand(OnAddAuthorPictureExecute);
             NationalitySelectionChangedCommand = new DelegateCommand(OnNationalitySelectionChangedExecute);
 
-            SelectedItem = new AuthorWrapper(new Author());
+            SelectedItem = new AuthorWrapper(domainService.CreateItem());
 
             Nationalities = new ObservableCollection<LookupItem>();
         }
@@ -176,7 +171,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetNationalityList()
-            => await nationalityLookupDataService.GetNationalityLookupAsync(nameof(NationalityDetailViewModel));
+            => await (domainService as AuthorService).NationalityLookupDataService
+                                                     .GetNationalityLookupAsync(nameof(NationalityDetailViewModel));
 
         private void OnNationalitySelectionChangedExecute()
         {
