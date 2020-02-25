@@ -77,6 +77,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             try
             {
                 var author = await domainService.Repository.GetSelectedAsync(id) ?? new Author();
+
                 SelectedItem = CreateWrapper(author);
 
                 SelectedItem.PropertyChanged += (s, e) =>
@@ -144,7 +145,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             {
                 MessageBox.Show(ex.Message);
                 logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
-            }        
+            }
         }
 
         public override async void SwitchEditableStateExecute()

@@ -14,32 +14,31 @@ using Xunit;
 namespace BookOrganizer.UI.WPFCoreTests
 {
     public class AuthorDetailViewModelTests
-    { 
-        private Mock<IEventAggregator> eventAggregatorMock;
-        private Mock<ILogger> loggerMock;
-        private Mock<IDomainService<Author>> authorsDomainServiceMock;
+    {
         private AuthorDetailViewModel viewModel;
 
         public AuthorDetailViewModelTests()
         {
-            eventAggregatorMock = new Mock<IEventAggregator>();
-            loggerMock = new Mock<ILogger>();
-            authorsDomainServiceMock = new Mock<IDomainService<Author>>();
+            var repMock = new Mock<IRepository<Author>>();
+            var natMock = new Mock<INationalityLookupDataService>();
+            var authorService = new AuthorService(repMock.Object, natMock.Object);
+            var eventAggregatorMock = new Mock<IEventAggregator>();
+            var loggerMock = new Mock<ILogger>();
 
             viewModel = new AuthorDetailViewModel(eventAggregatorMock.Object,
                 loggerMock.Object,
-                authorsDomainServiceMock.Object);
+                authorService);
         }
 
         [Fact]
-        public void NewAuthorsId_ShouldHaveDefaultValue()
+        public void New_Author_Has_Default_Guid_As_Id()
         {
             viewModel.SelectedItem.Should().BeOfType<AuthorWrapper>();
             viewModel.SelectedItem.Id.Should().Equals(default(Guid));
         }
 
         [Fact]
-        public async void OpeningAuthorDetailViewWithNewAuthor_ShouldByDefaultOpenAsEditable()
+        public async void New_Author_In_Editable_State_By_Default()
         {
 
             await viewModel.LoadAsync(default);
@@ -50,14 +49,14 @@ namespace BookOrganizer.UI.WPFCoreTests
         }
 
         [Fact]
-        public async void NewAuthorMugShotPath_ShouldBeSetToPlaceholderImage()
+        public async void New_Authors_Image_Set_To_Placeholder_Image()
         {
             await viewModel.LoadAsync(default);
             viewModel.SelectedItem.MugShotPath.Should().EndWith("placeholder.png");
         }
 
         [Fact]
-        public void NewAuthorNationalities_ShouldBeEmpty()
+        public void New_Authors_Nationality_Collection_Is_Empty()
         {
             viewModel.Nationalities.Should().BeEmpty();
         }
