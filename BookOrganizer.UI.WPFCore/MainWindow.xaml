@@ -196,12 +196,11 @@
                                 Visibility="{Binding HasChanges, Converter={StaticResource BoolToVis}}" />
                             <Button
                                 Margin="7,0,0,0"
-                                HorizontalContentAlignment="Right"
-                                VerticalContentAlignment="Top"
                                 Command="{Binding CloseDetailViewCommand}"
                                 Content="X"
                                 FontSize="16"
-                                FontWeight="Bold" />
+                                FontWeight="Bold"
+                                Style="{StaticResource ChromelessButtonStyle}" />
                         </StackPanel>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
