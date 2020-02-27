@@ -114,8 +114,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             set { id = value; }
         }
 
-        //public IRepository<T> Repository { get; set; }
-
         public abstract Task LoadAsync(Guid id);
         public abstract TBase CreateWrapper(T entity);
 
@@ -172,7 +170,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             => SelectedBookId = (Guid)id;
 
         private bool SaveItemCanExecute()
-            => true; // (!HasErrors) && (HasChanges || SelectedItem.Id == default);
+            => (!SelectedItem.HasErrors) && (HasChanges || SelectedItem.Id == default);
 
         private async void SaveItemExecute()
         {

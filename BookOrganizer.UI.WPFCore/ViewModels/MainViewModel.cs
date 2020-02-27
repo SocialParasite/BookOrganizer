@@ -70,8 +70,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 this.eventAggregator.GetEvent<OpenDetailViewEvent>()
                     .Subscribe(OnOpenDetailViewMatchingSelectedId);
 
-                //this.eventAggregator.GetEvent<CloseDetailsViewEvent>()
-                //    .Subscribe(CloseDetailsView);
+                this.eventAggregator.GetEvent<CloseDetailsViewEvent>()
+                    .Subscribe(CloseDetailsView);
 
                 //this.eventAggregator.GetEvent<SavedDetailsViewEvent>()
                 //    .Subscribe(OnSaveDetailsView);
@@ -225,6 +225,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private void CloseDetailsView(CloseDetailsViewEventArgs args)
         {
             RemoveDetailViewModel(args.Id, args.ViewModelName);
+
+            if (DetailViewModels.Count == 0)
+            {
+                IsViewVisible = true;
+            }
         }
 
         private void RemoveDetailViewModel(Guid id, string viewModelName)
