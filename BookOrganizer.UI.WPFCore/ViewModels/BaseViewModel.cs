@@ -12,7 +12,7 @@ using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
-    public abstract class BaseViewModel<T> : ViewModelBase, ISelectedViewModel
+    public abstract class BaseViewModel<T> : ViewModelBase, IItemLists
             where T : class, IIdentifiable
     {
         private List<LookupItem> entityCollection;

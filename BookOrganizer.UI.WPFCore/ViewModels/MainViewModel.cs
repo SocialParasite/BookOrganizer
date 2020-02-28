@@ -73,8 +73,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 this.eventAggregator.GetEvent<CloseDetailsViewEvent>()
                     .Subscribe(CloseDetailsView);
 
-                //this.eventAggregator.GetEvent<SavedDetailsViewEvent>()
-                //    .Subscribe(OnSaveDetailsView);
+                this.eventAggregator.GetEvent<SavedDetailsViewEvent>()
+                    .Subscribe(OnSaveDetailsView);
             }
         }
 
@@ -246,9 +246,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         private void OnSaveDetailsView(OpenDetailViewEventArgs args)
         {
-            RemoveDetailViewModel(default, args.ViewModelName);
+            if (SelectedVM is IItemLists)
+            {
+                (SelectedVM as IItemLists).InitializeRepositoryAsync();
+            }
+            //RemoveDetailViewModel(default, args.ViewModelName);
 
-            OnOpenDetailViewMatchingSelectedId(args);
+            //OnOpenDetailViewMatchingSelectedId(args);
         }
 
         private void OnCreateNewItemExecute(Type itemType)

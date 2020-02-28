@@ -57,19 +57,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private void SetTabTitle()
             => TabTitle = $"{SelectedItem.Model.LastName}, {SelectedItem.Model.FirstName}";
 
-        private async void OnAddAuthorPictureExecute()
+        private void OnAddAuthorPictureExecute()
         {
             SelectedItem.MugShotPath = FileExplorerService.BrowsePicture() ?? SelectedItem.MugShotPath;
-
-            try
-            {
-                await LoadAsync(SelectedItem.Id);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
-            }
         }
 
         public async override Task LoadAsync(Guid id)

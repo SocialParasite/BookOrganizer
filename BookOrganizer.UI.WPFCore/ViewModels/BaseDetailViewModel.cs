@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -30,7 +29,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public BaseDetailViewModel(IEventAggregator eventAggregator, ILogger logger, IDomainService<T> domainService)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));            
-            //Repository = repository;
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.domainService = domainService ?? throw new ArgumentNullException(nameof(domainService));
 
@@ -196,14 +194,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 domainService.Repository.Update(SelectedItem.Model);
                 await SaveRepository();
 
+                eventAggregator.GetEvent<SavedDetailsViewEvent>()
+                    .Publish(new OpenDetailViewEventArgs
+                    {
+                        Id = SelectedItem.Model.Id,
+                        ViewModelName = this.GetType().Name
+                    });
+
                 if (isNewItem)
                 {
-                    eventAggregator.GetEvent<SavedDetailsViewEvent>()
-                        .Publish(new OpenDetailViewEventArgs
-                        {
-                            Id = SelectedItem.Model.Id,
-                            ViewModelName = this.GetType().Name
-                        });
+
+                    await LoadAsync(SelectedItem.Model.Id);
                 }
 
                 HasChanges = false;
@@ -230,6 +231,15 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             {
                 domainService.Repository.Delete(SelectedItem.Model);
                 await SaveRepository();
+
+                CloseDetailViewExecute();
+
+                eventAggregator.GetEvent<SavedDetailsViewEvent>()
+                        .Publish(new OpenDetailViewEventArgs
+                        {
+                            Id = SelectedItem.Model.Id,
+                            ViewModelName = this.GetType().Name
+                        });
             }
         }
 
