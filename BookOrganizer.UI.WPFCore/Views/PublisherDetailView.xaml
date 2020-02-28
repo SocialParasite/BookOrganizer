@@ -1,0 +1,171 @@
+﻿<UserControl
+    x:Class="BookOrganizer.UI.WPFCore.Views.PublisherDetailView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BookOrganizer.UI.WPFCore.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Border
+                    Margin="2"
+                    HorizontalAlignment="Right"
+                    BorderThickness="1">
+                    <ToggleButton
+                        x:Name="EditModeActiveToggleButton"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="{Binding UserMode.Item3}"
+                        Command="{Binding SwitchEditableStateCommand}"
+                        FontSize="12">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Text="Edit" />
+                    </ToggleButton>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Button
+                    Grid.RowSpan="5"
+                    Width="Auto"
+                    Height="Auto"
+                    Margin="0,0,50,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding AddPublisherLogoCommand}"
+                    IsEnabled="{Binding UserMode.Item4}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image x:Name="publisherLogoImage" Source="{Binding SelectedItem.LogoPath}" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Label
+                    x:Name="nameLabel"
+                    Grid.Column="1"
+                    Content="Publisher: "
+                    FontWeight="Bold"
+                    Style="{StaticResource LabelStyles}"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                <TextBox
+                    x:Name="nameTextBox"
+                    Grid.Column="2"
+                    Style="{StaticResource ValidationTextBoxStyle}"
+                    Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <TabControl Margin="0,0,50,0">
+                    <TabItem Header="Description">
+                        <TextBox
+                            x:Name="descriptionTextBlock"
+                            Height="Auto"
+                            VerticalContentAlignment="Top"
+                            AcceptsReturn="True"
+                            BorderThickness="0"
+                            FontSize="14"
+                            FontWeight="Regular"
+                            Text="{Binding SelectedItem.Descciption, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap"
+                            VerticalScrollBarVisibility="Auto" />
+                    </TabItem>
+                    <TabItem Header="Books">
+                        <ListBox
+                            x:Name="booksListBox"
+                            HorizontalContentAlignment="Stretch"
+                            BorderThickness="0"
+                            ItemsSource="{Binding SelectedItem.Model.Books}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Label>
+                                            <Label.Content>
+                                                <Grid MaxWidth="550">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="50" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image
+                                                        x:Name="bookCoverImage"
+                                                        MaxWidth="75"
+                                                        MaxHeight="75"
+                                                        Source="{Binding BookCoverPicturePath}" />
+                                                    <TextBlock
+                                                        x:Name="basicLabelTextBlock"
+                                                        Grid.Column="1"
+                                                        Margin="20,0,0,0"
+                                                        FontSize="18"
+                                                        Text="{Binding Title}"
+                                                        TextWrapping="Wrap">
+                                                        <TextBlock.InputBindings>
+                                                            <MouseBinding
+                                                                Command="{Binding DataContext.ShowSelectedBookCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                                                CommandParameter="{Binding Id}"
+                                                                MouseAction="LeftDoubleClick" />
+                                                        </TextBlock.InputBindings>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Label.Content>
+                                        </Label>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="SaveAuthorDetailsButton"
+                    Grid.Column="1"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SaveItemCommand}"
+                    Content="Save" />
+                <Button
+                    x:Name="DeleteAuthorButton"
+                    Grid.Column="2"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding DeleteItemCommand}"
+                    Content="Delete" />
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

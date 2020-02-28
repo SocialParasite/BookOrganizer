@@ -101,11 +101,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
                 InitiliazeSelectedNationalityIfNoneSet();
 
-                //SelectedItem.Model.PropertyChanged += (s, e) =>
-                //{
-                //    SetChangeTracker();
-                //};
-
                 void SetDefaultAuthorPicIfNoneSet()
                 {
                     if (SelectedItem.MugShotPath is null)
@@ -114,19 +109,16 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
                 void InitiliazeSelectedNationalityIfNoneSet()
                 {
-                    if (SelectedNationality is null)
+                    if (SelectedNationality is null && SelectedItem.Model.Nationality != null)
                     {
-                        if (SelectedItem.Model.Nationality != null)
-                        {
-                            SelectedNationality =
-                                new LookupItem
-                                {
-                                    Id = SelectedItem.Model.Nationality.Id,
-                                    DisplayMember = SelectedItem.Model.Nationality is null
-                                    ? new Nationality().Name = ""
-                                    : SelectedItem.Model.Nationality.Name
-                                };
-                        }
+                        SelectedNationality =
+                            new LookupItem
+                            {
+                                Id = SelectedItem.Model.Nationality.Id,
+                                DisplayMember = SelectedItem.Model.Nationality is null
+                                ? new Nationality().Name = ""
+                                : SelectedItem.Model.Nationality.Name
+                            };
                     }
                 }
 

@@ -43,6 +43,9 @@
             <DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
                 <view:AuthorDetailView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PublisherDetailViewModel}">
+                <view:PublisherDetailView />
+            </DataTemplate>
 
             <Style x:Key="FadeOutMenu" TargetType="{x:Type Label}">
                 <Setter Property="Height" Value="10" />

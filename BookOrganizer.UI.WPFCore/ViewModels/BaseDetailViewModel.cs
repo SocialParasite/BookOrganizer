@@ -203,7 +203,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
                 if (isNewItem)
                 {
-
                     await LoadAsync(SelectedItem.Model.Id);
                 }
 
