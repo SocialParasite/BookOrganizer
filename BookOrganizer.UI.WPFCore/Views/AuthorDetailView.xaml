@@ -183,15 +183,8 @@
                     <TabItem Header="Biography">
                         <TextBox
                             x:Name="bioTextBlock"
-                            Height="Auto"
-                            VerticalContentAlignment="Top"
-                            AcceptsReturn="True"
-                            BorderThickness="0"
-                            FontSize="14"
-                            FontWeight="Regular"
-                            Text="{Binding SelectedItem.Biography, UpdateSourceTrigger=PropertyChanged}"
-                            TextWrapping="Wrap"
-                            VerticalScrollBarVisibility="Auto" />
+                            Style="{StaticResource FreeTextBoxStyle}"
+                            Text="{Binding SelectedItem.Biography, UpdateSourceTrigger=PropertyChanged}" />
                     </TabItem>
                     <TabItem Header="Bibliography">
                         <ListBox

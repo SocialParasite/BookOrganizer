@@ -79,8 +79,7 @@
                     Grid.Column="2"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap"
-                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                    TextWrapping="Wrap" />
             </Grid>
 
             <Grid Grid.Row="2">
@@ -88,15 +87,8 @@
                     <TabItem Header="Description">
                         <TextBox
                             x:Name="descriptionTextBlock"
-                            Height="Auto"
-                            VerticalContentAlignment="Top"
-                            AcceptsReturn="True"
-                            BorderThickness="0"
-                            FontSize="14"
-                            FontWeight="Regular"
-                            Text="{Binding SelectedItem.Descciption, UpdateSourceTrigger=PropertyChanged}"
-                            TextWrapping="Wrap"
-                            VerticalScrollBarVisibility="Auto" />
+                            Style="{StaticResource FreeTextBoxStyle}"
+                            Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}" />
                     </TabItem>
                     <TabItem Header="Books">
                         <ListBox

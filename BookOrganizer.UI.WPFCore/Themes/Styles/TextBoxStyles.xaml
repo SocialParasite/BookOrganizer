@@ -60,6 +60,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="0,10,0,15" />
         <Setter Property="Height" Value="35" />
+        <Setter Property="IsReadOnly" Value="{Binding UserMode.Item1}" />
         <Setter Property="Template" Value="{StaticResource TextBoxTemplate}" />
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="True">
@@ -67,6 +68,19 @@
                 <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FreeTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="IsReadOnly" Value="{Binding UserMode.Item1}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Template" Value="{StaticResource TextBoxTemplate}" />
     </Style>
 
     <Style BasedOn="{StaticResource BaseTextBoxStyle}" TargetType="{x:Type TextBox}" />
