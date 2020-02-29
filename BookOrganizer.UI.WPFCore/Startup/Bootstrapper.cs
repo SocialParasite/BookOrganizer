@@ -26,6 +26,7 @@ namespace BookOrganizer.UI.WPFCore.Startup
 
             builder.RegisterType<AuthorService>().AsImplementedInterfaces();
             builder.RegisterType<PublisherService>().AsImplementedInterfaces();
+            builder.RegisterType<SeriesService>().AsImplementedInterfaces();
             //builder.RegisterAssemblyTypes(typeof(AuthorService).Assembly)
             //    .Where(type => type.Name.EndsWith("Service"))
             //    .AsClosedTypesOf(typeof(IDomainService<>));

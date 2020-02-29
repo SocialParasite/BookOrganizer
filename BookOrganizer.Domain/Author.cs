@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookOrganizer.Domain
 {
-    public class Author : BaseDomainEntity, IIdentifiable
+    public class Author : IIdentifiable
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
