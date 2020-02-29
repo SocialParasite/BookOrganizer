@@ -22,6 +22,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
 
             Init();
+
+            ViewModelType = nameof(PublisherDetailViewModel);
         }
 
         private Task Init() 

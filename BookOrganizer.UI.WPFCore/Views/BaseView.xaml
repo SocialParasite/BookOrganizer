@@ -98,7 +98,7 @@
                 Margin="0,0,15,0"
                 HorizontalAlignment="Right"
                 Command="{Binding AddNewItemCommand}"
-                CommandParameter="{x:Type viewModel:AuthorDetailViewModel}"
+                CommandParameter="{Binding ViewModelType}"
                 Content="Add new item" />
         </Grid>
         <Grid Grid.Row="2">

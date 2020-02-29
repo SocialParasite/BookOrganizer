@@ -25,7 +25,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            AddNewItemCommand = new DelegateCommand<Type>(OnAddNewItemExecute);
+            AddNewItemCommand = new DelegateCommand<string>(OnAddNewItemExecute);
 
             ItemNameLabelMouseLeftButtonUpCommand =
                 new DelegateCommand<LookupItem>(OnItemNameLabelMouseLeftButtonUpExecute,
@@ -36,6 +36,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public IRepository<T> Repository;
         public ICommand AddNewItemCommand { get; }
         public ICommand ItemNameLabelMouseLeftButtonUpCommand { get; }
+
+        public string ViewModelType { get; set; }
 
         public List<LookupItem> EntityCollection
         {
@@ -83,13 +85,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public abstract Task InitializeRepositoryAsync();
 
-        private void OnAddNewItemExecute(Type itemType)
+        private void OnAddNewItemExecute(string itemType)
         {
             eventAggregator.GetEvent<OpenDetailViewEvent>()
                        .Publish(new OpenDetailViewEventArgs
                        {
                            Id = new Guid(),
-                           ViewModelName = Type.GetType(itemType.FullName).Name
+                           ViewModelName = itemType
                        });
         }
 
