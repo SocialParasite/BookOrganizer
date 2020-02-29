@@ -5,12 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookOrganizer.Domain
 {
-    public class Publisher : BaseDomainEntity, IIdentifiable
+    public class Publisher : IIdentifiable
     {
-        //private string _name;
-        //private string _logoPath;
-        //private string description;
-
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
@@ -21,35 +17,6 @@ namespace BookOrganizer.Domain
 
         public string LogoPath { get; set; }
         public string Description { get; set; }
-
-        //public string Name
-        //{
-        //    get => _name;
-        //    set
-        //    {
-        //        if (value is null || value == string.Empty || value.Length < 1 || value.Length > 64)
-        //            throw new ArgumentOutOfRangeException(nameof(Name), "Books title should be 1-64 characters long.");
-
-        //        _name = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //public string LogoPath
-        //{
-        //    get => _logoPath;
-        //    set
-        //    {
-        //        _logoPath = DomainHelpers.SetPicturePath(value, "PublisherLogos");
-        //        OnPropertyChanged();
-        //    }
-        //}
-
-        //public string Description
-        //{
-        //    get { return description; }
-        //    set { description = value; OnPropertyChanged(); }
-        //}
 
         public ICollection<Book> Books { get; set; }
     }

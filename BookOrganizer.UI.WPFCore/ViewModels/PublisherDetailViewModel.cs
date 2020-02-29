@@ -1,4 +1,7 @@
-﻿using BookOrganizer.DA;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore.Services;
@@ -6,20 +9,11 @@ using BookOrganizer.UI.WPFCore.Wrappers;
 using Prism.Commands;
 using Prism.Events;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
     public class PublisherDetailViewModel : BaseDetailViewModel<Publisher, PublisherWrapper>
     {
-        private LookupItem selectedNationality;
         private PublisherWrapper selectedItem;
 
         public PublisherDetailViewModel(IEventAggregator eventAggregator,
@@ -43,9 +37,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        //private void SetTabTitle()
-        //    => TabTitle = $"{SelectedItem.Model.Name}";
 
         private void OnAddPublisherLogoExecute()
         {
@@ -73,7 +64,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                     if (e.PropertyName == nameof(SelectedItem.Name))
                     {
                         TabTitle = SelectedItem.Name;
-                        //SetTabTitle();
                     }
                 };
                 ((DelegateCommand)SaveItemCommand).RaiseCanExecuteChanged();
@@ -83,7 +73,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 if (Id != default)
                 {
                     TabTitle = SelectedItem.Name;
-                    //SetTabTitle();
                 }
                 else
                     this.SwitchEditableStateExecute();
