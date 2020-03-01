@@ -1,11 +1,10 @@
-﻿using BookOrganizer.DA;
-using BookOrganizer.Domain;
-using Prism.Events;
-using Serilog;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using BookOrganizer.Domain;
+using Prism.Events;
+using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
@@ -21,6 +20,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             this.seriesLookupDataService = seriesLookupDataService;
 
             Init();
+
+            ViewModelType = nameof(SeriesDetailViewModel);
         }
 
         private Task Init() 

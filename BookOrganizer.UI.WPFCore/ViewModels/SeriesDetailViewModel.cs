@@ -33,10 +33,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             FilterBookListCommand = new DelegateCommand<string>(OnFilterBookListExecute);
             AddBookToSeriesCommand = new DelegateCommand<Guid?>(OnAddBookToSeriesExecute, OnAddBookToSeriesCanExecute);
 
+            SelectedItem = new SeriesWrapper(domainService.CreateItem());
+
             Books = new ObservableCollection<LookupItem>();
             AllBooks = new ObservableCollection<LookupItem>();
-
-            SelectedItem = new SeriesWrapper(domainService.CreateItem());
         }
 
         public ICommand AddSeriesPictureCommand { get; }
@@ -243,10 +243,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         private void PopulateBooksCollection(IOrderedEnumerable<LookupItem> tempBookCollection)
         {
-            Books.Clear();
-            foreach (var item in tempBookCollection)
+            if (Books.Count == 0 && !tempBookCollection.Any())
             {
-                Books.Add(item);
+                Books = AllBooks;
+            }
+            else
+            {
+                Books.Clear();
+                foreach (var item in tempBookCollection)
+                {
+                    Books.Add(item);
+                } 
             }
         }
 
