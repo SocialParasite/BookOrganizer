@@ -16,7 +16,7 @@ using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
-    public class SeriesDetailViewModel : BaseDetailViewModel<Series, SeriesWrapper>
+    public class SeriesDetailViewModel : BaseDetailViewModel<Series, SeriesWrapper>, IDropTarget
     {
         private SeriesWrapper selectedItem;
         private readonly IBookLookupDataService bookLookupDataService;
@@ -209,7 +209,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                     Book = addedBook,
                     Series = SelectedItem.Model,
                     SeriesId = SelectedItem.Id,
-                    Instalment = SelectedItem.Model.SeriesReadOrder.Count() + 1
+                    Instalment = SelectedItem.Model.SeriesReadOrder.Count + 1
                 });
 
             Books.Remove(Books.First(b => b.Id == id));
@@ -253,11 +253,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private async Task<IEnumerable<LookupItem>> GetBookList()
             => await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel));
 
-        private async void OnAddSeriesPictureExecute()
+        private void OnAddSeriesPictureExecute()
         {
             SelectedItem.PicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.PicturePath;
-            await LoadAsync(this.Id);
-            SetChangeTracker();
         }
 
         public void DragOver(IDropInfo dropInfo)

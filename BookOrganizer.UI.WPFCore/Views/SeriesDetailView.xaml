@@ -25,7 +25,7 @@
                 <RowDefinition Height="50" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="50" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid>
@@ -104,12 +104,10 @@
                     <TabItem Header="Books">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" MaxWidth="{Binding UserMode.Item4, Converter={StaticResource BoolToMaxConverter}}" />
+                                <ColumnDefinition Width="{Binding UserMode.Item4, Converter={StaticResource BoolToMaxConverter}}" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <GroupBox
-                                Width="600"
-                                Height="500"
                                 Margin="10"
                                 Header="All books:"
                                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
@@ -191,8 +189,6 @@
                             <GroupBox
                                 x:Name="bookSeriesLabel"
                                 Grid.Column="1"
-                                MaxWidth="600"
-                                MaxHeight="500"
                                 Margin="10"
                                 HorizontalAlignment="Left"
                                 FontWeight="Bold"

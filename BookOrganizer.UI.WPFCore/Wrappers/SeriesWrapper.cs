@@ -12,7 +12,6 @@ namespace BookOrganizer.UI.WPFCore.Wrappers
             set { SetValue(value); }
         }
 
-        // Turha?
         public int NumberOfBooks
         {
             get { return GetValue<int>(); }
