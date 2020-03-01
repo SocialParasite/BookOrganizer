@@ -55,17 +55,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 this.eventAggregator.GetEvent<OpenItemViewEvent>()
                     .Subscribe(OnOpenSelectedItemView);
 
-                //this.eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
-                //        .Subscribe(OnOpenBookMatchingSelectedId);
+                this.eventAggregator.GetEvent<OpenItemMatchingSelectedBookIdEvent<Guid>>()
+                        .Subscribe(OnOpenBookMatchingSelectedId);
 
-                //this.eventAggregator.GetEvent<OpenItemMatchingSelectedPublisherIdEvent<Guid>>()
-                //        .Subscribe(OnOpenPublisherMatchingSelectedId);
+                this.eventAggregator.GetEvent<OpenItemMatchingSelectedPublisherIdEvent<Guid>>()
+                        .Subscribe(OnOpenPublisherMatchingSelectedId);
 
                 this.eventAggregator.GetEvent<OpenItemMatchingSelectedAuthorIdEvent<Guid>>()
                         .Subscribe(OnOpenAuthorMatchingSelectedId);
 
-                //this.eventAggregator.GetEvent<OpenItemMatchingSelectedSeriesIdEvent<Guid>>()
-                //    .Subscribe(OnOpenSeriesMatchingSelectedId);
+                this.eventAggregator.GetEvent<OpenItemMatchingSelectedSeriesIdEvent<Guid>>()
+                    .Subscribe(OnOpenSeriesMatchingSelectedId);
 
                 this.eventAggregator.GetEvent<OpenDetailViewEvent>()
                     .Subscribe(OnOpenDetailViewMatchingSelectedId);

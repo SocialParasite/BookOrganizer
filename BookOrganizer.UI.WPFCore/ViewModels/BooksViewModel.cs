@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using BookOrganizer.DA;
 using BookOrganizer.Domain;
 using Prism.Events;
 using Serilog;
@@ -21,6 +20,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
 
             Init();
+
+            ViewModelType = nameof(BookDetailViewModel);
         }
 
         private Task Init()

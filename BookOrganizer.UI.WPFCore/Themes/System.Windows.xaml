@@ -7,6 +7,7 @@
     <local:StyleConverter x:Key="StyleConverter" />
     <local:DobCountAge x:Key="DobCountAge" />
     <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
+    <local:BookSeriesHeader x:Key="BookSeriesHeader" />
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="BaseResources.xaml" />
