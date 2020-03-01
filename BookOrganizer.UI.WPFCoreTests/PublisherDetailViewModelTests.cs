@@ -31,14 +31,14 @@ namespace BookOrganizer.UI.WPFCoreTests
         }
 
         [Fact]
-        public void NewPublishersId_ShouldHaveDefaultValue()
+        public void New_Publisher_Has_Default_Id()
         {
             viewModel.SelectedItem.Should().BeOfType<PublisherWrapper>();
             viewModel.SelectedItem.Id.Should().Equals(default(Guid));
         }
 
         [Fact]
-        public async void OpeningAPublisherDetailViewWithANewPublisher_ShouldByDefaultOpenAsEditable()
+        public async void New_Publisher_In_Editable_State_By_Default()
         {
             await viewModel.LoadAsync(default(Guid));
             viewModel.UserMode.Item1.Should().BeFalse();
@@ -48,7 +48,7 @@ namespace BookOrganizer.UI.WPFCoreTests
         }
 
         [Fact]
-        public async void NewPublisherLogoPath_ShouldBeSetToPlaceholderImage()
+        public async void New_Publisher_Logo_Is_Set_To_Placeholder_Image()
         {
             await viewModel.LoadAsync(default);
             viewModel.SelectedItem.LogoPath.Should().EndWith("placeholder.png");
