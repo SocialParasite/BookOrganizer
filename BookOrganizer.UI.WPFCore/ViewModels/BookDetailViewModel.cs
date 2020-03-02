@@ -557,6 +557,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             if (AllBookFormats.Any(bf => bf.Item1.Id == lookupItem.Id && bf.Item2 == false))
             {
+                AllBookFormats.Remove(AllBookFormats.Where(bf => bf.Item1.Id == lookupItem.Id).Single());
+                AllBookFormats.Add((lookupItem, true).ToTuple());
+
                 var newFormat = await (domainService.Repository as IBookRepository).GetBookFormatById(lookupItem.Id);
 
                 SelectedItem.Model.FormatLink.Add(new BooksFormats
@@ -569,6 +572,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
             else if (AllBookFormats.Any(bf => bf.Item1.Id == lookupItem.Id && bf.Item2 == true))
             {
+                AllBookFormats.Remove(AllBookFormats.Where(bf => bf.Item1.Id == lookupItem.Id).Single());
+                AllBookFormats.Add((lookupItem, false).ToTuple());
+
                 var item = SelectedItem.Model.FormatLink.Single(f => f.FormatId == lookupItem.Id);
                 SelectedItem.Model.FormatLink.Remove(item);
             }
@@ -579,6 +585,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             if (AllBookGenres.Any(bg => bg.Item1.Id == lookupItem.Id && bg.Item2 == false))
             {
+                AllBookGenres.Remove(AllBookGenres.Where(bg => bg.Item1.Id == lookupItem.Id).Single());
+                AllBookGenres.Add((lookupItem, true).ToTuple());
+
                 var newGenre = await (domainService.Repository as IBookRepository).GetBookGenreById(lookupItem.Id);
 
                 SelectedItem.Model.GenreLink.Add(new BookGenres
@@ -591,6 +600,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
             else if (AllBookGenres.Any(bg => bg.Item1.Id == lookupItem.Id && bg.Item2 == true))
             {
+                AllBookGenres.Remove(AllBookGenres.Where(bg => bg.Item1.Id == lookupItem.Id).Single());
+                AllBookGenres.Add((lookupItem, false).ToTuple());
+
                 var item = SelectedItem.Model.GenreLink.Single(g => g.GenreId == lookupItem.Id);
                 SelectedItem.Model.GenreLink.Remove(item);
             }

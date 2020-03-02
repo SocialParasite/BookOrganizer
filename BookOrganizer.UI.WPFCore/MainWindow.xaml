@@ -13,7 +13,7 @@
     Title="Book Organizer"
     Width="1080"
     Height="800"
-    MinWidth="650"
+    MinWidth="830"
     MinHeight="650"
     Background="LightSteelBlue"
     mc:Ignorable="d">
