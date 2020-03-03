@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.DA
 {
-    public class FormatRepository : BaseRepository<Format, BookOrganizerDbContext>
+    public class FormatRepository : BaseRepository<Format, BookOrganizerDbContext>, IFormatRepository
     {
         public FormatRepository(BookOrganizerDbContext context) : base(context)
         {
@@ -18,6 +18,12 @@ namespace BookOrganizer.DA
                 ? await context.Formats
                     .FirstOrDefaultAsync(f => f.Id == id)
                 : new Format();
+        }
+
+        public async Task AddNewFormatAsync(Format format)
+        {
+            context.Formats.Add(format);
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -440,6 +440,7 @@
                     </ListBox>
                 </GroupBox>
             </Grid>
+
             <Grid Grid.Row="4">
                 <TabControl Margin="0,0,50,0">
                     <TabItem Header="Description">
@@ -481,10 +482,7 @@
                                     ItemsSource="{Binding Source={StaticResource BooksSeriesList}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Expander
-                                                x:Name="bookSeriesExpander"
-                                                Margin="0,5,5,5"
-                                                FontWeight="Bold">
+                                            <Expander x:Name="bookSeriesExpander" Margin="0,5,5,5">
                                                 <Expander.Header>
                                                     <Label Content="{Binding Series.Name}" Style="{StaticResource LabelStyles}">
                                                         <Label.InputBindings>
@@ -563,11 +561,10 @@
                                         x:Name="AddReadDateButton"
                                         Grid.Row="1"
                                         Grid.Column="2"
-                                        Width="50"
-                                        Margin="50,0,0,0"
+                                        Margin="5,0,0,0"
                                         HorizontalAlignment="Left"
                                         Command="{Binding SetReadDateCommand}"
-                                        Content="+"
+                                        Style="{StaticResource AddItemButtonStyle}"
                                         ToolTip="Add selected date as books read date."
                                         Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
                                     <Grid Grid.Row="2">
@@ -602,12 +599,10 @@
                                                             Style="{StaticResource LabelStyles}" />
                                                         <Button
                                                             x:Name="removeReadDateButton"
-                                                            Grid.Column="1"
-                                                            Width="30"
-                                                            Height="30"
                                                             Command="{Binding DataContext.RemoveDateAsABookReadDateCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
                                                             CommandParameter="{Binding ReadDate}"
                                                             Content="-"
+                                                            Style="{StaticResource AddItemButtonStyle}"
                                                             ToolTip="Remove date from books read dates list."
                                                             Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
                                                     </Grid>
@@ -622,32 +617,79 @@
                                 Grid.Column="1"
                                 Header="Formats"
                                 Style="{StaticResource GroupBoxStyles}">
-                                <ItemsControl
-                                    x:Name="BookFormatsList"
-                                    ItemTemplate="{StaticResource BookFormatDataTemplate}"
-                                    ItemsSource="{Binding AllBookFormats}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox
+                                            x:Name="AddNewFormatTextBox"
+                                            Text="{Binding NewFormatName, Mode=OneWayToSource}"
+                                            Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
+                                        <Button
+                                            x:Name="AddNewFormatButton"
+                                            Command="{Binding AddNewFormatCommand}"
+                                            CommandParameter="{Binding NewFormatName}"
+                                            Style="{StaticResource AddItemButtonStyle}"
+                                            Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
+                                    </Grid>
+                                    <ItemsControl
+                                        x:Name="BookFormatsList"
+                                        Grid.Row="1"
+                                        ItemTemplate="{StaticResource BookFormatDataTemplate}"
+                                        ItemsSource="{Binding AllBookFormats}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
                             </GroupBox>
+
                             <GroupBox
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Header="Genres"
                                 Style="{StaticResource GroupBoxStyles}">
-                                <ItemsControl
-                                    x:Name="BookGenresList"
-                                    ItemTemplate="{StaticResource BookGenreDataTemplate}"
-                                    ItemsSource="{Binding AllBookGenres}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox
+                                            x:Name="AddNewGenreTextBox"
+                                            Text="{Binding NewGenreName, Mode=OneWayToSource}"
+                                            Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
+                                        <Button
+                                            x:Name="AddNewGenreButton"
+                                            Command="{Binding AddNewGenreCommand}"
+                                            CommandParameter="{Binding NewGenreName}"
+                                            Style="{StaticResource AddItemButtonStyle}"
+                                            Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
+                                    </Grid>
+                                    <ItemsControl
+                                        x:Name="BookGenresList"
+                                        Grid.Row="1"
+                                        ItemTemplate="{StaticResource BookGenreDataTemplate}"
+                                        ItemsSource="{Binding AllBookGenres}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
                             </GroupBox>
                         </Grid>
                     </TabItem>

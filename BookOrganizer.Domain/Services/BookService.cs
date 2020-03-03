@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace BookOrganizer.Domain.Services
 {
@@ -11,8 +12,12 @@ namespace BookOrganizer.Domain.Services
         public readonly IAuthorLookupDataService authorLookupDataService;
         public readonly IFormatLookupDataService formatLookupDataService;
         public readonly IGenreLookupDataService genreLookupDataService;
+        private readonly IFormatRepository formatRepository;
+        private readonly IGenreRepository genreRepository;
 
         public BookService(IRepository<Book> repository,
+            IFormatRepository formatRepository,
+            IGenreRepository genreRepository,
             ILanguageLookupDataService languageLookupDataService,
             IPublisherLookupDataService publisherLookupDataService,
             IAuthorLookupDataService authorLookupDataService,
@@ -20,11 +25,13 @@ namespace BookOrganizer.Domain.Services
             IGenreLookupDataService genreLookupDataService)
         {
             Repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.languageLookupDataService = languageLookupDataService;
-            this.publisherLookupDataService = publisherLookupDataService;
-            this.authorLookupDataService = authorLookupDataService;
-            this.formatLookupDataService = formatLookupDataService;
-            this.genreLookupDataService = genreLookupDataService;
+            this.languageLookupDataService = languageLookupDataService ?? throw new ArgumentNullException(nameof(languageLookupDataService));
+            this.publisherLookupDataService = publisherLookupDataService ?? throw new ArgumentNullException(nameof(publisherLookupDataService));
+            this.authorLookupDataService = authorLookupDataService ?? throw new ArgumentNullException(nameof(authorLookupDataService));
+            this.formatLookupDataService = formatLookupDataService ?? throw new ArgumentNullException(nameof(formatLookupDataService));
+            this.genreLookupDataService = genreLookupDataService ?? throw new ArgumentNullException(nameof(genreLookupDataService));
+            this.formatRepository = formatRepository ?? throw new ArgumentNullException(nameof(formatRepository));
+            this.genreRepository = genreRepository ?? throw new ArgumentNullException(nameof(genreRepository));
         }
 
         public Book CreateItem()
@@ -41,6 +48,16 @@ namespace BookOrganizer.Domain.Services
             Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
 
             return rgx.IsMatch(isbn);
+        }
+
+        public Task AddNewBookFormat(Format format)
+        {
+            return formatRepository.AddNewFormatAsync(format);
+        }
+
+        public Task AddNewBookGenre(Genre genre)
+        {
+            return genreRepository.AddNewGenreAsync(genre);
         }
     }
 }

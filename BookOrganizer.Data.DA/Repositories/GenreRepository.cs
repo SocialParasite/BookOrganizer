@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookOrganizer.DA
 {
-    public class GenreRepository : BaseRepository<Genre, BookOrganizerDbContext>
+    public class GenreRepository : BaseRepository<Genre, BookOrganizerDbContext>, IGenreRepository
     {
         public GenreRepository(BookOrganizerDbContext context) : base(context)
         {
@@ -18,6 +18,12 @@ namespace BookOrganizer.DA
                 ? await context.Genres
                     .FirstOrDefaultAsync(f => f.Id == id)
                 : new Genre();
+        }
+
+        public async Task AddNewGenreAsync(Genre genre)
+        {
+            context.Genres.Add(genre);
+            await context.SaveChangesAsync();
         }
     }
 }

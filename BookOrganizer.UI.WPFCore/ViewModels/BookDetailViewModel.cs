@@ -29,6 +29,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private Guid selectedAuthorId;
         private Guid selectedSeriesId;
         private int selectedReleaseYear;
+        private string newFormatName;
+        private string newGenreName;
 
         public BookDetailViewModel(IEventAggregator eventAggregator,
                                      ILogger logger,
@@ -54,6 +56,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             ShowSelectedSeriesCommand = new DelegateCommand<Guid?>(OnShowSelectedSeriesExecute, OnShowSelectedSeriesCanExecute);
             BookFormatSelectionChangedCommand = new DelegateCommand<LookupItem>(OnBookFormatSelectionChangedExecute);
             BookGenreSelectionChangedCommand = new DelegateCommand<LookupItem>(OnBookGenreSelectionChangedExecute);
+            AddNewFormatCommand = new DelegateCommand<string>(OnAddNewFormatExecute);
+            AddNewGenreCommand = new DelegateCommand<string>(OnAddNewGenreExecute);
 
             SelectedItem = new BookWrapper(domainService.CreateItem(), domainService);
 
@@ -85,6 +89,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public ICommand ShowSelectedSeriesCommand { get; }
         public ICommand BookFormatSelectionChangedCommand { get; }
         public ICommand BookGenreSelectionChangedCommand { get; }
+        public ICommand AddNewFormatCommand { get; }
+        public ICommand AddNewGenreCommand { get; }
 
         public Guid SelectedPublisherId
         {
@@ -187,6 +193,18 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 selectedItem = value ?? throw new ArgumentNullException(nameof(SelectedItem));
                 OnPropertyChanged();
             }
+        }
+
+        public string NewFormatName
+        {
+            get { return newFormatName; }
+            set { newFormatName = value; OnPropertyChanged(); }
+        }
+
+        public string NewGenreName
+        {
+            get { return newGenreName; }
+            set { newGenreName = value; OnPropertyChanged(); }
         }
 
         private void HighlightMouseLeaveExecute()
@@ -407,6 +425,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 }
             }
 
+        }
             async Task InitializeAllBookFormatsCollection()
             {
                 if (UserMode.Item1 == false)
@@ -470,7 +489,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                     }
                 }
             }
-        }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()
                     => await (domainService as BookService).publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
@@ -681,5 +699,33 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             return wrapper;
         }
 
+        private void OnAddNewGenreExecute(string genre)
+        {
+            AddNewBookGenreToCollection(genre);
+        }
+
+        private async Task AddNewBookGenreToCollection(string genre)
+        {
+            var newGenre = new Genre();
+            newGenre.Name = genre;
+
+            await (domainService as BookService).AddNewBookGenre(newGenre);
+            await InitializeAllBookGenresCollection();
+        }
+
+        private void OnAddNewFormatExecute(string format)
+        {
+            AddNewBookFormatToCollection(format);
+        }
+
+        private async Task AddNewBookFormatToCollection(string format)
+        {
+            var newFormat = new Format();
+            newFormat.Name = format;
+
+            await (domainService as BookService).AddNewBookFormat(newFormat);
+
+            await InitializeAllBookFormatsCollection();
+        }
     }
 }
