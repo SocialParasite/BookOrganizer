@@ -24,13 +24,9 @@ namespace BookOrganizer.UI.WPFCore.Startup
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
 
-            builder.RegisterType<AuthorService>().AsImplementedInterfaces();
-            builder.RegisterType<PublisherService>().AsImplementedInterfaces();
-            builder.RegisterType<SeriesService>().AsImplementedInterfaces();
-            builder.RegisterType<BookService>().AsImplementedInterfaces();
-            //builder.RegisterAssemblyTypes(typeof(AuthorService).Assembly)
-            //    .Where(type => type.Name.EndsWith("Service"))
-            //    .AsClosedTypesOf(typeof(IDomainService<>));
+            builder.RegisterAssemblyTypes(typeof(AuthorService).Assembly)
+                .Where(type => type.Name.EndsWith("Service"))
+                .AsClosedTypesOf(typeof(IDomainService<>));
 
             builder.RegisterAssemblyTypes(typeof(AuthorsViewModel).Assembly)
                 .Where(type => type.Name.EndsWith("ViewModel"))

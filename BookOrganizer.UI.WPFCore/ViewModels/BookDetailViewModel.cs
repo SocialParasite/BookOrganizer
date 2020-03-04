@@ -101,6 +101,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             {
                 selectedPublisherId = value;
                 OnPropertyChanged();
+
                 if (selectedPublisherId != Guid.Empty)
                 {
                     eventAggregator.GetEvent<OpenItemMatchingSelectedPublisherIdEvent<Guid>>()
@@ -116,6 +117,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             {
                 selectedAuthorId = value;
                 OnPropertyChanged();
+
                 if (selectedAuthorId != Guid.Empty)
                 {
                     eventAggregator.GetEvent<OpenItemMatchingSelectedAuthorIdEvent<Guid>>()
@@ -131,6 +133,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             {
                 selectedSeriesId = value;
                 OnPropertyChanged();
+
                 if (selectedSeriesId != Guid.Empty)
                 {
                     eventAggregator.GetEvent<OpenItemMatchingSelectedSeriesIdEvent<Guid>>()

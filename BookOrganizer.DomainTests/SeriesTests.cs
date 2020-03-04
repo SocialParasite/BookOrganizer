@@ -65,55 +65,5 @@ namespace BookOrganizer.DomainTests
             series.Description.Should().BeOfType<string>();
             series.Description.Should().BeEmpty();
         }
-
-        [Fact]
-        public void SeriesName_ShouldRaise_PropertyChangedEvent()
-        {
-            var series = new Series();
-            var raised = false;
-
-            series.PropertyChanged += (Sender, e) =>
-            {
-                raised = true;
-            };
-
-            series.Name = "Saga of Lost Tales";
-
-            raised.Should().BeTrue();
-        }
-
-
-        [Fact]
-        public void PicutrePath_ShouldRaise_PropertyChangedEvent()
-        {
-            var series = new Series();
-            var raised = false;
-
-            series.PropertyChanged += (Sender, e) =>
-            {
-                raised = true;
-            };
-
-            series.PicturePath = @"C:\temp";
-
-            raised.Should().BeTrue();
-        }
-
-        [Fact]
-        public void Description_ShouldRaise_PropertyChangedEvent()
-        {
-            var series = new Series();
-            var raised = false;
-
-            series.PropertyChanged += (Sender, e) =>
-            {
-                raised = true;
-            };
-
-            series.Description = "Saga of Lost Tales currently contains no books, but as soon as they are found they'll be published.";
-
-            raised.Should().BeTrue();
-        }
-
     }
 }
