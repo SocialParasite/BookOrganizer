@@ -28,26 +28,29 @@
             <DataTemplate DataType="{x:Type viewModel:AuthorsViewModel}">
                 <view:BaseView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
-                <view:BaseView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:PublishersViewModel}">
-                <view:BaseView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:SeriesViewModel}">
-                <view:BaseView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:BookStatisticsViewModel}">
-                <view:BookStatisticsView />
-            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:AuthorDetailViewModel}">
                 <view:AuthorDetailView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
+                <view:BaseView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:BookDetailViewModel}">
                 <view:BookDetailView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:BookStatisticsViewModel}">
+                <view:BookStatisticsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:FormatDetailViewModel}">
+                <view:FormatDetailView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:PublishersViewModel}">
+                <view:BaseView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:PublisherDetailViewModel}">
                 <view:PublisherDetailView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SeriesViewModel}">
+                <view:BaseView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:SeriesDetailViewModel}">
                 <view:SeriesDetailView />

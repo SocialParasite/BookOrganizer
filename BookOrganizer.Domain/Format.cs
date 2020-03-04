@@ -16,19 +16,7 @@ namespace BookOrganizer.Domain
         [Required]
         [MinLength(1, ErrorMessage = "Format name should be at minimum 1 character long.")]
         [MaxLength(32, ErrorMessage = "Format name should be maximum of 32 characters long.")]
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                if (value is null || value == string.Empty || value.Length < 1 || value.Length > 32)
-                    throw new ArgumentOutOfRangeException(nameof(Name), "Format name should be 1-32 characters long.");
-
-                _name = value;
-
-                OnPropertyChanged();
-            }
-        }
+        public string Name { get; set; }
 
         // Navigation properties
         public ICollection<BooksFormats> BookLink { get; set; }

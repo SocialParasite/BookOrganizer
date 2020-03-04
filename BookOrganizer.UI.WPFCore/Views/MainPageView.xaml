@@ -70,10 +70,12 @@
                     <Button
                         x:Name="AddBookButton"
                         Command="{Binding AddNewItemCommand}"
+                        CommandParameter="{x:Type viewModel:BookDetailViewModel}"
                         Content="Add a new book" />
                     <Button
                         x:Name="AddFormatButton"
                         Command="{Binding AddNewItemCommand}"
+                        CommandParameter="{x:Type viewModel:FormatDetailViewModel}"
                         Content="Add a new book format" />
                     <Button
                         x:Name="AddGenreButton"
@@ -90,10 +92,12 @@
                     <Button
                         x:Name="AddPublisherButton"
                         Command="{Binding AddNewItemCommand}"
+                        CommandParameter="{x:Type viewModel:PublisherDetailViewModel}"
                         Content="Add a new publisher" />
                     <Button
                         x:Name="AddSeriesButton"
                         Command="{Binding AddNewItemCommand}"
+                        CommandParameter="{x:Type viewModel:SeriesDetailViewModel}"
                         Content="Add a new series" />
                 </WrapPanel>
             </GroupBox>

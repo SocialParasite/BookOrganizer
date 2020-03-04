@@ -68,7 +68,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                            .Publish(new OpenDetailViewEventArgs
                            {
                                Id = await languageLookup.GetLanguageId(),
-                               ViewModelName = null //nameof(LanguageDetailViewModel)
+                               ViewModelName = nameof(LanguageDetailViewModel)
                            });
         }
         private async void OnEditNationalitiesExecute()
@@ -77,7 +77,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                         .Publish(new OpenDetailViewEventArgs
                         {
                             Id = await nationalityLookupDataService.GetNationalityId(),
-                            ViewModelName = null //nameof(NationalityDetailViewModel)
+                            ViewModelName = nameof(NationalityDetailViewModel)
                         });
         }
 
@@ -87,7 +87,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                            .Publish(new OpenDetailViewEventArgs
                            {
                                Id = await formatLookupDataService.GetFormatId(),
-                               ViewModelName = null //nameof(FormatDetailViewModel)
+                               ViewModelName = nameof(FormatDetailViewModel)
                            });
         }
 
@@ -97,7 +97,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                            .Publish(new OpenDetailViewEventArgs
                            {
                                Id = await genreLookupDataService.GetGenreId(),
-                               ViewModelName = null //nameof(GenreDetailViewModel)
+                               ViewModelName = nameof(GenreDetailViewModel)
                            });
 
         }
