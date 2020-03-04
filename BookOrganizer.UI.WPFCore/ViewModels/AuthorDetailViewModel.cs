@@ -95,7 +95,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                     SetTabTitle();
                 }
                 else
+                {
                     this.SwitchEditableStateExecute();
+                    SelectedItem.FirstName = "";
+                    SelectedItem.LastName = "";
+                }
 
                 SetDefaultAuthorPicIfNoneSet();
 

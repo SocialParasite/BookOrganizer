@@ -56,8 +56,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             ShowSelectedSeriesCommand = new DelegateCommand<Guid?>(OnShowSelectedSeriesExecute, OnShowSelectedSeriesCanExecute);
             BookFormatSelectionChangedCommand = new DelegateCommand<LookupItem>(OnBookFormatSelectionChangedExecute);
             BookGenreSelectionChangedCommand = new DelegateCommand<LookupItem>(OnBookGenreSelectionChangedExecute);
-            AddNewFormatCommand = new DelegateCommand<string>(OnAddNewFormatExecute);
-            AddNewGenreCommand = new DelegateCommand<string>(OnAddNewGenreExecute);
+            AddNewFormatCommand = new DelegateCommand<string>(OnAddNewFormatExecute, OnAddNewFormatCanExecute)
+                .ObservesProperty(() => NewFormatName);
+            AddNewGenreCommand = new DelegateCommand<string>(OnAddNewGenreExecute, OnAddNewGenreCanExecute)
+                .ObservesProperty(() => NewGenreName);
 
             SelectedItem = new BookWrapper(domainService.CreateItem(), domainService);
 
@@ -261,7 +263,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                     TabTitle = SelectedItem.Title;
                 }
                 else
+                {
                     this.SwitchEditableStateExecute();
+                }
 
                 SetDefaultBookCoverIfNoneSet();
                 SetDefaultBookTitleIfNoneSet();
@@ -697,6 +701,25 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             var wrapper = new BookWrapper(entity, domainService);
             return wrapper;
+        }
+
+        private bool OnAddNewFormatCanExecute(string arg)
+        {
+            if (arg is null)
+            {
+                return false;
+            }
+            var test = AllBookFormats.Any(f => f.Item1.DisplayMember.Equals(arg, StringComparison.InvariantCultureIgnoreCase));
+            return !test;
+        }
+
+        private bool OnAddNewGenreCanExecute(string arg)
+        {
+            if (arg is null)
+            {
+                return false;
+            }
+            return !AllBookGenres.Any(f => f.Item1.DisplayMember.Equals(arg, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private void OnAddNewGenreExecute(string genre)

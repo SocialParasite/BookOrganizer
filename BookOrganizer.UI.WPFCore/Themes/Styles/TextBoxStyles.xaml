@@ -58,7 +58,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,10,0,15" />
+        <Setter Property="Margin" Value="0,10,0,20" />
         <Setter Property="Height" Value="35" />
         <Setter Property="IsReadOnly" Value="{Binding UserMode.Item1}" />
         <Setter Property="Template" Value="{StaticResource TextBoxTemplate}" />

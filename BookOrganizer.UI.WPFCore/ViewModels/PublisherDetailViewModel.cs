@@ -75,7 +75,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                     TabTitle = SelectedItem.Name;
                 }
                 else
+                {
                     this.SwitchEditableStateExecute();
+                    SelectedItem.Name = "";
+                }
 
                 SetDefaultPublisherLogoIfNoneSet();
 

@@ -88,7 +88,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                     TabTitle = SelectedItem.Name;
                 }
                 else
+                {
                     this.SwitchEditableStateExecute();
+                    SelectedItem.Name = "";
+                }
 
                 await PopulateAllBooksCollection();
                 SetDefaultSeriesPictureIfNoneSet();
