@@ -42,7 +42,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         }
 
         public ICommand SwitchEditableStateCommand { get; }
-        public ICommand SaveItemCommand { get; }
+        public ICommand SaveItemCommand { get; protected set; }
         public ICommand DeleteItemCommand { get; }
         public ICommand CloseDetailViewCommand { get; }
         public ICommand ShowSelectedBookCommand { get; }
@@ -167,10 +167,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public virtual void OnShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
 
-        private bool SaveItemCanExecute()
+        protected bool SaveItemCanExecute()
             => (!SelectedItem.HasErrors) && (HasChanges || SelectedItem.Id == default);
 
-        private async void SaveItemExecute()
+        protected async void SaveItemExecute()
         {
             if (domainService.Repository.HasChanges() || SelectedItem.Model.Id == default)
             {

@@ -46,6 +46,12 @@
             <DataTemplate DataType="{x:Type viewModel:GenreDetailViewModel}">
                 <view:GenreDetailView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:LanguageDetailViewModel}">
+                <view:LanguageDetailView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:NationalityDetailViewModel}">
+                <view:NationalityDetailView />
+            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:PublishersViewModel}">
                 <view:BaseView />
             </DataTemplate>

@@ -8,5 +8,77 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid />
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Label
+                x:Name="nameLabel"
+                Content="Name: "
+                Style="{StaticResource LabelStyles}" />
+            <TextBox
+                x:Name="nameTextBox"
+                Grid.Column="1"
+                MinWidth="300"
+                HorizontalAlignment="Left"
+                Style="{StaticResource ValidationTextBoxStyle}"
+                Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextWrapping="Wrap" />
+            <GroupBox
+                x:Name="NationalityListGroupBox"
+                Grid.Column="2"
+                Grid.ColumnSpan="3"
+                Header="Existing nationalities">
+                <ListBox x:Name="NationalitiesListBox" ItemsSource="{Binding Nations}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock
+                                    x:Name="basicLabelTextBlock"
+                                    Margin="20,0,0,0"
+                                    FontSize="16"
+                                    Text="{Binding DisplayMember}"
+                                    TextWrapping="Wrap">
+                                    <TextBlock.InputBindings>
+                                        <MouseBinding
+                                            Command="{Binding DataContext.ChangeEditedNationalityCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}"
+                                            CommandParameter="{Binding Id}"
+                                            MouseAction="LeftDoubleClick" />
+                                    </TextBlock.InputBindings>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+            <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="SaveFormatButton"
+                    Margin="50,0,0,0"
+                    HorizontalAlignment="Right"
+                    Command="{Binding SaveItemCommand}"
+                    Content="Save" />
+                <Button
+                    x:Name="DeleteFormatButton"
+                    Grid.Column="1"
+                    Margin="15,0,0,0"
+                    HorizontalAlignment="Right"
+                    Command="{Binding DeleteItemCommand}"
+                    Content="Delete" />
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

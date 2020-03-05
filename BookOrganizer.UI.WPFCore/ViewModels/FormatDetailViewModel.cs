@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore.Wrappers;
@@ -27,10 +28,14 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             this.formatLookupDataService = formatLookupDataService ?? throw new ArgumentNullException(nameof(formatLookupDataService));
 
             ChangeEditedFormatCommand = new DelegateCommand<Guid?>(OnChangeEditedFormatExecute);
+            SaveItemCommand = new DelegateCommand(base.SaveItemExecute, base.SaveItemCanExecute)
+                .ObservesProperty(() => SelectedItem.Name);
 
             SelectedItem = CreateWrapper(domainService.CreateItem());
 
             Formats = new ObservableCollection<LookupItem>();
+
+            UserMode = (!UserMode.Item1, DetailViewState.EditMode, Brushes.LightGray, !UserMode.Item4).ToTuple();
         }
 
         public ICommand ChangeEditedFormatCommand { get; }
@@ -79,7 +84,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
             else
             {
-                this.SwitchEditableStateExecute();
                 SelectedItem.Name = SelectedItem.Model.Name;
             }
 
