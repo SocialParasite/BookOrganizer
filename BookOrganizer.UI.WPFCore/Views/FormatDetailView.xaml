@@ -35,6 +35,7 @@
             <GroupBox
                 x:Name="FormatListGroupBox"
                 Grid.Column="2"
+                Grid.ColumnSpan="3"
                 Header="Existing formats">
                 <ListBox x:Name="FormatsListBox" ItemsSource="{Binding Formats}">
                     <ListBox.ItemTemplate>

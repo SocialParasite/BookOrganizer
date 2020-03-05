@@ -80,14 +80,17 @@
                     <Button
                         x:Name="AddGenreButton"
                         Command="{Binding AddNewItemCommand}"
+                        CommandParameter="{x:Type viewModel:GenreDetailViewModel}"
                         Content="Add a new book genre" />
                     <Button
                         x:Name="AddLanguageButton"
                         Command="{Binding AddNewItemCommand}"
+                        CommandParameter="{x:Type viewModel:LanguageDetailViewModel}"
                         Content="Add a new language" />
                     <Button
                         x:Name="AddNationalityButton"
                         Command="{Binding AddNewItemCommand}"
+                        CommandParameter="{x:Type viewModel:NationalityDetailViewModel}"
                         Content="Add a new nationality" />
                     <Button
                         x:Name="AddPublisherButton"
