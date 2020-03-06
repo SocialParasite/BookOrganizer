@@ -448,6 +448,12 @@
             <Grid Grid.Row="4">
                 <TabControl Margin="0,0,50,0">
                     <TabItem Header="Description">
+                        <TabItem.Visibility>
+                            <MultiBinding Converter="{StaticResource VisibilityConverter}">
+                                <Binding Path="SelectedItem.Description.Length" />
+                                <Binding Path="UserMode.Item1" />
+                            </MultiBinding>
+                        </TabItem.Visibility>
                         <TextBox
                             x:Name="descTextBlock"
                             Style="{StaticResource FreeTextBoxStyle}"

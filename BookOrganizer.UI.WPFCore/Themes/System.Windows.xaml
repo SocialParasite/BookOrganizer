@@ -5,6 +5,7 @@
 
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
     <local:StyleConverter x:Key="StyleConverter" />
+    <local:VisibilityConverter x:Key="VisibilityConverter" />
     <local:DobCountAge x:Key="DobCountAge" />
     <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
     <local:BookSeriesHeader x:Key="BookSeriesHeader" />

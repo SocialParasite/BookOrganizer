@@ -181,6 +181,12 @@
             <Grid Grid.Row="2">
                 <TabControl Margin="0,0,50,0">
                     <TabItem Header="Biography">
+                        <TabItem.Visibility>
+                            <MultiBinding Converter="{StaticResource VisibilityConverter}">
+                                <Binding Path="SelectedItem.Biography.Length" />
+                                <Binding Path="UserMode.Item1" />
+                            </MultiBinding>
+                        </TabItem.Visibility>
                         <TextBox
                             x:Name="bioTextBlock"
                             Style="{StaticResource FreeTextBoxStyle}"

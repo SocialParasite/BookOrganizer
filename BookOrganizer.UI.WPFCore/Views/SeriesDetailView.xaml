@@ -100,6 +100,12 @@
                             x:Name="descriptionTextBlock"
                             Style="{StaticResource FreeTextBoxStyle}"
                             Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}" />
+                        <TabItem.Visibility>
+                            <MultiBinding Converter="{StaticResource VisibilityConverter}">
+                                <Binding Path="SelectedItem.Description.Length" />
+                                <Binding Path="UserMode.Item1" />
+                            </MultiBinding>
+                        </TabItem.Visibility>
                     </TabItem>
                     <TabItem Header="Books">
                         <Grid>

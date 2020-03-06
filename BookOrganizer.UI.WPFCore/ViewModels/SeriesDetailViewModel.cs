@@ -36,7 +36,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             SelectedItem = new SeriesWrapper(domainService.CreateItem());
 
             Books = new ObservableCollection<LookupItem>();
-            AllBooks = new ObservableCollection<LookupItem>();
+            AllBooks = new ObservableCollection<LookupItem>(); 
         }
 
         public ICommand AddSeriesPictureCommand { get; }
