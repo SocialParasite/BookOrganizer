@@ -133,6 +133,7 @@
                     x:Name="titleTextBox"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
+                    BorderThickness="{Binding UserMode.Item4, Converter={StaticResource ShowBordersInEditMode}}"
                     FontSize="24"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding SelectedItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -143,11 +144,11 @@
                     Grid.Column="1"
                     Content="Release Year:"
                     Style="{StaticResource LabelStyles}" />
-                <TextBox
+                <Label
                     x:Name="releaseYearTextBox"
                     Grid.Row="1"
                     Grid.Column="2"
-                    Text="{Binding SelectedReleaseYear}"
+                    Content="{Binding SelectedReleaseYear}"
                     Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
                 <ComboBox
                     x:Name="releaseYearComboBox"
@@ -183,6 +184,7 @@
                     x:Name="pageCountTextBox"
                     Grid.Row="2"
                     Grid.Column="2"
+                    BorderThickness="{Binding UserMode.Item4, Converter={StaticResource ShowBordersInEditMode}}"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding SelectedItem.PageCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -196,6 +198,7 @@
                     x:Name="wordCountTextBox"
                     Grid.Row="3"
                     Grid.Column="2"
+                    BorderThickness="{Binding UserMode.Item4, Converter={StaticResource ShowBordersInEditMode}}"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding SelectedItem.WordCount, StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -329,6 +332,7 @@
                     x:Name="isnbTextBox"
                     Grid.Row="6"
                     Grid.Column="2"
+                    BorderThickness="{Binding UserMode.Item4, Converter={StaticResource ShowBordersInEditMode}}"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding SelectedItem.ISBN, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
@@ -506,6 +510,7 @@
                                                 <ListBox
                                                     x:Name="booksInSeriesListBox"
                                                     MinWidth="300"
+                                                    BorderThickness="0"
                                                     ItemsSource="{Binding Series.SeriesReadOrder}">
                                                     <ListBox.ItemTemplate>
                                                         <DataTemplate>

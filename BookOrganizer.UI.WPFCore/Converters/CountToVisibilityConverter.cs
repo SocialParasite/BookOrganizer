@@ -5,7 +5,6 @@ using System.Windows.Data;
 
 namespace BookOrganizer.UI.WPFCore.Converters
 {
-    [ValueConversion(typeof(bool), typeof(double))]
     public class CountToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

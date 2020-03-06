@@ -4,13 +4,14 @@
     xmlns:local="clr-namespace:BookOrganizer.UI.WPFCore.Converters">
 
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
+    <local:DobCountAge x:Key="DobCountAge" />
+    <local:BookSeriesHeader x:Key="BookSeriesHeader" />
+    <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+    <local:GuidToVisibilityConverter x:Key="GuidToVisibilityConverter" />
+    <local:ShowBordersInEditMode x:Key="ShowBordersInEditMode" />
     <local:StyleConverter x:Key="StyleConverter" />
     <local:VisibilityConverter x:Key="VisibilityConverter" />
-    <local:DobCountAge x:Key="DobCountAge" />
-    <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
-    <local:BookSeriesHeader x:Key="BookSeriesHeader" />
-    <local:GuidToVisibilityConverter x:Key="GuidToVisibilityConverter" />
-    <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="BaseResources.xaml" />

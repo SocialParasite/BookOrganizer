@@ -706,23 +706,22 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             return wrapper;
         }
 
-        private bool OnAddNewFormatCanExecute(string arg)
+        private bool OnAddNewFormatCanExecute(string formatName)
         {
-            if (arg is null)
+            if (formatName is null || formatName == "")
             {
                 return false;
             }
-            var test = AllBookFormats.Any(f => f.Item1.DisplayMember.Equals(arg, StringComparison.InvariantCultureIgnoreCase));
-            return !test;
+            return !AllBookFormats.Any(f => f.Item1.DisplayMember.Equals(formatName, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private bool OnAddNewGenreCanExecute(string arg)
+        private bool OnAddNewGenreCanExecute(string genreName)
         {
-            if (arg is null)
+            if (genreName is null || genreName == "")
             {
                 return false;
             }
-            return !AllBookGenres.Any(f => f.Item1.DisplayMember.Equals(arg, StringComparison.InvariantCultureIgnoreCase));
+            return !AllBookGenres.Any(f => f.Item1.DisplayMember.Equals(genreName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private void OnAddNewGenreExecute(string genre)

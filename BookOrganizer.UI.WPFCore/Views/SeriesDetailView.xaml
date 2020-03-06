@@ -114,6 +114,7 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <GroupBox
+                                x:Name="AllBooksGroupBox"
                                 Margin="10"
                                 Header="All books:"
                                 Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
@@ -158,9 +159,9 @@
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
-                                                    <Label>
+                                                    <Label HorizontalAlignment="Stretch">
                                                         <Label.Content>
-                                                            <Grid MaxWidth="550">
+                                                            <Grid MaxWidth="{Binding ActualWidth, ElementName=AllBooksGroupBox}">
                                                                 <Grid.ColumnDefinitions>
                                                                     <ColumnDefinition Width="50" />
                                                                     <ColumnDefinition Width="*" />
@@ -193,7 +194,7 @@
                             </GroupBox>
 
                             <GroupBox
-                                x:Name="bookSeriesLabel"
+                                x:Name="BooksInSeriesGroupBox"
                                 Grid.Column="1"
                                 Margin="10"
                                 HorizontalAlignment="Left"
@@ -212,7 +213,7 @@
                                         <DataTemplate>
                                             <Label>
                                                 <Label.Content>
-                                                    <Grid MaxWidth="550">
+                                                    <Grid Width="{Binding ActualWidth, ElementName=BooksInSeriesGroupBox}">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="25" />
                                                             <ColumnDefinition Width="50" />
