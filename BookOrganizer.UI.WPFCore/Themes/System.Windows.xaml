@@ -8,6 +8,7 @@
     <local:DobCountAge x:Key="DobCountAge" />
     <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
     <local:BookSeriesHeader x:Key="BookSeriesHeader" />
+    <local:GuidToVisibilityConverter x:Key="GuidToVisibilityConverter" />
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="BaseResources.xaml" />

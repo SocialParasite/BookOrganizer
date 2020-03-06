@@ -90,7 +90,7 @@
                             Style="{StaticResource FreeTextBoxStyle}"
                             Text="{Binding SelectedItem.Description, UpdateSourceTrigger=PropertyChanged}" />
                     </TabItem>
-                    <TabItem Header="Books">
+                    <TabItem Header="Books" Visibility="{Binding SelectedItem.Id, Converter={StaticResource GuidToVisibilityConverter}}">
                         <ListBox
                             x:Name="booksListBox"
                             HorizontalContentAlignment="Stretch"
