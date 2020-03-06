@@ -403,7 +403,8 @@
                     x:Name="BookAuthorsGroupBox"
                     Margin="5"
                     HorizontalAlignment="Left"
-                    Header="Book Authors:">
+                    Header="Book Authors:"
+                    Visibility="{Binding SelectedItem.Model.AuthorsLink.Count, Converter={StaticResource CountToVisibilityConverter}}">
                     <ListBox x:Name="authorListBox" ItemsSource="{Binding SelectedItem.Model.AuthorsLink}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>

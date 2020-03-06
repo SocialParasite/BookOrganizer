@@ -69,7 +69,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             Authors = new ObservableCollection<LookupItem>();
             AllBookFormats = new ObservableCollection<Tuple<LookupItem, bool>>();
             AllBookGenres = new ObservableCollection<Tuple<LookupItem, bool>>();
-
+            
             YearsList = PopulateYearsMenu();
         }
 

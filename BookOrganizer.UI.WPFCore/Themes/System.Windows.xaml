@@ -9,6 +9,7 @@
     <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
     <local:BookSeriesHeader x:Key="BookSeriesHeader" />
     <local:GuidToVisibilityConverter x:Key="GuidToVisibilityConverter" />
+    <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="BaseResources.xaml" />
