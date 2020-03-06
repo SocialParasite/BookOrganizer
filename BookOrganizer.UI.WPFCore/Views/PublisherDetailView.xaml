@@ -41,7 +41,7 @@
             <Grid Grid.Row="1" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -68,14 +68,6 @@
                     </Button.Template>
                 </Button>
                 <Label
-                    x:Name="nameLabel_ReadOnly"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Content="{Binding SelectedItem.Name}"
-                    FontSize="18"
-                    FontWeight="Bold"
-                    Visibility="{Binding UserMode.Item1, Converter={StaticResource BoolToVis}}" />
-                <Label
                     x:Name="nameLabel"
                     Grid.Column="1"
                     Content="Publisher: "
@@ -85,10 +77,11 @@
                 <TextBox
                     x:Name="nameTextBox"
                     Grid.Column="2"
+                    BorderThickness="{Binding UserMode.Item4, Converter={StaticResource ShowBordersInEditMode}}"
+                    FontSize="18"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap"
-                    Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}" />
+                    TextWrapping="Wrap" />
             </Grid>
 
             <Grid Grid.Row="2">
@@ -108,7 +101,6 @@
                     <TabItem Header="Books" Visibility="{Binding SelectedItem.Id, Converter={StaticResource GuidToVisibilityConverter}}">
                         <ListBox
                             x:Name="booksListBox"
-                            HorizontalContentAlignment="Stretch"
                             BorderThickness="0"
                             ItemsSource="{Binding SelectedItem.Model.Books}">
                             <ListBox.ItemTemplate>

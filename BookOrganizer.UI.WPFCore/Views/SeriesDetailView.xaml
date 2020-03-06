@@ -52,7 +52,7 @@
             <Grid Grid.Row="1" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -88,6 +88,8 @@
                 <TextBox
                     x:Name="nameTextBox"
                     Grid.Column="2"
+                    BorderThickness="{Binding UserMode.Item4, Converter={StaticResource ShowBordersInEditMode}}"
+                    FontSize="18"
                     Style="{StaticResource ValidationTextBoxStyle}"
                     Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap" />
@@ -204,8 +206,8 @@
                                     x:Name="booksInSeriesListBox"
                                     HorizontalContentAlignment="Stretch"
                                     dd:DragDrop.DropHandler="{Binding}"
-                                    dd:DragDrop.IsDragSource="True"
-                                    dd:DragDrop.IsDropTarget="True"
+                                    dd:DragDrop.IsDragSource="{Binding UserMode.Item4}"
+                                    dd:DragDrop.IsDropTarget="{Binding UserMode.Item4}"
                                     BorderThickness="0"
                                     ItemsSource="{Binding Source={StaticResource ReadOrder}}"
                                     SelectionMode="Single">
