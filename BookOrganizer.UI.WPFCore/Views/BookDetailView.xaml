@@ -154,9 +154,7 @@
                     x:Name="releaseYearComboBox"
                     Grid.Row="1"
                     Grid.Column="2"
-                    MaxHeight="30"
                     ItemsSource="{Binding YearsList}"
-                    MaxDropDownHeight="200"
                     ScrollViewer.CanContentScroll="True"
                     SelectedValue="{Binding SelectedReleaseYear, Mode=TwoWay}"
                     VirtualizingStackPanel.IsVirtualizing="True"
@@ -238,7 +236,6 @@
                     x:Name="publisherComboBox"
                     Grid.Row="4"
                     Grid.Column="2"
-                    MaxHeight="30"
                     Margin="0,0,0,5"
                     IsEditable="True"
                     IsTextSearchEnabled="True"
@@ -290,7 +287,6 @@
                     x:Name="languageComboBox"
                     Grid.Row="5"
                     Grid.Column="2"
-                    MaxHeight="30"
                     IsEditable="True"
                     IsTextSearchEnabled="True"
                     ItemsSource="{Binding Languages}"
@@ -409,7 +405,10 @@
                     HorizontalAlignment="Left"
                     Header="Book Authors:"
                     Visibility="{Binding SelectedItem.Model.AuthorsLink.Count, Converter={StaticResource CountToVisibilityConverter}}">
-                    <ListBox x:Name="authorListBox" ItemsSource="{Binding SelectedItem.Model.AuthorsLink}">
+                    <ListBox
+                        x:Name="authorListBox"
+                        BorderThickness="0"
+                        ItemsSource="{Binding SelectedItem.Model.AuthorsLink}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Width="630" Margin="0,5,0,5">
@@ -515,6 +514,7 @@
                                                     <ListBox.ItemTemplate>
                                                         <DataTemplate>
                                                             <TextBlock
+                                                                Width="{Binding ElementName=booksInSeriesListBox, Path=ActualWidth}"
                                                                 FontSize="16"
                                                                 Text="{Binding Book.Title}"
                                                                 TextWrapping="Wrap">
