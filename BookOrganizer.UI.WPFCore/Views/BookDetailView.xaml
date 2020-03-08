@@ -649,6 +649,7 @@
                                             Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
                                         <Button
                                             x:Name="AddNewFormatButton"
+                                            Margin="5,0,0,5"
                                             Command="{Binding AddNewFormatCommand}"
                                             CommandParameter="{Binding NewFormatName}"
                                             Style="{StaticResource AddItemButtonStyle}"
@@ -690,6 +691,7 @@
                                             Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
                                         <Button
                                             x:Name="AddNewGenreButton"
+                                            Margin="5,0,0,5"
                                             Command="{Binding AddNewGenreCommand}"
                                             CommandParameter="{Binding NewGenreName}"
                                             Style="{StaticResource AddItemButtonStyle}"
