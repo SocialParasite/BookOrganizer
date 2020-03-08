@@ -16,6 +16,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="BaseResources.xaml" />
         <ResourceDictionary Source="Styles/ButtonStyles.xaml" />
+        <ResourceDictionary Source="Styles/CheckBoxStyles.xaml" />
         <ResourceDictionary Source="Styles/ComboBoxStyles.xaml" />
         <ResourceDictionary Source="Styles/TextBoxStyles.xaml" />
         <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml" />
