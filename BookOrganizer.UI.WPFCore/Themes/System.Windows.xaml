@@ -4,6 +4,8 @@
     xmlns:local="clr-namespace:BookOrganizer.UI.WPFCore.Converters">
 
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+    <local:AdjustWidthConverter x:Key="AdjustWidthConverter" />
     <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
     <local:DobCountAge x:Key="DobCountAge" />
     <local:BookSeriesHeader x:Key="BookSeriesHeader" />

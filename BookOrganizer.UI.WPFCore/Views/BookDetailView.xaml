@@ -403,8 +403,11 @@
                     x:Name="BookAuthorsGroupBox"
                     Margin="5"
                     HorizontalAlignment="Left"
-                    Header="Book Authors:"
                     Visibility="{Binding SelectedItem.Model.AuthorsLink.Count, Converter={StaticResource CountToVisibilityConverter}}">
+                    <GroupBox.Header>
+                        <Label Content="Book Authors: " FontWeight="Bold" />
+                    </GroupBox.Header>
+
                     <ListBox
                         x:Name="authorListBox"
                         BorderThickness="0"
@@ -478,26 +481,35 @@
                             <GroupBox
                                 x:Name="SeriesGroupBox"
                                 Grid.RowSpan="3"
-                                Margin="5"
-                                Header="{Binding SelectedItem.Model.BooksSeries.Count, Converter={StaticResource BookSeriesHeader}}">
+                                Margin="5">
+                                <GroupBox.Header>
+                                    <Label Content="{Binding SelectedItem.Model.BooksSeries.Count, Converter={StaticResource BookSeriesHeader}}" FontWeight="Bold" />
+                                </GroupBox.Header>
                                 <!--<GroupBox.Style>
                                 <Style BasedOn="{StaticResource MetroGroupBox}" TargetType="GroupBox">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding SelectedItem.BooksSeries.Count}" Value="0">
+                                        <DataTrigger Binding="{Binding SelectedItem.Model.BooksSeries.Count}" Value="0">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </GroupBox.Style>-->
-                                <ItemsControl
-                                    x:Name="BooksSeriesItemsControl"
-                                    Width="{Binding ElementName=SeriesGroupBox, Path=ActualWidth}"
-                                    ItemsSource="{Binding Source={StaticResource BooksSeriesList}}">
+                                <ItemsControl x:Name="BooksSeriesItemsControl" ItemsSource="{Binding Source={StaticResource BooksSeriesList}}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Expander x:Name="bookSeriesExpander" Margin="0,5,5,5">
+                                            <Expander
+                                                x:Name="bookSeriesExpander"
+                                                Width="{Binding ElementName=SeriesGroupBox, Path=ActualWidth, Converter={StaticResource AdjustWidthConverter}, ConverterParameter=0.95}"
+                                                Margin="0,5,0,5"
+                                                Background="LightSkyBlue"
+                                                BorderBrush="LightSkyBlue"
+                                                BorderThickness="2,2,0,0">
                                                 <Expander.Header>
-                                                    <Label Content="{Binding Series.Name}" Style="{StaticResource LabelStyles}">
+                                                    <Label
+                                                        Background="LightSkyBlue"
+                                                        Content="{Binding Series.Name}"
+                                                        FontWeight="Bold"
+                                                        Style="{StaticResource LabelStyles}">
                                                         <Label.InputBindings>
                                                             <MouseBinding
                                                                 Command="{Binding DataContext.ShowSelectedSeriesCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
@@ -514,8 +526,8 @@
                                                     <ListBox.ItemTemplate>
                                                         <DataTemplate>
                                                             <TextBlock
-                                                                Width="{Binding ElementName=booksInSeriesListBox, Path=ActualWidth}"
-                                                                FontSize="16"
+                                                                Width="{Binding ElementName=SeriesGroupBox, Path=ActualWidth, Converter={StaticResource AdjustWidthConverter}, ConverterParameter=0.92}"
+                                                                FontSize="14"
                                                                 Text="{Binding Book.Title}"
                                                                 TextWrapping="Wrap">
                                                                 <TextBlock.InputBindings>
@@ -537,8 +549,10 @@
                             <GroupBox
                                 Grid.Row="2"
                                 Grid.Column="1"
-                                Header="Read dates"
                                 Style="{StaticResource GroupBoxStyles}">
+                                <GroupBox.Header>
+                                    <Label Content="Read dates " FontWeight="Bold" />
+                                </GroupBox.Header>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -628,10 +642,10 @@
                                 </Grid>
                             </GroupBox>
                             <!--  Genres, formats  -->
-                            <GroupBox
-                                Grid.Column="1"
-                                Header="Formats"
-                                Style="{StaticResource GroupBoxStyles}">
+                            <GroupBox Grid.Column="1" Style="{StaticResource GroupBoxStyles}">
+                                <GroupBox.Header>
+                                    <Label Content="Formats " FontWeight="Bold" />
+                                </GroupBox.Header>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -672,8 +686,10 @@
                             <GroupBox
                                 Grid.Row="1"
                                 Grid.Column="1"
-                                Header="Genres"
                                 Style="{StaticResource GroupBoxStyles}">
+                                <GroupBox.Header>
+                                    <Label Content="Genres " FontWeight="Bold" />
+                                </GroupBox.Header>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
