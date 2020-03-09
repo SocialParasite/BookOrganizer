@@ -57,6 +57,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
+        protected override string CreateChangeMessage(DatabaseOperation operation)
+        {
+            return $"{operation.ToString()}: {SelectedItem.Name}.";
+        }
+
         public async override Task LoadAsync(Guid id)
         {
             try

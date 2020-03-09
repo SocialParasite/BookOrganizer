@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using Autofac.Features.Indexed;
 using BookOrganizer.UI.WPFCore.Events;
+using BookOrganizer.UI.WPFCore.Services;
 using Prism.Commands;
 using Prism.Events;
 using Serilog;
@@ -73,8 +74,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 this.eventAggregator.GetEvent<CloseDetailsViewEvent>()
                     .Subscribe(CloseDetailsView);
 
-                this.eventAggregator.GetEvent<SavedDetailsViewEvent>()
-                    .Subscribe(OnSaveDetailsView);
+                this.eventAggregator.GetEvent<ChangeDetailsViewEvent>()
+                    .Subscribe(OnChangeDetailsView);
             }
         }
 
@@ -140,6 +141,22 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 selectedVM = value;
                 OnPropertyChanged();
             }
+        }
+
+        private MessageItem messageItem;
+
+        public MessageItem MessageItem
+        {
+            get { return messageItem; }
+            set { messageItem = value; OnPropertyChanged(); }
+        }
+
+        private bool shouldAnimate;
+
+        public bool ShouldAnimate
+        {
+            get { return shouldAnimate; }
+            set { shouldAnimate = value; OnPropertyChanged(); }
         }
 
         private void OnOpenSelectedItemView(OpenItemViewEventArgs args)
@@ -244,12 +261,18 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
-        private void OnSaveDetailsView(OpenDetailViewEventArgs args)
+        private void OnChangeDetailsView(ChangeDetailsViewEventArgs args)
         {
+            ShouldAnimate = false;
+
             if (SelectedVM is IItemLists)
             {
                 (SelectedVM as IItemLists).InitializeRepositoryAsync();
             }
+
+            MessageItem = new MessageItem { Message = args.Message, MessageBackgroundColor = args.MessageBackgroundColor };
+
+            ShouldAnimate = true;
             //RemoveDetailViewModel(default, args.ViewModelName);
 
             //OnOpenDetailViewMatchingSelectedId(args);

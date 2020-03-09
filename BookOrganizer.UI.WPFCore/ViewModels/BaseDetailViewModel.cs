@@ -130,7 +130,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             SelectedItem = CreateWrapper(entity);
         }
 
-
         public virtual void SwitchEditableStateExecute()
         {
             if (UserMode.Item2 == DetailViewState.ViewMode)
@@ -168,7 +167,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public virtual void OnShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
 
-        protected bool SaveItemCanExecute() 
+        protected bool SaveItemCanExecute()
             => (!SelectedItem.HasErrors) && (HasChanges || SelectedItem.Id == default);
 
         private bool DeleteItemCanExecute()
@@ -198,11 +197,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 domainService.Repository.Update(SelectedItem.Model);
                 await SaveRepository();
 
-                eventAggregator.GetEvent<SavedDetailsViewEvent>()
-                    .Publish(new OpenDetailViewEventArgs
+                eventAggregator.GetEvent<ChangeDetailsViewEvent>()
+                    .Publish(new ChangeDetailsViewEventArgs
                     {
-                        Id = SelectedItem.Model.Id,
-                        ViewModelName = this.GetType().Name
+                        Message = CreateChangeMessage(isNewItem ? DatabaseOperation.ADD : DatabaseOperation.UPDATE),
+                        MessageBackgroundColor = Brushes.LawnGreen
                     });
 
                 if (isNewItem)
@@ -219,6 +218,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         }
 
+        protected abstract string CreateChangeMessage(DatabaseOperation operation);
+        
         private async void DeleteItemExecute()
         {
             //var result = await metroDialogService
@@ -237,12 +238,12 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
                 CloseDetailViewExecute();
 
-                eventAggregator.GetEvent<SavedDetailsViewEvent>()
-                        .Publish(new OpenDetailViewEventArgs
-                        {
-                            Id = SelectedItem.Model.Id,
-                            ViewModelName = this.GetType().Name
-                        });
+                eventAggregator.GetEvent<ChangeDetailsViewEvent>()
+                    .Publish(new ChangeDetailsViewEventArgs
+                    {
+                        Message = CreateChangeMessage(DatabaseOperation.DELETE),
+                        MessageBackgroundColor = Brushes.DimGray
+                    });
             }
         }
 

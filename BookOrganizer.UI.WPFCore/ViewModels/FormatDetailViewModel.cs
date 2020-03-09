@@ -52,6 +52,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public ObservableCollection<LookupItem> Formats { get; set; }
 
+        protected override string CreateChangeMessage(DatabaseOperation operation)
+        {
+            return $"{operation.ToString()}: {SelectedItem.Name}.";
+        }
+
         public async override Task LoadAsync(Guid id)
         {
             var format = await domainService.Repository.GetSelectedAsync(id) ?? new Format();

@@ -162,6 +162,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
+        protected override string CreateChangeMessage(DatabaseOperation operation)
+        {
+            return $"{operation.ToString()}: {SelectedItem.LastName}, {SelectedItem.FirstName}.";
+        }
+
         private async Task<IEnumerable<LookupItem>> GetNationalityList()
             => await (domainService as AuthorService).NationalityLookupDataService
                                                      .GetNationalityLookupAsync(nameof(NationalityDetailViewModel));

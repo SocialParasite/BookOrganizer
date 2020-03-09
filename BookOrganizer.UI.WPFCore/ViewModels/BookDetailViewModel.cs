@@ -377,6 +377,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
+        protected override string CreateChangeMessage(DatabaseOperation operation)
+        {
+            return $"{operation.ToString()}: {SelectedItem.Title}.";
+        }
+
         public override async void SwitchEditableStateExecute()
         {
             base.SwitchEditableStateExecute();

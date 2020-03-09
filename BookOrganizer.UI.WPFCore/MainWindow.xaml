@@ -94,11 +94,37 @@
                     </EventTrigger>
                 </Style.Triggers>
             </Style>
+
+            <Style x:Key="MessageBar" TargetType="{x:Type Label}">
+                <Setter Property="Background" Value="{Binding MessageItem.MessageBackgroundColor, Mode=OneWay}" />
+                <Setter Property="Content" Value="{Binding MessageItem.Message, Mode=OneWay}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Height" Value="0" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ShouldAnimate, Mode=TwoWay}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        AccelerationRatio="0.5"
+                                        DecelerationRatio="0.5"
+                                        Storyboard.TargetProperty="Height"
+                                        From="40"
+                                        To="0"
+                                        Duration="0:0:7" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -187,13 +213,9 @@
             </Label.Content>
         </Label>
 
-        <!--<DockPanel>
-        -->
-        <!--  info messages, e.g. book added to db??  -->
-        <!--
-        </DockPanel>-->
+        <Label Grid.Row="1" Style="{StaticResource MessageBar}" />
 
-        <DockPanel Grid.Row="1">
+        <DockPanel Grid.Row="2">
             <Label Visibility="{Binding IsViewVisible, Converter={StaticResource BoolToVis}}">
                 <ContentControl Width="{Binding ElementName=BookOrganizerMainWindow, Path=ActualWidth}" Content="{Binding SelectedVM}" />
             </Label>
