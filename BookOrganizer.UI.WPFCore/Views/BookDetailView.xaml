@@ -450,7 +450,6 @@
                     </ListBox>
                 </GroupBox>
             </Grid>
-
             <Grid Grid.Row="4">
                 <TabControl Margin="0,0,50,0">
                     <TabItem Header="Description">

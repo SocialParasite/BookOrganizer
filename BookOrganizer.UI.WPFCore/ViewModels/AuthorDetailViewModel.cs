@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
+using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Services;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using Prism.Commands;
@@ -26,6 +27,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             : base(eventAggregator, logger, domainService)
         {
             AddAuthorPictureCommand = new DelegateCommand(OnAddAuthorPictureExecute);
+            AddNewNationalityCommand = new DelegateCommand(OnAddNewNationalityExecute);
             NationalitySelectionChangedCommand = new DelegateCommand(OnNationalitySelectionChangedExecute);
 
             SelectedItem = new AuthorWrapper(domainService.CreateItem());
@@ -35,6 +37,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public ICommand AddAuthorPictureCommand { get; }
         public ICommand NationalitySelectionChangedCommand { get; }
+        public ICommand AddNewNationalityCommand { get; }
 
         public LookupItem SelectedNationality
         {
@@ -168,6 +171,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 SelectedItem.Model.NationalityId = SelectedNationality.Id;
                 SetChangeTracker();
             }
+        }
+
+
+        private void OnAddNewNationalityExecute()
+        {
+            eventAggregator.GetEvent<OpenDetailViewEvent>()
+                           .Publish(new OpenDetailViewEventArgs
+                           {
+                               Id = new Guid(),
+                               ViewModelName = nameof(NationalityDetailViewModel)
+                           });
         }
 
         public override AuthorWrapper CreateWrapper(Author entity)
