@@ -154,14 +154,15 @@
                                         x:Name="addBookToSeriesListBox"
                                         Grid.Row="1"
                                         Grid.ColumnSpan="3"
-                                        Margin="1"
+                                        Margin="0,5,0,0"
+                                        BorderThickness="0"
                                         FontSize="16"
                                         ItemsSource="{Binding Books}"
                                         Visibility="{Binding UserMode.Item4, Converter={StaticResource BoolToVis}}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
-                                                    <Label HorizontalAlignment="Stretch">
+                                                    <Label Width="{Binding ElementName=AllBooksGroupBox, Path=ActualWidth, Converter={StaticResource AdjustWidthConverter}, ConverterParameter=0.90}" HorizontalAlignment="Stretch">
                                                         <Label.Content>
                                                             <Grid MaxWidth="{Binding ActualWidth, ElementName=AllBooksGroupBox}">
                                                                 <Grid.ColumnDefinitions>
@@ -213,7 +214,7 @@
                                     SelectionMode="Single">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <Label>
+                                            <Label Width="{Binding ElementName=BooksInSeriesGroupBox, Path=ActualWidth, Converter={StaticResource AdjustWidthConverter}, ConverterParameter=0.95}">
                                                 <Label.Content>
                                                     <Grid Width="{Binding ActualWidth, ElementName=BooksInSeriesGroupBox}">
                                                         <Grid.ColumnDefinitions>
