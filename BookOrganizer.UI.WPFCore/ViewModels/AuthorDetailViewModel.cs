@@ -29,7 +29,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             AddAuthorPictureCommand = new DelegateCommand(OnAddAuthorPictureExecute);
             AddNewNationalityCommand = new DelegateCommand(OnAddNewNationalityExecute);
             NationalitySelectionChangedCommand = new DelegateCommand(OnNationalitySelectionChangedExecute);
-
+            SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)
+                .ObservesProperty(() => SelectedItem.FirstName)
+                .ObservesProperty(() => SelectedItem.LastName);
             SelectedItem = new AuthorWrapper(domainService.CreateItem());
 
             Nationalities = new ObservableCollection<LookupItem>();

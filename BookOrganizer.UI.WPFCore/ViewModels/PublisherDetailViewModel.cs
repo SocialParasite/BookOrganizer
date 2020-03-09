@@ -22,7 +22,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             : base(eventAggregator, logger, domainService)
         {
             AddPublisherLogoCommand = new DelegateCommand(OnAddPublisherLogoExecute);
-
+            SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)
+                .ObservesProperty(() => SelectedItem.Name);
+            
             SelectedItem = new PublisherWrapper(domainService.CreateItem());
         }
 

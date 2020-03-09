@@ -13,7 +13,7 @@ using Serilog;
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
     public abstract class BaseDetailViewModel<T, TBase> : ViewModelBase, IDetailViewModel
-            where TBase: BaseWrapper<T>
+            where TBase : BaseWrapper<T>
             where T : class, IIdentifiable
     {
         protected readonly IEventAggregator eventAggregator;
@@ -28,13 +28,14 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public BaseDetailViewModel(IEventAggregator eventAggregator, ILogger logger, IDomainService<T> domainService)
         {
-            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));            
+            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.domainService = domainService ?? throw new ArgumentNullException(nameof(domainService));
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
             SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute);
-            DeleteItemCommand = new DelegateCommand(DeleteItemExecute);
+            DeleteItemCommand = new DelegateCommand(DeleteItemExecute, DeleteItemCanExecute)
+                .ObservesProperty(() => UserMode);
             CloseDetailViewCommand = new DelegateCommand(CloseDetailViewExecute);
             ShowSelectedBookCommand = new DelegateCommand<Guid?>(OnShowSelectedBookExecute, OnShowSelectedBookCanExecute);
 
@@ -48,14 +49,14 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public ICommand ShowSelectedBookCommand { get; }
 
         public abstract TBase SelectedItem { get; set; }
-        
+
         public Tuple<bool, DetailViewState, SolidColorBrush, bool> UserMode
         {
             get => userMode;
-            set 
-            { 
-                userMode = value; 
-                OnPropertyChanged(); 
+            set
+            {
+                userMode = value;
+                OnPropertyChanged();
             }
         }
 
@@ -77,17 +78,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             get
             {
-                if (tabTitle is null) 
+                if (tabTitle is null)
                     return "";
                 if (tabTitle.Length <= 50)
                     return tabTitle;
                 else
                     return tabTitle.Substring(0, 50) + "...";
             }
-            set 
-            { 
-                tabTitle = value; 
-                OnPropertyChanged(); 
+            set
+            {
+                tabTitle = value;
+                OnPropertyChanged();
             }
         }
 
@@ -167,8 +168,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public virtual void OnShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
 
-        protected bool SaveItemCanExecute()
+        protected bool SaveItemCanExecute() 
             => (!SelectedItem.HasErrors) && (HasChanges || SelectedItem.Id == default);
+
+        private bool DeleteItemCanExecute()
+            => SelectedItem.Model.Id != default && UserMode.Item4;
 
         protected async void SaveItemExecute()
         {

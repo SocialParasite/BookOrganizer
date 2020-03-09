@@ -32,7 +32,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             AddSeriesPictureCommand = new DelegateCommand(OnAddSeriesPictureExecute);
             FilterBookListCommand = new DelegateCommand<string>(OnFilterBookListExecute);
             AddBookToSeriesCommand = new DelegateCommand<Guid?>(OnAddBookToSeriesExecute, OnAddBookToSeriesCanExecute);
-
+            SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)
+                .ObservesProperty(() => SelectedItem.Name);
             SelectedItem = new SeriesWrapper(domainService.CreateItem());
 
             Books = new ObservableCollection<LookupItem>();

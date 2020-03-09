@@ -60,6 +60,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 .ObservesProperty(() => NewFormatName);
             AddNewGenreCommand = new DelegateCommand<string>(OnAddNewGenreExecute, OnAddNewGenreCanExecute)
                 .ObservesProperty(() => NewGenreName);
+            SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)
+                .ObservesProperty(() => SelectedItem.Title);
 
             SelectedItem = new BookWrapper(domainService.CreateItem(), domainService);
 
