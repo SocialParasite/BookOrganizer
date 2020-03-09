@@ -31,9 +31,10 @@ namespace BookOrganizer.UI.WPFCore.Wrappers
             get { return GetValue<string>(); }
             set
             {
-                if ((domainService as BookService).ValidateIsbn(value))
+                SetValue(value);
+                if (!(domainService as BookService).ValidateIsbn(value))
                 {
-                    SetValue(value);
+                    AddError(nameof(ISBN), "Not valid ISBN code!");
                 }
             }
         }
