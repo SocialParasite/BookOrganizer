@@ -61,7 +61,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             AddNewGenreCommand = new DelegateCommand<string>(OnAddNewGenreExecute, OnAddNewGenreCanExecute)
                 .ObservesProperty(() => NewGenreName);
             SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)
-                .ObservesProperty(() => SelectedItem.Title);
+                .ObservesProperty(() => SelectedItem.Title)
+                .ObservesProperty(() => SelectedItem.PageCount)
+                .ObservesProperty(() => SelectedItem.LanguageId)
+                .ObservesProperty(() => SelectedItem.PublisherId);
 
             SelectedItem = new BookWrapper(domainService.CreateItem(), domainService);
 
@@ -375,6 +378,14 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 MessageBox.Show(ex.Message);
                 logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
             }
+        }
+
+        protected override bool SaveItemCanExecute()
+        {
+            return (!SelectedItem.HasErrors) && (HasChanges || SelectedItem.Id == default)
+                && (SelectedItem.PublisherId != default
+                    && SelectedItem.Model.LanguageId != default
+                    && SelectedItem.Model.PageCount > 0);
         }
 
         protected override string CreateChangeMessage(DatabaseOperation operation)

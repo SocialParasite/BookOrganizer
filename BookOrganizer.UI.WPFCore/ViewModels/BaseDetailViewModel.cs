@@ -167,7 +167,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public virtual void OnShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
 
-        protected bool SaveItemCanExecute()
+        protected virtual bool SaveItemCanExecute()
             => (!SelectedItem.HasErrors) && (HasChanges || SelectedItem.Id == default);
 
         private bool DeleteItemCanExecute()
