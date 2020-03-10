@@ -39,7 +39,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
             HighlightMouseLeaveCommand = new DelegateCommand(HighlightMouseLeaveExecute);
-            SetReadDateCommand = new DelegateCommand(SetReadDateExecute);
+            SetReadDateCommand = new DelegateCommand(SetReadDateExecute, SetReadDateCanExecute)
+                .ObservesProperty(() => NewReadDate);
             AddBookCoverImageCommand = new DelegateCommand(AddBookCoverImageExecute);
             AddAuthorAsABookAuthorCommand = new DelegateCommand<LookupItem>(AddBookAuthorExecute);
             AddNewAuthorCommand = new DelegateCommand(OnAddNewAuthorExecute);
@@ -74,7 +75,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             Authors = new ObservableCollection<LookupItem>();
             AllBookFormats = new ObservableCollection<Tuple<LookupItem, bool>>();
             AllBookGenres = new ObservableCollection<Tuple<LookupItem, bool>>();
-            
+
             YearsList = PopulateYearsMenu();
         }
 
@@ -223,15 +224,20 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private void HighlightMouseOverExecute()
             => HighlightBrush = Brushes.LightSkyBlue;
 
+
+        private bool SetReadDateCanExecute()
+        {
+            return !SelectedItem.Model.ReadDates.Any(d => d.ReadDate == NewReadDate);
+        }
+
         private void SetReadDateExecute()
         {
             var newReadDate = new BooksReadDate { ReadDate = NewReadDate };
 
-            if (!SelectedItem.Model.ReadDates.Any(d => d.ReadDate == newReadDate.ReadDate))
-            {
-                SelectedItem.Model.ReadDates.Add(newReadDate);
-                SetChangeTracker();
-            }
+            SelectedItem.Model.ReadDates.Add(newReadDate);
+            NewReadDate = NewReadDate;
+            SetChangeTracker();
+
         }
 
         private void AddBookCoverImageExecute()
@@ -451,69 +457,69 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
 
         }
-            async Task InitializeAllBookFormatsCollection()
+        async Task InitializeAllBookFormatsCollection()
+        {
+            if (UserMode.Item1 == false)
             {
-                if (UserMode.Item1 == false)
+                foreach (var item in await GetBookFormatList())
                 {
-                    foreach (var item in await GetBookFormatList())
+                    if (AllBookFormats.Any(i => i.Item1.Id == item.Id))
                     {
-                        if (AllBookFormats.Any(i => i.Item1.Id == item.Id))
-                        {
-                            continue;
-                        }
-                        AllBookFormats.Add((item, false).ToTuple());
+                        continue;
                     }
-                }
-                else
-                {
-                    var tempBookFormatsCollection = new ObservableCollection<Tuple<LookupItem, bool>>();
-                    foreach (var item in AllBookFormats)
-                    {
-                        if (item.Item2 == true)
-                        {
-                            tempBookFormatsCollection.Add(item);
-                        }
-                    }
-                    AllBookFormats.Clear();
-
-                    foreach (var item in tempBookFormatsCollection)
-                    {
-                        AllBookFormats.Add(item);
-                    }
+                    AllBookFormats.Add((item, false).ToTuple());
                 }
             }
-
-            async Task InitializeAllBookGenresCollection()
+            else
             {
-                if (UserMode.Item1 == false)
+                var tempBookFormatsCollection = new ObservableCollection<Tuple<LookupItem, bool>>();
+                foreach (var item in AllBookFormats)
                 {
-                    foreach (var item in await GetBookGenreList())
+                    if (item.Item2 == true)
                     {
-                        if (AllBookGenres.Any(i => i.Item1.Id == item.Id))
-                        {
-                            continue;
-                        }
-                        AllBookGenres.Add((item, false).ToTuple());
+                        tempBookFormatsCollection.Add(item);
                     }
                 }
-                else
-                {
-                    var tempBookGenresCollection = new ObservableCollection<Tuple<LookupItem, bool>>();
-                    foreach (var item in AllBookGenres)
-                    {
-                        if (item.Item2 == true)
-                        {
-                            tempBookGenresCollection.Add(item);
-                        }
-                    }
-                    AllBookGenres.Clear();
+                AllBookFormats.Clear();
 
-                    foreach (var item in tempBookGenresCollection)
-                    {
-                        AllBookGenres.Add(item);
-                    }
+                foreach (var item in tempBookFormatsCollection)
+                {
+                    AllBookFormats.Add(item);
                 }
             }
+        }
+
+        async Task InitializeAllBookGenresCollection()
+        {
+            if (UserMode.Item1 == false)
+            {
+                foreach (var item in await GetBookGenreList())
+                {
+                    if (AllBookGenres.Any(i => i.Item1.Id == item.Id))
+                    {
+                        continue;
+                    }
+                    AllBookGenres.Add((item, false).ToTuple());
+                }
+            }
+            else
+            {
+                var tempBookGenresCollection = new ObservableCollection<Tuple<LookupItem, bool>>();
+                foreach (var item in AllBookGenres)
+                {
+                    if (item.Item2 == true)
+                    {
+                        tempBookGenresCollection.Add(item);
+                    }
+                }
+                AllBookGenres.Clear();
+
+                foreach (var item in tempBookGenresCollection)
+                {
+                    AllBookGenres.Add(item);
+                }
+            }
+        }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()
                     => await (domainService as BookService).publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));

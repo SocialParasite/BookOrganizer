@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\admin-ui%2824px%29.png" />
     <None Remove="Resources\Images\agency%2824px%29.png" />
     <None Remove="Resources\Images\analytics%2824px%29.png" />
     <None Remove="Resources\Images\book %28128px%29.png" />
@@ -62,6 +63,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Images\admin-ui(24px).png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Images\agency(24px).png" />
     <Resource Include="Resources\Images\analytics(24px).png" />
     <Resource Include="Resources\Images\book (24px).png" />

@@ -128,7 +128,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label x:Name="ToolbarLabel" HorizontalAlignment="Stretch">
+        <Label x:Name="ToolbarLabel" HorizontalContentAlignment="Stretch">
             <Label.Style>
                 <MultiBinding Converter="{StaticResource StyleConverter}">
                     <Binding Path="IsMenuBarVisible" />
@@ -200,7 +200,19 @@
                             <Label Content="Settings" />
                         </StackPanel>
                     </Button>
-                    <ToggleButton IsChecked="{Binding IsMenuBarVisible}" Style="{StaticResource NavigationMenuToggleButtonStyle}">
+                    <Button CommandParameter="AdministrationViewModel" Style="{StaticResource NavigationMenuButtonStyle}">
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Source="Resources\Images\admin-ui(24px).png" />
+                            <Label Content="Administration" />
+                        </StackPanel>
+                    </Button>
+                    <ToggleButton
+                        HorizontalAlignment="Right"
+                        IsChecked="{Binding IsMenuBarVisible}"
+                        Style="{StaticResource NavigationMenuToggleButtonStyle}">
                         <ToggleButton.Content>
                             <Label
                                 HorizontalContentAlignment="Center"
