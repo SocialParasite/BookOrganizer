@@ -11,6 +11,7 @@
     <local:BookSeriesHeader x:Key="BookSeriesHeader" />
     <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
     <local:GuidToVisibilityConverter x:Key="GuidToVisibilityConverter" />
+    <local:RowHasValuesConverter x:Key="RowHasValuesConverter" />
     <local:ShowBordersInEditMode x:Key="ShowBordersInEditMode" />
     <local:StyleConverter x:Key="StyleConverter" />
     <local:VisibilityConverter x:Key="VisibilityConverter" />

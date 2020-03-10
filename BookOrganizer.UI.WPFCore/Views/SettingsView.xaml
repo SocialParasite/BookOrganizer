@@ -1,0 +1,183 @@
+﻿<UserControl
+    x:Class="BookOrganizer.UI.WPFCore.Views.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="clr-namespace:BookOrganizer.UI.WPFCore"
+    xmlns:local="clr-namespace:BookOrganizer.UI.WPFCore.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ObjectDataProvider
+                x:Key="FileActions"
+                MethodName="GetValues"
+                ObjectType="{x:Type sys:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type Type="enums:FileAction" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label
+            x:Name="DatabaseLabel"
+            HorizontalContentAlignment="Right"
+            Content="Database"
+            Style="{StaticResource LabelStyles}" />
+        <DataGrid
+            x:Name="DatabaseDataGrid"
+            Grid.Column="1"
+            AlternatingRowBackground="SkyBlue"
+            AutoGenerateColumns="False"
+            Background="Black"
+            GridLinesVisibility="Vertical"
+            ItemsSource="{Binding Databases, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            RowBackground="CornflowerBlue">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Is Default">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <RadioButton
+                                HorizontalAlignment="Center"
+                                GroupName="DefaultDB"
+                                IsChecked="{Binding Default, UpdateSourceTrigger=PropertyChanged}"
+                                Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}, Path=DataContext, Converter={StaticResource RowHasValuesConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Identifier}" Header="Id" />
+                <DataGridTextColumn Binding="{Binding Server}" Header="Server" />
+                <DataGridTextColumn Binding="{Binding Database}" Header="Database" />
+                <DataGridTextColumn Binding="{Binding Trusted_Connection}" Header="Trusted_Connection" />
+                <DataGridTemplateColumn Header="Remove">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Command="{Binding Path=DataContext.RemoveConnectionStringCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                CommandParameter="{Binding Identifier}"
+                                Content="Remove"
+                                Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}, Path=DataContext, Converter={StaticResource RowHasValuesConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label
+            x:Name="StoragePathLabel"
+            Grid.Row="1"
+            Margin="0,10,0,10"
+            HorizontalContentAlignment="Right"
+            Content="Path to book covers: "
+            Style="{StaticResource LabelStyles}"
+            Visibility="Hidden" />
+        <TextBox
+            x:Name="StoragePathTextBox"
+            Grid.Row="1"
+            Margin="0,10,0,10"
+            HorizontalAlignment="Stretch"
+            Opacity="90"
+            Text="{Binding StoragePath, Mode=TwoWay}"
+            Visibility="Hidden" />
+        <Label
+            x:Name="SPChoiceLabel"
+            Grid.Row="2"
+            Margin="0,10,0,10"
+            HorizontalContentAlignment="Right"
+            Content="Copy or move old files to new location? "
+            Style="{StaticResource LabelStyles}"
+            Visibility="Hidden" />
+        <ComboBox
+            x:Name="StoragePathComboBox"
+            Grid.Row="2"
+            Grid.Column="1"
+            Width="150"
+            Margin="0,10,0,10"
+            HorizontalAlignment="Left"
+            ItemsSource="{Binding Source={StaticResource FileActions}}"
+            SelectedValue="{Binding FileActionMode, Mode=TwoWay}"
+            Visibility="Hidden" />
+
+        <Label
+            x:Name="ResolutionLabel"
+            Grid.Row="3"
+            Margin="0,10,0,10"
+            HorizontalContentAlignment="Right"
+            Content="Screen resolution: "
+            Style="{StaticResource LabelStyles}"
+            Visibility="Hidden" />
+        <ComboBox
+            x:Name="ResolutionComboBox"
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="0,10,0,10"
+            ItemsSource="{Binding Resolutions}"
+            SelectedItem="{Binding CurrentResolution, Mode=TwoWay}"
+            Visibility="Hidden" />
+        <Label
+            x:Name="LanguageLabel"
+            Grid.Row="4"
+            Margin="0,10,0,10"
+            HorizontalContentAlignment="Right"
+            Content="Language: "
+            Style="{StaticResource LabelStyles}" />
+        <ComboBox
+            x:Name="LanguageComboBox"
+            Grid.Row="4"
+            Grid.Column="1"
+            Margin="0,10,0,10"
+            ItemsSource="{Binding Languages}"
+            SelectedItem="{Binding CurrentLanguage, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding LanguageName}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <CheckBox
+                x:Name="SaveAsDefaultCheckBox"
+                Margin="0,0,20,0"
+                HorizontalAlignment="Left"
+                Content="Save as default"
+                FontSize="18"
+                IsChecked="{Binding WillBeSavedAsDefault, Mode=TwoWay}"
+                Visibility="Hidden" />
+        </Grid>
+        <Button
+            x:Name="ApplyButton"
+            Grid.Row="8"
+            Grid.Column="2"
+            Width="50"
+            Height="50"
+            Margin="5,0,0,0"
+            HorizontalAlignment="Left"
+            Command="{Binding ApplyAndSaveSettingsCommand}"
+            Content="Apply" />
+    </Grid>
+</UserControl>

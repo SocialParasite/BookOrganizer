@@ -1,4 +1,4 @@
-﻿namespace BookOrganizer.UI.WPF.Startup
+﻿namespace BookOrganizer.UI.WPFCore.Startup
 {
     public class Settings
     {
