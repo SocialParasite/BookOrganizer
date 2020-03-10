@@ -12,22 +12,22 @@ using Xunit;
 
 namespace BookOrganizer.UI.WPFCoreTests
 {
-    public class FormatDetailViewModelTests
+    public class LanguageDetailViewModelTests
     {
-        private FormatDetailViewModel viewModel;
+        private LanguageDetailViewModel viewModel;
 
-        public FormatDetailViewModelTests()
+        public LanguageDetailViewModelTests()
         {
             var eventAggregatorMock = new Mock<IEventAggregator>();
             var loggerMock = new Mock<ILogger>();
-            var formatLookupServiceMock = new Mock<IFormatLookupDataService>();
-            var formatRepoMock = new Mock<IRepository<Format>>();
-            var domainService = new FormatService(formatRepoMock.Object);
+            var languageLookupServiceMock = new Mock<ILanguageLookupDataService>();
+            var languageRepoMock = new Mock<IRepository<Language>>();
+            var domainService = new LanguageService(languageRepoMock.Object);
 
-            viewModel = new FormatDetailViewModel(eventAggregatorMock.Object, 
-                loggerMock.Object, 
+            viewModel = new LanguageDetailViewModel(eventAggregatorMock.Object,
+                loggerMock.Object,
                 domainService,
-                formatLookupServiceMock.Object);
+                languageLookupServiceMock.Object);
         }
 
         [Fact]
@@ -35,27 +35,27 @@ namespace BookOrganizer.UI.WPFCoreTests
         {
             var raised = viewModel.SelectedItem.IsPropertyChangedRaised(() =>
             {
-                viewModel.SelectedItem.Name = "Pdf";
-            }, nameof(viewModel.SelectedItem.Name));
+                viewModel.SelectedItem.LanguageName = "Spanish";
+            }, nameof(viewModel.SelectedItem.LanguageName));
 
             raised.Should().BeTrue();
         }
 
         [Fact]
-        public void New_Format_Has_Default_Id()
+        public void New_Language_Has_Default_Id()
         {
-            viewModel.SelectedItem.Model.Should().BeOfType<Format>();
+            viewModel.SelectedItem.Model.Should().BeOfType<Language>();
             viewModel.SelectedItem.Model.Id.Should().Equals(default(Guid));
         }
 
         [Fact]
-        public void New_Formats_Formats_Collection_Is_Empty()
+        public void New_Languages_Languages_Collection_Is_Empty()
         {
-            viewModel.Formats.Should().BeEmpty();
+            viewModel.Languages.Should().BeEmpty();
         }
 
         [Fact]
-        public async void New_Format_In_Editable_State_By_Default()
+        public async void New_Language_In_Editable_State_By_Default()
         {
             await viewModel.LoadAsync(default);
             viewModel.UserMode.Item1.Should().BeFalse();

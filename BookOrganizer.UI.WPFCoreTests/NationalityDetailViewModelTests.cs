@@ -4,6 +4,7 @@ using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore;
 using BookOrganizer.UI.WPFCore.ViewModels;
+using BookOrganizer.UI.WPFCore.Wrappers;
 using FluentAssertions;
 using Moq;
 using Prism.Events;
@@ -12,22 +13,22 @@ using Xunit;
 
 namespace BookOrganizer.UI.WPFCoreTests
 {
-    public class FormatDetailViewModelTests
+    public class NationalityDetailViewModelTests
     {
-        private FormatDetailViewModel viewModel;
+        private NationalityDetailViewModel viewModel;
 
-        public FormatDetailViewModelTests()
+        public NationalityDetailViewModelTests()
         {
             var eventAggregatorMock = new Mock<IEventAggregator>();
             var loggerMock = new Mock<ILogger>();
-            var formatLookupServiceMock = new Mock<IFormatLookupDataService>();
-            var formatRepoMock = new Mock<IRepository<Format>>();
-            var domainService = new FormatService(formatRepoMock.Object);
+            var nationalityLookupServiceMock = new Mock<INationalityLookupDataService>();
+            var nationalityRepoMock = new Mock<IRepository<Nationality>>();
+            var domainService = new NationalityService(nationalityRepoMock.Object);
 
-            viewModel = new FormatDetailViewModel(eventAggregatorMock.Object, 
-                loggerMock.Object, 
+            viewModel = new NationalityDetailViewModel(eventAggregatorMock.Object,
+                loggerMock.Object,
                 domainService,
-                formatLookupServiceMock.Object);
+                nationalityLookupServiceMock.Object);
         }
 
         [Fact]
@@ -35,27 +36,27 @@ namespace BookOrganizer.UI.WPFCoreTests
         {
             var raised = viewModel.SelectedItem.IsPropertyChangedRaised(() =>
             {
-                viewModel.SelectedItem.Name = "Pdf";
+                viewModel.SelectedItem.Name = "Canadian";
             }, nameof(viewModel.SelectedItem.Name));
 
             raised.Should().BeTrue();
         }
 
         [Fact]
-        public void New_Format_Has_Default_Id()
+        public void New_Nationality_Has_Default_Id()
         {
-            viewModel.SelectedItem.Model.Should().BeOfType<Format>();
+            viewModel.SelectedItem.Model.Should().BeOfType<Nationality>();
             viewModel.SelectedItem.Model.Id.Should().Equals(default(Guid));
         }
 
         [Fact]
-        public void New_Formats_Formats_Collection_Is_Empty()
+        public void New_Nations_Nations_Collection_Is_Empty()
         {
-            viewModel.Formats.Should().BeEmpty();
+            viewModel.Nations.Should().BeEmpty();
         }
 
         [Fact]
-        public async void New_Format_In_Editable_State_By_Default()
+        public async void New_Nationality_In_Editable_State_By_Default()
         {
             await viewModel.LoadAsync(default);
             viewModel.UserMode.Item1.Should().BeFalse();

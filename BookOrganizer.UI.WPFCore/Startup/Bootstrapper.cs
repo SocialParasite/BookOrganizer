@@ -52,29 +52,29 @@ namespace BookOrganizer.UI.WPFCore.Startup
                     .CreateLogger())
                 .SingleInstance();
 
-            //var startupDb = GetStartupDatabase();
-            //var connectionString = ConnectivityService.GetConnectionString(startupDb);
+            var startupDb = GetStartupDatabase();
+            var connectionString = ConnectivityService.GetConnectionString(startupDb);
 
-            //builder.RegisterType<BookOrganizerDbContext>().AsSelf().WithParameter("connectionString", connectionString);
-            builder.RegisterType<BookOrganizerDbContext>().AsSelf();
+            builder.RegisterType<BookOrganizerDbContext>().AsSelf().WithParameter("connectionString", connectionString);
+            //builder.RegisterType<BookOrganizerDbContext>().AsSelf();
 
             return builder.Build();
         }
 
-        //string GetStartupDatabase()
-        //{
-        //    string connectionString = null;
+        string GetStartupDatabase()
+        {
+            string connectionString = null;
 
-        //    if (File.Exists(@"Startup\settings.json"))
-        //    {
-        //        var settingsFile = File.ReadAllText(@"Startup\settings.json");
+            if (File.Exists(@"Startup\settings.json"))
+            {
+                var settingsFile = File.ReadAllText(@"Startup\settings.json");
 
-        //        JObject jobj = (JObject)JsonConvert.DeserializeObject(settingsFile);
-        //        Settings settings = jobj.ToObject<Settings>();
-        //        connectionString = settings.StartupDatabase;
-        //    }
+                JObject jobj = (JObject)JsonConvert.DeserializeObject(settingsFile);
+                Settings settings = jobj.ToObject<Settings>();
+                connectionString = settings.StartupDatabase;
+            }
 
-        //    return connectionString;
-        //}
+            return connectionString;
+        }
     }
 }

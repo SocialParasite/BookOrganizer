@@ -4,6 +4,7 @@ using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore;
 using BookOrganizer.UI.WPFCore.ViewModels;
+using BookOrganizer.UI.WPFCore.Wrappers;
 using FluentAssertions;
 using Moq;
 using Prism.Events;
@@ -12,22 +13,22 @@ using Xunit;
 
 namespace BookOrganizer.UI.WPFCoreTests
 {
-    public class FormatDetailViewModelTests
+    public class GenreDetailViewModelTests
     {
-        private FormatDetailViewModel viewModel;
+        private GenreDetailViewModel viewModel;
 
-        public FormatDetailViewModelTests()
+        public GenreDetailViewModelTests()
         {
             var eventAggregatorMock = new Mock<IEventAggregator>();
             var loggerMock = new Mock<ILogger>();
-            var formatLookupServiceMock = new Mock<IFormatLookupDataService>();
-            var formatRepoMock = new Mock<IRepository<Format>>();
-            var domainService = new FormatService(formatRepoMock.Object);
+            var genreLookupServiceMock = new Mock<IGenreLookupDataService>();
+            var genreRepoMock = new Mock<IRepository<Genre>>();
+            var domainService = new GenreService(genreRepoMock.Object);
 
-            viewModel = new FormatDetailViewModel(eventAggregatorMock.Object, 
-                loggerMock.Object, 
+            viewModel = new GenreDetailViewModel(eventAggregatorMock.Object,
+                loggerMock.Object,
                 domainService,
-                formatLookupServiceMock.Object);
+                genreLookupServiceMock.Object);
         }
 
         [Fact]
@@ -35,27 +36,27 @@ namespace BookOrganizer.UI.WPFCoreTests
         {
             var raised = viewModel.SelectedItem.IsPropertyChangedRaised(() =>
             {
-                viewModel.SelectedItem.Name = "Pdf";
+                viewModel.SelectedItem.Name = "Horror";
             }, nameof(viewModel.SelectedItem.Name));
 
             raised.Should().BeTrue();
         }
 
         [Fact]
-        public void New_Format_Has_Default_Id()
+        public void New_Genre_Has_Default_Id()
         {
-            viewModel.SelectedItem.Model.Should().BeOfType<Format>();
+            viewModel.SelectedItem.Model.Should().BeOfType<Genre>();
             viewModel.SelectedItem.Model.Id.Should().Equals(default(Guid));
         }
 
         [Fact]
-        public void New_Formats_Formats_Collection_Is_Empty()
+        public void New_Genres_Genres_Collection_Is_Empty()
         {
-            viewModel.Formats.Should().BeEmpty();
+            viewModel.Genres.Should().BeEmpty();
         }
 
         [Fact]
-        public async void New_Format_In_Editable_State_By_Default()
+        public async void New_Genre_In_Editable_State_By_Default()
         {
             await viewModel.LoadAsync(default);
             viewModel.UserMode.Item1.Should().BeFalse();

@@ -60,12 +60,9 @@ namespace BookOrganizer.UI.WPFCoreTests
         [InlineData("ABCDEFGHIJKLM")]
         public void Invalid_ISBN(string isbn)
         {
-            var raised = viewModel.SelectedItem.IsPropertyChangedRaised(() =>
-            {
-                viewModel.SelectedItem.ISBN = isbn;
-            }, nameof(viewModel.SelectedItem.ISBN));
-
-            raised.Should().BeFalse();
+            viewModel.SelectedItem.HasErrors.Should().BeFalse();
+            viewModel.SelectedItem.ISBN = isbn;
+            viewModel.SelectedItem.HasErrors.Should().BeTrue();
         }
 
         [Theory]
