@@ -22,6 +22,7 @@
         <ResourceDictionary Source="Styles/CheckBoxStyles.xaml" />
         <ResourceDictionary Source="Styles/ComboBoxStyles.xaml" />
         <ResourceDictionary Source="Styles/DatePickerStyles.xaml" />
+        <ResourceDictionary Source="Styles/GroupBoxStyles.xaml" />
         <ResourceDictionary Source="Styles/TextBoxStyles.xaml" />
         <ResourceDictionary Source="Styles/ToggleButtonStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>

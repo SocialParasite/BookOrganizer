@@ -15,7 +15,7 @@
     Height="800"
     MinWidth="830"
     MinHeight="650"
-    Background="LightSteelBlue"
+    Background="SteelBlue"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>

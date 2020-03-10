@@ -548,7 +548,7 @@
                             <GroupBox
                                 Grid.Row="2"
                                 Grid.Column="1"
-                                Style="{StaticResource GroupBoxStyles}">
+                                Margin="5">
                                 <GroupBox.Header>
                                     <Label Content="Read dates " FontWeight="Bold" />
                                 </GroupBox.Header>
@@ -566,7 +566,7 @@
                                     <CheckBox
                                         x:Name="isReadCheckBox"
                                         Grid.ColumnSpan="3"
-                                        Margin="0,0,0,5"
+                                        Margin="5,0,0,5"
                                         Content="I have read this book."
                                         FontSize="12"
                                         IsChecked="{Binding SelectedItem.IsRead}"
@@ -641,7 +641,7 @@
                                 </Grid>
                             </GroupBox>
                             <!--  Genres, formats  -->
-                            <GroupBox Grid.Column="1" Style="{StaticResource GroupBoxStyles}">
+                            <GroupBox Grid.Column="1">
                                 <GroupBox.Header>
                                     <Label Content="Formats " FontWeight="Bold" />
                                 </GroupBox.Header>
@@ -657,12 +657,12 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox
                                             x:Name="AddNewFormatTextBox"
-                                            Margin="0,0,0,5"
+                                            Margin="5,0,0,5"
                                             Text="{Binding NewFormatName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                             Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
                                         <Button
                                             x:Name="AddNewFormatButton"
-                                            Margin="5,0,0,5"
+                                            Margin="5,0,5,5"
                                             Command="{Binding AddNewFormatCommand}"
                                             CommandParameter="{Binding NewFormatName}"
                                             Style="{StaticResource AddItemButtonStyle}"
@@ -671,6 +671,7 @@
                                     <ItemsControl
                                         x:Name="BookFormatsList"
                                         Grid.Row="1"
+                                        Margin="5,0,5,5"
                                         ItemTemplate="{StaticResource BookFormatDataTemplate}"
                                         ItemsSource="{Binding AllBookFormats}">
                                         <ItemsControl.ItemsPanel>
@@ -682,10 +683,7 @@
                                 </Grid>
                             </GroupBox>
 
-                            <GroupBox
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Style="{StaticResource GroupBoxStyles}">
+                            <GroupBox Grid.Row="1" Grid.Column="1">
                                 <GroupBox.Header>
                                     <Label Content="Genres " FontWeight="Bold" />
                                 </GroupBox.Header>
@@ -701,12 +699,12 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBox
                                             x:Name="AddNewGenreTextBox"
-                                            Margin="0,0,0,5"
+                                            Margin="5,0,0,5"
                                             Text="{Binding NewGenreName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                             Visibility="{Binding DataContext.UserMode.Item4, Converter={StaticResource BoolToVis}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
                                         <Button
                                             x:Name="AddNewGenreButton"
-                                            Margin="5,0,0,5"
+                                            Margin="5,0,5,5"
                                             Command="{Binding AddNewGenreCommand}"
                                             CommandParameter="{Binding NewGenreName}"
                                             Style="{StaticResource AddItemButtonStyle}"
@@ -715,6 +713,7 @@
                                     <ItemsControl
                                         x:Name="BookGenresList"
                                         Grid.Row="1"
+                                        Margin="5,0,5,5"
                                         ItemTemplate="{StaticResource BookGenreDataTemplate}"
                                         ItemsSource="{Binding AllBookGenres}">
                                         <ItemsControl.ItemsPanel>

@@ -15,17 +15,17 @@
 
     <ScrollViewer>
         <WrapPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <GroupBox
-                x:Name="ShowItemsGroupBox"
-                Width="{Binding ElementName=AddItemsGroupBox, Path=ActualWidth}"
-                Style="{StaticResource GroupBoxStyles}">
+            <GroupBox x:Name="ShowItemsGroupBox" Width="{Binding ElementName=AddItemsGroupBox, Path=ActualWidth}">
                 <GroupBox.Header>
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                         <Label
                             Content="&#xE792;"
                             FontFamily="Segoe MDL2 Assets"
                             Style="{StaticResource LabelStyles}" />
-                        <Label Content="List:" Style="{StaticResource LabelStyles}" />
+                        <Label
+                            Content="List:"
+                            FontWeight="Bold"
+                            Style="{StaticResource LabelStyles}" />
                     </StackPanel>
                 </GroupBox.Header>
                 <WrapPanel>
@@ -51,12 +51,13 @@
                         Content="Series" />
                 </WrapPanel>
             </GroupBox>
-            <GroupBox x:Name="AddItemsGroupBox" Style="{StaticResource GroupBoxStyles}">
+            <GroupBox x:Name="AddItemsGroupBox">
                 <GroupBox.Header>
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                         <Label
                             Content="&#xE792;"
                             FontFamily="Segoe MDL2 Assets"
+                            FontWeight="Bold"
                             Style="{StaticResource LabelStyles}" />
                         <Label Content="Add new items:" Style="{StaticResource LabelStyles}" />
                     </StackPanel>
@@ -104,15 +105,13 @@
                         Content="Add a new series" />
                 </WrapPanel>
             </GroupBox>
-            <GroupBox
-                x:Name="EditItemsGroupBox"
-                Width="{Binding ElementName=AddItemsGroupBox, Path=ActualWidth}"
-                Style="{StaticResource GroupBoxStyles}">
+            <GroupBox x:Name="EditItemsGroupBox" Width="{Binding ElementName=AddItemsGroupBox, Path=ActualWidth}">
                 <GroupBox.Header>
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                         <Label
                             Content="&#xE792;"
                             FontFamily="Segoe MDL2 Assets"
+                            FontWeight="Bold"
                             Style="{StaticResource LabelStyles}" />
                         <Label Content="Edit items:" Style="{StaticResource LabelStyles}" />
                     </StackPanel>

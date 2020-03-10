@@ -273,9 +273,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             MessageItem = new MessageItem { Message = args.Message, MessageBackgroundColor = args.MessageBackgroundColor };
 
             ShouldAnimate = true;
-            //RemoveDetailViewModel(default, args.ViewModelName);
-
-            //OnOpenDetailViewMatchingSelectedId(args);
         }
 
         private void OnCreateNewItemExecute(Type itemType)
