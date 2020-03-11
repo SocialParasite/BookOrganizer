@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookOrganizer.Domain
 {
-    public class Format : BaseDomainEntity, IIdentifiable
+    public class Format : IIdentifiable
     {
         private string _name;
 
