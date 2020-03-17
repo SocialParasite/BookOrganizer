@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Services;
 using BookOrganizer.UI.WPFCore.Wrappers;
@@ -23,8 +24,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public AuthorDetailViewModel(IEventAggregator eventAggregator,
                                      ILogger logger,
-                                     IDomainService<Author> domainService)
-            : base(eventAggregator, logger, domainService)
+                                     IDomainService<Author> domainService,
+                                     IDialogService dialogService)
+            : base(eventAggregator, logger, domainService, dialogService)
         {
             AddAuthorPictureCommand = new DelegateCommand(OnAddAuthorPictureExecute);
             AddNewNationalityCommand = new DelegateCommand(OnAddNewNationalityExecute);
@@ -162,10 +164,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
-        protected override string CreateChangeMessage(DatabaseOperation operation)
-        {
-            return $"{operation.ToString()}: {SelectedItem.LastName}, {SelectedItem.FirstName}.";
-        }
+        protected override string CreateChangeMessage(DatabaseOperation operation) 
+            => $"{operation.ToString()}: {SelectedItem.LastName}, {SelectedItem.FirstName}.";
 
         private async Task<IEnumerable<LookupItem>> GetNationalityList()
             => await (domainService as AuthorService).NationalityLookupDataService

@@ -19,9 +19,10 @@ namespace BookOrganizer.UI.WPFCoreTests
 
         public AuthorDetailViewModelTests()
         {
-            var repMock = new Mock<IRepository<Author>>();
+            var repoMock = new Mock<IRepository<Author>>();
             var natMock = new Mock<INationalityLookupDataService>();
-            var authorService = new AuthorService(repMock.Object, natMock.Object);
+            var authorService = new AuthorService(repoMock.Object, natMock.Object);
+
             var eventAggregatorMock = new Mock<IEventAggregator>();
             var loggerMock = new Mock<ILogger>();
 
@@ -40,12 +41,21 @@ namespace BookOrganizer.UI.WPFCoreTests
         [Fact]
         public async void New_Author_In_Editable_State_By_Default()
         {
-
             await viewModel.LoadAsync(default);
             viewModel.UserMode.Item1.Should().BeFalse();
             viewModel.UserMode.Item2.Should().Equals(DetailViewState.EditMode);
             viewModel.UserMode.Item3.Should().Equals(Brushes.LightGreen);
             viewModel.UserMode.Item4.Should().BeTrue();
+        }
+
+        [Fact]
+        public async void Existing_Author_In_NonEditable_State_By_Default()
+        {
+            await viewModel.LoadAsync(Guid.Parse("73e1631d-6941-493f-aead-704cde8dad07"));
+            viewModel.UserMode.Item1.Should().BeTrue();
+            viewModel.UserMode.Item2.Should().Equals(DetailViewState.ViewMode);
+            viewModel.UserMode.Item3.Should().Equals(Brushes.LightGray);
+            viewModel.UserMode.Item4.Should().BeFalse();
         }
 
         [Fact]

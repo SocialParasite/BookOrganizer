@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.Services;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using Prism.Commands;
@@ -18,8 +19,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public PublisherDetailViewModel(IEventAggregator eventAggregator,
                                      ILogger logger,
-                                     IDomainService<Publisher> domainService)
-            : base(eventAggregator, logger, domainService)
+                                     IDomainService<Publisher> domainService,
+                                     IDialogService dialogService)
+            : base(eventAggregator, logger, domainService, dialogService)
         {
             AddPublisherLogoCommand = new DelegateCommand(OnAddPublisherLogoExecute);
             SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute)

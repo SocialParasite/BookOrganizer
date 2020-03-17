@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using Prism.Commands;
 using Prism.Events;
@@ -22,8 +23,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public NationalityDetailViewModel(IEventAggregator eventAggregator,
             ILogger logger,
             IDomainService<Nationality> domainService,
-            INationalityLookupDataService nationalityLookupDataService)
-            : base(eventAggregator, logger, domainService)
+            INationalityLookupDataService nationalityLookupDataService,
+            IDialogService dialogService)
+            : base(eventAggregator, logger, domainService, dialogService)
         {
             this.nationalityLookupDataService = nationalityLookupDataService ?? throw new ArgumentNullException(nameof(nationalityLookupDataService));
 
@@ -115,15 +117,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             if (this.domainService.Repository.HasChanges())
             {
-                //var result = await metroDialogService
-                //   .ShowOkCancelDialogAsync(
-                //   "You have made changes. Changing editable format will loose all unsaved changes. Are you sure you still want to switch?",
-                //   "Close the view?");
+                var dialog = new OkCancelViewModel("Close the view?", "You have made changes. Changing editable nationality will loose all unsaved changes. Are you sure you still want to switch?");
+                var result = dialogService.OpenDialog(dialog);
 
-                //if (result == MessageDialogResult.Canceled)
-                //{
-                //    return;
-                //}
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
             }
 
             domainService.Repository.ResetTracking(SelectedItem.Model);

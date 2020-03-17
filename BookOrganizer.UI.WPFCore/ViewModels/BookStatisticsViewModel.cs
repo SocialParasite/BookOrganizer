@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using BookOrganizer.Data.DA;
@@ -54,7 +53,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
+                logger.Error("Exception: {Exception} Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.GetType().Name, ex.Message, ex.StackTrace);
             }
         }
     }

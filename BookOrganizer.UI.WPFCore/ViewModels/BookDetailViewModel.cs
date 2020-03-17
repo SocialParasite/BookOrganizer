@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Services;
 using BookOrganizer.UI.WPFCore.Wrappers;
@@ -34,8 +35,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public BookDetailViewModel(IEventAggregator eventAggregator,
                                      ILogger logger,
-                                     IDomainService<Book> domainService)
-            : base(eventAggregator, logger, domainService)
+                                     IDomainService<Book> domainService,
+                                     IDialogService dialogService)
+            : base(eventAggregator, logger, domainService, dialogService)
         {
             HighlightMouseOverCommand = new DelegateCommand(HighlightMouseOverExecute);
             HighlightMouseLeaveCommand = new DelegateCommand(HighlightMouseLeaveExecute);

@@ -1,15 +1,15 @@
-﻿using Autofac;
+﻿using System.IO;
+using Autofac;
 using BookOrganizer.DA;
 using BookOrganizer.Data.DA;
 using BookOrganizer.Data.SqlServer;
-using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Prism.Events;
 using Serilog;
-using System.IO;
 
 namespace BookOrganizer.UI.WPFCore.Startup
 {
@@ -23,6 +23,7 @@ namespace BookOrganizer.UI.WPFCore.Startup
 
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
+            builder.RegisterType<DialogService>().As<IDialogService>();
 
             builder.RegisterAssemblyTypes(typeof(AuthorService).Assembly)
                 .Where(type => type.Name.EndsWith("Service"))

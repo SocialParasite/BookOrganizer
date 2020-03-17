@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using Prism.Commands;
@@ -19,6 +20,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         protected readonly IEventAggregator eventAggregator;
         protected readonly ILogger logger;
         protected readonly IDomainService<T> domainService;
+        protected readonly IDialogService dialogService;
 
         private Tuple<bool, DetailViewState, SolidColorBrush, bool> userMode;
         private bool hasChanges;
@@ -26,11 +28,12 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private string tabTitle;
         private Guid id;
 
-        public BaseDetailViewModel(IEventAggregator eventAggregator, ILogger logger, IDomainService<T> domainService)
+        public BaseDetailViewModel(IEventAggregator eventAggregator, ILogger logger, IDomainService<T> domainService, IDialogService dialogService)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.domainService = domainService ?? throw new ArgumentNullException(nameof(domainService));
+            this.dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             SwitchEditableStateCommand = new DelegateCommand(SwitchEditableStateExecute);
             SaveItemCommand = new DelegateCommand(SaveItemExecute, SaveItemCanExecute);
@@ -142,15 +145,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             if (domainService.Repository.HasChanges())
             {
-                //var result = await metroDialogService
-                //    .ShowOkCancelDialogAsync(
-                //    "You have made changes. Closing will loose all unsaved changes. Are you sure you still want to close this view?",
-                //    "Close the view?");
+                var dialog = new OkCancelViewModel("Close the view?", "You have made changes. Closing will loose all unsaved changes. Are you sure you still want to close this view?");
+                var result = dialogService.OpenDialog(dialog);
 
-                //if (result == MessageDialogResult.Canceled)
-                //{
-                //    return;
-                //}
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
             }
 
             eventAggregator.GetEvent<CloseDetailsViewEvent>()
@@ -170,68 +171,56 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         protected virtual bool SaveItemCanExecute()
             => (!SelectedItem.HasErrors) && (HasChanges || SelectedItem.Id == default);
 
-        private bool DeleteItemCanExecute()
-            => SelectedItem.Model.Id != default && UserMode.Item4;
-
         protected async void SaveItemExecute()
         {
-            if (domainService.Repository.HasChanges() || SelectedItem.Model.Id == default)
+            var isNewItem = false;
+
+            var dialog = new OkCancelViewModel("Save changes?", "You are about to save your changes. This will overwrite the previous version. Are you sure?");
+            var result = dialogService.OpenDialog(dialog);
+
+            if (result == DialogResult.No)
             {
-                var isNewItem = false;
-
-                //var resultWhenChanges = await metroDialogService
-                //    .ShowOkCancelDialogAsync(
-                //    "You are about to save your changes. This will overwrite the previous version. Are you sure?",
-                //    "Save changes?");
-
-                //if (resultWhenChanges == MessageDialogResult.Canceled)
-                //{
-                //    return;
-                //}
-
-                if (SelectedItem.Model.Id == default)
-                {
-                    isNewItem = true;
-                }
-
-                domainService.Repository.Update(SelectedItem.Model);
-                await SaveRepository();
-
-                eventAggregator.GetEvent<ChangeDetailsViewEvent>()
-                    .Publish(new ChangeDetailsViewEventArgs
-                    {
-                        Message = CreateChangeMessage(isNewItem ? DatabaseOperation.ADD : DatabaseOperation.UPDATE),
-                        MessageBackgroundColor = Brushes.LawnGreen
-                    });
-
-                if (isNewItem)
-                {
-                    await LoadAsync(SelectedItem.Model.Id);
-                }
-
-                HasChanges = false;
-            }
-            else
-            {
-                //var unmodifiedResult = metroDialogService.ShowInfoDialogAsync("You have no unsaved changes on this view.");
+                return;
             }
 
+            if (SelectedItem.Model.Id == default)
+            {
+                isNewItem = true;
+            }
+
+            domainService.Repository.Update(SelectedItem.Model);
+            await SaveRepository();
+
+            eventAggregator.GetEvent<ChangeDetailsViewEvent>()
+                .Publish(new ChangeDetailsViewEventArgs
+                {
+                    Message = CreateChangeMessage(isNewItem ? DatabaseOperation.ADD : DatabaseOperation.UPDATE),
+                    MessageBackgroundColor = Brushes.LawnGreen
+                });
+
+            if (isNewItem)
+            {
+                await LoadAsync(SelectedItem.Model.Id);
+            }
+
+            HasChanges = false;
         }
 
         protected abstract string CreateChangeMessage(DatabaseOperation operation);
-        
+
+        private bool DeleteItemCanExecute()
+            => SelectedItem.Model.Id != default && UserMode.Item4;
+
         private async void DeleteItemExecute()
         {
-            //var result = await metroDialogService
-            //    .ShowOkCancelDialogAsync(
-            //    "You are about to delete an item. This operation cannot be undone. Are you sure?",
-            //    "Delete an item?");
+            var dialog = new OkCancelViewModel("Delete item?", "You are about to delete an item. This operation cannot be undone. Are you sure?");
+            var result = dialogService.OpenDialog(dialog);
 
-            //if (result == MessageDialogResult.Canceled)
-            //{
-            //    return;
-            //}
-            //else
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+            else
             {
                 domainService.Repository.Delete(SelectedItem.Model);
                 await SaveRepository();

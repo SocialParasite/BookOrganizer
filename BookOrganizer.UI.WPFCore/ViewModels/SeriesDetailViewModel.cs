@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.Services;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using GongSolutions.Wpf.DragDrop;
@@ -24,8 +25,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public SeriesDetailViewModel(IEventAggregator eventAggregator,
                                      ILogger logger,
                                      IDomainService<Series> domainService,
-                                     IBookLookupDataService bookLookupDataService)
-            : base(eventAggregator, logger, domainService)
+                                     IBookLookupDataService bookLookupDataService,
+                                     IDialogService dialogService)
+            : base(eventAggregator, logger, domainService, dialogService)
         {
             this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
 
