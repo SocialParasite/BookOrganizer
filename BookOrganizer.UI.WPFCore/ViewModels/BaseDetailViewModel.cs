@@ -141,7 +141,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 UserMode = (!UserMode.Item1, DetailViewState.ViewMode, Brushes.LightGray, !UserMode.Item4).ToTuple();
         }
 
-        private async void CloseDetailViewExecute()
+        private void CloseDetailViewExecute()
         {
             if (domainService.Repository.HasChanges())
             {
