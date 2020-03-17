@@ -175,12 +175,16 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             var isNewItem = false;
 
-            var dialog = new OkCancelViewModel("Save changes?", "You are about to save your changes. This will overwrite the previous version. Are you sure?");
-            var result = dialogService.OpenDialog(dialog);
-
-            if (result == DialogResult.No)
+            if (SelectedItem.Model.Id != default)
             {
-                return;
+                var dialog = new OkCancelViewModel("Save changes?", "You are about to save your changes. This will overwrite the previous version. Are you sure?");
+
+                var result = dialogService.OpenDialog(dialog);
+
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
             }
 
             if (SelectedItem.Model.Id == default)
