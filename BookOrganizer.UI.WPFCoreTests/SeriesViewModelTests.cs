@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookOrganizer.Domain;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using FluentAssertions;
 using Moq;
@@ -19,6 +20,7 @@ namespace BookOrganizer.UI.WPFCoreTests
             var eventAggregatorMock = new Mock<IEventAggregator>();
             var seriesLookupServiceMock = new Mock<ISeriesLookupDataService>();
             var loggerMock = new Mock<ILogger>();
+            var dialogService = new DialogService();
 
             seriesLookupServiceMock.Setup(dp => dp.GetSeriesLookupAsync(nameof(SeriesDetailViewModel)))
                 .ReturnsAsync(new List<LookupItem>
@@ -27,7 +29,7 @@ namespace BookOrganizer.UI.WPFCoreTests
                     new LookupItem { Id = Guid.NewGuid(), DisplayMember = "The Powder Mage Trilogy" }
                 });
 
-            return new SeriesViewModel(eventAggregatorMock.Object, seriesLookupServiceMock.Object, loggerMock.Object);
+            return new SeriesViewModel(eventAggregatorMock.Object, seriesLookupServiceMock.Object, loggerMock.Object, dialogService);
         }
 
         [Fact]

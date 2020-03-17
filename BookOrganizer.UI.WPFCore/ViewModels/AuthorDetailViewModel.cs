@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
@@ -136,7 +135,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                var dialog = new NotificationViewModel("Exception", ex.Message);
+                dialogService.OpenDialog(dialog);
+                
                 logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
             }
         }

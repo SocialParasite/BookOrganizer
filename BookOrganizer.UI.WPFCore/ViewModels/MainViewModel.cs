@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Autofac.Features.Indexed;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Services;
 using Prism.Commands;
@@ -23,16 +24,19 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private bool isMenuBarVisible;
         private char pinGlyph;
         private readonly ILogger logger;
+        private readonly IDialogService dialogService;
 
         public MainViewModel(IEventAggregator eventAggregator,
                               IIndex<string, IDetailViewModel> detailViewModelCreator,
                               IIndex<string, ISelectedViewModel> viewModelCreator,
-                              ILogger logger)
+                              ILogger logger,
+                              IDialogService dialogService)
         {
             this.detailViewModelCreator = detailViewModelCreator ?? throw new ArgumentNullException(nameof(detailViewModelCreator));
             this.viewModelCreator = viewModelCreator ?? throw new ArgumentNullException(nameof(viewModelCreator));
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             DetailViewModels = new ObservableCollection<IDetailViewModel>();
             TEMP_DetailViewModels = new ObservableCollection<IDetailViewModel>();
@@ -179,7 +183,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    var dialog = new NotificationViewModel("Exception", ex.Message);
+                    dialogService.OpenDialog(dialog);
+
                     logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
                     return;
                 }

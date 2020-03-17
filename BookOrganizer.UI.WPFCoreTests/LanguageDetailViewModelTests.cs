@@ -3,6 +3,7 @@ using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using FluentAssertions;
 using Moq;
@@ -23,11 +24,13 @@ namespace BookOrganizer.UI.WPFCoreTests
             var languageLookupServiceMock = new Mock<ILanguageLookupDataService>();
             var languageRepoMock = new Mock<IRepository<Language>>();
             var domainService = new LanguageService(languageRepoMock.Object);
+            var dialogService = new DialogService();
 
             viewModel = new LanguageDetailViewModel(eventAggregatorMock.Object,
                 loggerMock.Object,
                 domainService,
-                languageLookupServiceMock.Object);
+                languageLookupServiceMock.Object,
+                dialogService);
         }
 
         [Fact]

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using BookOrganizer.Domain;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using Prism.Events;
 using Serilog;
 
@@ -14,8 +14,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public SeriesViewModel(IEventAggregator eventAggregator, 
                                ISeriesLookupDataService seriesLookupDataService,
-                               ILogger logger)
-            : base(eventAggregator, logger)
+                               ILogger logger,
+                               IDialogService dialogService)
+            : base(eventAggregator, logger, dialogService)
         {
             this.seriesLookupDataService = seriesLookupDataService;
 
@@ -37,7 +38,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                var dialog = new NotificationViewModel("Exception", ex.Message);
+                dialogService.OpenDialog(dialog);
+
                 logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
             }
         }

@@ -11,6 +11,7 @@ using FluentAssertions;
 using System.Linq;
 using Serilog;
 using BookOrganizer.Domain;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 
 namespace BookOrganizer.UI.WPFCoreTests
 {
@@ -21,6 +22,7 @@ namespace BookOrganizer.UI.WPFCoreTests
             var eventAggregatorMock = new Mock<IEventAggregator>();
             var authorLookupServiceMock = new Mock<IAuthorLookupDataService>();
             var loggerMock = new Mock<ILogger>();
+            var dialogService = new DialogService();
 
             authorLookupServiceMock.Setup(dp => dp.GetAuthorLookupAsync(nameof(AuthorDetailViewModel)))
                 .ReturnsAsync(new List<LookupItem>
@@ -29,7 +31,7 @@ namespace BookOrganizer.UI.WPFCoreTests
                     new LookupItem { Id = Guid.NewGuid(), DisplayMember = "Rothfuss, Patrick" }
                 });
 
-            return new AuthorsViewModel(eventAggregatorMock.Object, authorLookupServiceMock.Object, loggerMock.Object);
+            return new AuthorsViewModel(eventAggregatorMock.Object, authorLookupServiceMock.Object, loggerMock.Object, dialogService);
         }
 
         [Fact]

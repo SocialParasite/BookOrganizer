@@ -3,6 +3,7 @@ using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using FluentAssertions;
 using Moq;
@@ -23,11 +24,13 @@ namespace BookOrganizer.UI.WPFCoreTests
             var formatLookupServiceMock = new Mock<IFormatLookupDataService>();
             var formatRepoMock = new Mock<IRepository<Format>>();
             var domainService = new FormatService(formatRepoMock.Object);
+            var dialogService = new DialogService();
 
             viewModel = new FormatDetailViewModel(eventAggregatorMock.Object, 
                 loggerMock.Object, 
                 domainService,
-                formatLookupServiceMock.Object);
+                formatLookupServiceMock.Object,
+                dialogService);
         }
 
         [Fact]

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BookOrganizer.Domain;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Extensions;
 using Prism.Commands;
@@ -18,12 +19,15 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private List<LookupItem> entityCollection;
         public readonly IEventAggregator eventAggregator;
         protected readonly ILogger logger;
+        protected readonly IDialogService dialogService;
         
         public BaseViewModel(IEventAggregator eventAggregator,
-                             ILogger logger)
+                             ILogger logger,
+                             IDialogService dialogService)
         {
             this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             AddNewItemCommand = new DelegateCommand<string>(OnAddNewItemExecute);
 

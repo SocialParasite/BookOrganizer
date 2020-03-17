@@ -100,7 +100,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                var dialog = new NotificationViewModel("Exception", ex.Message);
+                dialogService.OpenDialog(dialog);
+
                 logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
             }
         }

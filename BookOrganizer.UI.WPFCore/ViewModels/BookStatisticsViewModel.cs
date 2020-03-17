@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using BookOrganizer.Data.DA;
 using BookOrganizer.Domain;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using Serilog;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
@@ -14,11 +15,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private readonly BookStatisticsLookupDataService lookupService;
         private List<AnnualBookStatisticsReport> reportData;
         private int rowCount;
+        private readonly IDialogService dialogService;
 
-        public BookStatisticsViewModel(BookStatisticsLookupDataService lookupService, ILogger logger)
+        public BookStatisticsViewModel(BookStatisticsLookupDataService lookupService, ILogger logger, IDialogService dialogService)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.lookupService = lookupService ?? throw new ArgumentNullException(nameof(lookupService));
+            this.dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             Init();
         }
@@ -52,7 +55,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                var dialog = new NotificationViewModel("Exception", ex.Message);
+                dialogService.OpenDialog(dialog);
+
                 logger.Error("Exception: {Exception} Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.GetType().Name, ex.Message, ex.StackTrace);
             }
         }

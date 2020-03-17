@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookOrganizer.Domain;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using FluentAssertions;
 using Moq;
@@ -19,6 +20,7 @@ namespace BookOrganizer.UI.WPFCoreTests
             var eventAggregatorMock = new Mock<IEventAggregator>();
             var publisherLookupServiceMock = new Mock<IPublisherLookupDataService>();
             var loggerMock = new Mock<ILogger>();
+            var dialogService = new DialogService();
 
             publisherLookupServiceMock.Setup(dp => dp.GetPublisherLookupAsync(nameof(PublisherDetailViewModel)))
                 .ReturnsAsync(new List<LookupItem>
@@ -27,7 +29,7 @@ namespace BookOrganizer.UI.WPFCoreTests
                     new LookupItem { Id = Guid.NewGuid(), DisplayMember = "The Second Publisher" }
                 });
 
-            return new PublishersViewModel(eventAggregatorMock.Object, publisherLookupServiceMock.Object, loggerMock.Object);
+            return new PublishersViewModel(eventAggregatorMock.Object, publisherLookupServiceMock.Object, loggerMock.Object, dialogService);
         }
 
         [Fact]

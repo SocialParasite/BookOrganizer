@@ -3,6 +3,7 @@ using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore;
+using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.ViewModels;
 using BookOrganizer.UI.WPFCore.Wrappers;
 using FluentAssertions;
@@ -24,11 +25,13 @@ namespace BookOrganizer.UI.WPFCoreTests
             var genreLookupServiceMock = new Mock<IGenreLookupDataService>();
             var genreRepoMock = new Mock<IRepository<Genre>>();
             var domainService = new GenreService(genreRepoMock.Object);
+            var dialogService = new DialogService();
 
             viewModel = new GenreDetailViewModel(eventAggregatorMock.Object,
                 loggerMock.Object,
                 domainService,
-                genreLookupServiceMock.Object);
+                genreLookupServiceMock.Object,
+                dialogService);
         }
 
         [Fact]
