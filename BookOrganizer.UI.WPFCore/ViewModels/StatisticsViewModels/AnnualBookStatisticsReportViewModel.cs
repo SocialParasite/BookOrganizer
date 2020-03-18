@@ -33,11 +33,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
             Init();
         }
 
-        private void OnYearSelectionChangedExecute()
-        {
-            Init(SelectedYear);
-        }
-
         public string ReportName => "Annual books read report";
 
         public ICommand YearSelectionChangedCommand { get; set; }
@@ -95,5 +90,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
 
         private Task Init(int? year = null)
             => InitializeRepositoryAsync(year);
+
+        private void OnYearSelectionChangedExecute()
+        {
+            Init(SelectedYear);
+        }
     }
 }
