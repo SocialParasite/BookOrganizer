@@ -41,8 +41,11 @@ namespace BookOrganizer.UI.WPFCore.Startup
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces()
                 .WithParameter("imagePath", ""); // FileExplorerService.GetImagePath());
             
-            builder.RegisterType<BookStatisticsLookupDataService>().AsSelf();
-            builder.RegisterType<AnnualBookStatisticsReportViewModel>().AsSelf();
+            builder.RegisterType<ReportLookupDataService>().AsSelf();
+
+            builder.RegisterAssemblyTypes(typeof(AnnualBookStatisticsReportViewModel).Assembly)
+                .Where(type => type.Name.EndsWith("ReportViewModel"))
+                .Keyed<IReport>(c => c.Name);
 
             builder.RegisterAssemblyTypes(typeof(BooksRepository).Assembly)
                 .Where(type => type.Name.EndsWith("Repository"))

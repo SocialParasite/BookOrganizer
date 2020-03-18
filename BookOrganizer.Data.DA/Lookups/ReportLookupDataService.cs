@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookOrganizer.Data.DA
 {
-    public class BookStatisticsLookupDataService
+    public class ReportLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
 
-        public BookStatisticsLookupDataService(Func<BookOrganizerDbContext> contextCreator)
+        public ReportLookupDataService(Func<BookOrganizerDbContext> contextCreator)
         {
             _contextCreator = contextCreator ?? throw new ArgumentNullException(nameof(contextCreator));
         }
@@ -23,6 +23,17 @@ namespace BookOrganizer.Data.DA
                 return await ctx.Query<AnnualBookStatisticsReport>()
                     .AsNoTracking()
                     .FromSql($"EXEC GetBookStatisticsByYear {year}")
+                    .ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<AnnualBookStatisticsInRangeReport>> GetAnnualBookStatisticsInRangeReportAsync(int startYear, int endYear)
+        {
+            using (var ctx = _contextCreator())
+            {
+                return await ctx.Query<AnnualBookStatisticsInRangeReport>()
+                    .AsNoTracking()
+                    .FromSql($"EXEC GetAnnualBookStatisticsInRange {startYear}, {endYear}")
                     .ToListAsync();
             }
         }

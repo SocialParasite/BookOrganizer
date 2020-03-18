@@ -16,9 +16,9 @@
             <DataTemplate DataType="{x:Type viewModel:AnnualBookStatisticsReportViewModel}">
                 <local:AnnualBookStatisticsReportView />
             </DataTemplate>
-            <!--<DataTemplate DataType="{x:Type viewModel:AnnualBookStatisticsInRangeReportViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:AnnualBookStatisticsInRangeReportViewModel}">
                 <local:AnnualBookStatisticsInRangeReportView />
-            </DataTemplate>-->
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -56,11 +56,6 @@
                     <TextBlock FontSize="16" Text="{Binding ReportName}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding ReportSelectionChangedCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
         </ComboBox>
 
         <ContentControl

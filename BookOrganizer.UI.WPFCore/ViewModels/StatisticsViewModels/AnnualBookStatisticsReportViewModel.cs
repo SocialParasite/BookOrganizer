@@ -11,13 +11,15 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
     public class AnnualBookStatisticsReportViewModel : ViewModelBase, IReport
     {
         private readonly ILogger logger;
-        private readonly BookStatisticsLookupDataService lookupService;
+        private readonly ReportLookupDataService lookupService;
         private readonly IDialogService dialogService;
 
         private List<AnnualBookStatisticsReport> reportData;
         private int rowCount;
 
-        public AnnualBookStatisticsReportViewModel(BookStatisticsLookupDataService lookupService, ILogger logger, IDialogService dialogService)
+        public AnnualBookStatisticsReportViewModel(ReportLookupDataService lookupService, 
+                                                   ILogger logger, 
+                                                   IDialogService dialogService)
         {
                 this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
                 this.lookupService = lookupService ?? throw new ArgumentNullException(nameof(lookupService));
