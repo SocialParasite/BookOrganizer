@@ -16,24 +16,24 @@ namespace BookOrganizer.Data.DA
             _contextCreator = contextCreator ?? throw new ArgumentNullException(nameof(contextCreator));
         }
 
-        public async Task<IEnumerable<AnnualBookStatisticsReport>> GetAnnualBookStatisticsReportAsync(int year)
+        public async Task<IEnumerable<AnnualBookStatisticsReport>> GetAnnualBookStatisticsReportAsync(int? year = null)
         {
             using (var ctx = _contextCreator())
             {
                 return await ctx.Query<AnnualBookStatisticsReport>()
                     .AsNoTracking()
-                    .FromSql($"EXEC GetBookStatisticsByYear {year}")
+                    .FromSql($"EXEC GetBookStatisticsByYear {year ?? DateTime.Now.Year}")
                     .ToListAsync();
             }
         }
 
-        public async Task<IEnumerable<AnnualBookStatisticsInRangeReport>> GetAnnualBookStatisticsInRangeReportAsync(int startYear, int endYear)
+        public async Task<IEnumerable<AnnualBookStatisticsInRangeReport>> GetAnnualBookStatisticsInRangeReportAsync(int? startYear, int? endYear)
         {
             using (var ctx = _contextCreator())
             {
                 return await ctx.Query<AnnualBookStatisticsInRangeReport>()
                     .AsNoTracking()
-                    .FromSql($"EXEC GetAnnualBookStatisticsInRange {startYear}, {endYear}")
+                    .FromSql($"EXEC GetAnnualBookStatisticsInRange {startYear ?? DateTime.Now.Year}, {endYear ?? DateTime.Now.Year}")
                     .ToListAsync();
             }
         }
