@@ -6,6 +6,7 @@ using BookOrganizer.Data.SqlServer;
 using BookOrganizer.Domain.Services;
 using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using BookOrganizer.UI.WPFCore.ViewModels;
+using BookOrganizer.UI.WPFCore.ViewModels.Statistics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Prism.Events;
@@ -41,6 +42,7 @@ namespace BookOrganizer.UI.WPFCore.Startup
                 .WithParameter("imagePath", ""); // FileExplorerService.GetImagePath());
             
             builder.RegisterType<BookStatisticsLookupDataService>().AsSelf();
+            builder.RegisterType<AnnualBookStatisticsReportViewModel>().AsSelf();
 
             builder.RegisterAssemblyTypes(typeof(BooksRepository).Assembly)
                 .Where(type => type.Name.EndsWith("Repository"))
