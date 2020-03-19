@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookOrganizer.Data.DA
 {
-    public class ReportLookupDataService
+    public class ReportLookupDataService : IAnnualBookStatisticsLookupDataService, IBookStatisticsYearRangeLookupDataService
     {
         private Func<BookOrganizerDbContext> _contextCreator;
 

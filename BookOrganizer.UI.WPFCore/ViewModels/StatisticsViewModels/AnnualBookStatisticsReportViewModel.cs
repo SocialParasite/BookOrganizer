@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using BookOrganizer.Data.DA;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using Prism.Commands;
@@ -13,13 +12,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
     public class AnnualBookStatisticsReportViewModel : ViewModelBase, IReport
     {
         private readonly ILogger logger;
-        private readonly ReportLookupDataService lookupService;
+        private readonly IAnnualBookStatisticsLookupDataService lookupService;
         private readonly IDialogService dialogService;
 
         private List<AnnualBookStatisticsReport> reportData;
         private int selectedYear;
 
-        public AnnualBookStatisticsReportViewModel(ReportLookupDataService lookupService,
+        public AnnualBookStatisticsReportViewModel(IAnnualBookStatisticsLookupDataService lookupService,
                                                    ILogger logger,
                                                    IDialogService dialogService)
         {

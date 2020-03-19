@@ -40,9 +40,8 @@ namespace BookOrganizer.UI.WPFCore.Startup
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces()
                 .WithParameter("imagePath", ""); // FileExplorerService.GetImagePath());
-            
-            builder.RegisterType<ReportLookupDataService>().AsSelf();
 
+            builder.RegisterType<ReportLookupDataService>().AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(AnnualBookStatisticsReportViewModel).Assembly)
                 .Where(type => type.Name.EndsWith("ReportViewModel"))
                 .Keyed<IReport>(c => c.Name);
@@ -62,7 +61,6 @@ namespace BookOrganizer.UI.WPFCore.Startup
             var connectionString = ConnectivityService.GetConnectionString(startupDb);
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf().WithParameter("connectionString", connectionString);
-            //builder.RegisterType<BookOrganizerDbContext>().AsSelf();
 
             return builder.Build();
         }
