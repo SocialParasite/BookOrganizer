@@ -98,7 +98,7 @@
             ItemsSource="{Binding ReportData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             RowBackground="PapayaWhip">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Year}" Header="Year" />
+                <DataGridTextColumn Binding="{Binding Year, Converter={StaticResource TotalRowIdentifier}}" Header="Year" />
                 <DataGridTextColumn Binding="{Binding TotalNumberOfBooksRead, StringFormat={}{0:N0}}" Header="TotalNumberOfBooksRead" />
                 <DataGridTextColumn Binding="{Binding ShortestBookRead, StringFormat={}{0:N0}}" Header="ShortestBookRead" />
                 <DataGridTextColumn Binding="{Binding LongestBookRead, StringFormat={}{0:N0}}" Header="LongestBookRead" />

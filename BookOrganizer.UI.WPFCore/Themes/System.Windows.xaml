@@ -14,6 +14,7 @@
     <local:RowHasValuesConverter x:Key="RowHasValuesConverter" />
     <local:ShowBordersInEditMode x:Key="ShowBordersInEditMode" />
     <local:StyleConverter x:Key="StyleConverter" />
+    <local:TotalRowIdentifier x:Key="TotalRowIdentifier" />
     <local:VisibilityConverter x:Key="VisibilityConverter" />
 
     <ResourceDictionary.MergedDictionaries>
