@@ -17,7 +17,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
         private readonly IDialogService dialogService;
 
         private List<AnnualBookStatisticsInRangeReport> reportData;
-        private int rowCount;
+        private int selectedBeginYear;
+        private int selectedEndYear;
 
         public AnnualBookStatisticsInRangeReportViewModel(ReportLookupDataService lookupService,
                                                           ILogger logger,
@@ -32,10 +33,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
             Init();
         }
 
+        public ICommand YearSelectionChangedCommand { get; set; }
         public string ReportName => "Books read during period report";
-
         public IEnumerable<int> YearsList { get; set; }
-
         public List<AnnualBookStatisticsInRangeReport> ReportData
         {
             get => reportData;
@@ -46,17 +46,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
             }
         }
 
-        public ICommand YearSelectionChangedCommand { get; set; }
-
-        private int selectedBeginYear;
-
         public int SelectedBeginYear
         {
             get { return selectedBeginYear; }
             set { selectedBeginYear = value; OnPropertyChanged(); }
         }
-
-        private int selectedEndYear;
 
         public int SelectedEndYear
         {
@@ -64,13 +58,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
             set { selectedEndYear = value; OnPropertyChanged(); }
         }
 
-        public int RowCount
-        {
-            get { return rowCount; }
-            private set { rowCount = value; OnPropertyChanged(); }
-        }
-
-        public async Task InitializeReportAsync(int? beginYear = null, int? endYear = null)
+        private async Task InitializeReportAsync(int? beginYear = null, int? endYear = null)
         {
             if (SelectedBeginYear == default)
             {
@@ -91,7 +79,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
             {
                 var temp = await lookupService.GetAnnualBookStatisticsInRangeReportAsync(SelectedBeginYear, SelectedEndYear);
                 ReportData = new List<AnnualBookStatisticsInRangeReport>(temp);
-                RowCount = ReportData.Count;
             }
             catch (Exception ex)
             {

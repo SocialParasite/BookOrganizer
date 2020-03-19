@@ -17,7 +17,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
         private readonly IDialogService dialogService;
 
         private List<AnnualBookStatisticsReport> reportData;
-        private int rowCount;
+        private int selectedYear;
 
         public AnnualBookStatisticsReportViewModel(ReportLookupDataService lookupService,
                                                    ILogger logger,
@@ -33,10 +33,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
             Init();
         }
 
-        public string ReportName => "Annual books read report";
-
         public ICommand YearSelectionChangedCommand { get; set; }
-
+        public string ReportName => "Annual books read report";
         public IEnumerable<int> YearsList { get; set; }
 
         public List<AnnualBookStatisticsReport> ReportData
@@ -48,8 +46,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
                 OnPropertyChanged();
             }
         }
-
-        private int selectedYear;
 
         public int SelectedYear
         {
@@ -63,13 +59,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
                 yield return year;
         }
 
-        public int RowCount
-        {
-            get { return rowCount; }
-            private set { rowCount = value; OnPropertyChanged(); }
-        }
-
-        public async Task InitializeRepositoryAsync(int? year = null)
+        private async Task InitializeRepositoryAsync(int? year = null)
         {
             YearsList = PopulateYearsMenu();
 
@@ -77,7 +67,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
             {
                 var temp = await lookupService.GetAnnualBookStatisticsReportAsync(year);
                 ReportData = new List<AnnualBookStatisticsReport>(temp);
-                RowCount = ReportData.Count;
             }
             catch (Exception ex)
             {
