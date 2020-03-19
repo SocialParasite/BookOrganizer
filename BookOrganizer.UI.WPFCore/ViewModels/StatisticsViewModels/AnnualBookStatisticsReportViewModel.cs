@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BookOrganizer.Domain;
@@ -58,6 +59,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
                 yield return year;
         }
 
+        private Task Init(int? year = null)
+            => InitializeRepositoryAsync(year);
+
         private async Task InitializeRepositoryAsync(int? year = null)
         {
             YearsList = PopulateYearsMenu();
@@ -67,21 +71,23 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
                 var temp = await lookupService.GetAnnualBookStatisticsReportAsync(year);
                 ReportData = new List<AnnualBookStatisticsReport>(temp);
             }
+            catch(SqlNullValueException ex)
+            {
+                var details = $"No statistics found for year {SelectedYear}";
+                var dialog = new NotificationViewModel("Error!", details);
+                dialogService.OpenDialog(dialog);
+                logger.Error("Exception: {Exception} Details: {Details} Message: {Message}\n\n Stack trace: {StackTrace}\n\n", 
+                    ex.GetType().Name, details, ex.Message, ex.StackTrace);
+            }
             catch (Exception ex)
             {
-                var dialog = new NotificationViewModel("Exception", ex.Message);
+                var dialog = new NotificationViewModel("Error!", ex.Message);
                 dialogService.OpenDialog(dialog);
-
                 logger.Error("Exception: {Exception} Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.GetType().Name, ex.Message, ex.StackTrace);
             }
         }
 
-        private Task Init(int? year = null)
-            => InitializeRepositoryAsync(year);
-
-        private void OnYearSelectionChangedExecute()
-        {
-            Init(SelectedYear);
-        }
+        private void OnYearSelectionChangedExecute() 
+            => Init(SelectedYear);
     }
 }

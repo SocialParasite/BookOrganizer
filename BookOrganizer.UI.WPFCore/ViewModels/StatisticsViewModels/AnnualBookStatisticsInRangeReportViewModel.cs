@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BookOrganizer.Domain;
@@ -57,6 +58,9 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
             set { selectedEndYear = value; OnPropertyChanged(); }
         }
 
+        private Task Init(int? beginYear = null, int? endYear = null)
+            => InitializeReportAsync(beginYear, endYear);
+
         private async Task InitializeReportAsync(int? beginYear = null, int? endYear = null)
         {
             if (SelectedBeginYear == default)
@@ -79,22 +83,27 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
                 var temp = await lookupService.GetAnnualBookStatisticsInRangeReportAsync(SelectedBeginYear, SelectedEndYear);
                 ReportData = new List<AnnualBookStatisticsInRangeReport>(temp);
             }
+            catch (SqlNullValueException ex)
+            {
+                var details = $"No statistics found for year range {SelectedBeginYear} - {SelectedEndYear}";
+                var dialog = new NotificationViewModel("Error!", details);
+                
+                dialogService.OpenDialog(dialog);
+             
+                logger.Error("Exception: {Exception} Details: {Details} Message: {Message}\n\n Stack trace: {StackTrace}\n\n",
+                    ex.GetType().Name, details, ex.Message, ex.StackTrace);
+            }
             catch (Exception ex)
             {
-                var dialog = new NotificationViewModel("Exception", ex.Message);
+                var dialog = new NotificationViewModel("Error!", ex.Message);
                 dialogService.OpenDialog(dialog);
 
                 logger.Error("Exception: {Exception} Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.GetType().Name, ex.Message, ex.StackTrace);
             }
         }
 
-        private Task Init(int? beginYear = null, int? endYear = null)
-            => InitializeReportAsync(beginYear, endYear);
-
-        private void OnYearSelectionChangedExecute()
-        {
-            Init(SelectedBeginYear, SelectedEndYear);
-        }
+        private void OnYearSelectionChangedExecute() 
+            => Init(SelectedBeginYear, SelectedEndYear);
 
         private IEnumerable<int> PopulateYearsMenu()
         {
