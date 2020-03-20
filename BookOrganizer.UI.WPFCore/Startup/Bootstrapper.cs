@@ -50,35 +50,36 @@ namespace BookOrganizer.UI.WPFCore.Startup
                 .Where(type => type.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
 
+            Settings settings = GetSettings();
+
             builder.Register<ILogger>((_)
                 => new LoggerConfiguration()
-                    .WriteTo.File("Log-{Date}.txt", rollingInterval: RollingInterval.Day)
-                    .WriteTo.Seq("http://localhost:5341/")
+                    .WriteTo.File(Path.Combine(settings.LogFilePath,"Log-{Date}.txt"), rollingInterval: RollingInterval.Day)
+                    .WriteTo.Seq(settings.LogServerUrl)
                     .CreateLogger())
                 .SingleInstance();
 
-            var startupDb = GetStartupDatabase();
-            var connectionString = ConnectivityService.GetConnectionString(startupDb);
+            var connectionString = ConnectivityService.GetConnectionString(settings.StartupDatabase);
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf().WithParameter("connectionString", connectionString);
 
             return builder.Build();
         }
 
-        string GetStartupDatabase()
+        Settings GetSettings()
         {
-            string connectionString = null;
+            Settings settings = null;
 
             if (File.Exists(@"Startup\settings.json"))
             {
                 var settingsFile = File.ReadAllText(@"Startup\settings.json");
 
                 JObject jobj = (JObject)JsonConvert.DeserializeObject(settingsFile);
-                Settings settings = jobj.ToObject<Settings>();
-                connectionString = settings.StartupDatabase;
+                settings = jobj.ToObject<Settings>();
             }
 
-            return connectionString;
+            return settings;
         }
     }
+
 }

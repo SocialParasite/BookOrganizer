@@ -33,6 +33,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -153,7 +155,24 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Grid Grid.Row="7" Grid.Column="1">
+        <Label
+            Grid.Row="7"
+            Content="Log file path:"
+            Style="{StaticResource LabelStyles}" />
+        <TextBox
+            Grid.Row="7"
+            Grid.Column="1"
+            Text="{Binding LogFilePath, Mode=TwoWay}" />
+        <Label
+            Grid.Row="8"
+            Content="Log server:"
+            Style="{StaticResource LabelStyles}" />
+        <TextBox
+            Grid.Row="8"
+            Grid.Column="1"
+            Text="{Binding LogServerUrl, Mode=TwoWay}" />
+
+        <Grid Grid.Row="9" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
@@ -168,7 +187,7 @@
         </Grid>
         <Button
             x:Name="ApplyButton"
-            Grid.Row="8"
+            Grid.Row="9"
             Grid.Column="2"
             Command="{Binding ApplyAndSaveSettingsCommand}"
             Content="Apply" />

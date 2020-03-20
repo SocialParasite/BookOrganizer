@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <Content Include="Startup\settings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

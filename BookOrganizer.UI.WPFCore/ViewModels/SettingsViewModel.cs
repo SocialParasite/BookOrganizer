@@ -15,6 +15,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 {
     public class SettingsViewModel : ViewModelBase, ISelectedViewModel
     {
+        private string storagePath;
+        private FileAction fileActionMode;
+
+        private Settings settings;
+        
         public SettingsViewModel()
         {
             ApplyAndSaveSettingsCommand = new DelegateCommand(OnApplyAndSaveExecute);
@@ -25,11 +30,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
             InitializeRepositoryAsync();
         }
-
-        private string storagePath;
-        private FileAction fileActionMode;
-
-        Settings settings;
 
         public ICommand ApplyAndSaveSettingsCommand { get; }
         public ICommand RemoveConnectionStringCommand { get; }
@@ -46,6 +46,18 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             get { return fileActionMode; }
             set { fileActionMode = value; OnPropertyChanged(); }
+        }
+
+        public string LogFilePath
+        {
+            get { return settings.LogFilePath; }
+            set { settings.LogFilePath = value; OnPropertyChanged(); }
+        }
+
+        public string LogServerUrl
+        {
+            get { return settings.LogServerUrl; }
+            set { settings.LogServerUrl = value; OnPropertyChanged(); }
         }
 
         private void InitializeRepositoryAsync()
