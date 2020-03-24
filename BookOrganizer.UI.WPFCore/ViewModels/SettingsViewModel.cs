@@ -4,31 +4,42 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using System.Windows.Media;
 using BookOrganizer.Data.SqlServer;
+using BookOrganizer.UI.WPFCore.Events;
 using BookOrganizer.UI.WPFCore.Startup;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Prism.Commands;
+using Prism.Events;
+using System;
 
 namespace BookOrganizer.UI.WPFCore.ViewModels
 {
     public class SettingsViewModel : ViewModelBase, ISelectedViewModel
     {
-        private string storagePath;
+        private readonly IEventAggregator eventAggregator;
+
         private FileAction fileActionMode;
 
         private Settings settings;
-        
-        public SettingsViewModel()
+        private Settings unmodifiedSettings;
+
+        public SettingsViewModel(IEventAggregator eventAggregator)
         {
-            ApplyAndSaveSettingsCommand = new DelegateCommand(OnApplyAndSaveExecute);
+            this.eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+
+            ApplyAndSaveSettingsCommand = new DelegateCommand(OnApplyAndSaveExecute, OnApplyAndSaveCanExecute)
+                .ObservesProperty(() => HasChanges);
             RemoveConnectionStringCommand = new DelegateCommand<string>(OnRemoveConnectionStringExecute);
 
             if (Databases is null)
                 Databases = new ObservableCollection<ConnectionString>();
 
-            InitializeRepositoryAsync();
+            InitializeRepository();
+
+            HasChanges = true;
         }
 
         public ICommand ApplyAndSaveSettingsCommand { get; }
@@ -36,10 +47,18 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public ObservableCollection<ConnectionString> Databases { get; set; }
 
+        private bool hasChanges;
+
+        public bool HasChanges
+        {
+            get { return hasChanges; }
+            set { hasChanges = value; OnPropertyChanged(); }
+        }
+
         public string StoragePath
         {
-            get { return storagePath; }
-            set { storagePath = value; OnPropertyChanged(); }
+            get { return settings.StoragePath; }
+            set { settings.StoragePath = value; OnPropertyChanged(); }
         }
 
         public FileAction FileActionMode
@@ -60,7 +79,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             set { settings.LogServerUrl = value; OnPropertyChanged(); }
         }
 
-        private void InitializeRepositoryAsync()
+        private void InitializeRepository()
         {
             ReadSettings();
 
@@ -77,21 +96,22 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
                 jobj = (JObject)JsonConvert.DeserializeObject(settingsFile);
                 settings = jobj.ToObject<Settings>();
+                unmodifiedSettings = jobj.ToObject<Settings>();
             }
         }
 
         private void ReadAndConvertConnectionStrings()
         {
-            IConfigurationBuilder builder2 = new ConfigurationBuilder().AddJsonFile("connectionString.json");
-            IConfiguration connectionStringConfiguration = builder2.Build();
+            IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("connectionString.json");
+            IConfiguration connectionStringConfiguration = builder.Build();
 
             Databases.Clear();
             IConfigurationSection loop = connectionStringConfiguration.GetSection("ConnectionStrings");
 
             foreach (var item in loop.GetChildren())
             {
-                string neConnectionString = builder2.Build().GetConnectionString(item.Key);
-                SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(neConnectionString);
+                string newConnectionString = builder.Build().GetConnectionString(item.Key);
+                SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(newConnectionString);
 
                 ConnectionString tempConnectionString = new ConnectionString();
 
@@ -106,6 +126,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
                 Databases.Add(tempConnectionString);
             }
+        }
+
+        private bool OnApplyAndSaveCanExecute()
+        {
+            return HasChanges;
         }
 
         private void OnApplyAndSaveExecute()
@@ -148,6 +173,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
             dynamic jsonSettings = JsonConvert.SerializeObject(settings, Formatting.Indented);
             File.WriteAllText(@"Startup\settings.json", jsonSettings);
+
+            eventAggregator.GetEvent<ChangeDetailsViewEvent>()
+                    .Publish(new ChangeDetailsViewEventArgs
+                    {
+                        Message = CreateChangeMessage(DatabaseOperation.SETTINGS),
+                        MessageBackgroundColor = Brushes.Green
+                    });
         }
 
         private void OnRemoveConnectionStringExecute(string id)
@@ -155,7 +187,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             if (id != null || id != Databases.LastOrDefault().Identifier)
             {
                 Databases.Remove(Databases.First(i => i.Identifier == id));
+
+                eventAggregator.GetEvent<ChangeDetailsViewEvent>()
+                    .Publish(new ChangeDetailsViewEventArgs
+                    {
+                        Message = CreateChangeMessage(DatabaseOperation.DATABASE_CONNECTIONS),
+                        MessageBackgroundColor = Brushes.Red
+                    });
             }
         }
+
+        private string CreateChangeMessage(DatabaseOperation operation)
+            => $"{operation} modified.";
     }
 }

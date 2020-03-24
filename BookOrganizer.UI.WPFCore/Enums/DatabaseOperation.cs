@@ -4,6 +4,8 @@
     {
         ADD,
         UPDATE,
-        DELETE
+        DELETE,
+        DATABASE_CONNECTIONS,
+        SETTINGS
     }
 }
