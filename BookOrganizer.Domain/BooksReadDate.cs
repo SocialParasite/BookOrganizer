@@ -8,6 +8,8 @@ namespace BookOrganizer.Domain
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
+        [Column(TypeName = "Date")]
         public DateTime ReadDate { get; set; }
         public Guid BookId { get; set; }
     }

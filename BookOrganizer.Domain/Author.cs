@@ -20,6 +20,7 @@ namespace BookOrganizer.Domain
         [Required]
         public string LastName { get; set; }
 
+        [Column(TypeName="Date")]
         public DateTime? DateOfBirth { get; set; }
 
         [MaxLength(256)]
