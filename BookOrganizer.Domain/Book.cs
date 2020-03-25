@@ -40,6 +40,7 @@ namespace BookOrganizer.Domain
 
         public string Description { get; set; }
 
+        [MaxLength(256)]
         public string BookCoverPicturePath { get; set; }
 
         public Guid LanguageId { get; set; }

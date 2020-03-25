@@ -15,6 +15,7 @@ namespace BookOrganizer.Domain
         [MaxLength(64, ErrorMessage = "Publishers name should be maximum of 64 characters long.")]
         public string Name { get; set; }
 
+        [MaxLength(256)]
         public string LogoPath { get; set; }
         public string Description { get; set; }
 

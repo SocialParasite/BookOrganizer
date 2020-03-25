@@ -4,14 +4,16 @@ using BookOrganizer.Data.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookOrganizer.Data.SqlServer.Migrations
 {
     [DbContext(typeof(BookOrganizerDbContext))]
-    partial class BookOrganizerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200324164155_BookCoverPicPath")]
+    partial class BookCoverPicPath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,8 +38,7 @@ namespace BookOrganizer.Data.SqlServer.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("MugShotPath")
-                        .HasMaxLength(256);
+                    b.Property<string>("MugShotPath");
 
                     b.Property<Guid?>("NationalityId");
 
@@ -237,8 +238,7 @@ namespace BookOrganizer.Data.SqlServer.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("LogoPath")
-                        .HasMaxLength(256);
+                    b.Property<string>("LogoPath");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -262,8 +262,7 @@ namespace BookOrganizer.Data.SqlServer.Migrations
 
                     b.Property<int>("NumberOfBooks");
 
-                    b.Property<string>("PicturePath")
-                        .HasMaxLength(256);
+                    b.Property<string>("PicturePath");
 
                     b.HasKey("Id");
 
@@ -295,8 +294,7 @@ namespace BookOrganizer.Data.SqlServer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("StoragePath")
-                        .HasMaxLength(256);
+                    b.Property<string>("StoragePath");
 
                     b.HasKey("Id");
 

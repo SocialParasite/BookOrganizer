@@ -24,6 +24,7 @@ namespace BookOrganizer.Domain
         [Range(1, 1000)]
         public int NumberOfBooks { get; set; }
 
+        [MaxLength(256)]
         public string PicturePath { get; set; }
         public string Description { get; set; }
 

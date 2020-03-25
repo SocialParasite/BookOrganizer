@@ -98,7 +98,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
                 var dialog = new NotificationViewModel("Error!", ex.Message);
                 dialogService.OpenDialog(dialog);
 
-                logger.Error("Exception: {Exception} Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.GetType().Name, ex.Message, ex.StackTrace);
+                logger.Error("Exception: {Exception} Message: {Message}\n\n Stack trace: {StackTrace}\n\n", 
+                    ex.GetType().Name, ex.Message, ex.StackTrace);
             }
         }
 

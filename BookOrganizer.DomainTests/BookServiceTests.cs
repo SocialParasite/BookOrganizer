@@ -21,9 +21,14 @@ namespace BookOrganizer.DomainTests
             var formatLookupDataServiceMock = new Mock<IFormatLookupDataService>();
             var genreLookupDataServiceMock = new Mock<IGenreLookupDataService>();
 
-            bookService = new BookService(repositoryMock.Object, formatRepositoryMock.Object, genreRepositoryMock.Object,
-                languageLookupDataServiceMock.Object, publisherLookupDataServiceMock.Object, authorLookupDataServiceMock.Object,
-                formatLookupDataServiceMock.Object, genreLookupDataServiceMock.Object);
+            bookService = new BookService(repositoryMock.Object, 
+                                          formatRepositoryMock.Object, 
+                                          genreRepositoryMock.Object,
+                                          languageLookupDataServiceMock.Object, 
+                                          publisherLookupDataServiceMock.Object, 
+                                          authorLookupDataServiceMock.Object,
+                                          formatLookupDataServiceMock.Object, 
+                                          genreLookupDataServiceMock.Object);
         }
 
         [Theory]

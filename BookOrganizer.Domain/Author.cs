@@ -22,6 +22,7 @@ namespace BookOrganizer.Domain
 
         public DateTime? DateOfBirth { get; set; }
 
+        [MaxLength(256)]
         public string MugShotPath { get; set; }
 
         public string Biography { get; set; }

@@ -9,6 +9,7 @@ namespace BookOrganizer.Domain
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        [MaxLength(256)]
         public string StoragePath { get; set; }
     }
 }
