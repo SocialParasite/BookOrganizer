@@ -26,27 +26,31 @@
                 <div style="border:none;width:100%;height:15%;"></div>
             </div>
         </div>
-        <div class="gridwrapper" style="height:auto;width:50%">
-            <div class="gridcontent" style="width:100%;background:white;border:hidden">
-                @Model.SelectedItem.Biography
-            </div>
-        </div>
-        <div class="gridwrapper" style="height:auto;width:50%">
-            <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
-                @foreach (var book in Model.SelectedItem.BooksLink)
-                {
-                    <form asp-controller="Book" asp-action="Details" asp-route-id="@book.BookId">
-                        <button type="submit" class="btn-outline-secondary text-left" style="height:auto;width:100%;margin:10px;padding:5px;">
-                            <span style="align-items:start;">
-                                <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(book.Book.BookCoverPicturePath)}")" asp-append-version="true" width="50" height="75">
 
-                                @book.Book.Title
-                            </span>
-                        </button>
-                    </form>
-                }
-            </div>
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="@(Model.ActiveTab == BookOrganizer.UI.Web.Models.Tab.Biography ? "active" : string.Empty)">
+                <a asp-route-id="@Model.SelectedItem.Id" asp-route-tabname="@BookOrganizer.UI.Web.Models.Tab.Biography" asp-action="Details">
+                    Biography
+                </a>
+            </li>
+            <li role="presentation" class="@(Model.ActiveTab == BookOrganizer.UI.Web.Models.Tab.Bibliography ? "active" : string.Empty)">
+                <a asp-route-id="@Model.SelectedItem.Id" asp-route-tabname="@BookOrganizer.UI.Web.Models.Tab.Bibliography" asp-action="Details">
+                    Bibliography
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content" role="presentation">
+            @switch (Model.ActiveTab)
+            {
+                case Tab.Biography:
+                    @await Component.InvokeAsync("Biography");
+                    break;
+                case Tab.Bibliography:
+                    @await Component.InvokeAsync("Bibliography");
+                    break;
+                default:
+                    break;
+            }
         </div>
     </div>
 </div>
-

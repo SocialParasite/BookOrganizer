@@ -1,10 +1,9 @@
-﻿using BookOrganizer.DA;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BookOrganizer.UI.Web.Controllers
 {
@@ -14,7 +13,7 @@ namespace BookOrganizer.UI.Web.Controllers
         private readonly IRepository<Author> authorsRepository;
         private readonly INationalityLookupDataService nationalityLookupDataService;
 
-        public AuthorController(IAuthorLookupDataService authorLookupDataService, 
+        public AuthorController(IAuthorLookupDataService authorLookupDataService,
             IRepository<Author> authorsRepository,
             INationalityLookupDataService nationalityLookupDataService)
         {
@@ -30,12 +29,13 @@ namespace BookOrganizer.UI.Web.Controllers
             return View(vm);
         }
 
-        public async Task<IActionResult> Details(Guid? Id)
+        public async Task<IActionResult> Details(Guid? Id, Tab tabname)
         {
             if (Id == null) throw new ArgumentNullException(nameof(Id));
 
             var author = await authorsRepository.GetSelectedAsync((Guid)Id);
-            var vm = new AuthorDetailViewModel(author); 
+            var vm = new AuthorDetailViewModel(author);
+            vm.ActiveTab = tabname;
 
             return View(vm);
         }

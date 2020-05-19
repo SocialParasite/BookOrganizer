@@ -20,10 +20,6 @@ namespace BookOrganizer.UI.WPFCore.Startup
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
-
-            builder.RegisterType<MainWindow>().AsSelf();
-            builder.RegisterType<MainViewModel>().AsSelf();
             builder.RegisterType<DialogService>().As<IDialogService>();
 
             builder.RegisterAssemblyTypes(typeof(AuthorService).Assembly)
@@ -62,6 +58,11 @@ namespace BookOrganizer.UI.WPFCore.Startup
             var connectionString = ConnectivityService.GetConnectionString(settings.StartupDatabase);
 
             builder.RegisterType<BookOrganizerDbContext>().AsSelf().WithParameter("connectionString", connectionString);
+
+            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+
+            builder.RegisterType<MainWindow>().AsSelf().SingleInstance();
+            builder.RegisterType<MainViewModel>().AsSelf().SingleInstance();
 
             return builder.Build();
         }

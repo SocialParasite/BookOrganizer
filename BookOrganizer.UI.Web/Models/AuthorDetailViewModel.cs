@@ -29,5 +29,14 @@ namespace BookOrganizer.UI.Web.Models
         public DateTime? DOB => SelectedItem.DateOfBirth;
 
         public List<LookupItem> Nationalities { get; set; }
+
+        public Tab ActiveTab { get; set; } //= Tab.Bibliography;
+
+    }
+
+    public enum Tab
+    {
+        Biography,
+        Bibliography
     }
 }

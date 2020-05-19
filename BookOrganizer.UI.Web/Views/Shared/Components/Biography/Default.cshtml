@@ -1,0 +1,9 @@
+﻿@model BookOrganizer.UI.Web.Models.AuthorDetailViewModel
+
+<div id="biography" class="tab-pane @(Model.ActiveTab == BookOrganizer.UI.Web.Models.Tab.Biography ? "active" : string.Empty)">
+    <div class="gridwrapper" style="height:auto;width:70%">
+        <div class="gridcontent" style="width:100%;background:white;border:hidden">
+            @Model.SelectedItem.Biography
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@model BookOrganizer.UI.Web.Models.AuthorDetailViewModel
+
+<div id="bibliography" class="tab-pane @(Model.ActiveTab == BookOrganizer.UI.Web.Models.Tab.Bibliography ? "active" : string.Empty)">
+    <div class="gridwrapper" style="height:auto;width:70%">
+        <div class="gridcontent" style="width:90%;background:white;border-right-color:transparent;">
+            @foreach (var book in Model.SelectedItem.BooksLink)
+            {
+                <form asp-controller="Book" asp-action="Details" asp-route-id="@book.BookId">
+                    <button type="submit" class="btn-outline-secondary text-left" style="height:auto;width:100%;margin:10px;padding:5px;">
+                        <span style="align-items:start;">
+                            <img src="@Url.Content($"~/Covers/{Model.GetItemPicture(book.Book.BookCoverPicturePath)}")" asp-append-version="true" width="50" height="75">
+
+                            @book.Book.Title
+                        </span>
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+

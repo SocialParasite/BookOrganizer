@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using Prism.Events;
@@ -33,7 +33,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             try
             {
-                Items = await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel));
+                Items = await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel)).ConfigureAwait(false);
 
                 EntityCollection = Items
                     .OrderBy(b => b.DisplayMember
@@ -45,7 +45,6 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
             catch (Exception ex)
             {
-
                 var dialog = new NotificationViewModel("Exception", ex.Message);
                 dialogService.OpenDialog(dialog);
 
