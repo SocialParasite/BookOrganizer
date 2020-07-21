@@ -36,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{AABD3D26-DA4
 		BooksReadByMonthInSpecifiedYear.sql = BooksReadByMonthInSpecifiedYear.sql
 		SQL\GetAnnualBookStatisticsInRange.sql = SQL\GetAnnualBookStatisticsInRange.sql
 		SQL\GetBookStatisticsByYear.sql = SQL\GetBookStatisticsByYear.sql
+		GetMonthlyReads.sql = GetMonthlyReads.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookOrganizer.UI.WPFCore", "BookOrganizer.UI.WPFCore\BookOrganizer.UI.WPFCore.csproj", "{C01028E7-D4D8-42E8-A12B-AE047E0BC772}"

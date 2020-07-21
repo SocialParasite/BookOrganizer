@@ -38,6 +38,7 @@ namespace BookOrganizer.Data.SqlServer
 
             modelBuilder.Query<AnnualBookStatisticsReport>();
             modelBuilder.Query<AnnualBookStatisticsInRangeReport>();
+            modelBuilder.Query<MonthlyReadsReport>();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
