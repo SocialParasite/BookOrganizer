@@ -50,7 +50,7 @@ namespace BookOrganizer.UI.WPFCore.Startup
 
             builder.Register<ILogger>((_)
                 => new LoggerConfiguration()
-                    .WriteTo.File(Path.Combine(settings.LogFilePath,"Log-{Date}.txt"), rollingInterval: RollingInterval.Day)
+                    .WriteTo.File(Path.Combine(settings.LogFilePath, "Log-{Date}.txt"), rollingInterval: RollingInterval.Day)
                     .WriteTo.Seq(settings.LogServerUrl)
                     .CreateLogger())
                 .SingleInstance();
@@ -76,7 +76,7 @@ namespace BookOrganizer.UI.WPFCore.Startup
                 var settingsFile = File.ReadAllText(@"Startup\settings.json");
 
                 JObject jobj = (JObject)JsonConvert.DeserializeObject(settingsFile);
-                settings = jobj.ToObject<Settings>();
+                settings = jobj?.ToObject<Settings>();
             }
 
             return settings;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Media;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPF.Enums;

@@ -30,6 +30,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             Reports = new ObservableCollection<IReport>();
             Reports.Add(viewModelCreator[nameof(AnnualBookStatisticsReportViewModel)]);
             Reports.Add(viewModelCreator[nameof(AnnualBookStatisticsInRangeReportViewModel)]);
+            Reports.Add(viewModelCreator[nameof(MonthlyReadsReportViewModel)]);
             SelectedReport = Reports[0];
         }
     }
