@@ -57,14 +57,7 @@
             FontSize="16"
             ItemsSource="{Binding MonthsList}"
             ScrollViewer.CanContentScroll="True"
-            SelectedValue="{Binding SelectedMonth, Mode=TwoWay}"
-            VirtualizingStackPanel.IsVirtualizing="True"
-            VirtualizingStackPanel.VirtualizationMode="Recycling">
-            <ComboBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ComboBox.ItemsPanel>
+            SelectedValue="{Binding SelectedMonth, Mode=TwoWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding MonthSelectionChangedCommand}" />
@@ -87,7 +80,7 @@
             RowBackground="PapayaWhip">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
-                <DataGridTextColumn Binding="{Binding ReadDate}" Header="Read date" />
+                <DataGridTextColumn Binding="{Binding ReadDate, StringFormat=d.M.yyyy}" Header="Read date" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

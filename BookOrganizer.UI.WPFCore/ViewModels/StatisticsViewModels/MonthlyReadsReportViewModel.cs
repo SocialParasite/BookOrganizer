@@ -22,19 +22,20 @@ namespace BookOrganizer.UI.WPFCore.ViewModels.Statistics
         private Months selectedMonth;
 
         public MonthlyReadsReportViewModel(IMonthlyReadsLookupDataService lookupService,
-                                                   ILogger logger,
-                                                   IDialogService dialogService)
+                                           ILogger logger,
+                                           IDialogService dialogService)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.lookupService = lookupService ?? throw new ArgumentNullException(nameof(lookupService));
             this.dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 
             YearSelectionChangedCommand = new DelegateCommand(OnYearSelectionChangedExecute);
-            SelectedYear = DateTime.Now.Year;
             MonthSelectionChangedCommand = new DelegateCommand(OnMonthSelectionChangedExecute);
-            SelectedMonth = (Months)DateTime.Now.Month;
 
-            Init();
+            SelectedYear = DateTime.Now.Year;
+            SelectedMonth = (Months)DateTime.Now.Month - 1;
+
+            Init(SelectedYear, (int)SelectedMonth + 1);
         }
 
         public ICommand YearSelectionChangedCommand { get; set; }
