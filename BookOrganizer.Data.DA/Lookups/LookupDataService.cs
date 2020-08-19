@@ -13,28 +13,31 @@ namespace BookOrganizer.DA
                                      ISeriesLookupDataService, INationalityLookupDataService,
                                      IFormatLookupDataService, IGenreLookupDataService
     {
-        private Func<BookOrganizerDbContext> _contextCreator;
+        private readonly Func<BookOrganizerDbContext> contextCreator;
         private readonly string placeholderPic;
 
         public LookupDataService(Func<BookOrganizerDbContext> contextCreator, string imagePath)
         {
-            _contextCreator = contextCreator;
+            this.contextCreator = contextCreator;
             placeholderPic = imagePath;
         }
 
         public async Task<IEnumerable<LookupItem>> GetBookLookupAsync(string viewModelName)
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Books
                     .AsNoTracking()
+                    .Include(b => b.FormatLink)
                     .Select(b =>
                         new LookupItem
                         {
                             Id = b.Id,
                             DisplayMember = $"{b.Title} ({b.ReleaseYear})",
                             Picture = b.BookCoverPicturePath ?? placeholderPic,
-                            ViewModelName = viewModelName
+                            ViewModelName = viewModelName,
+                            Owned = b.FormatLink.Count > 0,
+                            Read = b.IsRead
                         })
                     .ToListAsync();
             }
@@ -42,7 +45,7 @@ namespace BookOrganizer.DA
 
         public async Task<IEnumerable<LookupItem>> GetPublisherLookupAsync(string viewModelName)
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Publishers
                     .AsNoTracking()
@@ -61,7 +64,7 @@ namespace BookOrganizer.DA
 
         public async Task<IEnumerable<LookupItem>> GetAuthorLookupAsync(string viewModelName)
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Authors
                     .AsNoTracking()
@@ -80,7 +83,7 @@ namespace BookOrganizer.DA
 
         public async Task<IEnumerable<LookupItem>> GetLanguageLookupAsync(string viewModelName)
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Languages
                     .AsNoTracking()
@@ -99,7 +102,7 @@ namespace BookOrganizer.DA
 
         public async Task<Guid> GetLanguageId()
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Languages
                     .AsNoTracking()
@@ -111,7 +114,7 @@ namespace BookOrganizer.DA
 
         public async Task<IEnumerable<LookupItem>> GetSeriesLookupAsync(string viewModelName)
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Series
                     .AsNoTracking()
@@ -129,7 +132,7 @@ namespace BookOrganizer.DA
 
         public async Task<IEnumerable<LookupItem>> GetNationalityLookupAsync(string viewModelName)
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Nationalities
                     .AsNoTracking()
@@ -148,7 +151,7 @@ namespace BookOrganizer.DA
 
         public async Task<Guid> GetNationalityId()
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Nationalities
                     .AsNoTracking()
@@ -160,7 +163,7 @@ namespace BookOrganizer.DA
 
         public async Task<IEnumerable<LookupItem>> GetFormatLookupAsync(string viewModelName)
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Formats
                     .AsNoTracking()
@@ -179,7 +182,7 @@ namespace BookOrganizer.DA
 
         public async Task<Guid> GetFormatId()
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Formats
                     .AsNoTracking()
@@ -191,7 +194,7 @@ namespace BookOrganizer.DA
 
         public async Task<IEnumerable<LookupItem>> GetGenreLookupAsync(string viewModelName)
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Genres
                     .AsNoTracking()
@@ -210,7 +213,7 @@ namespace BookOrganizer.DA
 
         public async Task<Guid> GetGenreId()
         {
-            using (var ctx = _contextCreator())
+            using (var ctx = contextCreator())
             {
                 return await ctx.Genres
                     .AsNoTracking()

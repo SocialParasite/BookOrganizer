@@ -1,4 +1,5 @@
 ﻿using System;
+using BookOrganizer.Domain.Enums;
 
 namespace BookOrganizer.Domain
 {
@@ -8,5 +9,7 @@ namespace BookOrganizer.Domain
         public string DisplayMember { get; set; }
         public string Picture { get; set; }
         public string ViewModelName { get; set; }
+        public bool Owned { get; set; }
+        public bool Read { get; set; }
     }
 }

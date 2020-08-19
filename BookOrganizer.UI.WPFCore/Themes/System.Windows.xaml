@@ -6,10 +6,11 @@
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
 
     <local:AdjustWidthConverter x:Key="AdjustWidthConverter" />
-    <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
-    <local:DobCountAge x:Key="DobCountAge" />
+    <local:BackgroundColorConverter x:Key="BackgroundColorConverter" />
     <local:BookSeriesHeader x:Key="BookSeriesHeader" />
+    <local:BoolToMaxConverter x:Key="BoolToMaxConverter" />
     <local:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+    <local:DobCountAge x:Key="DobCountAge" />
     <local:GuidToVisibilityConverter x:Key="GuidToVisibilityConverter" />
     <local:RowHasValuesConverter x:Key="RowHasValuesConverter" />
     <local:ShowBordersInEditMode x:Key="ShowBordersInEditMode" />

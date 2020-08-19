@@ -33,7 +33,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             try
             {
-                Items = await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel)).ConfigureAwait(false);
+                Items = await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel));
 
                 EntityCollection = Items
                     .OrderBy(b => b.DisplayMember
