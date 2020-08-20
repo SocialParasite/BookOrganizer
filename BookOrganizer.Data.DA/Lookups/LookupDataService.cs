@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookOrganizer.Domain;
+using BookOrganizer.Domain.Enums;
+using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
 namespace BookOrganizer.DA
 {
@@ -29,6 +31,7 @@ namespace BookOrganizer.DA
                 return await ctx.Books
                     .AsNoTracking()
                     .Include(b => b.FormatLink)
+                    .AsAsyncEnumerable()
                     .Select(b =>
                         new LookupItem
                         {
@@ -36,10 +39,23 @@ namespace BookOrganizer.DA
                             DisplayMember = $"{b.Title} ({b.ReleaseYear})",
                             Picture = b.BookCoverPicturePath ?? placeholderPic,
                             ViewModelName = viewModelName,
-                            Owned = b.FormatLink.Count > 0,
-                            Read = b.IsRead
+                            ItemStatus = CheckBookStatus(b.IsRead, b.FormatLink.Count > 0)
                         })
-                    .ToListAsync();
+                    .ToList();
+            }
+
+            BookStatus CheckBookStatus(bool read, bool owned)
+            {
+                if (read && owned)
+                    return BookStatus.Read | BookStatus.Owned;
+
+                if (read)
+                    return BookStatus.Read;
+
+                if (owned)
+                    return BookStatus.Owned;
+
+                return BookStatus.None;
             }
         }
 

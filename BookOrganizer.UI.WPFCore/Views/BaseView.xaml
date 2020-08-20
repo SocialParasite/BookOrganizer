@@ -29,6 +29,7 @@
                                 <ControlTemplate TargetType="{x:Type Label}">
                                     <Label
                                         x:Name="textBlockLabel"
+                                        Background="{Binding ItemStatus, Converter={StaticResource BackgroundColorConverter}}"
                                         BorderBrush="SteelBlue"
                                         BorderThickness="1"
                                         FontSize="12">
@@ -51,12 +52,11 @@
                                                     TextWrapping="Wrap" />
                                             </Grid>
                                         </Label.Content>
-                                        <Label.Background>
+                                        <!--<Label.Background>
                                             <MultiBinding Converter="{StaticResource BackgroundColorConverter}">
-                                                <Binding Path="Read" />
-                                                <Binding Path="Owned" />
+                                                <Binding Path="ItemStatus" />
                                             </MultiBinding>
-                                        </Label.Background>
+                                        </Label.Background>-->
                                     </Label>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="Label.IsMouseOver" Value="True">
