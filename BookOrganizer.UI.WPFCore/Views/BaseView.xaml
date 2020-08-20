@@ -52,11 +52,6 @@
                                                     TextWrapping="Wrap" />
                                             </Grid>
                                         </Label.Content>
-                                        <!--<Label.Background>
-                                            <MultiBinding Converter="{StaticResource BackgroundColorConverter}">
-                                                <Binding Path="ItemStatus" />
-                                            </MultiBinding>
-                                        </Label.Background>-->
                                     </Label>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="Label.IsMouseOver" Value="True">

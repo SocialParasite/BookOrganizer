@@ -13,37 +13,27 @@ namespace BookOrganizer.UI.WPFCore.Converters
             switch (value)
             {
                 case BookStatus _:
-                    switch (value)
+                    return value switch
                     {
-                        case BookStatus.Read | BookStatus.Owned:
-                            return new SolidColorBrush(Colors.GreenYellow);
-                        case BookStatus.Read:
-                            return new SolidColorBrush(Colors.Aquamarine);
-                        case BookStatus.Owned:
-                            return new SolidColorBrush(Colors.Crimson);
-                        default:
-                            return new SolidColorBrush(Colors.WhiteSmoke);
-
-                    }
+                        BookStatus.Read | BookStatus.Owned => new SolidColorBrush(Colors.PaleGreen),
+                        BookStatus.Read => new SolidColorBrush(Colors.PaleVioletRed),
+                        BookStatus.Owned => new SolidColorBrush(Colors.LightSkyBlue),
+                        _ => new SolidColorBrush(Colors.WhiteSmoke),
+                    };
                 case SeriesStatus _:
-                    switch (value)
+                    return value switch
                     {
-                        case SeriesStatus.NoneOwnedNoneRead:
-                        case SeriesStatus.NoneOwnedPartlyRead:
-                        case SeriesStatus.NoneOwnedAllRead:
-                            return new SolidColorBrush(Colors.GreenYellow);
-                        case SeriesStatus.PartlyOwnedNoneRead:
-                        case SeriesStatus.PartlyOwnedPartlyRead:
-                        case SeriesStatus.PartlyOwnedAllRead:
-                            return new SolidColorBrush(Colors.Aquamarine);
-                        case SeriesStatus.AllOwnedNoneRead:
-                        case SeriesStatus.AllOwnedPartlyRead:
-                        case SeriesStatus.AllOwnedAllRead:
-                            return new SolidColorBrush(Colors.Crimson);
-                        default:
-                            return new SolidColorBrush(Colors.WhiteSmoke);
-
-                    }
+                        SeriesStatus.NoneOwnedNoneRead => new SolidColorBrush(Colors.Red),
+                        SeriesStatus.NoneOwnedPartlyRead => new SolidColorBrush(Colors.OrangeRed),
+                        SeriesStatus.NoneOwnedAllRead => new SolidColorBrush(Colors.PaleVioletRed),
+                        SeriesStatus.PartlyOwnedNoneRead => new SolidColorBrush(Colors.AliceBlue),
+                        SeriesStatus.PartlyOwnedPartlyRead => new SolidColorBrush(Colors.LightSteelBlue),
+                        SeriesStatus.PartlyOwnedAllRead => new SolidColorBrush(Colors.CornflowerBlue),
+                        SeriesStatus.AllOwnedNoneRead => new SolidColorBrush(Colors.LightSkyBlue),
+                        SeriesStatus.AllOwnedPartlyRead => new SolidColorBrush(Colors.DeepSkyBlue),
+                        SeriesStatus.AllOwnedAllRead => new SolidColorBrush(Colors.PaleGreen),
+                        _ => new SolidColorBrush(Colors.WhiteSmoke),
+                    };
                 default:
                     return new SolidColorBrush(Colors.WhiteSmoke);
             }
