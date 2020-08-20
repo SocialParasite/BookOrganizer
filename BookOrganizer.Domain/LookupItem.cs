@@ -9,6 +9,6 @@ namespace BookOrganizer.Domain
         public string DisplayMember { get; set; }
         public string Picture { get; set; }
         public string ViewModelName { get; set; }
-        public BookStatus ItemStatus { get; set; }
+        public object ItemStatus { get; set; }
     }
 }
