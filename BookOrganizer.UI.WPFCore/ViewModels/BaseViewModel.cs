@@ -20,7 +20,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         public readonly IEventAggregator eventAggregator;
         protected readonly ILogger logger;
         protected readonly IDialogService dialogService;
-        
+
         public BaseViewModel(IEventAggregator eventAggregator,
                              ILogger logger,
                              IDialogService dialogService)
@@ -70,10 +70,10 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public string SearchString
         {
-            get { return searchString; }
-            set 
-            { 
-                searchString = value; 
+            get => searchString;
+            set
+            {
+                searchString = value;
                 OnPropertyChanged();
                 UpdateFilteredEntityCollection();
             }
@@ -81,8 +81,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         private void UpdateFilteredEntityCollection()
         {
-            FilteredEntityCollection.Clear();
-            FilteredEntityCollection = EntityCollection.Where(w => w.DisplayMember
+            FilteredEntityCollection?.Clear();
+            FilteredEntityCollection = EntityCollection?.Where(w => w.DisplayMember
                                                        .IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
                                                        .ToList();
         }
@@ -100,7 +100,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         }
 
         private bool OnItemNameLabelMouseLeftButtonUpCanExecute(LookupItem item)
-            => (item.Id == Guid.Empty) ? false : true;
+            => (item.Id != Guid.Empty);
 
         private void OnItemNameLabelMouseLeftButtonUpExecute(LookupItem item)
         {

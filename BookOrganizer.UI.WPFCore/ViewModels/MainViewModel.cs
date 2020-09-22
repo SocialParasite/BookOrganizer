@@ -42,7 +42,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             TEMP_DetailViewModels = new ObservableCollection<IDetailViewModel>();
 
             OpenSelectedViewCommand = new DelegateCommand<string>(OnOpenSelectedViewExecute);
-            
+
             CreateNewItemCommand = new DelegateCommand<Type>(OnCreateNewItemExecute);
 
             IsMenuBarVisible = true;
@@ -92,7 +92,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public IDetailViewModel SelectedDetailViewModel
         {
-            get { return _selectedDetailViewModel; }
+            get => _selectedDetailViewModel;
             set
             {
                 _selectedDetailViewModel = value;
@@ -129,7 +129,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public char PinGlyph
         {
-            get { return pinGlyph; }
+            get => pinGlyph;
             set
             {
                 pinGlyph = value;
@@ -139,7 +139,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public ISelectedViewModel SelectedVM
         {
-            get { return selectedVM; }
+            get => selectedVM;
             set
             {
                 selectedVM = value;
@@ -151,7 +151,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public MessageItem MessageItem
         {
-            get { return messageItem; }
+            get => messageItem;
             set { messageItem = value; OnPropertyChanged(); }
         }
 
@@ -159,7 +159,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public bool ShouldAnimate
         {
-            get { return shouldAnimate; }
+            get => shouldAnimate;
             set { shouldAnimate = value; OnPropertyChanged(); }
         }
 
@@ -271,10 +271,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             ShouldAnimate = false;
 
-            if (SelectedVM is IItemLists)
-            {
-                (SelectedVM as IItemLists).InitializeRepositoryAsync();
-            }
+            (SelectedVM as IItemLists)?.InitializeRepositoryAsync();
 
             MessageItem = new MessageItem { Message = args.Message, MessageBackgroundColor = args.MessageBackgroundColor };
 

@@ -21,20 +21,21 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         {
             this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
 
-            Init();
-
             ViewModelType = nameof(BookDetailViewModel);
+            Init().Await();
         }
 
-        private Task Init()
-            => InitializeRepositoryAsync();
+        private async Task Init()
+            => await Task.Run(InitializeRepositoryAsync);
 
         public override async Task InitializeRepositoryAsync()
         {
+
             try
             {
                 Items = await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel));
 
+                // TODO: below op freezes UI.
                 EntityCollection = Items
                     .OrderBy(b => b.DisplayMember
                         .StartsWith("A ", StringComparison.OrdinalIgnoreCase)
@@ -50,6 +51,14 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
                 logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
             }
+        }
+    }
+
+    public static class TaskExtensions
+    {
+        public static async void Await(this Task task)
+        {
+            await task;
         }
     }
 }

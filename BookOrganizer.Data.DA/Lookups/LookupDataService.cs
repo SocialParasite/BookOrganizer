@@ -37,7 +37,7 @@ namespace BookOrganizer.DA
                         {
                             Id = b.Id,
                             DisplayMember = $"{b.Title} ({b.ReleaseYear})",
-                            Picture = b.BookCoverPicturePath ?? placeholderPic,
+                            Picture = GetPictureThumbnail(b.BookCoverPicturePath) ?? placeholderPic,
                             ViewModelName = viewModelName,
                             ItemStatus = CheckBookStatus(b.IsRead, b.FormatLink.Count > 0)
                         })
@@ -58,6 +58,10 @@ namespace BookOrganizer.DA
                 return BookStatus.None;
             }
         }
+
+        // TODO: thumbnail is always of type jpg!
+        private string GetPictureThumbnail(string picturePath)
+            => picturePath.Insert(picturePath.Length - 4, "_thumb");
 
         public async Task<IEnumerable<LookupItem>> GetPublisherLookupAsync(string viewModelName)
         {

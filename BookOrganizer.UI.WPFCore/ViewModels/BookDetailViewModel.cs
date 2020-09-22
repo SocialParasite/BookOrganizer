@@ -210,7 +210,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public string NewFormatName
         {
-            get { return newFormatName; }
+            get => newFormatName;
             set { newFormatName = value; OnPropertyChanged(); }
         }
 
@@ -244,7 +244,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         private void AddBookCoverImageExecute()
         {
+            var temp = SelectedItem.BookCoverPicturePath;
             SelectedItem.BookCoverPicturePath = FileExplorerService.BrowsePicture() ?? SelectedItem.BookCoverPicturePath;
+            if (!string.IsNullOrEmpty(SelectedItem.BookCoverPicturePath)
+                && SelectedItem.BookCoverPicturePath != temp)
+            {
+                FileExplorerService.CreateThumbnail(SelectedItem.BookCoverPicturePath);
+            }
         }
 
         public async override Task LoadAsync(Guid id)
@@ -526,7 +532,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()
-                    => await (domainService as BookService).publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
+                    => await (domainService as BookService)?.publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
 
         private async Task<IEnumerable<LookupItem>> GetLanguageList()
             => await (domainService as BookService).languageLookupDataService.GetLanguageLookupAsync(nameof(LanguageDetailViewModel));

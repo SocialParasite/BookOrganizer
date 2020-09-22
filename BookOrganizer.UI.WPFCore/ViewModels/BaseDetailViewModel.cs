@@ -127,11 +127,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
-        public virtual async Task OnOpenItemDetailsViewAsync(Guid id)
-        {
-            var entity = await domainService.Repository.GetSelectedAsync(id);
-            SelectedItem = CreateWrapper(entity);
-        }
+        //public virtual async Task OnOpenItemDetailsViewAsync(Guid id)
+        //{
+        //    var entity = await domainService.Repository.GetSelectedAsync(id);
+        //    SelectedItem = CreateWrapper(entity);
+        //}
 
         public virtual void SwitchEditableStateExecute()
         {
@@ -163,7 +163,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         }
 
         private bool OnShowSelectedBookCanExecute(Guid? id)
-            => (id is null || id == Guid.Empty) ? false : true;
+            => (!(id is null) && id != Guid.Empty);
 
         public virtual void OnShowSelectedBookExecute(Guid? id)
             => SelectedBookId = (Guid)id;
