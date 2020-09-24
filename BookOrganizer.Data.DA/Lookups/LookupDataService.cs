@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BookOrganizer.Domain;
@@ -59,9 +60,8 @@ namespace BookOrganizer.DA
             }
         }
 
-        // TODO: thumbnail is always of type jpg!
         private string GetPictureThumbnail(string picturePath)
-            => picturePath.Insert(picturePath.Length - 4, "_thumb");
+            => Path.ChangeExtension(picturePath.Insert(picturePath.Length - 4, "_thumb"), "jpg");
 
         public async Task<IEnumerable<LookupItem>> GetPublisherLookupAsync(string viewModelName)
         {
