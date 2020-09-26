@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPFCore.DialogServiceManager;
 using Prism.Events;
@@ -13,7 +12,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
     {
         private readonly ISeriesLookupDataService seriesLookupDataService;
 
-        public SeriesViewModel(IEventAggregator eventAggregator, 
+        public SeriesViewModel(IEventAggregator eventAggregator,
                                ISeriesLookupDataService seriesLookupDataService,
                                ILogger logger,
                                IDialogService dialogService)
@@ -26,17 +25,17 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             ViewModelType = nameof(SeriesDetailViewModel);
         }
 
-        private Task Init() 
+        private Task Init()
             => InitializeRepositoryAsync();
 
-        public async override Task InitializeRepositoryAsync()
+        public override async Task InitializeRepositoryAsync()
         {
             try
             {
-                Items = await seriesLookupDataService
+                items = await seriesLookupDataService
                                 .GetSeriesLookupAsync(nameof(SeriesDetailViewModel));
 
-                EntityCollection = Items.OrderBy(p => p.DisplayMember).ToList();
+                EntityCollection = items.OrderBy(p => p.DisplayMember).ToList();
             }
             catch (Exception ex)
             {

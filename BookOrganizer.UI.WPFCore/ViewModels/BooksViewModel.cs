@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using BookOrganizer.Domain;
 using BookOrganizer.UI.WPFCore.DialogServiceManager;
@@ -33,14 +32,14 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
             try
             {
-                Items = await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel));
+                items = await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel));
 
                 // TODO: below op freezes UI.
-                EntityCollection = Items
+                EntityCollection = items
                     .OrderBy(b => b.DisplayMember
                         .StartsWith("A ", StringComparison.OrdinalIgnoreCase)
                         || b.DisplayMember.StartsWith("The ", StringComparison.OrdinalIgnoreCase)
-                        ? b.DisplayMember.Substring(b.DisplayMember.IndexOf(" ") + 1)
+                        ? b.DisplayMember.Substring(b.DisplayMember.IndexOf(" ", StringComparison.Ordinal) + 1)
                         : b.DisplayMember)
                     .ToList();
             }

@@ -1,5 +1,4 @@
 ﻿using System;
-using BookOrganizer.Domain.Enums;
 
 namespace BookOrganizer.Domain
 {

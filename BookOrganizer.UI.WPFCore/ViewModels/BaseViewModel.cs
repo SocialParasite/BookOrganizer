@@ -21,7 +21,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         protected readonly ILogger logger;
         protected readonly IDialogService dialogService;
 
-        public BaseViewModel(IEventAggregator eventAggregator,
+        protected BaseViewModel(IEventAggregator eventAggregator,
                              ILogger logger,
                              IDialogService dialogService)
         {
@@ -36,8 +36,8 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                                            OnItemNameLabelMouseLeftButtonUpCanExecute);
         }
 
-        public IEnumerable<LookupItem> Items;
-        public IRepository<T> Repository;
+        public IEnumerable<LookupItem> items;
+        public IRepository<T> repository;
         public ICommand AddNewItemCommand { get; }
         public ICommand ItemNameLabelMouseLeftButtonUpCommand { get; }
 
@@ -105,11 +105,11 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         private void OnItemNameLabelMouseLeftButtonUpExecute(LookupItem item)
         {
             eventAggregator.GetEvent<OpenDetailViewEvent>()
-                                   .Publish(new OpenDetailViewEventArgs
-                                   {
-                                       Id = item.Id,
-                                       ViewModelName = item.ViewModelName
-                                   });
+                           .Publish(new OpenDetailViewEventArgs
+                           {
+                               Id = item.Id,
+                               ViewModelName = item.ViewModelName
+                           });
         }
     }
 }
