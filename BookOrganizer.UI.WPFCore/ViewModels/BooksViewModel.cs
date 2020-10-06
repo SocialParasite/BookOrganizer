@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookOrganizer.Domain;
@@ -21,6 +22,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             this.bookLookupDataService = bookLookupDataService ?? throw new ArgumentNullException(nameof(bookLookupDataService));
 
             ViewModelType = nameof(BookDetailViewModel);
+            EntityCollection ??= new List<LookupItem>();
             Init().Await();
         }
 
@@ -33,15 +35,16 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             try
             {
                 items = await bookLookupDataService.GetBookLookupAsync(nameof(BookDetailViewModel));
-
+                //EntityCollection = items.ToList();
                 // TODO: below op freezes UI.
                 EntityCollection = items
                     .OrderBy(b => b.DisplayMember
-                        .StartsWith("A ", StringComparison.OrdinalIgnoreCase)
-                        || b.DisplayMember.StartsWith("The ", StringComparison.OrdinalIgnoreCase)
+                                      .StartsWith("A ", StringComparison.OrdinalIgnoreCase)
+                                  || b.DisplayMember.StartsWith("The ", StringComparison.OrdinalIgnoreCase)
                         ? b.DisplayMember.Substring(b.DisplayMember.IndexOf(" ", StringComparison.Ordinal) + 1)
                         : b.DisplayMember)
                     .ToList();
+                //.CreateOrderedEnumerable();
             }
             catch (Exception ex)
             {
@@ -51,13 +54,24 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                 logger.Error("Message: {Message}\n\n Stack trace: {StackTrace}\n\n", ex.Message, ex.StackTrace);
             }
         }
+
+        private IEnumerable<IOrderedEnumerable<LookupItem>> OrderEntityCollection()
+        {
+            yield return items
+                .OrderBy(b => b.DisplayMember
+                                  .StartsWith("A ", StringComparison.OrdinalIgnoreCase)
+                              || b.DisplayMember.StartsWith("The ", StringComparison.OrdinalIgnoreCase)
+                    ? b.DisplayMember.Substring(b.DisplayMember.IndexOf(" ", StringComparison.Ordinal) + 1)
+                    : b.DisplayMember);
+            //.ToEnumerable<LookupItem>();
+        }
     }
 
     public static class TaskExtensions
     {
-        public static async void Await(this Task task)
+        public static Task Await(this Task task)
         {
-            await task;
+            return task;
         }
     }
 }

@@ -36,10 +36,10 @@ namespace BookOrganizer.UI.WPFCoreTests
         public async Task Get_All_Books()
         {
             var viewModel = CreateViewModelWithBooks();
-            viewModel.EntityCollection.Count.Should().Equals(0);
+            viewModel.EntityCollection.Should().NotBeNull().And.HaveCount(0);
             
             await viewModel.InitializeRepositoryAsync();
-            viewModel.EntityCollection.Count.Should().Equals(2);
+            viewModel.EntityCollection.Should().HaveCount(2);
         }
 
         [Fact]
