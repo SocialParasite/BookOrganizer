@@ -32,7 +32,8 @@
                                         Background="{Binding ItemStatus, Converter={StaticResource BackgroundColorConverter}}"
                                         BorderBrush="SteelBlue"
                                         BorderThickness="1"
-                                        FontSize="12">
+                                        FontSize="12"
+                                        ToolTip="{Binding ItemStatus}">
                                         <Label.Content>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>

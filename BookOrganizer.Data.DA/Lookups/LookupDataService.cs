@@ -60,6 +60,7 @@ namespace BookOrganizer.DA
             }
         }
 
+        // TODO: fails with extension that is longer than 3 characters
         private string GetPictureThumbnail(string picturePath)
             => Path.ChangeExtension(picturePath.Insert(picturePath.Length - 4, "_thumb"), "jpg");
 

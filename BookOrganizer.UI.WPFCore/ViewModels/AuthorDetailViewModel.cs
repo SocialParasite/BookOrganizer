@@ -44,7 +44,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public LookupItem SelectedNationality
         {
-            get { return selectedNationality; }
+            get => selectedNationality;
             set { selectedNationality = value; OnPropertyChanged(); }
         }
 
@@ -52,7 +52,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public override AuthorWrapper SelectedItem
         {
-            get { return selectedItem; }
+            get => selectedItem;
             set
             {
                 selectedItem = value ?? throw new ArgumentNullException(nameof(SelectedItem));
@@ -68,7 +68,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             SelectedItem.MugShotPath = FileExplorerService.BrowsePicture() ?? SelectedItem.MugShotPath;
         }
 
-        public async override Task LoadAsync(Guid id)
+        public override async Task LoadAsync(Guid id)
         {
             try
             {

@@ -19,7 +19,7 @@ namespace BookOrganizer.DA
                 .Include(b => b.Publisher)
                 .FirstOrDefault(b => b.Title == title);
 
-        public async override Task<Book> GetSelectedAsync(Guid id)
+        public override async Task<Book> GetSelectedAsync(Guid id)
         {
             return id != default
                 ? await context.Books

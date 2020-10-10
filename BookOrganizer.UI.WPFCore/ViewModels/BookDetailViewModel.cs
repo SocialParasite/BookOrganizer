@@ -152,7 +152,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public SolidColorBrush HighlightBrush
         {
-            get { return highlightBrush; }
+            get => highlightBrush;
             set { highlightBrush = value; OnPropertyChanged(); }
         }
 
@@ -160,7 +160,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public LookupItem SelectedLanguage
         {
-            get { return selectedLanguage; }
+            get => selectedLanguage;
             set { selectedLanguage = value; OnPropertyChanged(); }
         }
 
@@ -172,7 +172,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public LookupItem SelectedPublisher
         {
-            get { return selectedPublisher; }
+            get => selectedPublisher;
             set { selectedPublisher = value; OnPropertyChanged(); }
         }
 
@@ -180,13 +180,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public LookupItem SelectedAuthor
         {
-            get { return selectedAuthor; }
+            get => selectedAuthor;
             set { selectedAuthor = value; OnPropertyChanged(); }
         }
 
         public DateTime NewReadDate
         {
-            get { return newReadDate; }
+            get => newReadDate;
             set { newReadDate = value; OnPropertyChanged(); }
         }
 
@@ -194,13 +194,13 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public int SelectedReleaseYear
         {
-            get { return selectedReleaseYear; }
+            get => selectedReleaseYear;
             set { selectedReleaseYear = value; OnPropertyChanged(); }
         }
 
         public override BookWrapper SelectedItem
         {
-            get { return selectedItem; }
+            get => selectedItem;
             set
             {
                 selectedItem = value ?? throw new ArgumentNullException(nameof(SelectedItem));
@@ -216,7 +216,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         public string NewGenreName
         {
-            get { return newGenreName; }
+            get => newGenreName;
             set { newGenreName = value; OnPropertyChanged(); }
         }
 
@@ -229,7 +229,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
         private bool SetReadDateCanExecute()
         {
-            return !SelectedItem.Model.ReadDates.Any(d => d.ReadDate == NewReadDate);
+            return SelectedItem.Model.ReadDates.All(d => d.ReadDate != NewReadDate);
         }
 
         private void SetReadDateExecute()
@@ -253,7 +253,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
             }
         }
 
-        public async override Task LoadAsync(Guid id)
+        public override async Task LoadAsync(Guid id)
         {
             try
             {
@@ -291,7 +291,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
 
                 SetDefaultBookCoverIfNoneSet();
                 SetDefaultBookTitleIfNoneSet();
-                InitiliazeSelectedLanguageIfNoneSet();
+                InitializeSelectedLanguageIfNoneSet();
                 InitializeSelectedPublisherIfNoneSet();
                 SetBooksSelectedReleaseYear();
                 InitializeAllBookFormats();
@@ -309,7 +309,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                         SelectedItem.Title = "Book Title";
                 }
 
-                void InitiliazeSelectedLanguageIfNoneSet()
+                void InitializeSelectedLanguageIfNoneSet()
                 {
                     if (SelectedLanguage is null)
                     {
@@ -319,7 +319,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                                 new LookupItem
                                 {
                                     Id = SelectedItem.Model.Language.Id,
-                                    DisplayMember = SelectedItem.Model.Language is null
+                                    DisplayMember = SelectedItem.Model.Language == null
                                     ? new Language().LanguageName = ""
                                     : SelectedItem.Model.Language.LanguageName
                                 };
@@ -337,7 +337,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
                                 new LookupItem
                                 {
                                     Id = SelectedItem.Model.Publisher.Id,
-                                    DisplayMember = SelectedItem.Model.Publisher is null
+                                    DisplayMember = SelectedItem.Model.Publisher == null
                                     ? new Publisher().Name = ""
                                     : SelectedItem.Model.Publisher.Name
                                 };
@@ -532,7 +532,7 @@ namespace BookOrganizer.UI.WPFCore.ViewModels
         }
 
         private async Task<IEnumerable<LookupItem>> GetPublisherList()
-                    => await (domainService as BookService)?.publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
+            => await (domainService as BookService)?.publisherLookupDataService.GetPublisherLookupAsync(nameof(PublisherDetailViewModel));
 
         private async Task<IEnumerable<LookupItem>> GetLanguageList()
             => await (domainService as BookService).languageLookupDataService.GetLanguageLookupAsync(nameof(LanguageDetailViewModel));
